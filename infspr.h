@@ -4,7 +4,7 @@
 !   Supplied for use with Inform 6 -- Release 6.12.7dev -- Serial number 240624
 !
 !   Copyright Graham Nelson 1993-2004 and David Griffith 2012-2024
-!   Spanish adaptation by Habibis.Habidis
+!   Spanish adaptation by Gargoris (https://github.com/gargoris)
 !
 !   This code is licensed under either the traditional Inform license as
 !   described by the DM4 or the Artistic License version 2.0.  See the
