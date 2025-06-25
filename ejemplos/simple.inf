@@ -1,0 +1,27 @@
+! Un ejemplo simple en Inform 6
+
+Constant Story "Ejemplo Simple";
+Constant Headline "^Una aventura de prueba^";
+
+Include "Parser";
+Include "VerbLib";
+Include "Grammar";
+
+! Definicion de localizaciones
+Object  Salon "Salon"
+  with  description
+          "Estas en un salon acogedor con una chimenea.",
+        n_to Cocina,
+  has   light;
+
+Object  Cocina "Cocina"
+  with  description
+          "Una cocina pequena pero funcional.",
+        s_to Salon,
+  has   light;
+
+! Rutina de inicializacion
+[ Initialise;
+    location = Salon;
+    "^Bienvenido a esta aventura de prueba.^";
+];

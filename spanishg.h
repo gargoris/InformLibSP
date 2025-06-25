@@ -571,3 +571,5 @@ VerboIrregular "corregir un error" with imperativo 'oops' 'epa' 'eepa';
 ! ----------------------------------------------------------------------------
 !  Final del fichero de gramática
 ! ----------------------------------------------------------------------------
+
+! [Verificado para compatibilidad con Inform 6.12.7dev]

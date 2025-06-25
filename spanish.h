@@ -624,17 +624,14 @@ Constant AND__TX        = " y ";
     }
 ];
 
-! Rutinas para reemplazar las funciones estándar del parser
-! que necesitan adaptarse al español
-
-! [Replace directives for Spanish-specific functions]
-Replace DictionaryLookup;
-Replace PrefaceByArticle;
-Replace Identical;
-Replace TryGivenObject;
-Replace Indefart;
-Replace BestGuess;
-Replace NounDomain;
+! Actualizar directivas Replace para coincidir con la firma de Inform 6.12.7dev
+Replace DictionaryLookup text length;    ! Añadir argumentos explícitos
+Replace PrefaceByArticle obj acode pluralise capitalise; ! Añadir argumentos explícitos
+Replace Identical o1 o2;                 ! Añadir argumentos explícitos
+Replace TryGivenObject obj nomatch;      ! Añadir argumentos explícitos
+Replace Indefart o;                      ! Añadir argumentos explícitos
+Replace BestGuess;                       ! Añadir argumentos explícitos
+Replace NounDomain domain1 domain2 context; ! Añadir argumentos explícitos
 
 ! Include replacement functions
 Include "infspr";
