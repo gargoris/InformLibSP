@@ -726,7 +726,7 @@ Include "SpanishIrregularVerbs";
 
 ! Incluir meta-comandos si están habilitados
 #Ifdef SPANISH_META_COMMANDS;
-Include "SpanishMeta";
+Include "meta/SpanishMeta";
 #Endif;
 
 ! Incluir sistema de ayuda expandido si está habilitado
