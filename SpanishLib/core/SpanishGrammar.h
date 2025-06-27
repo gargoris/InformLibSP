@@ -1,5 +1,5 @@
 ! ==============================================================================
-! SPANISHGRAMMAR.H - Definiciones gramaticales y utilidades para español
+! SPANISHGRAMMAR.H - Sistema completo de gramática y impresión para español
 ! Parte del sistema modular Spanish Library para Inform 6
 ! Compatible con Inform 6.42 y librería estándar 6.12.7
 ! ==============================================================================
@@ -8,36 +8,19 @@ System_file;
 
 #Ifndef SPANISH_GRAMMAR_INCLUDED;
 Constant SPANISH_GRAMMAR_INCLUDED;
+Constant SPANISH_GRAMMAR_VERSION = "1.1-consolidated";
 
 ! Verificación de dependencias
+#Ifndef SPANISH_CONSTANTS_INCLUDED;
+  Message fatalerror "*** Include SpanishConstants.h antes de SpanishGrammar.h ***";
+#Endif;
+
 #Ifndef SPANISH_CORE_INCLUDED;
   Message fatalerror "*** Include SpanishCore.h antes de SpanishGrammar.h ***";
 #Endif;
 
 ! ==============================================================================
-! CONSTANTES GRAMATICALES
-! ==============================================================================
-
-! Género
-Constant MASCULINE = 1;
-Constant FEMININE = 2;
-Constant NEUTER = 3;
-
-! Número
-Constant SINGULAR = 1;
-Constant PLURAL = 2;
-
-! Persona gramatical
-Constant PRIMERA_PERSONA = 1;
-Constant SEGUNDA_PERSONA = 2;
-Constant TERCERA_PERSONA = 3;
-
-! Formalidad
-Constant INFORMAL = 0;
-Constant FORMAL = 1;
-
-! ==============================================================================
-! FUNCIONES DE GÉNERO Y NÚMERO
+! FUNCIONES DE GÉNERO Y NÚMERO - CENTRALIZADAS
 ! ==============================================================================
 
 [ EsGeneroMasculino obj;
@@ -74,13 +57,63 @@ Constant FORMAL = 1;
 ];
 
 ! ==============================================================================
-! ARTÍCULOS Y DETERMINANTES
+! FUNCIONES DE IMPRESIÓN PRINCIPALES - CONSOLIDADAS
+! ==============================================================================
+
+[ LanguagePrintShortName obj aux;
+    ! FUNCIÓN PRINCIPAL DE IMPRESIÓN - ahora solo aquí
+    if (obj == 0) { print "(nada)"; rtrue; }
+    
+    ! Intentar con short_name_indef si existe y estamos en modo indefinido
+    if (indef_mode && obj.&short_name_indef ~= 0) {
+        aux = obj.&short_name_indef;
+        if (aux-->0 ~= 0) {
+            print (string) aux-->0;
+            rtrue;
+        }
+    }
+    
+    ! Usar short_name normal
+    aux = obj.&short_name;
+    if (aux ~= 0) {
+        if (aux-->0 ~= 0) {
+            print (string) aux-->0;
+            rtrue;
+        }
+    }
+    
+    rfalse;
+];
+
+[ LanguagePrintName obj aux;
+    ! Función estándar de impresión de nombres
+    if (obj == 0) { print "(nada)"; rtrue; }
+    
+    aux = obj.&name;
+    if (aux ~= 0) {
+        if (aux-->0 ~= 0) {
+            print (string) aux-->0;
+            rtrue;
+        }
+    }
+    
+    ! Fallback a short_name
+    return LanguagePrintShortName(obj);
+];
+
+[ PrintName obj;
+    ! Alias para compatibilidad
+    return LanguagePrintName(obj);
+];
+
+! ==============================================================================
+! ARTÍCULOS Y DETERMINANTES - EXPANDIDOS
 ! ==============================================================================
 
 [ ArticuloDefinido obj;
     if (EsPlural(obj)) {
-        print "los";
-        if (EsGeneroMasculino(obj) == false) print "/las";
+        if (EsGeneroMasculino(obj)) print "los";
+        else print "las";
     }
     else {
         if (EsGeneroMasculino(obj)) print "el";
@@ -228,8 +261,8 @@ Constant FORMAL = 1;
            }
         2: switch(caso) {
                1: if (FormalityLevel) print "usted"; else print "tú";
-               2: print "te";
-               3: print "te";
+               2: if (FormalityLevel) print "le"; else print "te";
+               3: if (FormalityLevel) print "le"; else print "te";
            }
         3: switch(caso) {
                1: if (numero == PLURAL) {
@@ -251,8 +284,8 @@ Constant FORMAL = 1;
            }
         5: switch(caso) {
                1: if (FormalityLevel) print "ustedes"; else print "vosotros";
-               2: print "os";
-               3: print "os";
+               2: if (FormalityLevel) print "les"; else print "os";
+               3: if (FormalityLevel) print "les"; else print "os";
            }
         6: switch(caso) {
                1: if (genero == FEMININE) print "ellas"; else print "ellos";
@@ -282,6 +315,39 @@ Constant FORMAL = 1;
         }
     }
 ];
+
+! ==============================================================================
+! FUNCIONES DE IMPRESIÓN CON ARTÍCULOS - INTEGRADAS
+! ==============================================================================
+
+[ LanguageA obj   aux;
+    ! Imprime artículo indefinido + objeto
+    if (obj == nothing) { print "nada"; rtrue; }
+    if (obj == player) { print "tú mismo"; rtrue; }
+    
+    ArticuloIndefinido(obj);
+    print " ";
+    LanguagePrintShortName(obj);
+    rtrue;
+];
+
+[ LanguageThe obj   aux;
+    ! Imprime artículo definido + objeto
+    if (obj == nothing) { print "nada"; rtrue; }
+    if (obj == player) { print "tú"; rtrue; }
+    
+    ArticuloDefinido(obj);
+    print " ";
+    LanguagePrintShortName(obj);
+    rtrue;
+];
+
+[ A obj; return LanguageA(obj); ];
+[ The obj; return LanguageThe(obj); ];
+
+! Compatibilidad con sintaxis estándar
+[ a obj; return LanguageA(obj); ];
+[ the obj; return LanguageThe(obj); ];
 
 ! ==============================================================================
 ! UTILIDADES DE IMPRESIÓN CON CONCORDANCIA
@@ -526,6 +592,47 @@ Constant FORMAL = 1;
 ];
 
 ! ==============================================================================
+! FUNCIONES DE INTEGRACIÓN CON SISTEMA PRINCIPAL
+! ==============================================================================
+
+[ LanguageRefers obj wn   word pronoun_class;
+    ! Sistema de pronombres integrado con voseo
+    word = wn-->0;
+    
+    #Ifdef SPANISH_REGIONAL_INCLUDED;
+        ! Si es voseo argentino, manejar "vos"
+        if (voseo_enabled && word == 'vos') {
+            if (obj == player) rtrue;
+        }
+    #Endif;
+    
+    ! Verificar pronombres estándar
+    if (word == 'el' or 'ella' or 'ello') {
+        if (obj has animate && ~~(obj has pluralname)) rtrue;
+    }
+    
+    if (word == 'ellos' or 'ellas') {
+        if (obj has animate && obj has pluralname) rtrue;
+    }
+    
+    if (word == 'lo' or 'la') {
+        if (~~(obj has animate) && ~~(obj has pluralname)) rtrue;
+    }
+    
+    if (word == 'los' or 'las') {
+        if (~~(obj has animate) && obj has pluralname) rtrue;
+    }
+    
+    ! Verificar en tabla de pronombres
+    pronoun_class = PronounValue(word);
+    if (pronoun_class ~= 0) {
+        if (obj == pronoun_class) rtrue;
+    }
+    
+    rfalse;
+];
+
+! ==============================================================================
 ! DEPURACIÓN GRAMATICAL
 ! ==============================================================================
 
@@ -559,8 +666,27 @@ Constant FORMAL = 1;
 ];
 #Endif;
 
+! ==============================================================================
+! INICIALIZACIÓN Y FINALIZACIÓN
+! ==============================================================================
+
+[ SpanishGrammarInitialise;
+    ! Marcar que el módulo está listo
+    spanish_grammar_ready = true;
+    MarkModuleLoaded('grammar');
+    
+    #Ifdef DEBUG;
+        print "[SpanishGrammar v", (string) SPANISH_GRAMMAR_VERSION, " inicializado]^";
+        print "[Funciones de impresión, artículos, pronombres y concordancia cargadas]^";
+    #Endif;
+];
+
+! Constantes de finalización
+Constant SPANISH_GRAMMAR_COMPLETE;
+Constant SPANISH_GRAMMAR_READY;
+
 #Endif; ! SPANISH_GRAMMAR_INCLUDED
 
 ! ==============================================================================
-! Fin de SpanishGrammar.h - Definiciones gramaticales para español
+! Fin de SpanishGrammar.h - Sistema completo y consolidado de gramática española
 ! ==============================================================================

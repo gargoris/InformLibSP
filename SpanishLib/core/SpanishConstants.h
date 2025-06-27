@@ -1,6 +1,6 @@
 ! ==============================================================================
 ! SPANISHCONSTANTS.H - Constantes centralizadas del sistema español
-! Todas las constantes del sistema Spanish Library en un solo lugar
+! Sistema modular Spanish Library para Inform 6
 ! Compatible con Inform 6.42 y librería estándar 6.12.7
 ! ==============================================================================
 
@@ -8,15 +8,7 @@ System_file;
 
 #Ifndef SPANISH_CONSTANTS_INCLUDED;
 Constant SPANISH_CONSTANTS_INCLUDED;
-Constant SPANISH_CONSTANTS_VERSION = "1.0-unified";
-
-! ==============================================================================
-! CONSTANTES DE VERSIÓN Y COMPATIBILIDAD
-! ==============================================================================
-
-Constant LanguageVersion = "6.12.7-es-modular-unified";
-Constant LIBRARY_SPANISH;
-Constant SPANISH_MODULAR_SYSTEM;
+Constant SPANISH_CONSTANTS_VERSION = "1.1-centralized-fixed";
 
 ! ==============================================================================
 ! CONSTANTES DE TIEMPOS VERBALES
@@ -49,21 +41,53 @@ Constant PRIMERA_PERSONA = 1;
 Constant SEGUNDA_PERSONA = 2;
 Constant TERCERA_PERSONA = 3;
 
-! Formalidad
+! ==============================================================================
+! CONSTANTES DE FORMALIDAD
+! ==============================================================================
+
 Constant INFORMAL = 0;
 Constant FORMAL = 1;
 
+! Configuración por defecto
+#Ifndef SPANISH_FORMALITY_DEFAULT;
+    Constant SPANISH_FORMALITY_DEFAULT = 0;  ! Informal por defecto
+#Endif;
+
 ! ==============================================================================
-! ARTÍCULOS BÁSICOS
+! VARIABLES GLOBALES CENTRALIZADAS
 ! ==============================================================================
 
-Constant DEFART_H = "el";        ! Masculino singular
-Constant DEFART_F = "la";        ! Femenino singular
-Constant DEFART_PL = "los/las";  ! Plural
+! Variable principal de formalidad (antes estaba duplicada)
+Global FormalityLevel = SPANISH_FORMALITY_DEFAULT;
 
-Constant INDEFART_H = "un";      ! Masculino singular
-Constant INDEFART_F = "una";     ! Femenino singular
-Constant INDEFART_PL = "unos/unas"; ! Plural
+! Variables de estado del sistema
+Global spanish_initialized = false;
+Global spanish_parser_ready = false;
+Global spanish_verbs_ready = false;
+Global spanish_grammar_ready = false;
+Global spanish_messages_ready = false;
+
+! Variables para comandos
+Global last_command_length = 0;
+Global spanish_parse_stage = 0;
+Global spanish_last_verb = 0;
+
+! Variables para meta-comandos
+Global undo_disabled = false;
+Global again_enabled = true;
+Global oops_enabled = true;
+Global last_command_valid = false;
+Global oops_word = 0;
+Global oops_position = 0;
+
+! Variables regionales
+#Ifndef SPANISH_REGION_DEFAULT;
+    Constant SPANISH_REGION_DEFAULT = 0;     ! Neutral por defecto
+#Endif;
+
+Global current_spanish_region = SPANISH_REGION_DEFAULT;
+Global voseo_enabled = false;
+Global regional_vocabulary = true;
 
 ! ==============================================================================
 ! DIRECCIONES EN ESPAÑOL
@@ -86,7 +110,6 @@ Constant OUT_TO   = "fuera salir";
 ! PALABRAS ESPECIALES DEL PARSER
 ! ==============================================================================
 
-! Formas de "todo"
 Constant ALL1__WD   = 'todo';
 Constant ALL2__WD   = 'todos';
 Constant ALL3__WD   = 'todas';
@@ -94,37 +117,31 @@ Constant ALL4__WD   = 'cada';
 Constant ALL5__WD   = 'ambos';
 Constant ALL6__WD   = 'ambas';
 
-! Conjunciones
 Constant AND1__WD   = 'y';
-Constant AND2__WD   = 'e';      ! Eufonía ante 'i'
+Constant AND2__WD   = 'e';
 Constant AND3__WD   = 'también';
 
-! Excepciones
 Constant BUT1__WD   = 'menos';
 Constant BUT2__WD   = 'excepto';
 Constant BUT3__WD   = 'salvo';
 Constant BUT4__WD   = 'sino';
 
-! Pronombres reflexivos y personales
 Constant ME1__WD    = 'yo';
 Constant ME2__WD    = 'mi';
 Constant ME3__WD    = 'me';
-Constant ME4__WD    = 'mí';    ! Con tilde
+Constant ME4__WD    = 'mí';
 
-! Preposiciones y contracciones
 Constant OF1__WD    = 'de';
-Constant OF2__WD    = 'del';    ! Contracción
+Constant OF2__WD    = 'del';
 Constant OF3__WD    = 'de_la';
 Constant OF4__WD    = 'de_los';
 Constant OF5__WD    = 'de_las';
 
-! Otros determinantes
 Constant OTHER1__WD = 'otro';
 Constant OTHER2__WD = 'otra';
 Constant OTHER3__WD = 'otros';
 Constant OTHER4__WD = 'otras';
 
-! Conectores temporales
 Constant THEN1__WD  = 'luego';
 Constant THEN2__WD  = 'después';
 Constant THEN3__WD  = 'entonces';
@@ -135,24 +152,33 @@ Constant THEN5__WD  = 'y_después';
 ! CONSTANTES DE PARSING
 ! ==============================================================================
 
-! Tipos de preposiciones
 Constant PREP_SIMPLE = 1;
 Constant PREP_COMPOUND_START = 2;
 Constant PREP_COMPOUND_MIDDLE = 3;
 Constant PREP_COMPOUND_END = 4;
 
-! Posiciones sintácticas
 Constant SPANISH_VERB_POSITION = 1;
 Constant SPANISH_OBJECT_POSITION = 2;
 Constant SPANISH_PREPOSITION_POSITION = 3;
 Constant SPANISH_SECONDARY_OBJECT_POSITION = 4;
 
 ! ==============================================================================
+! CONSTANTES REGIONALES
+! ==============================================================================
+
+Constant REGION_NEUTRAL = 0;
+Constant REGION_MEXICO = 1;
+Constant REGION_ARGENTINA = 2;
+Constant REGION_SPAIN = 3;
+Constant REGION_COLOMBIA = 4;
+Constant REGION_CHILE = 5;
+
+! ==============================================================================
 ! CONSTANTES DE META-COMANDOS
 ! ==============================================================================
 
 Constant META_UNDO = 1;
-Constant META_AGAIN = 2; 
+Constant META_AGAIN = 2;
 Constant META_OOPS = 3;
 Constant META_HELP = 4;
 Constant META_COMMANDS = 5;
@@ -166,33 +192,19 @@ Constant META_VERBOSE = 12;
 Constant META_SUPERBRIEF = 13;
 
 ! ==============================================================================
-! CONSTANTES REGIONALES
+! ARRAYS BÁSICOS COMPARTIDOS - CENTRALIZADOS
 ! ==============================================================================
 
-! Códigos de región
-Constant REGION_NEUTRAL = 0;
-Constant REGION_MEXICO = 1;
-Constant REGION_ARGENTINA = 2;
-Constant REGION_SPAIN = 3;
-Constant REGION_COLOMBIA = 4;
-Constant REGION_CHILE = 5;
+! Buffer principal del sistema
+Array spanish_buffer -> 120;
 
-! ==============================================================================
-! CONFIGURACIÓN POR DEFECTO
-! ==============================================================================
+! Buffers para comandos
+Array last_command_buffer -> 120;
+Array last_command_parse table 32;
 
-! Configuraciones que pueden ser sobreescritas por el desarrollador
-#Ifndef SPANISH_FORMALITY_DEFAULT;
-    Constant SPANISH_FORMALITY_DEFAULT = 0;  ! Informal por defecto
-#Endif;
-
-#Ifndef SPANISH_REGION_DEFAULT;
-    Constant SPANISH_REGION_DEFAULT = 0;     ! Neutro por defecto
-#Endif;
-
-! ==============================================================================
-! ARRAYS Y TABLAS BÁSICAS
-! ==============================================================================
+! Buffers para parsing
+Array spanish_parse_buffer --> 64;
+Array spanish_temp_parse --> 32;
 
 Array LanguagePronouns table
     'me'       $$000001   NULL     
@@ -243,30 +255,124 @@ Array LanguageNumbers table
     'dieciséis' 16, 'diecisiete' 17, 'dieciocho' 18, 'diecinueve' 19, 'veinte' 20;
 
 ! ==============================================================================
-! MARCADORES DE CARACTERÍSTICAS OPCIONALES
+! CONSTANTES DE VERSIÓN Y COMPATIBILIDAD
 ! ==============================================================================
 
-! Estos se definen automáticamente según qué módulos se incluyan
-! El desarrollador puede definirlos manualmente antes de incluir SpanishLib.h
+Constant LIBRARY_SPANISH;
+Constant SPANISH_MODULAR_SYSTEM;
+Constant SPANISH_CONSTANTS_COMPLETE;
+Constant SPANISH_SYSTEM_VERSION = "1.1-modular-fixed";
 
-! #Define SPANISH_IRREGULAR_VERBS     ! Activa verbos irregulares
-! #Define SPANISH_META_COMMANDS       ! Activa meta-comandos avanzados  
-! #Define SPANISH_REGIONAL_VARIANTS   ! Activa variantes regionales
-! #Define SPANISH_FULL_MESSAGES       ! Activa sistema completo de mensajes
-! #Define SPANISH_HELP_SYSTEM         ! Activa sistema de ayuda integrado
+! Marcadores de módulos disponibles (se activan cuando se cargan)
+Global SPANISH_CORE_LOADED = false;
+Global SPANISH_PARSER_LOADED = false;
+Global SPANISH_GRAMMAR_LOADED = false;
+Global SPANISH_VERBS_LOADED = false;
+Global SPANISH_MESSAGES_LOADED = false;
+Global SPANISH_IRREGULAR_VERBS_LOADED = false;
+Global SPANISH_META_LOADED = false;
+Global SPANISH_REGIONAL_LOADED = false;
 
 ! ==============================================================================
-! INFORMACIÓN DE DEPURACIÓN
+! FUNCIONES BÁSICAS DE CONFIGURACIÓN
 ! ==============================================================================
 
-#Ifdef DEBUG;
-Constant SPANISH_DEBUG_INFO = "Spanish Library - Sistema Modular Unificado";
-Constant SPANISH_BUILD_DATE = "2024-12-unified";
-Constant SPANISH_TARGET_VERSION = "6.12.7";
-#Endif;
+[ SpanishSetFormality level;
+    ! Cambiar nivel de formalidad dinámicamente
+    if (level == FORMAL || level == INFORMAL) {
+        FormalityLevel = level;
+        return true;
+    }
+    return false;
+];
+
+[ SpanishGetFormality;
+    return FormalityLevel;
+];
+
+[ SpanishToggleFormality;
+    if (FormalityLevel == FORMAL) {
+        return SpanishSetFormality(INFORMAL);
+    } else {
+        return SpanishSetFormality(FORMAL);
+    }
+];
+
+! ==============================================================================
+! FUNCIONES DE ESTADO DEL SISTEMA
+! ==============================================================================
+
+[ SpanishSystemStatus;
+    print "^=== ESTADO DEL SISTEMA ESPAÑOL ===^";
+    print "Versión: ", (string) SPANISH_SYSTEM_VERSION, "^";
+    
+    print "Módulos cargados:^";
+    print "• Core: "; if (SPANISH_CORE_LOADED) print "✅"; else print "❌"; print "^";
+    print "• Parser: "; if (SPANISH_PARSER_LOADED) print "✅"; else print "❌"; print "^";
+    print "• Grammar: "; if (SPANISH_GRAMMAR_LOADED) print "✅"; else print "❌"; print "^";
+    print "• Verbs: "; if (SPANISH_VERBS_LOADED) print "✅"; else print "❌"; print "^";
+    print "• Messages: "; if (SPANISH_MESSAGES_LOADED) print "✅"; else print "❌"; print "^";
+    print "• Irregular Verbs: "; if (SPANISH_IRREGULAR_VERBS_LOADED) print "✅"; else print "❌"; print "^";
+    print "• Meta Commands: "; if (SPANISH_META_LOADED) print "✅"; else print "❌"; print "^";
+    print "• Regional: "; if (SPANISH_REGIONAL_LOADED) print "✅"; else print "❌"; print "^";
+    
+    print "^Configuración:^";
+    print "• Formalidad: ";
+    if (FormalityLevel == FORMAL) print "Formal (usted)"; else print "Informal (tú)";
+    print "^• Región: ";
+    switch(current_spanish_region) {
+        REGION_MEXICO: print "México";
+        REGION_ARGENTINA: print "Argentina";
+        REGION_SPAIN: print "España";
+        default: print "Neutral";
+    }
+    print "^• Voseo: ";
+    if (voseo_enabled) print "Sí"; else print "No";
+    print "^";
+];
+
+[ MarkModuleLoaded module_name;
+    switch(module_name) {
+        'core': SPANISH_CORE_LOADED = true;
+        'parser': SPANISH_PARSER_LOADED = true;
+        'grammar': SPANISH_GRAMMAR_LOADED = true;
+        'verbs': SPANISH_VERBS_LOADED = true;
+        'messages': SPANISH_MESSAGES_LOADED = true;
+        'irregular': SPANISH_IRREGULAR_VERBS_LOADED = true;
+        'meta': SPANISH_META_LOADED = true;
+        'regional': SPANISH_REGIONAL_LOADED = true;
+    }
+];
+
+! ==============================================================================
+! INICIALIZACIÓN DE CONSTANTES
+! ==============================================================================
+
+[ SpanishConstantsInit;
+    ! Inicializar valores por defecto
+    FormalityLevel = SPANISH_FORMALITY_DEFAULT;
+    current_spanish_region = SPANISH_REGION_DEFAULT;
+    spanish_initialized = false;
+    
+    ! Limpiar arrays
+    spanish_buffer->0 = 0;
+    last_command_buffer->0 = 0;
+    
+    ! Configurar sistema
+    undo_disabled = false;
+    again_enabled = true;
+    oops_enabled = true;
+    last_command_valid = false;
+    voseo_enabled = false;
+    regional_vocabulary = true;
+    
+    #Ifdef DEBUG;
+    print "[SpanishConstants v", (string) SPANISH_CONSTANTS_VERSION, " inicializado]^";
+    #Endif;
+];
 
 #Endif; ! SPANISH_CONSTANTS_INCLUDED
 
 ! ==============================================================================
-! Fin de SpanishConstants.h - Constantes centralizadas del sistema español
+! Fin de SpanishConstants.h - Constantes centralizadas y corregidas
 ! ==============================================================================

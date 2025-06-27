@@ -2,15 +2,20 @@
 ! SPANISHIRREGULARVERBS.H - Sistema completo de verbos irregulares en español
 ! Extensión para el sistema modular Spanish Library para Inform 6
 ! Compatible con Inform 6.42 y librería estándar 6.12.7
+! ACTUALIZADO: Integración completa con el sistema modular
 ! ==============================================================================
 
 System_file;
 
 #Ifndef SPANISH_IRREGULAR_VERBS_INCLUDED;
 Constant SPANISH_IRREGULAR_VERBS_INCLUDED;
-Constant SPANISH_IRREGULAR_VERBS_VERSION = "1.0-complete";
+Constant SPANISH_IRREGULAR_VERBS_VERSION = "2.0-modular";
 
 ! Verificación de dependencias
+#Ifndef SPANISH_CONSTANTS_INCLUDED;
+  Message fatalerror "*** Include SpanishConstants.h antes de SpanishIrregularVerbs.h ***";
+#Endif;
+
 #Ifndef SPANISH_VERBS_INCLUDED;
   Message fatalerror "*** Include SpanishVerbs.h antes de SpanishIrregularVerbs.h ***";
 #Endif;
@@ -57,7 +62,7 @@ Array spanish_irregular_verbs table
     return false; ! No es irregular conocido
 ];
 
-[ EsVerboIrregular verbo   i;
+[ LanguageIsIrregularVerb verbo   i;
     ! Verificar si un verbo está en nuestra tabla de irregulares
     for (i = 0: i < spanish_irregular_verbs-->0: i = i + 2) {
         if (spanish_irregular_verbs-->(i+1) == verbo) return true;
@@ -1212,28 +1217,71 @@ Array spanish_irregular_verbs table
 ! INTEGRACIÓN CON EL SISTEMA PRINCIPAL
 ! ==============================================================================
 
-! Sobrescribir la función principal de conjugación en SpanishVerbs.h
-[ ConjugarVerbo verbo persona tiempo tipo;
-    ! Primero intentar verbos irregulares
-    if (SpanishConjugarIrregular(verbo, persona, tiempo)) return true;
-    
-    ! Si no es irregular, usar conjugación regular
-    if (tipo == 0) tipo = DetectarTipoVerbo(verbo);
-    
-    switch(tipo) {
-        1: ConjugarAR(verbo, persona, tiempo);
-        2: ConjugarER(verbo, persona, tiempo);
-        3: ConjugarIR(verbo, persona, tiempo);
-        default:
-            ! Si no se puede conjugar, imprimir infinitivo
-            print (string) verbo;
-    }
-    return true;
+! Función principal para integración con SpanishVerbs.h
+[ SpanishConjugarVerboIrregular verbo persona tiempo;
+    ! Esta función es llamada desde ConjugarVerbo() en SpanishVerbs.h
+    return SpanishConjugarIrregular(verbo, persona, tiempo);
 ];
 
-! Función auxiliar para detectar si una palabra es verbo irregular
-[ LanguageIsIrregularVerb word;
-    return EsVerboIrregular(word);
+! Función auxiliar para detección en LanguageIsVerb
+[ SpanishEsVerboIrregular word;
+    ! Formas irregulares específicas comunes en IF
+    if (word == 'soy' or 'eres' or 'es' or 'somos' or 'sois' or 'son') rtrue;      ! ser
+    if (word == 'estoy' or 'estás' or 'está' or 'estamos' or 'estáis' or 'están') rtrue; ! estar
+    if (word == 'tengo' or 'tienes' or 'tiene' or 'tenemos' or 'tenéis' or 'tienen') rtrue; ! tener
+    if (word == 'hago' or 'haces' or 'hace' or 'hacemos' or 'hacéis' or 'hacen') rtrue; ! hacer
+    if (word == 'voy' or 'vas' or 'va' or 'vamos' or 'vais' or 'van') rtrue;       ! ir
+    if (word == 'vengo' or 'vienes' or 'viene' or 'venimos' or 'venís' or 'vienen') rtrue; ! venir
+    if (word == 'veo' or 'ves' or 've' or 'vemos' or 'veis' or 'ven') rtrue;       ! ver
+    if (word == 'doy' or 'das' or 'da' or 'damos' or 'dais' or 'dan') rtrue;       ! dar
+    if (word == 'puedo' or 'puedes' or 'puede' or 'podemos' or 'podéis' or 'pueden') rtrue; ! poder
+    if (word == 'quiero' or 'quieres' or 'quiere' or 'queremos' or 'queréis' or 'quieren') rtrue; ! querer
+    if (word == 'sé' or 'sabes' or 'sabe' or 'sabemos' or 'sabéis' or 'saben') rtrue; ! saber
+    if (word == 'digo' or 'dices' or 'dice' or 'decimos' or 'decís' or 'dicen') rtrue; ! decir
+    if (word == 'pongo' or 'pones' or 'pone' or 'ponemos' or 'ponéis' or 'ponen') rtrue; ! poner
+    if (word == 'salgo' or 'sales' or 'sale' or 'salimos' or 'salís' or 'salen') rtrue; ! salir
+    
+    ! También verificar infinitivos
+    return LanguageIsIrregularVerb(word);
+];
+
+! ==============================================================================
+! SISTEMA DE DETECCIÓN INTELIGENTE DE VERBOS
+! ==============================================================================
+
+[ DetectarVerboIrregular word   base_verb;
+    ! Intenta detectar el verbo base de una forma conjugada
+    
+    ! Formas de SER
+    if (word == 'soy' or 'eres' or 'es' or 'somos' or 'sois' or 'son' or
+               'era' or 'eras' or 'éramos' or 'erais' or 'eran' or
+               'fui' or 'fuiste' or 'fue' or 'fuimos' or 'fuisteis' or 'fueron') 
+        return 'ser';
+    
+    ! Formas de ESTAR
+    if (word == 'estoy' or 'estás' or 'está' or 'estamos' or 'estáis' or 'están' or
+               'estaba' or 'estabas' or 'estábamos' or 'estabais' or 'estaban' or
+               'estuve' or 'estuviste' or 'estuvo' or 'estuvimos' or 'estuvisteis' or 'estuvieron')
+        return 'estar';
+    
+    ! Formas de TENER
+    if (word == 'tengo' or 'tienes' or 'tiene' or 'tenemos' or 'tenéis' or 'tienen' or
+               'tenía' or 'tenías' or 'teníamos' or 'teníais' or 'tenían' or
+               'tuve' or 'tuviste' or 'tuvo' or 'tuvimos' or 'tuvisteis' or 'tuvieron')
+        return 'tener';
+    
+    ! Formas de HACER
+    if (word == 'hago' or 'haces' or 'hace' or 'hacemos' or 'hacéis' or 'hacen' or
+               'hacía' or 'hacías' or 'hacíamos' or 'hacíais' or 'hacían' or
+               'hice' or 'hiciste' or 'hizo' or 'hicimos' or 'hicisteis' or 'hicieron')
+        return 'hacer';
+    
+    ! Formas de IR
+    if (word == 'voy' or 'vas' or 'va' or 'vamos' or 'vais' or 'van' or
+               'iba' or 'ibas' or 'íbamos' or 'ibais' or 'iban')
+        return 'ir';
+    
+    return 0; ! No detectado
 ];
 
 ! ==============================================================================
@@ -1278,8 +1326,9 @@ Array spanish_irregular_verbs table
 ];
 
 [ SpanishDebugIrregular verbo;
-    print "Analizando verbo irregular: ", (address) verbo, "^";
-    if (EsVerboIrregular(verbo)) {
+    print "^=== ANÁLISIS DE VERBO IRREGULAR ===^";
+    print "Verbo: ", (address) verbo, "^";
+    if (LanguageIsIrregularVerb(verbo)) {
         print "✅ Es verbo irregular reconocido^";
         print "Presente (3ª persona): ";
         SpanishConjugarIrregular(verbo, 3, PRESENTE_T);
@@ -1290,6 +1339,38 @@ Array spanish_irregular_verbs table
         print "❌ No es verbo irregular o no está implementado^";
     }
 ];
+
+[ TestConjugacionCompleta verbo;
+    print "^=== CONJUGACIÓN COMPLETA IRREGULAR: ", (string) verbo, " ===^";
+    
+    if (~~LanguageIsIrregularVerb(verbo)) {
+        print "❌ Error: No es un verbo irregular reconocido^";
+        return;
+    }
+    
+    print "^PRESENTE:^";
+    print "  yo "; SpanishConjugarIrregular(verbo, 1, PRESENTE_T); print "^";
+    print "  tú "; SpanishConjugarIrregular(verbo, 2, PRESENTE_T); print "^";
+    print "  él/ella "; SpanishConjugarIrregular(verbo, 3, PRESENTE_T); print "^";
+    print "  nosotros "; SpanishConjugarIrregular(verbo, 4, PRESENTE_T); print "^";
+    print "  vosotros "; SpanishConjugarIrregular(verbo, 5, PRESENTE_T); print "^";
+    print "  ellos/ellas "; SpanishConjugarIrregular(verbo, 6, PRESENTE_T); print "^";
+    
+    print "^PRETÉRITO:^";
+    print "  yo "; SpanishConjugarIrregular(verbo, 1, PRETERITO_T); print "^";
+    print "  tú "; SpanishConjugarIrregular(verbo, 2, PRETERITO_T); print "^";
+    print "  él/ella "; SpanishConjugarIrregular(verbo, 3, PRETERITO_T); print "^";
+    print "  nosotros "; SpanishConjugarIrregular(verbo, 4, PRETERITO_T); print "^";
+    print "  vosotros "; SpanishConjugarIrregular(verbo, 5, PRETERITO_T); print "^";
+    print "  ellos/ellas "; SpanishConjugarIrregular(verbo, 6, PRETERITO_T); print "^";
+    
+    print "^IMPERFECTO:^";
+    print "  yo "; SpanishConjugarIrregular(verbo, 1, IMPERFECTO_T); print "^";
+    print "  tú "; SpanishConjugarIrregular(verbo, 2, IMPERFECTO_T); print "^";
+    print "  él/ella "; SpanishConjugarIrregular(verbo, 3, IMPERFECTO_T); print "^";
+    
+    print "^=== FIN DE CONJUGACIÓN ===^";
+];
 #Endif;
 
 ! ==============================================================================
@@ -1298,14 +1379,29 @@ Array spanish_irregular_verbs table
 
 [ SpanishIrregularVerbsInitialise;
     #Ifdef DEBUG;
-    print "[Verbos irregulares españoles cargados - 20 verbos implementados]^";
+    print "^[SpanishIrregularVerbs v", (string) SPANISH_IRREGULAR_VERBS_VERSION, " inicializado]^";
+    print "[✅ 20 verbos irregulares implementados completamente]^";
     print "[SER, ESTAR, TENER, HACER, IR, VENIR, VER, DAR, PODER, QUERER,]^";
     print "[SABER, DECIR, PONER, SALIR, TRAER, CAER, OÍR, DORMIR, MORIR, SENTIR]^";
+    print "[✅ Integración completa con sistema modular]^";
+    print "[✅ Detección automática de formas conjugadas]^";
     #Endif;
 ];
+
+! ==============================================================================
+! CONSTANTES DE FINALIZACIÓN
+! ==============================================================================
+
+Constant SPANISH_IRREGULAR_VERBS_COMPLETE;
+Constant SPANISH_IRREGULAR_VERBS_READY;
+Constant SPANISH_IRREGULAR_VERBS_COUNT = 20;
+
+! Información del módulo
+Constant SPANISH_IRREGULAR_FEATURES = "20 verbos completos, detección automática, integración modular";
 
 #Endif; ! SPANISH_IRREGULAR_VERBS_INCLUDED
 
 ! ==============================================================================
 ! Fin de SpanishIrregularVerbs.h - Sistema completo de verbos irregulares
+! Actualizado para integración completa con el sistema modular
 ! ==============================================================================
