@@ -251,7 +251,7 @@ Global spanish_corrections_made = 0;
     if (word == 'grande' or 'pequeño' or 'rojo' or 'azul' or 'verde' or 'amarillo') return true;
     if (word == 'bueno' or 'malo' or 'nuevo' or 'viejo' or 'joven' or 'alto' or 'bajo') return true;
     if (word == 'hermoso' or 'feo' or 'rápido' or 'lento' or 'fuerte' or 'débil') return true;
-    if (word == 'caliente' or 'frío' or 'húmedo' or 'seco' or 'suave' or 'duro') return true;
+    if (word == 'caliente' or 'fr\235o' or 'h\250medo' or 'seco' or 'suave' or 'duro') return true;
     if (word == 'claro' or 'oscuro' or 'brillante' or 'opaco' or 'limpio' or 'sucio') return true;
     return false;
 ];
@@ -273,7 +273,7 @@ Global spanish_corrections_made = 0;
     ! Lista extendida de preposiciones españolas
     if (word == 'a' or 'ante' or 'bajo' or 'con' or 'contra' or 'de' or 'desde' 
               or 'durante' or 'en' or 'entre' or 'hacia' or 'hasta' or 'mediante'
-              or 'para' or 'por' or 'según' or 'sin' or 'sobre' or 'tras') return true;
+              or 'para' or 'por' or 'seg\250n' or 'sin' or 'sobre' or 'tras') return true;
               
     ! Preposiciones compuestas
     if (word == 'debajo_de' or 'encima_de' or 'cerca_de' or 'lejos_de' 
@@ -287,16 +287,16 @@ Global spanish_corrections_made = 0;
 [ SpanishIsAdverb word;
     ! Adverbios comunes en español
     if (word == 'muy' or 'poco' or 'mucho' or 'bastante' or 'demasiado') return true;
-    if (word == 'siempre' or 'nunca' or 'jamás' or 'ya' or 'todavía' or 'aún') return true;
-    if (word == 'aquí' or 'ahí' or 'allí' or 'acá' or 'allá') return true;
-    if (word == 'bien' or 'mal' or 'mejor' or 'peor' or 'así' or 'también') return true;
-    if (word == 'sí' or 'no' or 'quizás' or 'tal_vez' or 'posiblemente') return true;
+    if (word == 'siempre' or 'nunca' or 'jamás' or 'ya' or 'todav\235a' or 'a\250n') return true;
+    if (word == 'aqu\235' or 'ah\235' or 'all\235' or 'acá' or 'allá') return true;
+    if (word == 'bien' or 'mal' or 'mejor' or 'peor' or 'as\235' or 'también') return true;
+    if (word == 's\235' or 'no' or 'quizás' or 'tal_vez' or 'posiblemente') return true;
     return false;
 ];
 
 [ SpanishIsPronoun word;
     ! Pronombres españoles
-    if (word == 'yo' or 'tú' or 'él' or 'ella' or 'nosotros' or 'vosotros' or 'ellos' or 'ellas') return true;
+    if (word == 'yo' or 't\250' or 'él' or 'ella' or 'nosotros' or 'vosotros' or 'ellos' or 'ellas') return true;
     if (word == 'me' or 'te' or 'se' or 'nos' or 'os' or 'le' or 'la' or 'lo' or 'les' or 'las' or 'los') return true;
     if (word == 'mi' or 'tu' or 'su' or 'nuestro' or 'vuestro') return true;
     if (word == 'este' or 'esta' or 'esto' or 'ese' or 'esa' or 'eso' or 'aquel' or 'aquella' or 'aquello') return true;
@@ -345,7 +345,7 @@ Global spanish_corrections_made = 0;
                 if (SpanishIsObjectCandidate(i)) count++;
             3: ! Preposiciones
                 if (SpanishIsPreposition(SpanishGetWordAt(i))) count++;
-            4: ! Artículos
+            4: ! Art\235culos
                 if (SpanishIsArticle(SpanishGetWordAt(i))) count++;
             5: ! Adjetivos
                 if (SpanishIsAdjective(SpanishGetWordAt(i))) count++;

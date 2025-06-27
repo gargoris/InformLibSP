@@ -10,6 +10,18 @@ System_file;
 Constant SPANISH_CONSTANTS_INCLUDED;
 Constant SPANISH_CONSTANTS_VERSION = "1.1-centralized-fixed";
 
+Zcharacter table
+    '@{00E1}' '@{00E9}' '@{00ED}' '@{00F3}' '@{00FA}'  ! á é í ó ú (minúsculas con acento)
+    '@{00C1}' '@{00C9}' '@{00CD}' '@{00D3}' '@{00DA}'  ! Á É Í Ó Ú (mayúsculas con acento)
+    '@{00F1}' '@{00D1}'                                ! ñ Ñ
+    '@{00FC}' '@{00DC}'                                ! ü Ü
+    '@{00A1}' '@{00BF}'                                ! ¡ ¿
+    '@{00C3}'
+    '@{00A9}'                                          ! © (símbolo de copyright)
+    '@{00B1}' '@{00B3}'                                ! ± ³ (otros símbolos)
+    '@{00E2}' '@{00A2}' '@{00BA}'                                       
+;
+
 ! ==============================================================================
 ! CONSTANTES DE TIEMPOS VERBALES
 ! ==============================================================================
