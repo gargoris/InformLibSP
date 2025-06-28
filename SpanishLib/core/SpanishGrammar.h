@@ -189,6 +189,7 @@ Constant SPANISH_GRAMMAR_VERSION = "1.2-complete-fixed";
 ! CONTRACCIONES Y COMBINACIONES
 ! ==============================================================================
 
+#Ifndef LanguageContraction;
 [ LanguageContraction prep article;
     ! Manejo automatico de contracciones espanolas
     if (prep == 'de' && article == 'el') {
@@ -201,6 +202,7 @@ Constant SPANISH_GRAMMAR_VERSION = "1.2-complete-fixed";
     }
     return false;
 ];
+#Endif;
 
 [ ImprimirPreposicionArticulo prep obj;
     ! Imprime preposicion + articulo con contracciones automaticas
@@ -220,10 +222,9 @@ Constant SPANISH_GRAMMAR_VERSION = "1.2-complete-fixed";
 ! CONCORDANCIA DE ADJETIVOS
 ! ==============================================================================
 
-[ ConcordarAdjetivo adj obj tipo;
+[ ConcordarAdjetivo adj obj tipo   adj_str len last_char;
     ! [OK] CORREGIDO: Funcion completa de concordancia de adjetivos
     ! tipo: 0 = normal, 1 = invariable en genero, 2 = invariable total
-    local adj_str len last_char;
     
     if (tipo == 2) {
         print (address) adj;
@@ -363,12 +364,20 @@ Constant SPANISH_GRAMMAR_VERSION = "1.2-complete-fixed";
     rtrue;
 ];
 
+#Ifndef A;
 [ A obj; return LanguageA(obj); ];
+#Endif;
+#Ifndef The;
 [ The obj; return LanguageThe(obj); ];
+#Endif;
 
 ! Compatibilidad con sintaxis estandar
+#Ifndef a;
 [ a obj; return LanguageA(obj); ];
+#Endif;
+#Ifndef the;
 [ the obj; return LanguageThe(obj); ];
+#Endif;
 
 ! ==============================================================================
 ! UTILIDADES DE IMPRESION CON CONCORDANCIA
@@ -385,12 +394,14 @@ Constant SPANISH_GRAMMAR_VERSION = "1.2-complete-fixed";
     else print "esta";
 ];
 
+#Ifndef LanguageAnimateGender;
 [ LanguageAnimateGender person;
     ! Funcion para determinar genero de personas
     if (person has female) return FEMININE;
     if (person has male) return MASCULINE;
     return MASCULINE; ! Por defecto masculino
 ];
+#Endif;
 
 [ LanguageGenderNumber obj;
     ! Funcion que devuelve codigo de genero y numero
@@ -437,6 +448,7 @@ Constant SPANISH_GRAMMAR_VERSION = "1.2-complete-fixed";
     print n;
 ];
 
+#Ifndef LanguageNumber;
 [ LanguageNumber n obj;
     ! Funcion estandar para numeros con concordancia
     if (n == 1) {

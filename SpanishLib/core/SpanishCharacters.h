@@ -112,6 +112,9 @@ Constant SPANISH_BULLET = "-";            ! En lugar de -
     return false;
 ];
 
+! Variable global para controlar normalizacion - debe declararse antes de uso
+Global spanish_normalize_input = true;  ! Por defecto, normalizar
+
 ! ==============================================================================
 ! INTEGRACION CON EL PARSER
 ! ==============================================================================
@@ -125,9 +128,6 @@ Constant SPANISH_BULLET = "-";            ! En lugar de -
     
     return len;
 ];
-
-! Variable global para controlar normalizacion
-Global spanish_normalize_input = true;  ! Por defecto, normalizar
 
 ! ==============================================================================
 ! FUNCIONES DE CONFIGURACION

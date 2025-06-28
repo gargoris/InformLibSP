@@ -319,10 +319,9 @@ Constant SPANISH_CORE_VERSION = "1.2-coordinator-fixed";
     return true;
 ];
 
-[ SpanishValidateSystem;
+[ SpanishValidateSystem   errors;
     ! [OK] CORREGIDO: Funcion completa de validacion del sistema
     ! Verificar integridad del sistema
-    local errors;
     errors = 0;
     
     #Ifdef DEBUG;
@@ -457,8 +456,7 @@ Constant SPANISH_COORDINATOR_READY;
 Constant SPANISH_CORE_FEATURES = "Coordinacion, inicializacion, fallback, validacion";
 Constant SPANISH_CORE_FUNCTIONS = 10; ! Numero de funciones publicas
 
-! Marcar completitud del modulo
-Constant SPANISH_CORE_COMPLETE;
+! Marcar completitud del modulo (ya definido en linea 452)
 
 #Endif; ! SPANISH_CORE_INCLUDED
 

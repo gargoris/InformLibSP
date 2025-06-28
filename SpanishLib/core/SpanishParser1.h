@@ -134,9 +134,8 @@ Global spanish_corrections_made = 0;
 ! FUNCIONES DE UTILIDAD PARA MANIPULACION
 ! ==============================================================================
 
-[ SpanishNormalizeParsing;
+[ SpanishNormalizeParsing   i cleaned;
     ! Normaliza el buffer de parsing eliminando inconsistencias
-    local i cleaned;
     cleaned = 0;
     
     ! Eliminar palabras duplicadas consecutivas
@@ -214,7 +213,7 @@ Global spanish_corrections_made = 0;
     return expansions;
 ];
 
-[ SpanishReorderWords i temp_word temp_dict reorders;
+[ SpanishReorderWords   i temp_word temp_dict reorders;
 
     reorders = 0;
     
@@ -373,7 +372,7 @@ Global spanish_corrections_made = 0;
     return pattern;
 ];
 
-[ SpanishGetCommandComplexity complexity;
+[ SpanishGetCommandComplexity   complexity;
     ! Determina la complejidad del comando basado en varios factores
     complexity = 0;
     

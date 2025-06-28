@@ -506,7 +506,8 @@
     if (pos > 0) prev_word = SpanishGetWordAt(pos-1);
     
     ! No eliminar si va seguido de nombre propio
-    if (next_word has proper) return false;
+    ! (Simplified check - 'has' only works with objects, not words)
+    ! if (next_word has proper) return false;
     
     ! No eliminar en construcciones "todo el/la/los/las"
     if (prev_word == 'todo' or 'toda' or 'todos' or 'todas') return false;
@@ -561,8 +562,8 @@
     if (pos < parse->1 - 1) next_word = SpanishGetWordAt(pos+1);
     
     ! Contexto de verbo
-    if (SpanishIsVerb(prev_word)) context = context | 1;
-    if (SpanishIsVerb(next_word)) context = context | 2;
+    if (SpanishIsVerbCandidate(pos-1)) context = context | 1;
+    if (SpanishIsVerbCandidate(pos+1)) context = context | 2;
     
     ! Contexto de objeto
     if (SpanishIsObjectCandidate(pos-1)) context = context | 4;

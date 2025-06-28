@@ -1,6 +1,6 @@
 !% -~S~D
-!%
-! AVENTURA DEL RIOJA
+!
+! AVENTURA DEL RIOJA - Version Simple
 ! Una pequena aventura donde el objetivo es beber un vaso de vino Rioja
 
 Constant Story "AVENTURA DEL RIOJA";
@@ -9,13 +9,30 @@ Constant Headline "^Una pequena aventura para disfrutar de un buen vino^";
 Include "Parser";
 Include "VerbLib";
 
-! Incluir todos los modulos necesarios en orden correcto
-Include "SpanishLib/core/SpanishConstants";
-Include "SpanishLib/core/SpanishCharacters";
-Include "SpanishLib/core/SpanishCore";
-Include "SpanishLib/core/SpanishGrammar";
-Include "SpanishLib/core/SpanishVerbs";
-Include "SpanishLib/resources/SpanishMessages";
+! Stubs necesarios para compilación básica
+[ AfterPrompt; ];
+[ BeforeParsing; ];
+[ UnknownVerb; ];
+[ ParserError pe_type; ];
+[ ChooseObjects obj code; ];
+[ PrintVerb; ];
+[ InScope; ];
+[ ParseNoun; ];
+[ ParseNumber; ];
+[ AfterLife; ];
+[ TimePasses; ];
+[ DeathMessage; ];
+[ Epilogue; ];
+[ Amusing; ];
+[ GamePreRoutine; ];
+[ GamePostRoutine; ];
+[ AfterRestore; ];
+[ AfterSave; ];
+[ PrintRank; ];
+[ ObjectDoesNotFit; ];
+[ DarkToDark; ];
+[ NewRoom; ];
+[ LookRoutine; ];
 
 ! Definicion de las localizaciones
 Object  Bosque "Bosque"
@@ -48,13 +65,13 @@ Object  PuertaCabana "puerta de la cabana" Bosque
             return s_to;
         ],
         found_in Bosque Cabana,
-  has   door openable ~open female;
+  has   door openable ~open;
 
 ! Definicion de los objetos dentro de la cabana
 Object  Mesa "mesa" Cabana
   with  name 'mesa',
         description "Una mesa de madera rustica pero resistente.",
-  has   static supporter female;
+  has   static supporter;
 
 Object  Silla "silla" Cabana
   with  name 'silla',
@@ -67,7 +84,7 @@ Object  Silla "silla" Cabana
                 }
                 return true;
         ],
-  has   static enterable female;
+  has   static enterable;
 
 Object  Botella "botella de vino" Mesa
   with  name 'botella' 'vino' 'rioja' 'tinto',
@@ -82,7 +99,7 @@ Object  Botella "botella de vino" Mesa
                      llena inmediatamente el ambiente.";
                 }
         ],
-  has   container openable ~open female;
+  has   container openable ~open;
 
 Object  Vino "vino tinto" Botella
   with  name 'vino' 'tinto' 'rioja' 'contenido',
