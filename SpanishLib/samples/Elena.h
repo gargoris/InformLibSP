@@ -1,55 +1,55 @@
 ! ==============================================================================
-! ELENA.H - NPC Romántico Complejo para demostrar sistema Spanish NPCs
-! Ejemplo de implementación avanzada con seducción, personalidad compleja
-! y evolución cultural realista
+! ELENA.H - NPC Romantico Complejo para demostrar sistema Spanish NPCs
+! Ejemplo de implementacion avanzada con seduccion, personalidad compleja
+! y evolucion cultural realista
 ! ==============================================================================
 
 ! ==============================================================================
-! ELENA VÁZQUEZ - ARTISTA ESPAÑOLA COMPLEJA
+! ELENA VAZQUEZ - ARTISTA ESPANOLA COMPLEJA
 ! ==============================================================================
 
-SpanishNPC elena "Elena Vázquez" galeria
+SpanishNPC elena "Elena Vazquez" galeria
     with 
-        ! Información básica
-        name 'elena' 'vázquez' 'vazquez' 'artista' 'pintora' 'mujer',
+        ! Informacion basica
+        name 'elena' 'vazquez' 'vazquez' 'artista' 'pintora' 'mujer',
         description [; ElenaNPC_Description(); ],
         
-        ! Características lingüísticas específicas
+        ! Caracteristicas linguisticas especificas
         formality_level NPC_FORMAL,           ! Empieza formal
         personality_type PERSONALIDAD_INTELECTUAL,
         regional_variant REGION_ESPANA,
         
-        ! Configuración social específica
+        ! Configuracion social especifica
         social_class 3,                       ! Clase media-alta
-        educational_level 4,                  ! Universidad + estudios artísticos
-        age_category 2,                       ! Adulta (28 años)
+        educational_level 4,                  ! Universidad + estudios artisticos
+        age_category 2,                       ! Adulta (28 anos)
         
-        ! Estado inicial de relación
+        ! Estado inicial de relacion
         relationship_level RELACION_DESCONOCIDO,
         emotional_state EMOCION_NEUTRAL,
         
-        ! Características especiales para romance
+        ! Caracteristicas especiales para romance
         trust_level 0,                        ! 0-100: confianza ganada
         artistic_appreciation 0,              ! 0-50: si el jugador aprecia arte
-        intellectual_connection 0,            ! 0-50: conexión intelectual
+        intellectual_connection 0,            ! 0-50: conexion intelectual
         cultural_sensitivity 0,               ! 0-30: sensibilidad cultural
         personal_revelation_level 0,          ! 0-20: secretos compartidos
         
-        ! Flags de estado romántico
+        ! Flags de estado romantico
         romance_available false,              ! Se activa con requisitos
-        has_shared_past false,               ! Revelará algo personal
+        has_shared_past false,               ! Revelara algo personal
         is_vulnerable false,                 ! Estado emocional especial
         player_impressed_her false,          ! Logros que la impresionaron
         
-        ! Obstáculos románticos
+        ! Obstaculos romanticos
         has_artistic_block true,             ! Problema creativo actual
-        worried_about_exhibition false,      ! Preocupación profesional
-        skeptical_of_relationships true,     ! Desconfianza romántica inicial
+        worried_about_exhibition false,      ! Preocupacion profesional
+        skeptical_of_relationships true,     ! Desconfianza romantica inicial
         
         ! Contadores especiales
         deep_conversations 0,                ! Conversaciones profundas
-        times_helped 0,                      ! Veces que el jugador la ayudó
-        artistic_topics_discussed 0,        ! Temas artísticos conversados
+        times_helped 0,                      ! Veces que el jugador la ayudo
+        artistic_topics_discussed 0,        ! Temas artisticos conversados
         personal_space_violations 0,        ! Intentos prematuros de intimidad
         
         ! Rutinas personalizadas
@@ -58,7 +58,7 @@ SpanishNPC elena "Elena Vázquez" galeria
         special_response ElenaNPC_SpecialResponse,
         check_romance_progress ElenaNPC_CheckRomanceProgress,
         
-        ! Métodos de interacción específicos
+        ! Metodos de interaccion especificos
         discuss_art ElenaNPC_DiscussArt,
         share_vulnerability ElenaNPC_ShareVulnerability,
         respond_to_compliment ElenaNPC_RespondToCompliment,
@@ -67,49 +67,49 @@ SpanishNPC elena "Elena Vázquez" galeria
     has female animate proper;
 
 ! ==============================================================================
-! DESCRIPCIÓN DINÁMICA QUE EVOLUCIONA CON LA RELACIÓN
+! DESCRIPCION DINAMICA QUE EVOLUCIONA CON LA RELACION
 ! ==============================================================================
 
 [ ElenaNPC_Description;
     local relationship = elena.relationship_level;
     local trust = elena.trust_level;
     
-    print "Elena es una mujer de veintiocho años con una presencia que ";
+    print "Elena es una mujer de veintiocho anos con una presencia que ";
     print "inmediatamente sugiere refinamiento intelectual. ";
     
     if (relationship <= RELACION_CONOCIDO) {
-        print "Tiene el cabello castaño recogido en un moño algo ";
-        print "descuidado, como si estuviera más preocupada por sus ";
+        print "Tiene el cabello castano recogido en un mono algo ";
+        print "descuidado, como si estuviera mas preocupada por sus ";
         print "pensamientos que por su apariencia. Sus ojos verdes ";
         print "observan con una mezcla de curiosidad e intensidad ";
-        print "analítica. ";
+        print "analitica. ";
     } else {
-        print "Su cabello castaño enmarca un rostro expresivo que ";
+        print "Su cabello castano enmarca un rostro expresivo que ";
         print "has llegado a conocer bien. Cuando te mira, sus ojos ";
         print "verdes reflejan una calidez que no mostaba inicialmente. ";
     }
     
-    print "Lleva ropa que combina practicidad artística con ";
+    print "Lleva ropa que combina practicidad artistica con ";
     print "elegancia sin esfuerzo: una blusa de lino blanco ";
     print "manchada discretamente de pintura y pantalones ";
     print "negros bien cortados.";
     
     if (relationship >= RELACION_AMIGABLE) {
         print " Notas que sus manos, delgadas y expresivas, ";
-        print "están perpetuamente manchadas de pintura, un detalle ";
+        print "estan perpetuamente manchadas de pintura, un detalle ";
         print "que ahora encuentras encantador.";
     }
     
     if (trust > 50) {
         print "^^Hay momentos en que la has visto vulnerable, cuando ";
-        print "su máscara de autocontrol se desliza ligeramente, ";
+        print "su mascara de autocontrol se desliza ligeramente, ";
         print "revelando las dudas y pasiones que se ocultan bajo ";
         print "su exterior sereno.";
     }
     
     if (elena.is_vulnerable) {
         print "^^En este momento parece especialmente pensativa, ";
-        print "casi melancólica, como si estuviera luchando con ";
+        print "casi melancolica, como si estuviera luchando con ";
         print "algo profundamente personal.";
     }
 ];
@@ -122,46 +122,46 @@ SpanishNPC elena "Elena Vázquez" galeria
     local relationship = elena.relationship_level;
     local formality_changed;
     
-    ! Actualizar formalidad dinámicamente
+    ! Actualizar formalidad dinamicamente
     formality_changed = SpanishNPC_UpdateFormality(elena, FormalityLevel, context);
     
     elena.conversation_count++;
     
     print "^";
     
-    ! Diferentes saludos según progresión de relación
+    ! Diferentes saludos segun progresion de relacion
     switch (relationship) {
         RELACION_DESCONOCIDO:
-            print "Elena levanta la vista de su lienzo con expresión ";
+            print "Elena levanta la vista de su lienzo con expresion ";
             print "ligeramente sorprendida. Sus modales son corteses ";
             print "pero reservados.^";
-            print "^~Buenos días. ¿En qué puedo ayudarle?~ dice con ";
+            print "^~Buenos dias. ?En que puedo ayudarle?~ dice con ";
             print "formalidad educada, manteniendo cierta distancia.";
             
         RELACION_CONOCIDO:
             if (formality_changed) {
-                print "Elena te sonríe con más naturalidad que antes.^";
-                print "^~¡Hola! Me alegra verte de nuevo~ dice, y notas ";
-                print "que ya no usa el 'usted'. ~¿Cómo has estado?~";
+                print "Elena te sonrie con mas naturalidad que antes.^";
+                print "^~!Hola! Me alegra verte de nuevo~ dice, y notas ";
+                print "que ya no usa el 'usted'. ~?Como has estado?~";
             } else {
                 print "Elena deja su pincel y te saluda con una sonrisa ";
                 print "genuina.^";
-                print "^~¡Hola! Qué bueno verte~ dice cálidamente.";
+                print "^~!Hola! Que bueno verte~ dice calidamente.";
             }
             
         RELACION_AMIGABLE:
             print "Los ojos de Elena se iluminan cuando te ve entrar.^";
-            print "^~¡"; 
+            print "^~!"; 
             print (name) player;
             print "! Precisamente estaba pensando en ti~ dice, ";
-            print "acercándose con pasos ligeros. ~Tengo que contarte ";
+            print "acercandose con pasos ligeros. ~Tengo que contarte ";
             print "algo sobre lo que hemos estado hablando.~";
             
         RELACION_AMIGO:
-            print "Elena deja inmediatamente lo que está haciendo ";
-            print "cuando te ve, su rostro iluminándose con alegría ";
-            print "auténtica.^";
-            print "^~¡Por fin! He estado esperando que vinieras~ ";
+            print "Elena deja inmediatamente lo que esta haciendo ";
+            print "cuando te ve, su rostro iluminandose con alegria ";
+            print "autentica.^";
+            print "^~!Por fin! He estado esperando que vinieras~ ";
             print "dice, casi corriendo hacia ti. ~Tengo tantas ";
             print "cosas que quiero compartir contigo.~";
             
@@ -169,15 +169,15 @@ SpanishNPC elena "Elena Vázquez" galeria
             if (elena.romance_available) {
                 print "Elena se acerca a ti con una sonrisa que reserva ";
                 print "solo para los momentos especiales entre ustedes.^";
-                print "^~Hola, cariño~ dice suavemente, sus ojos ";
+                print "^~Hola, carino~ dice suavemente, sus ojos ";
                 print "buscando los tuyos con una intimidad que ";
-                print "envía una corriente cálida por tu pecho.";
+                print "envia una corriente calida por tu pecho.";
             }
     }
     
     print "^";
     
-    ! Actualizar confianza ligeramente por interacción positiva
+    ! Actualizar confianza ligeramente por interaccion positiva
     ElenaNPC_AdjustTrust(2);
 ];
 
@@ -191,7 +191,7 @@ SpanishNPC elena "Elena Vázquez" galeria
     ! Establecer estado emocional
     elena.emotional_state = emotional_context;
     
-    ! Respuestas específicas por temas
+    ! Respuestas especificas por temas
     switch (topic) {
         'arte', 'pintura', 'artista', 'creatividad':
             response_given = ElenaNPC_DiscussArt(emotional_context);
@@ -199,20 +199,20 @@ SpanishNPC elena "Elena Vázquez" galeria
         'personal', 'vida', 'familia', 'pasado':
             response_given = ElenaNPC_ShareVulnerability(emotional_context);
             
-        'trabajo', 'exposición', 'galería', 'carrera':
+        'trabajo', 'exposicion', 'galeria', 'carrera':
             response_given = ElenaNPC_DiscussProfessionalLife(emotional_context);
             
-        'amor', 'relación', 'sentimientos', 'romance':
+        'amor', 'relacion', 'sentimientos', 'romance':
             response_given = ElenaNPC_DiscussRomance(emotional_context);
             
-        'España', 'cultura', 'Madrid', 'tradición':
+        'Espana', 'cultura', 'Madrid', 'tradicion':
             response_given = ElenaNPC_DiscussCulture(emotional_context);
             
         default:
             response_given = ElenaNPC_GeneralResponse(topic, emotional_context);
     }
     
-    ! Actualizar contadores según el tipo de conversación
+    ! Actualizar contadores segun el tipo de conversacion
     if (response_given) {
         if (topic == 'arte' or 'pintura' or 'creatividad') {
             elena.artistic_topics_discussed++;
@@ -228,7 +228,7 @@ SpanishNPC elena "Elena Vázquez" galeria
 ];
 
 ! ==============================================================================
-! CONVERSACIÓN ARTÍSTICA - CLAVE PARA CONECTAR CON ELENA
+! CONVERSACION ARTISTICA - CLAVE PARA CONECTAR CON ELENA
 ! ==============================================================================
 
 [ ElenaNPC_DiscussArt emotional_context;
@@ -239,37 +239,37 @@ SpanishNPC elena "Elena Vázquez" galeria
     
     if (elena.has_artistic_block) {
         if (relationship <= RELACION_CONOCIDO) {
-            print "^~El arte... sí, es toda mi vida~ dice, pero ";
-            print "detectas una sombra que cruza por su expresión. ";
-            print "~Aunque debo admitir que últimamente he estado ";
-            print "pasando por un período... complicado. A veces ";
-            print "la inspiración se esconde cuando más la necesitas.~";
+            print "^~El arte... si, es toda mi vida~ dice, pero ";
+            print "detectas una sombra que cruza por su expresion. ";
+            print "~Aunque debo admitir que ultimamente he estado ";
+            print "pasando por un periodo... complicado. A veces ";
+            print "la inspiracion se esconde cuando mas la necesitas.~";
             
         } else if (relationship >= RELACION_AMIGABLE) {
-            print "^~¿Sabes qué?~ dice, bajando la voz como si ";
+            print "^~?Sabes que?~ dice, bajando la voz como si ";
             print "compartiera un secreto. ~He estado luchando con ";
             print "un bloqueo creativo terrible. Es como si todas ";
             print "mis ideas se hubieran evaporado de repente.~ ";
-            print "Sus ojos buscan los tuyos. ~¿Te ha pasado algo ";
-            print "así? ¿Esa sensación de estar perdido en algo ";
-            print "que antes te definía?~";
+            print "Sus ojos buscan los tuyos. ~?Te ha pasado algo ";
+            print "asi? ?Esa sensacion de estar perdido en algo ";
+            print "que antes te definia?~";
             
             elena.has_shared_past = true;
             ElenaNPC_AdjustTrust(8);
         }
     } else {
         if (appreciation < 20) {
-            print "^~Para mí, el arte no es solo una profesión~ ";
+            print "^~Para mi, el arte no es solo una profesion~ ";
             print "explica Elena, gesticulando graciosamente. ";
             print "~Es una forma de descifrar el mundo, de encontrar ";
             print "belleza en lugares inesperados. Cada pincelada ";
-            print "es una conversación entre el alma y el lienzo.~";
+            print "es una conversacion entre el alma y el lienzo.~";
             
         } else {
             print "^~Me encanta que aprecies el arte~ dice Elena ";
-            print "con una sonrisa genuina. ~La mayoría de la gente ";
-            print "mira una pintura y ve solo colores. Pero tú... ";
-            print "tú realmente lo entiendes, ¿verdad? Ves las ";
+            print "con una sonrisa genuina. ~La mayoria de la gente ";
+            print "mira una pintura y ve solo colores. Pero tu... ";
+            print "tu realmente lo entiendes, ?verdad? Ves las ";
             print "emociones, las historias no contadas.~";
             
             ElenaNPC_AdjustIntellectualConnection(7);
@@ -278,13 +278,13 @@ SpanishNPC elena "Elena Vázquez" galeria
     
     ! Oportunidad para que el jugador responda
     print "^^[Puedes AYUDAR a Elena con su bloqueo, PREGUNTAR sobre ";
-    print "su técnica, o COMPARTIR tu propia perspectiva artística]";
+    print "su tecnica, o COMPARTIR tu propia perspectiva artistica]";
     
     return true;
 ];
 
 ! ==============================================================================
-! VULNERABILIDAD Y CONEXIÓN EMOCIONAL
+! VULNERABILIDAD Y CONEXION EMOCIONAL
 ! ==============================================================================
 
 [ ElenaNPC_ShareVulnerability emotional_context;
@@ -292,7 +292,7 @@ SpanishNPC elena "Elena Vázquez" galeria
     local relationship = elena.relationship_level;
     
     if (trust < 30) {
-        print "^Elena sonríe educadamente pero mantiene cierta ";
+        print "^Elena sonrie educadamente pero mantiene cierta ";
         print "distancia.^";
         print "^~Prefiero no hablar mucho de mi vida personal ";
         print "con... bueno, con gente que acabo de conocer. ";
@@ -305,32 +305,32 @@ SpanishNPC elena "Elena Vázquez" galeria
     if (trust >= 30 && trust < 60) {
         print "^Elena te mira pensativamente, como evaluando ";
         print "si puede confiar en ti.^";
-        print "^~¿Sabes? Vengo de una familia muy tradicional de ";
-        print "Santander. Mi padre quería que fuera abogada, como ";
-        print "él. Cuando les dije que quería ser artista...~ ";
-        print "suspira. ~Digamos que no fue la conversación más ";
-        print "fácil de mi vida. Todavía creen que es una 'fase'.~";
+        print "^~?Sabes? Vengo de una familia muy tradicional de ";
+        print "Santander. Mi padre queria que fuera abogada, como ";
+        print "el. Cuando les dije que queria ser artista...~ ";
+        print "suspira. ~Digamos que no fue la conversacion mas ";
+        print "facil de mi vida. Todavia creen que es una 'fase'.~";
         
         elena.personal_revelation_level = elena.personal_revelation_level + 5;
         ElenaNPC_AdjustTrust(10);
         
     } else if (trust >= 60) {
         if (~~elena.is_vulnerable) {
-            print "^Elena mira hacia la ventana, su expresión ";
-            print "volviéndose melancólica.^";
-            print "^~¿Puedo confesarte algo?~ dice suavemente. ";
+            print "^Elena mira hacia la ventana, su expresion ";
+            print "volviendose melancolica.^";
+            print "^~?Puedo confesarte algo?~ dice suavemente. ";
             print "~A veces me siento como si estuviera viviendo ";
             print "dos vidas. La Elena que todos ven: exitosa, ";
-            print "segura de sí misma, con todo bajo control... ";
+            print "segura de si misma, con todo bajo control... ";
             print "y la Elena real, que se despierta a las tres ";
-            print "de la madrugada preguntándose si realmente ";
+            print "de la madrugada preguntandose si realmente ";
             print "vale la pena todo este esfuerzo.~";
             
             elena.is_vulnerable = true;
             elena.personal_revelation_level = elena.personal_revelation_level + 10;
             ElenaNPC_AdjustTrust(15);
             
-            print "^^[Elena está siendo muy vulnerable contigo. ";
+            print "^^[Elena esta siendo muy vulnerable contigo. ";
             print "Puedes CONSOLAR, COMPARTIR tu propia vulnerabilidad, ";
             print "o ESCUCHAR en silencio]";
         }
@@ -340,7 +340,7 @@ SpanishNPC elena "Elena Vázquez" galeria
 ];
 
 ! ==============================================================================
-! SISTEMA DE ROMANCE Y SEDUCCIÓN PROGRESIVA
+! SISTEMA DE ROMANCE Y SEDUCCION PROGRESIVA
 ! ==============================================================================
 
 [ ElenaNPC_CheckRomanceProgress;
@@ -350,7 +350,7 @@ SpanishNPC elena "Elena Vázquez" galeria
     local cultural = elena.cultural_sensitivity;
     local violations = elena.personal_space_violations;
     
-    ! Requisitos para activar posibilidad romántica
+    ! Requisitos para activar posibilidad romantica
     if (trust >= 50 && 
         artistic >= 25 && 
         intellectual >= 20 && 
@@ -361,7 +361,7 @@ SpanishNPC elena "Elena Vázquez" galeria
             elena.romance_available = true;
             elena.skeptical_of_relationships = false;
             
-            print "^[Sientes que tu relación con Elena ha alcanzado ";
+            print "^[Sientes que tu relacion con Elena ha alcanzado ";
             print "un punto especial. Hay una nueva calidez en sus ";
             print "miradas, una intimidad creciente en vuestras ";
             print "conversaciones.]";
@@ -379,9 +379,9 @@ SpanishNPC elena "Elena Vázquez" galeria
     local violations = elena.personal_space_violations;
     
     switch (type) {
-        1: ! Cumplido físico
+        1: ! Cumplido fisico
             if (relationship < RELACION_AMIGABLE) {
-                print "^Elena se sonroja ligeramente y desvía la mirada.^";
+                print "^Elena se sonroja ligeramente y desvia la mirada.^";
                 print "^~Eh... gracias, supongo~ dice con cierta ";
                 print "incomodidad. Es evidente que el cumplido la ";
                 print "ha tomado por sorpresa.";
@@ -390,16 +390,16 @@ SpanishNPC elena "Elena Vázquez" galeria
                 ElenaNPC_AdjustTrust(-5);
                 
             } else if (elena.romance_available) {
-                print "^Elena sonríe con calidez, aceptando el cumplido ";
+                print "^Elena sonrie con calidez, aceptando el cumplido ";
                 print "con gracia.^";
                 print "^~Eres muy amable~ dice, y hay algo nuevo en ";
-                print "su mirada, una apreciación que va más allá de ";
-                print "la simple cortesía.";
+                print "su mirada, una apreciacion que va mas alla de ";
+                print "la simple cortesia.";
                 
                 ElenaNPC_AdjustTrust(3);
             }
             
-        2: ! Cumplido intelectual/artístico
+        2: ! Cumplido intelectual/artistico
             print "^Los ojos de Elena se iluminan con placer genuino.^";
             print "^~Eso significa mucho viniendo de ti~ dice con ";
             print "sinceridad. ~No muchas personas entienden realmente ";
@@ -412,7 +412,7 @@ SpanishNPC elena "Elena Vázquez" galeria
             if (trust >= 40) {
                 print "^Elena te mira con una mezcla de sorpresa y ";
                 print "gratitud.^";
-                print "^~¿De verdad piensas eso?~ pregunta suavemente. ";
+                print "^~?De verdad piensas eso?~ pregunta suavemente. ";
                 print "~A veces siento que soy demasiado... intensa. ";
                 print "Que pienso demasiado las cosas.~";
                 
@@ -428,32 +428,32 @@ SpanishNPC elena "Elena Vázquez" galeria
     elena.times_helped++;
     
     switch (help_type) {
-        1: ! Ayuda con bloqueo artístico
+        1: ! Ayuda con bloqueo artistico
             if (elena.has_artistic_block) {
                 print "^Elena te mira con asombro creciente.^";
-                print "^~No puedo creer que... ¡sí! ¡Eso es exactamente ";
+                print "^~No puedo creer que... !si! !Eso es exactamente ";
                 print "lo que necesitaba escuchar!~ exclama, su rostro ";
-                print "transformándose con nueva inspiración. ~Llevas ";
-                print "razón. He estado tan obsesionada con ser perfecta ";
-                print "que olvidé por qué empecé a pintar en primer lugar.~";
+                print "transformandose con nueva inspiracion. ~Llevas ";
+                print "razon. He estado tan obsesionada con ser perfecta ";
+                print "que olvide por que empece a pintar en primer lugar.~";
                 
                 elena.has_artistic_block = false;
                 elena.player_impressed_her = true;
                 ElenaNPC_AdjustTrust(15);
                 ElenaNPC_AdjustIntellectualConnection(10);
                 
-                print "^^Te abraza espontáneamente, y por un momento ";
+                print "^^Te abraza espontaneamente, y por un momento ";
                 print "sientes la calidez de su gratitud genuina.";
                 
             }
             
         2: ! Ayuda emocional
             if (elena.is_vulnerable) {
-                print "^Elena toma una respiración profunda, sus ojos ";
+                print "^Elena toma una respiracion profunda, sus ojos ";
                 print "brillando ligeramente.^";
                 print "^~Gracias~ dice simplemente, pero hay una ";
                 print "profundidad en esas palabras que resuena entre ";
-                print "ustedes. ~No muchas personas saben cómo... ";
+                print "ustedes. ~No muchas personas saben como... ";
                 print "simplemente estar presente cuando alguien lo ";
                 print "necesita.~";
                 
@@ -467,7 +467,7 @@ SpanishNPC elena "Elena Vázquez" galeria
 ];
 
 ! ==============================================================================
-! GESTIÓN DE CONFIANZA Y MÉTRICAS ROMÁNTICAS
+! GESTION DE CONFIANZA Y METRICAS ROMANTICAS
 ! ==============================================================================
 
 [ ElenaNPC_AdjustTrust amount;
@@ -475,7 +475,7 @@ SpanishNPC elena "Elena Vázquez" galeria
     if (elena.trust_level < 0) elena.trust_level = 0;
     if (elena.trust_level > 100) elena.trust_level = 100;
     
-    ! Actualizaciones automáticas de relación basadas en confianza
+    ! Actualizaciones automaticas de relacion basadas en confianza
     if (elena.trust_level >= 80 && elena.relationship_level < RELACION_INTIMO) {
         SpanishNPC_UpdateRelationship(elena, 2);
     } else if (elena.trust_level >= 50 && elena.relationship_level < RELACION_AMIGO) {
@@ -496,25 +496,25 @@ SpanishNPC elena "Elena Vázquez" galeria
 ];
 
 ! ==============================================================================
-! RESPUESTAS ESPECÍFICAS POR TEMAS
+! RESPUESTAS ESPECIFICAS POR TEMAS
 ! ==============================================================================
 
 [ ElenaNPC_DiscussProfessionalLife emotional_context;
     if (elena.worried_about_exhibition) {
-        print "^Elena suspira, mostrando una vulnerabilidad poco común.^";
-        print "^~Tengo una exposición importante el próximo mes~ ";
-        print "confiesa. ~Es en una galería muy prestigiosa, y... ";
-        print "bueno, podría cambiar toda mi carrera. Pero también ";
-        print "podría ser un desastre total.~ Se ríe nerviosamente. ";
-        print "~No ayuda que esté pasando por este bloqueo creativo.~";
+        print "^Elena suspira, mostrando una vulnerabilidad poco comun.^";
+        print "^~Tengo una exposicion importante el proximo mes~ ";
+        print "confiesa. ~Es en una galeria muy prestigiosa, y... ";
+        print "bueno, podria cambiar toda mi carrera. Pero tambien ";
+        print "podria ser un desastre total.~ Se rie nerviosamente. ";
+        print "~No ayuda que este pasando por este bloqueo creativo.~";
         
         ElenaNPC_AdjustTrust(6);
     } else {
         print "^~Mi carrera ha sido un viaje interesante~ dice Elena ";
-        print "reflexivamente. ~Cuando empecé, pensaba que el éxito ";
-        print "sería solo cuestión de talento. Pero he aprendido que ";
-        print "es igual de importante saber quién eres como artista ";
-        print "y qué quieres decir al mundo.~";
+        print "reflexivamente. ~Cuando empece, pensaba que el exito ";
+        print "seria solo cuestion de talento. Pero he aprendido que ";
+        print "es igual de importante saber quien eres como artista ";
+        print "y que quieres decir al mundo.~";
     }
     
     return true;
@@ -524,9 +524,9 @@ SpanishNPC elena "Elena Vázquez" galeria
     local relationship = elena.relationship_level;
     
     if (elena.skeptical_of_relationships) {
-        print "^Elena se pone visiblemente incómoda.^";
+        print "^Elena se pone visiblemente incomoda.^";
         print "^~Honestly... he tenido algunas experiencias que me ";
-        print "han hecho ser más cautelosa~ dice cuidadosamente. ";
+        print "han hecho ser mas cautelosa~ dice cuidadosamente. ";
         print "~En mi experiencia, las relaciones pueden ser... ";
         print "complicadas. Especialmente cuando eres una persona ";
         print "que necesita espacio para crear.~";
@@ -535,28 +535,28 @@ SpanishNPC elena "Elena Vázquez" galeria
         
     } else if (elena.romance_available) {
         print "^Elena te mira con una nueva suavidad en sus ojos.^";
-        print "^~¿Sabes? Solía pensar que el amor romántico era ";
-        print "incompatible con la vida artística~ dice suavemente. ";
-        print "~Pero últimamente... bueno, digamos que algunas ";
+        print "^~?Sabes? Solia pensar que el amor romantico era ";
+        print "incompatible con la vida artistica~ dice suavemente. ";
+        print "~Pero ultimamente... bueno, digamos que algunas ";
         print "personas han hecho que reconsidere esa perspectiva.~";
         
         ElenaNPC_AdjustTrust(5);
         
-        print "^^[Elena está claramente hablando de ti. Este podría ";
-        print "ser el momento para una DECLARACIÓN o para PROFUNDIZAR ";
-        print "la conversación sobre vuestros sentimientos]";
+        print "^^[Elena esta claramente hablando de ti. Este podria ";
+        print "ser el momento para una DECLARACION o para PROFUNDIZAR ";
+        print "la conversacion sobre vuestros sentimientos]";
     }
     
     return true;
 ];
 
 [ ElenaNPC_DiscussCulture emotional_context;
-    print "^Elena sonríe con orgullo genuino.^";
-    print "^~España es un país de contrastes fascinantes~ dice ";
-    print "con pasión. ~Tenemos esta rica herencia artística: ";
-    print "Goya, Velázquez, Picasso... pero también una cultura ";
-    print "contemporánea vibrante. Madrid especialmente tiene ";
-    print "esta energía única donde lo tradicional y lo moderno ";
+    print "^Elena sonrie con orgullo genuino.^";
+    print "^~Espana es un pais de contrastes fascinantes~ dice ";
+    print "con pasion. ~Tenemos esta rica herencia artistica: ";
+    print "Goya, Velazquez, Picasso... pero tambien una cultura ";
+    print "contemporanea vibrante. Madrid especialmente tiene ";
+    print "esta energia unica donde lo tradicional y lo moderno ";
     print "se encuentran en cada esquina.~";
     
     ElenaNPC_AdjustCulturalSensitivity(5);
@@ -577,15 +577,15 @@ SpanishNPC elena "Elena Vázquez" galeria
 
 [ ElenaSeducirSub;
     if (elena notin location) {
-        print "Elena no está aquí.";
+        print "Elena no esta aqui.";
         return;
     }
     
     if (elena.romance_available == false) {
-        print "Elena retrocede ligeramente, claramente incómoda.^";
+        print "Elena retrocede ligeramente, claramente incomoda.^";
         print "^~Creo que me has malinterpretado~ dice con firmeza ";
-        print "pero sin rudeza. ~Aprecio tu... interés, pero no ";
-        print "estoy buscando ese tipo de relación en este momento.~";
+        print "pero sin rudeza. ~Aprecio tu... interes, pero no ";
+        print "estoy buscando ese tipo de relacion en este momento.~";
         
         elena.personal_space_violations = elena.personal_space_violations + 2;
         ElenaNPC_AdjustTrust(-10);
@@ -598,7 +598,7 @@ SpanishNPC elena "Elena Vázquez" galeria
     print "entre ustedes se espesa con posibilidades no dichas.^";
     print "^~"; print (name) player; print "...~ dice suavemente, ";
     print "tu nombre como una caricia. ~He estado sintiendo algo ";
-    print "especial entre nosotros también. Pero... ¿estás seguro ";
+    print "especial entre nosotros tambien. Pero... ?estas seguro ";
     print "de esto? Porque cuando me entrego a algo, lo hago ";
     print "completamente.~";
     
@@ -606,8 +606,8 @@ SpanishNPC elena "Elena Vázquez" galeria
     ElenaNPC_AdjustTrust(20);
     ElenaNPC_SetEmotion(elena, EMOCION_EMOCIONADO, 0);
     
-    print "^^[¡Felicidades! Has conseguido conquistar el corazón ";
-    print "de Elena a través de paciencia, comprensión y apreciación ";
+    print "^^[!Felicidades! Has conseguido conquistar el corazon ";
+    print "de Elena a traves de paciencia, comprension y apreciacion ";
     print "genuina por su arte y personalidad.]";
 ];
 
@@ -616,15 +616,15 @@ Verb 'seducir' 'conquistar' 'cortejar'
 
 [ ElenaAyudarSub;
     if (elena notin location) {
-        print "Elena no está aquí.";
+        print "Elena no esta aqui.";
         return;
     }
     
     if (elena.has_artistic_block) {
-        print "^~¿Ayudarme?~ Elena te mira con curiosidad mezclada ";
-        print "con esperanza. ~¿Qué tienes en mente?~^";
+        print "^~?Ayudarme?~ Elena te mira con curiosidad mezclada ";
+        print "con esperanza. ~?Que tienes en mente?~^";
         print "^[Puedes sugerir que se RELAJE, que EXPLORE nuevas ";
-        print "técnicas, o que RECUERDE por qué empezó a pintar]";
+        print "tecnicas, o que RECUERDE por que empezo a pintar]";
         
         ElenaNPC_ReactToHelp(1);
         return;
@@ -633,13 +633,13 @@ Verb 'seducir' 'conquistar' 'cortejar'
     if (elena.worried_about_exhibition) {
         print "Elena te mira gratefully.^";
         print "^~Solo... gracias por preocuparte~ dice. ~A veces ";
-        print "ayuda saber que alguien entiende la presión.~";
+        print "ayuda saber que alguien entiende la presion.~";
         
         ElenaNPC_AdjustTrust(5);
         return;
     }
     
-    print "Elena sonríe cálidamente.^";
+    print "Elena sonrie calidamente.^";
     print "^~Eres muy amable al ofrecerte, pero en este momento ";
     print "me siento bastante bien. Aunque aprecio mucho el gesto.~";
 ];
@@ -648,27 +648,27 @@ Verb 'ayudar' 'asistir' 'apoyar'
     * creature -> ElenaAyudarSub;
 
 ! ==============================================================================
-! RUTINAS DE DEPURACIÓN PARA ELENA
+! RUTINAS DE DEPURACION PARA ELENA
 ! ==============================================================================
 
 #Ifdef DEBUG;
 [ ElenaDebugStatus;
     print "^=== ESTADO DE ELENA ===^";
     print "Confianza: ", elena.trust_level, "/100^";
-    print "Apreciación artística: ", elena.artistic_appreciation, "/50^";
-    print "Conexión intelectual: ", elena.intellectual_connection, "/50^";
+    print "Apreciacion artistica: ", elena.artistic_appreciation, "/50^";
+    print "Conexion intelectual: ", elena.intellectual_connection, "/50^";
     print "Sensibilidad cultural: ", elena.cultural_sensitivity, "/30^";
     print "Conversaciones profundas: ", elena.deep_conversations, "^";
     print "Veces ayudada: ", elena.times_helped, "^";
     print "Violaciones espacio personal: ", elena.personal_space_violations, "^";
     print "Romance disponible: ";
-    if (elena.romance_available) print "SÍ"; else print "NO";
+    if (elena.romance_available) print "SI"; else print "NO";
     print "^";
-    print "Bloqueo artístico: ";
-    if (elena.has_artistic_block) print "SÍ"; else print "NO";
+    print "Bloqueo artistico: ";
+    if (elena.has_artistic_block) print "SI"; else print "NO";
     print "^";
     print "Es vulnerable: ";
-    if (elena.is_vulnerable) print "SÍ"; else print "NO";
+    if (elena.is_vulnerable) print "SI"; else print "NO";
     print "^";
     print "========================^";
 ];
@@ -678,20 +678,20 @@ Verb meta 'elena_debug' 'elena_estado'
 #Endif;
 
 ! ==============================================================================
-! LOCALIZACIÓN: GALERÍA DE ARTE
+! LOCALIZACION: GALERIA DE ARTE
 ! ==============================================================================
 
-Room galeria "Galería de Arte"
+Room galeria "Galeria de Arte"
     with 
         description [;
-            print "Esta galería íntima exhibe principalmente obras ";
+            print "Esta galeria intima exhibe principalmente obras ";
             print "de artistas locales emergentes. Las paredes blancas ";
-            print "están cuidadosamente iluminadas para resaltar las ";
+            print "estan cuidadosamente iluminadas para resaltar las ";
             print "pinturas, y el suelo de madera pulida refleja ";
             print "suavemente las luces del techo.";
             
             if (elena in self) {
-                print " Elena está trabajando en su caballete cerca ";
+                print " Elena esta trabajando en su caballete cerca ";
                 print "de la ventana, aprovechando la luz natural.";
             }
         ],
@@ -700,20 +700,20 @@ Room galeria "Galería de Arte"
         
     has light;
 
-! Ejemplo de inicialización
+! Ejemplo de inicializacion
 [ InicializarElena;
     move elena to galeria;
     elena.has_artistic_block = true;
     elena.worried_about_exhibition = true;
     elena.skeptical_of_relationships = true;
     
-    print "^[Elena Vázquez ha sido inicializada en la galería. ";
-    print "Para conquistarla necesitarás: ";
+    print "^[Elena Vazquez ha sido inicializada en la galeria. ";
+    print "Para conquistarla necesitaras: ";
     print "ganar su confianza (50+), apreciar su arte (25+), ";
     print "conectar intelectualmente (20+), tener 3+ conversaciones ";
     print "profundas, y evitar ser invasivo (<3 violaciones).]^";
 ];
 
 ! ==============================================================================
-! Fin del ejemplo de Elena - NPC Romántico Complejo
+! Fin del ejemplo de Elena - NPC Romantico Complejo
 ! ==============================================================================

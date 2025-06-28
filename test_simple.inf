@@ -1,0 +1,22 @@
+!% -~S~D
+!% +language_name=Spanish
+!
+! Test simple de compilacion usando archivos locales
+!
+
+Constant Story "Test Simple";
+Constant Headline "^Test de compilacion^";
+
+! Usar archivos locales en lugar de los del sistema
+Include "infspr";
+
+Object TestRoom "Habitacion"
+  with description "Una habitacion simple.",
+  has light;
+
+[ Initialise;
+  location = TestRoom;
+  print "^Test completado.^";
+];
+
+Include "SpanishG";

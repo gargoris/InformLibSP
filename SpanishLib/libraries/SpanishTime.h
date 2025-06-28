@@ -1,7 +1,7 @@
 ! ==============================================================================
-! SPANISHTIME.H - Sistema Completo de Gestión Temporal para Español
-! Módulo avanzado del sistema modular Spanish Library para Inform 6
-! Compatible con Inform 6.42 y librería estándar 6.12.7
+! SPANISHTIME.H - Sistema Completo de Gestion Temporal para Espanol
+! Modulo avanzado del sistema modular Spanish Library para Inform 6
+! Compatible con Inform 6.42 y libreria estandar 6.12.7
 ! ==============================================================================
 
 System_file;
@@ -10,30 +10,30 @@ System_file;
 Constant SPANISH_TIME_INCLUDED;
 Constant SPANISH_TIME_VERSION = "1.0-complete";
 
-! Verificación de dependencias
+! Verificacion de dependencias
 #Ifndef SPANISH_LIB_INCLUDED;
   Message fatalerror "*** Include Spanish.h antes de SpanishTime.h ***";
 #Endif;
 
 ! ==============================================================================
-! CONFIGURACIÓN DEL SISTEMA TEMPORAL
+! CONFIGURACION DEL SISTEMA TEMPORAL
 ! ==============================================================================
 
-! Características opcionales activables por el desarrollador
+! Caracteristicas opcionales activables por el desarrollador
 #Ifndef SPANISH_TIME_FEATURES;
-    Constant SPANISH_TIME_BASIC;           ! Solo funciones básicas
+    Constant SPANISH_TIME_BASIC;           ! Solo funciones basicas
     ! Constant SPANISH_TIME_CULTURAL;      ! Calendario cultural
     ! Constant SPANISH_TIME_REGIONAL;      ! Variantes regionales
-    ! Constant SPANISH_TIME_ADVANCED;      ! Mecánicas avanzadas
+    ! Constant SPANISH_TIME_ADVANCED;      ! Mecanicas avanzadas
 #Endif;
 
-! Configuración de región temporal por defecto
+! Configuracion de region temporal por defecto
 #Ifndef SPANISH_TIME_REGION;
-    Constant SPANISH_TIME_REGION = 0;  ! 0=neutral, 1=México, 2=España, 3=Argentina
+    Constant SPANISH_TIME_REGION = 0;  ! 0=neutral, 1=Mexico, 2=Espana, 3=Argentina
 #Endif;
 
 ! ==============================================================================
-! CONSTANTES TEMPORALES BÁSICAS
+! CONSTANTES TEMPORALES BASICAS
 ! ==============================================================================
 
 ! Unidades de tiempo
@@ -43,14 +43,14 @@ Constant HORA = 3600;
 Constant DIA = 86400;
 Constant SEMANA = 604800;
 
-! Períodos del día
+! Periodos del dia
 Constant MADRUGADA = 1;    ! 00:00 - 05:59
-Constant MAÑANA = 2;       ! 06:00 - 11:59
+Constant MANANA = 2;       ! 06:00 - 11:59
 Constant MEDIODIA = 3;     ! 12:00 - 12:59
 Constant TARDE = 4;        ! 13:00 - 19:59
 Constant NOCHE = 5;        ! 20:00 - 23:59
 
-! Días de la semana
+! Dias de la semana
 Constant LUNES = 1;
 Constant MARTES = 2;
 Constant MIERCOLES = 3;
@@ -59,7 +59,7 @@ Constant VIERNES = 5;
 Constant SABADO = 6;
 Constant DOMINGO = 0;
 
-! Meses del año
+! Meses del ano
 Constant ENERO = 1;    Constant FEBRERO = 2;   Constant MARZO = 3;
 Constant ABRIL = 4;    Constant MAYO = 5;      Constant JUNIO = 6;
 Constant JULIO = 7;    Constant AGOSTO = 8;    Constant SEPTIEMBRE = 9;
@@ -67,7 +67,7 @@ Constant OCTUBRE = 10; Constant NOVIEMBRE = 11; Constant DICIEMBRE = 12;
 
 ! Estaciones (Hemisferio Norte por defecto)
 Constant PRIMAVERA = 1; Constant VERANO = 2;
-Constant OTOÑO = 3;     Constant INVIERNO = 4;
+Constant OTONO = 3;     Constant INVIERNO = 4;
 
 ! ==============================================================================
 ! VARIABLES GLOBALES DEL SISTEMA TEMPORAL
@@ -81,27 +81,27 @@ Global hora_inicial = 8;     ! 8:00 AM por defecto
 Global minuto_inicial = 0;
 Global dia_inicial = 1;      ! Lunes por defecto
 Global mes_inicial = 6;      ! Junio por defecto
-Global año_inicial = 2024;
+Global ano_inicial = 2024;
 
 ! Estado temporal actual
 Global tiempo_pausado = false;
 Global velocidad_tiempo = 1;  ! Multiplicador de velocidad
 
-! Configuración cultural
+! Configuracion cultural
 Global formato_24_horas = false;  ! false = 12 horas, true = 24 horas
-Global primer_dia_semana = LUNES; ! Primer día de la semana
+Global primer_dia_semana = LUNES; ! Primer dia de la semana
 Global hemisferio_sur = false;    ! Afecta estaciones
 
 ! ==============================================================================
-! SISTEMA DE EXPRESIÓN TEMPORAL EN ESPAÑOL
+! SISTEMA DE EXPRESION TEMPORAL EN ESPANOL
 ! ==============================================================================
 
 Array nombres_dias table
-    "domingo" "lunes" "martes" "miércoles" 
-    "jueves" "viernes" "sábado";
+    "domingo" "lunes" "martes" "miercoles" 
+    "jueves" "viernes" "sabado";
 
 Array nombres_dias_cortos table
-    "dom" "lun" "mar" "mié" "jue" "vie" "sáb";
+    "dom" "lun" "mar" "mie" "jue" "vie" "sab";
 
 Array nombres_meses table
     "enero" "febrero" "marzo" "abril" "mayo" "junio"
@@ -112,28 +112,28 @@ Array nombres_meses_cortos table
     "jul" "ago" "sep" "oct" "nov" "dic";
 
 Array nombres_estaciones table
-    "primavera" "verano" "otoño" "invierno";
+    "primavera" "verano" "otono" "invierno";
 
 Array expresiones_tiempo table
-    "al amanecer" "por la mañana" "al mediodía" "por la tarde"
+    "al amanecer" "por la manana" "al mediodia" "por la tarde"
     "al atardecer" "por la noche" "a medianoche" "de madrugada";
 
 ! ==============================================================================
-! RUTINAS BÁSICAS DE TIEMPO
+! RUTINAS BASICAS DE TIEMPO
 ! ==============================================================================
 
-[ TiempoInicializar hora minuto dia mes año;
+[ TiempoInicializar hora minuto dia mes ano;
     if (hora == 0) hora = hora_inicial;
     if (minuto == 0) minuto = minuto_inicial;
     if (dia == 0) dia = dia_inicial;
     if (mes == 0) mes = mes_inicial;
-    if (año == 0) año = año_inicial;
+    if (ano == 0) ano = ano_inicial;
     
     hora_inicial = hora;
     minuto_inicial = minuto;
     dia_inicial = dia;
     mes_inicial = mes;
-    año_inicial = año;
+    ano_inicial = ano;
     
     tiempo_juego = 0;
     tiempo_pausado = false;
@@ -169,14 +169,14 @@ Array expresiones_tiempo table
     local hora = ObtenerHoraActual();
     
     if (hora >= 0 && hora <= 5) return MADRUGADA;
-    if (hora >= 6 && hora <= 11) return MAÑANA;
+    if (hora >= 6 && hora <= 11) return MANANA;
     if (hora == 12) return MEDIODIA;
     if (hora >= 13 && hora <= 19) return TARDE;
     return NOCHE;
 ];
 
 ! ==============================================================================
-! SISTEMA DE IMPRESIÓN TEMPORAL EN ESPAÑOL
+! SISTEMA DE IMPRESION TEMPORAL EN ESPANOL
 ! ==============================================================================
 
 [ ImprimirHora formato;
@@ -220,9 +220,9 @@ Array expresiones_tiempo table
             }
         }
         
-        ! Añadir AM/PM en español
-        if (hora < 12) print " de la mañana";
-        else if (hora == 12) print " del mediodía";
+        ! Anadir AM/PM en espanol
+        if (hora < 12) print " de la manana";
+        else if (hora == 12) print " del mediodia";
         else if (hora < 19) print " de la tarde";
         else print " de la noche";
     }
@@ -235,16 +235,16 @@ Array expresiones_tiempo table
 
 [ ImprimirFecha completa;
     local dia_semana = ObtenerDiaActual();
-    local mes = mes_inicial; ! Simplificado - podría calcularse
-    local año = año_inicial;
+    local mes = mes_inicial; ! Simplificado - podria calcularse
+    local ano = ano_inicial;
     
     if (completa) {
         print (string) nombres_dias-->dia_semana, ", ";
     }
     
-    print (LanguageNumber) 1; ! Día del mes - simplificado
+    print (LanguageNumber) 1; ! Dia del mes - simplificado
     print " de ", (string) nombres_meses-->(mes-1);
-    print " de ", (LanguageNumber) año;
+    print " de ", (LanguageNumber) ano;
 ];
 
 [ ImprimirHoraCompleta;
@@ -260,8 +260,8 @@ Array expresiones_tiempo table
     
     switch(periodo) {
         MADRUGADA: print "madrugada";
-        MAÑANA: print "mañana";
-        MEDIODIA: print "mediodía";
+        MANANA: print "manana";
+        MEDIODIA: print "mediodia";
         TARDE: print "tarde";
         NOCHE: print "noche";
     }
@@ -272,8 +272,8 @@ Array expresiones_tiempo table
     
     switch(periodo) {
         MADRUGADA: print "de madrugada";
-        MAÑANA: print "por la mañana";
-        MEDIODIA: print "al mediodía";
+        MANANA: print "por la manana";
+        MEDIODIA: print "al mediodia";
         TARDE: print "por la tarde";
         NOCHE: print "por la noche";
     }
@@ -293,7 +293,7 @@ Class TiempoEvento
          ejecutado false,
          accion_evento 0;
 
-Array eventos_programados --> 20; ! Máximo 20 eventos
+Array eventos_programados --> 20; ! Maximo 20 eventos
 Global num_eventos = 0;
 
 [ RegistrarEvento nombre hora minuto accion repetir;
@@ -338,7 +338,7 @@ Global num_eventos = 0;
                 }
                 
                 if (evento.repetir) {
-                    evento.ejecutado = false; ! Se resetea para mañana
+                    evento.ejecutado = false; ! Se resetea para manana
                 } else {
                     evento.ejecutado = true;
                 }
@@ -353,24 +353,24 @@ Global num_eventos = 0;
 
 #Ifdef SPANISH_TIME_CULTURAL;
 
-! Días festivos y celebraciones
+! Dias festivos y celebraciones
 Array dias_festivos table
-    ! Mes, Día, Nombre
-    1 1 "Año Nuevo"
-    1 6 "Día de Reyes"
-    2 14 "San Valentín"
-    5 1 "Día del Trabajo"
+    ! Mes, Dia, Nombre
+    1 1 "Ano Nuevo"
+    1 6 "Dia de Reyes"
+    2 14 "San Valentin"
+    5 1 "Dia del Trabajo"
     12 25 "Navidad"
     12 31 "Nochevieja";
 
-! Calendario religioso básico
+! Calendario religioso basico
 Array calendario_religioso table
-    ! Eventos móviles requerirían cálculo más complejo
-    3 19 "San José"
-    8 15 "Asunción"
+    ! Eventos moviles requeririan calculo mas complejo
+    3 19 "San Jose"
+    8 15 "Asuncion"
     11 1 "Todos los Santos"
-    11 2 "Día de los Muertos"
-    12 8 "Inmaculada Concepción";
+    11 2 "Dia de los Muertos"
+    12 8 "Inmaculada Concepcion";
 
 [ EsDiaFestivo mes dia;
     local i;
@@ -402,12 +402,12 @@ Array calendario_religioso table
 
 [ ConfigurarRegion region;
     switch(region) {
-        1: ! México
+        1: ! Mexico
             formato_24_horas = false;
             primer_dia_semana = DOMINGO;
             hemisferio_sur = false;
             
-        2: ! España  
+        2: ! Espana  
             formato_24_horas = true;
             primer_dia_semana = LUNES;
             hemisferio_sur = false;
@@ -426,11 +426,11 @@ Array calendario_religioso table
 
 [ ImprimirHoraRegional;
     switch(SPANISH_TIME_REGION) {
-        1: ! México - más informal
+        1: ! Mexico - mas informal
             print "Ahorita son las ";
             ImprimirHora(false);
             
-        2: ! España - más formal
+        2: ! Espana - mas formal
             print "Son las ";
             ImprimirHora(true);
             print " horas";
@@ -447,7 +447,7 @@ Array calendario_religioso table
 #Endif; ! SPANISH_TIME_REGIONAL
 
 ! ==============================================================================
-! MECÁNICAS TEMPORALES AVANZADAS
+! MECANICAS TEMPORALES AVANZADAS
 ! ==============================================================================
 
 #Ifdef SPANISH_TIME_ADVANCED;
@@ -462,7 +462,7 @@ Global tiempo_envejecimiento = 0;
     if (obj provides tiempo_creacion) {
         edad = tiempo_juego - obj.tiempo_creacion;
         
-        ! Aplicar efectos según la edad
+        ! Aplicar efectos segun la edad
         if (edad > DIA * 7) { ! Una semana
             if (obj has comida) {
                 obj.descripcion = "Ya no parece fresco.";
@@ -547,10 +547,10 @@ Global tiempo_envejecimiento = 0;
 ];
 
 [ ComandoDormir horas;
-    local tiempo_sueño;
+    local tiempo_sueno;
     
     if (horas == 0) horas = 8;
-    tiempo_sueño = horas * HORA;
+    tiempo_sueno = horas * HORA;
     
     print "Te quedas dormido";
     if (horas > 1) {
@@ -558,7 +558,7 @@ Global tiempo_envejecimiento = 0;
     }
     print ".^";
     
-    AvanzarTiempo(tiempo_sueño);
+    AvanzarTiempo(tiempo_sueno);
     ProcesarEventos();
     
     print "Despiertas. Ahora es ";
@@ -571,7 +571,7 @@ Global tiempo_envejecimiento = 0;
 ];
 
 ! ==============================================================================
-! INTEGRACIÓN CON GRAMMAR Y VERBOS
+! INTEGRACION CON GRAMMAR Y VERBOS
 ! ==============================================================================
 
 [ TiempoVerb;
@@ -586,7 +586,7 @@ Global tiempo_envejecimiento = 0;
     ComandoDormir(noun);
 ];
 
-! Agregar a la gramática (ejemplo - requiere integración)
+! Agregar a la gramatica (ejemplo - requiere integracion)
 ! Verb 'tiempo' 'hora' -> TiempoVerb;
 ! Verb 'esperar' * number -> EsperarVerb;
 ! Verb 'dormir' * -> DormirVerb;
@@ -640,7 +640,7 @@ Global tiempo_envejecimiento = 0;
 ];
 
 ! ==============================================================================
-! SISTEMA DE DEPURACIÓN TEMPORAL
+! SISTEMA DE DEPURACION TEMPORAL
 ! ==============================================================================
 
 #Ifdef DEBUG;
@@ -649,15 +649,15 @@ Global tiempo_envejecimiento = 0;
     print "^=== ESTADO DEL SISTEMA TEMPORAL ===^";
     print "Tiempo de juego: ", tiempo_juego, " segundos^";
     print "Hora actual: "; ImprimirHoraCompleta(); print "^";
-    print "Período: "; ImprimirPeriodoDia(); print "^";
+    print "Periodo: "; ImprimirPeriodoDia(); print "^";
     print "Velocidad: x", velocidad_tiempo;
     if (tiempo_pausado) print " (PAUSADO)";
     print "^";
     print "Eventos activos: ", num_eventos, "^";
     
     #Ifdef SPANISH_TIME_REGIONAL;
-    print "Región: ", SPANISH_TIME_REGION, "^";
-    print "Formato 24h: "; if (formato_24_horas) print "Sí"; else print "No"; print "^";
+    print "Region: ", SPANISH_TIME_REGION, "^";
+    print "Formato 24h: "; if (formato_24_horas) print "Si"; else print "No"; print "^";
     #Endif;
     
     print "================================^";
@@ -694,11 +694,11 @@ Global tiempo_envejecimiento = 0;
 #Endif; ! DEBUG
 
 ! ==============================================================================
-! RUTINA DE INICIALIZACIÓN DEL MÓDULO
+! RUTINA DE INICIALIZACION DEL MODULO
 ! ==============================================================================
 
 [ SpanishTimeInitialise;
-    ! Configuración regional automática
+    ! Configuracion regional automatica
     #Ifdef SPANISH_TIME_REGIONAL;
     ConfigurarRegion(SPANISH_TIME_REGION);
     #Endif;
@@ -710,15 +710,15 @@ Global tiempo_envejecimiento = 0;
     print "[SpanishTime v", (string) SPANISH_TIME_VERSION, " inicializado]^";
     
     #Ifdef SPANISH_TIME_CULTURAL;
-    print "[✅ Calendario cultural activado]^";
+    print "[[OK] Calendario cultural activado]^";
     #Endif;
     
     #Ifdef SPANISH_TIME_REGIONAL;
-    print "[✅ Variantes regionales activadas]^";
+    print "[[OK] Variantes regionales activadas]^";
     #Endif;
     
     #Ifdef SPANISH_TIME_ADVANCED;
-    print "[✅ Mecánicas avanzadas activadas]^";
+    print "[[OK] Mecanicas avanzadas activadas]^";
     #Endif;
     
     print "[Hora inicial: ";
@@ -728,7 +728,7 @@ Global tiempo_envejecimiento = 0;
 ];
 
 ! ==============================================================================
-! HOOKS PARA INTEGRACIÓN CON EL JUEGO PRINCIPAL
+! HOOKS PARA INTEGRACION CON EL JUEGO PRINCIPAL
 ! ==============================================================================
 
 [ SpanishTimeHeartbeat;
@@ -745,23 +745,23 @@ Global tiempo_envejecimiento = 0;
 ];
 
 [ SpanishTimeAfterEveryTurn;
-    ! Llamar después de cada turno
+    ! Llamar despues de cada turno
     AvanzarTiempo(MINUTO * 1); ! 1 minuto por turno por defecto
     SpanishTimeHeartbeat();
 ];
 
 ! ==============================================================================
-! CONSTANTES DE FINALIZACIÓN
+! CONSTANTES DE FINALIZACION
 ! ==============================================================================
 
 Constant SPANISH_TIME_LOADED;
 
 #Ifdef SPANISH_MINIMAL;
-Message warning "SpanishTime cargado en modo básico - activa SPANISH_TIME_CULTURAL y SPANISH_TIME_ADVANCED para características completas";
+Message warning "SpanishTime cargado en modo basico - activa SPANISH_TIME_CULTURAL y SPANISH_TIME_ADVANCED para caracteristicas completas";
 #Endif;
 
 #Endif; ! SPANISH_TIME_INCLUDED
 
 ! ==============================================================================
-! Fin de SpanishTime.h - Sistema Completo de Gestión Temporal para Español
+! Fin de SpanishTime.h - Sistema Completo de Gestion Temporal para Espanol
 ! ==============================================================================

@@ -1,0 +1,35 @@
+!% +language_name=Spanish
+!
+! Test simple para verificar compilación de SpanishLib
+!
+
+Constant Story "Test SpanishLib";
+Constant Headline "^Prueba de compilación^";
+
+Include "Parser";
+Include "VerbLib";
+
+! Configuración completa para probar todo
+Constant SPANISH_FULL_MESSAGES;
+Constant SPANISH_META_COMMANDS;
+Constant SPANISH_IRREGULAR_VERBS;
+Constant SPANISH_ADVANCED_PARSER;
+
+Include "SpanishLib/SpanishLib";
+
+Object TestRoom "Habitación de prueba"
+  with description "Una habitación para probar la librería española.",
+  has light;
+
+Object -> TestTable "mesa"
+  with name 'mesa',
+       description "Una mesa de madera.",
+  has female supporter;
+
+[ Initialise;
+  location = TestRoom;
+  print "^Test SpanishLib inicializado correctamente.^";
+  print "^Usa 'SPANISH_INFO' para ver información del sistema.^";
+];
+
+Include "Grammar";

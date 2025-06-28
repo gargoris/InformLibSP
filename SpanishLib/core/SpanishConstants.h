@@ -1,7 +1,7 @@
 ! ==============================================================================
-! SPANISHCONSTANTS.H - Constantes centralizadas del sistema español
+! SPANISHCONSTANTS.H - Constantes centralizadas del sistema espanol
 ! Sistema modular Spanish Library para Inform 6
-! Compatible con Inform 6.42 y librería estándar 6.12.7
+! Compatible con Inform 6.42 y libreria estandar 6.12.7
 ! ==============================================================================
 
 System_file;
@@ -23,15 +23,19 @@ Constant SUBJUNTIVO_T = 6;
 Constant IMPERATIVO_T = 7;
 
 ! ==============================================================================
-! CONSTANTES DE GÉNERO Y NÚMERO
+! CONSTANTES DE GENERO Y NUMERO
 ! ==============================================================================
 
 Constant MASCULINE = 1;
 Constant FEMININE = 2;
+#Ifndef NEUTER;
 Constant NEUTER = 3;
+#Endif;
 
 Constant SINGULAR = 1;
+#Ifndef PLURAL;
 Constant PLURAL = 2;
+#Endif;
 
 ! ==============================================================================
 ! CONSTANTES DE PERSONA GRAMATICAL
@@ -48,7 +52,7 @@ Constant TERCERA_PERSONA = 3;
 Constant INFORMAL = 0;
 Constant FORMAL = 1;
 
-! Configuración por defecto
+! Configuracion por defecto
 #Ifndef SPANISH_FORMALITY_DEFAULT;
     Constant SPANISH_FORMALITY_DEFAULT = 0;  ! Informal por defecto
 #Endif;
@@ -101,66 +105,138 @@ Constant SPANISH_PREPOSITION_POSITION = 3;
 Constant SPANISH_SECONDARY_OBJECT_POSITION = 4;
 
 ! ==============================================================================
-! DIRECCIONES EN ESPAÑOL
+! DIRECCIONES EN ESPANOL
 ! ==============================================================================
 
+#Ifndef N_TO;
 Constant N_TO     = "norte n";
+#Endif;
+#Ifndef S_TO;
 Constant S_TO     = "sur s";
+#Endif;
+#Ifndef E_TO;
 Constant E_TO     = "este e";
+#Endif;
+#Ifndef W_TO;
 Constant W_TO     = "oeste o";
+#Endif;
+#Ifndef NE_TO;
 Constant NE_TO    = "nordeste ne";
+#Endif;
+#Ifndef NW_TO;
 Constant NW_TO    = "noroeste no";
+#Endif;
+#Ifndef SE_TO;
 Constant SE_TO    = "sudeste se";
+#Endif;
+#Ifndef SW_TO;
 Constant SW_TO    = "sudoeste so";
+#Endif;
+#Ifndef U_TO;
 Constant U_TO     = "arriba subir";
+#Endif;
+#Ifndef D_TO;
 Constant D_TO     = "abajo bajar";
+#Endif;
+#Ifndef IN_TO;
 Constant IN_TO    = "dentro entrar";
+#Endif;
+#Ifndef OUT_TO;
 Constant OUT_TO   = "fuera salir";
+#Endif;
 
 ! ==============================================================================
 ! PALABRAS ESPECIALES DEL PARSER
 ! ==============================================================================
 
+#Ifndef ALL1__WD;
 Constant ALL1__WD   = 'todo';
+#Endif;
+#Ifndef ALL2__WD;
 Constant ALL2__WD   = 'todos';
+#Endif;
+#Ifndef ALL3__WD;
 Constant ALL3__WD   = 'todas';
+#Endif;
+#Ifndef ALL4__WD;
 Constant ALL4__WD   = 'cada';
+#Endif;
+#Ifndef ALL5__WD;
 Constant ALL5__WD   = 'ambos';
+#Endif;
 Constant ALL6__WD   = 'ambas';
 
+#Ifndef AND1__WD;
 Constant AND1__WD   = 'y';
+#Endif;
+#Ifndef AND2__WD;
 Constant AND2__WD   = 'e';
-Constant AND3__WD   = 'también';
+#Endif;
+#Ifndef AND3__WD;
+Constant AND3__WD   = 'tambien';
+#Endif;
 
+#Ifndef BUT1__WD;
 Constant BUT1__WD   = 'menos';
+#Endif;
+#Ifndef BUT2__WD;
 Constant BUT2__WD   = 'excepto';
+#Endif;
+#Ifndef BUT3__WD;
 Constant BUT3__WD   = 'salvo';
+#Endif;
 Constant BUT4__WD   = 'sino';
 
+#Ifndef ME1__WD;
 Constant ME1__WD    = 'yo';
+#Endif;
+#Ifndef ME2__WD;
 Constant ME2__WD    = 'mi';
+#Endif;
+#Ifndef ME3__WD;
 Constant ME3__WD    = 'me';
-Constant ME4__WD    = 'mí';
+#Endif;
+Constant ME4__WD    = 'mi';
 
+#Ifndef OF1__WD;
 Constant OF1__WD    = 'de';
+#Endif;
+#Ifndef OF2__WD;
 Constant OF2__WD    = 'del';
+#Endif;
+#Ifndef OF3__WD;
 Constant OF3__WD    = 'de_la';
+#Endif;
+#Ifndef OF4__WD;
 Constant OF4__WD    = 'de_los';
+#Endif;
 Constant OF5__WD    = 'de_las';
 
+#Ifndef OTHER1__WD;
 Constant OTHER1__WD = 'otro';
+#Endif;
+#Ifndef OTHER2__WD;
 Constant OTHER2__WD = 'otra';
+#Endif;
+#Ifndef OTHER3__WD;
 Constant OTHER3__WD = 'otros';
+#Endif;
 Constant OTHER4__WD = 'otras';
 
+#Ifndef THEN1__WD;
 Constant THEN1__WD  = 'luego';
-Constant THEN2__WD  = 'después';
+#Endif;
+#Ifndef THEN2__WD;
+Constant THEN2__WD  = 'despues';
+#Endif;
+#Ifndef THEN3__WD;
 Constant THEN3__WD  = 'entonces';
+#Endif;
 Constant THEN4__WD  = 'y_luego';
-Constant THEN5__WD  = 'y_después';
+Constant THEN5__WD  = 'y_despues';
 
 ! ==============================================================================
-! VARIABLES GLOBALES CENTRALIZADAS - ✅ SIN DUPLICACIONES
+! VARIABLES GLOBALES CENTRALIZADAS - [OK] SIN DUPLICACIONES
 ! ==============================================================================
 
 ! Variable principal de formalidad
@@ -191,7 +267,7 @@ Global current_spanish_region = SPANISH_REGION_DEFAULT;
 Global voseo_enabled = false;
 Global regional_vocabulary = true;
 
-! Marcadores de módulos cargados
+! Marcadores de modulos cargados
 Global SPANISH_CORE_LOADED = false;
 Global SPANISH_PARSER_LOADED = false;
 Global SPANISH_GRAMMAR_LOADED = false;
@@ -202,7 +278,7 @@ Global SPANISH_META_LOADED = false;
 Global SPANISH_REGIONAL_LOADED = false;
 
 ! ==============================================================================
-! ARRAYS BÁSICOS COMPARTIDOS - ✅ CENTRALIZADOS
+! ARRAYS BASICOS COMPARTIDOS - [OK] CENTRALIZADOS
 ! ==============================================================================
 
 ! Buffer principal del sistema
@@ -218,40 +294,43 @@ Array spanish_parse_buffer --> 64;
 Array spanish_temp_parse --> 32;
 
 ! ==============================================================================
-! ARRAYS LINGÜÍSTICOS PRINCIPALES
+! ARRAYS LINGUISTICOS PRINCIPALES
 ! ==============================================================================
 
-! ✅ CORREGIDO: Arrays con verificación de compatibilidad
+! [OK] CORREGIDO: Arrays con verificacion de compatibilidad
 #Ifdef LIBRARY_STAGE;
 #Iffalse LIBRARY_STAGE >= AFTER_PARSER;
-  ! Los arrays se definirán después del parser
+  ! Los arrays se definiran despues del parser
 #Ifnot;
 
+#Ifndef LanguagePronouns;
 Array LanguagePronouns table
-    'me'       $$000001   NULL     
-    'mi'       $$000001   NULL     
-    'yo'       $$000001   NULL
-    'te'       $$000010   NULL     
-    'tu'       $$000010   NULL
-    'usted'    $$000010   NULL
-    'le'       $$000100   NULL     
-    'la'       $$000100   NULL
-    'lo'       $$000100   NULL
-    'el'       $$000100   NULL
-    'ella'     $$000100   NULL
-    'nos'      $$001000   NULL     
-    'nosotros' $$001000   NULL
-    'nosotras' $$001000   NULL
-    'os'       $$010000   NULL     
-    'vosotros' $$010000   NULL 
-    'vosotras' $$010000   NULL
-    'ustedes'  $$010000   NULL
-    'les'      $$100000   NULL     
-    'las'      $$100000   NULL
-    'los'      $$100000   NULL
-    'ellos'    $$100000   NULL
-    'ellas'    $$100000   NULL;
+    'me'       $$000001   0     
+    'mi'       $$000001   0     
+    'yo'       $$000001   0
+    'te'       $$000010   0     
+    'tu'       $$000010   0
+    'usted'    $$000010   0
+    'le'       $$000100   0     
+    'la'       $$000100   0
+    'lo'       $$000100   0
+    'el'       $$000100   0
+    'ella'     $$000100   0
+    'nos'      $$001000   0     
+    'nosotros' $$001000   0
+    'nosotras' $$001000   0
+    'os'       $$010000   0     
+    'vosotros' $$010000   0 
+    'vosotras' $$010000   0
+    'ustedes'  $$010000   0
+    'les'      $$100000   0     
+    'las'      $$100000   0
+    'los'      $$100000   0
+    'ellos'    $$100000   0
+    'ellas'    $$100000   0;
+#Endif;
 
+#Ifndef LanguageDescriptors;
 Array LanguageDescriptors table
     'mi'       $$000001,
     'mis'      $$000001,
@@ -267,23 +346,26 @@ Array LanguageDescriptors table
     'vuestra'  $$010000,
     'vuestros' $$010000,
     'vuestras' $$010000;
+#Endif;
 
+#Ifndef LanguageNumbers;
 Array LanguageNumbers table
     'uno' 1 'un' 1 'una' 1,
     'dos' 2, 'tres' 3, 'cuatro' 4, 'cinco' 5,
     'seis' 6, 'siete' 7, 'ocho' 8, 'nueve' 9, 'diez' 10,
     'once' 11, 'doce' 12, 'trece' 13, 'catorce' 14, 'quince' 15,
-    'dieciséis' 16, 'diecisiete' 17, 'dieciocho' 18, 'diecinueve' 19, 'veinte' 20;
+    'dieciseis' 16, 'diecisiete' 17, 'dieciocho' 18, 'diecinueve' 19, 'veinte' 20;
+#Endif;
 
 #Endif;
 #Endif;
 
 ! ==============================================================================
-! FUNCIONES BÁSICAS DE CONFIGURACIÓN
+! FUNCIONES BASICAS DE CONFIGURACION
 ! ==============================================================================
 
 [ SpanishSetFormality level;
-    ! ✅ CORREGIDO: Función completa de configuración de formalidad
+    ! [OK] CORREGIDO: Funcion completa de configuracion de formalidad
     if (level == FORMAL || level == INFORMAL) {
         FormalityLevel = level;
         
@@ -298,18 +380,18 @@ Array LanguageNumbers table
     }
     
     #Ifdef DEBUG;
-        print "[ERROR: Nivel de formalidad inválido: ", level, "]^";
+        print "[ERROR: Nivel de formalidad invalido: ", level, "]^";
     #Endif;
     
     return false;
 ];
 
 [ SpanishSetRegion region;
-    ! ✅ AÑADIDO: Función de configuración regional
+    ! [OK] ANADIDO: Funcion de configuracion regional
     if (region >= REGION_NEUTRAL && region <= REGION_CHILE) {
         current_spanish_region = region;
         
-        ! Configuración automática basada en región
+        ! Configuracion automatica basada en region
         switch (region) {
             REGION_ARGENTINA:
                 voseo_enabled = true;
@@ -323,12 +405,12 @@ Array LanguageNumbers table
         }
         
         #Ifdef DEBUG;
-            print "[Región cambiada a: ";
+            print "[Region cambiada a: ";
             switch (region) {
                 REGION_NEUTRAL: print "NEUTRAL";
-                REGION_MEXICO: print "MÉXICO";
+                REGION_MEXICO: print "MEXICO";
                 REGION_ARGENTINA: print "ARGENTINA";
-                REGION_SPAIN: print "ESPAÑA";
+                REGION_SPAIN: print "ESPANA";
                 REGION_COLOMBIA: print "COLOMBIA";
                 REGION_CHILE: print "CHILE";
             }
@@ -342,22 +424,22 @@ Array LanguageNumbers table
 ];
 
 [ SpanishGetFormality;
-    ! ✅ AÑADIDO: Obtener nivel de formalidad actual
+    ! [OK] ANADIDO: Obtener nivel de formalidad actual
     return FormalityLevel;
 ];
 
 [ SpanishGetRegion;
-    ! ✅ AÑADIDO: Obtener región actual
+    ! [OK] ANADIDO: Obtener region actual
     return current_spanish_region;
 ];
 
 [ SpanishIsVoseoEnabled;
-    ! ✅ AÑADIDO: Verificar si el voseo está activo
+    ! [OK] ANADIDO: Verificar si el voseo esta activo
     return voseo_enabled;
 ];
 
 [ SpanishToggleVoseo;
-    ! ✅ AÑADIDO: Alternar voseo manualmente
+    ! [OK] ANADIDO: Alternar voseo manualmente
     voseo_enabled = ~~voseo_enabled;
     
     #Ifdef DEBUG;
@@ -371,11 +453,11 @@ Array LanguageNumbers table
 ];
 
 ! ==============================================================================
-! SISTEMA DE TRACKING DE MÓDULOS
+! SISTEMA DE TRACKING DE MODULOS
 ! ==============================================================================
 
 [ MarkModuleLoaded module_name;
-    ! ✅ AÑADIDO: Marcar un módulo como cargado
+    ! [OK] ANADIDO: Marcar un modulo como cargado
     switch (module_name) {
         'core': SPANISH_CORE_LOADED = true;
         'parser': SPANISH_PARSER_LOADED = true;
@@ -389,7 +471,7 @@ Array LanguageNumbers table
 ];
 
 [ IsModuleLoaded module_name;
-    ! ✅ AÑADIDO: Verificar si un módulo está cargado
+    ! [OK] ANADIDO: Verificar si un modulo esta cargado
     switch (module_name) {
         'core': return SPANISH_CORE_LOADED;
         'parser': return SPANISH_PARSER_LOADED;
@@ -404,25 +486,25 @@ Array LanguageNumbers table
 ];
 
 [ SpanishModuleStatus;
-    ! ✅ AÑADIDO: Mostrar estado de todos los módulos
-    print "^=== ESTADO DE MÓDULOS SPANISH LIBRARY ===^";
-    print "• Core: "; if (SPANISH_CORE_LOADED) print "✅"; else print "❌"; print "^";
-    print "• Parser: "; if (SPANISH_PARSER_LOADED) print "✅"; else print "❌"; print "^";
-    print "• Grammar: "; if (SPANISH_GRAMMAR_LOADED) print "✅"; else print "❌"; print "^";
-    print "• Verbs: "; if (SPANISH_VERBS_LOADED) print "✅"; else print "❌"; print "^";
-    print "• Messages: "; if (SPANISH_MESSAGES_LOADED) print "✅"; else print "❌"; print "^";
-    print "• Irregular Verbs: "; if (SPANISH_IRREGULAR_VERBS_LOADED) print "✅"; else print "❌"; print "^";
-    print "• Meta Commands: "; if (SPANISH_META_LOADED) print "✅"; else print "❌"; print "^";
-    print "• Regional: "; if (SPANISH_REGIONAL_LOADED) print "✅"; else print "❌"; print "^";
+    ! [OK] ANADIDO: Mostrar estado de todos los modulos
+    print "^=== ESTADO DE MODULOS SPANISH LIBRARY ===^";
+    print "- Core: "; if (SPANISH_CORE_LOADED) print "[OK]"; else print "[X]"; print "^";
+    print "- Parser: "; if (SPANISH_PARSER_LOADED) print "[OK]"; else print "[X]"; print "^";
+    print "- Grammar: "; if (SPANISH_GRAMMAR_LOADED) print "[OK]"; else print "[X]"; print "^";
+    print "- Verbs: "; if (SPANISH_VERBS_LOADED) print "[OK]"; else print "[X]"; print "^";
+    print "- Messages: "; if (SPANISH_MESSAGES_LOADED) print "[OK]"; else print "[X]"; print "^";
+    print "- Irregular Verbs: "; if (SPANISH_IRREGULAR_VERBS_LOADED) print "[OK]"; else print "[X]"; print "^";
+    print "- Meta Commands: "; if (SPANISH_META_LOADED) print "[OK]"; else print "[X]"; print "^";
+    print "- Regional: "; if (SPANISH_REGIONAL_LOADED) print "[OK]"; else print "[X]"; print "^";
     print "========================================^";
 ];
 
 ! ==============================================================================
-! INICIALIZACIÓN DE CONSTANTES
+! INICIALIZACION DE CONSTANTES
 ! ==============================================================================
 
 [ SpanishConstantsInit;
-    ! ✅ CORREGIDO: Inicialización completa sin duplicaciones
+    ! [OK] CORREGIDO: Inicializacion completa sin duplicaciones
     FormalityLevel = SPANISH_FORMALITY_DEFAULT;
     current_spanish_region = SPANISH_REGION_DEFAULT;
     spanish_initialized = false;
@@ -440,7 +522,7 @@ Array LanguageNumbers table
     voseo_enabled = false;
     regional_vocabulary = true;
     
-    ! Limpiar marcadores de módulos
+    ! Limpiar marcadores de modulos
     SPANISH_CORE_LOADED = false;
     SPANISH_PARSER_LOADED = false;
     SPANISH_GRAMMAR_LOADED = false;
@@ -456,13 +538,15 @@ Array LanguageNumbers table
 ];
 
 ! ==============================================================================
-! CONSTANTES DE VERSIÓN Y COMPATIBILIDAD
+! CONSTANTES DE VERSION Y COMPATIBILIDAD
 ! ==============================================================================
 
 Constant LIBRARY_SPANISH;
 Constant SPANISH_MODULAR_SYSTEM;
-Constant SPANISH_CONSTANTS_COMPLETE;
 Constant SPANISH_SYSTEM_VERSION = "1.2-modular-fixed";
+
+! Marcar completitud del modulo
+Constant SPANISH_CONSTANTS_COMPLETE;
 
 #Endif; ! SPANISH_CONSTANTS_INCLUDED
 

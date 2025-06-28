@@ -1,7 +1,7 @@
 ! ==============================================================================
-! SPANISHGRAMMAR.H - Sistema de gramática española para Inform 6
+! SPANISHGRAMMAR.H - Sistema de gramatica espanola para Inform 6
 ! Sistema modular Spanish Library para Inform 6
-! Compatible con Inform 6.42 y librería estándar 6.12.7
+! Compatible con Inform 6.42 y libreria estandar 6.12.7
 ! ==============================================================================
 
 System_file;
@@ -11,7 +11,7 @@ Constant SPANISH_GRAMMAR_INCLUDED;
 Constant SPANISH_GRAMMAR_VERSION = "1.2-complete-fixed";
 
 ! ==============================================================================
-! VERIFICACIÓN DE DEPENDENCIAS
+! VERIFICACION DE DEPENDENCIAS
 ! ==============================================================================
 
 #Ifndef SPANISH_CONSTANTS_INCLUDED;
@@ -25,24 +25,24 @@ Constant SPANISH_GRAMMAR_VERSION = "1.2-complete-fixed";
 #Endif;
 
 ! ==============================================================================
-! FUNCIONES BÁSICAS DE GÉNERO Y NÚMERO
+! FUNCIONES BASICAS DE GENERO Y NUMERO
 ! ==============================================================================
 
 [ EsGeneroMasculino obj;
-    ! ✅ CORREGIDO: Función crítica que faltaba completamente
-    ! Determina si un objeto es de género masculino
+    ! [OK] CORREGIDO: Funcion critica que faltaba completamente
+    ! Determina si un objeto es de genero masculino
     
     if (obj == nothing) return true; ! Por defecto masculino
     if (obj == player) return ~~(player has female); ! Depende del jugador
     
-    ! Verificar atributo explícito
+    ! Verificar atributo explicito
     if (obj has male) return true;
     if (obj has female) return false;
     
-    ! Heurística por terminación del nombre (si está disponible)
+    ! Heuristica por terminacion del nombre (si esta disponible)
     if (obj provides name && obj.name ~= 0) {
         ! Por ahora, masculino por defecto
-        ! Se puede expandir con análisis de terminaciones
+        ! Se puede expandir con analisis de terminaciones
         return true;
     }
     
@@ -50,7 +50,7 @@ Constant SPANISH_GRAMMAR_VERSION = "1.2-complete-fixed";
 ];
 
 [ EsGeneroFemenino obj;
-    ! ✅ AÑADIDO: Función complementaria
+    ! [OK] ANADIDO: Funcion complementaria
     return ~~EsGeneroMasculino(obj);
 ];
 
@@ -71,15 +71,15 @@ Constant SPANISH_GRAMMAR_VERSION = "1.2-complete-fixed";
 ];
 
 ! ==============================================================================
-! FUNCIONES DE IMPRESIÓN DE NOMBRES - ✅ CONSOLIDADAS AQUÍ
+! FUNCIONES DE IMPRESION DE NOMBRES - [OK] CONSOLIDADAS AQUI
 ! ==============================================================================
 
 [ LanguagePrintShortName obj   aux;
-    ! ✅ CORREGIDO: Función estándar de impresión de nombres sin recursión
+    ! [OK] CORREGIDO: Funcion estandar de impresion de nombres sin recursion
     if (obj == 0) { print "(nada)"; rtrue; }
-    if (obj == player) { print "tú"; rtrue; }
+    if (obj == player) { print "tu"; rtrue; }
     
-    ! Intentar usar short_name si está disponible
+    ! Intentar usar short_name si esta disponible
     if (obj provides short_name && obj.short_name ~= 0) {
         if (metaclass(obj.short_name) == String) {
             print (string) obj.short_name;
@@ -103,7 +103,7 @@ Constant SPANISH_GRAMMAR_VERSION = "1.2-complete-fixed";
 ];
 
 [ LanguagePrintName obj;
-    ! ✅ AÑADIDO: Función estándar de impresión de nombres largos
+    ! [OK] ANADIDO: Funcion estandar de impresion de nombres largos
     if (obj == 0) { print "(nada)"; rtrue; }
     
     ! Usar LanguagePrintShortName como base
@@ -116,11 +116,11 @@ Constant SPANISH_GRAMMAR_VERSION = "1.2-complete-fixed";
 ];
 
 ! ==============================================================================
-! ARTÍCULOS Y DETERMINANTES - ✅ COMPLETOS
+! ARTICULOS Y DETERMINANTES - [OK] COMPLETOS
 ! ==============================================================================
 
 [ ArticuloDefinido obj;
-    ! Imprime artículo definido según género y número
+    ! Imprime articulo definido segun genero y numero
     if (EsPlural(obj)) {
         if (EsGeneroMasculino(obj)) print "los";
         else print "las";
@@ -132,7 +132,7 @@ Constant SPANISH_GRAMMAR_VERSION = "1.2-complete-fixed";
 ];
 
 [ ArticuloIndefinido obj;
-    ! Imprime artículo indefinido según género y número
+    ! Imprime articulo indefinido segun genero y numero
     if (EsPlural(obj)) {
         if (EsGeneroMasculino(obj)) print "unos";
         else print "unas";
@@ -190,7 +190,7 @@ Constant SPANISH_GRAMMAR_VERSION = "1.2-complete-fixed";
 ! ==============================================================================
 
 [ LanguageContraction prep article;
-    ! Manejo automático de contracciones españolas
+    ! Manejo automatico de contracciones espanolas
     if (prep == 'de' && article == 'el') {
         print "del";
         return true;
@@ -203,7 +203,7 @@ Constant SPANISH_GRAMMAR_VERSION = "1.2-complete-fixed";
 ];
 
 [ ImprimirPreposicionArticulo prep obj;
-    ! Imprime preposición + artículo con contracciones automáticas
+    ! Imprime preposicion + articulo con contracciones automaticas
     if (prep == 'de' && EsGeneroMasculino(obj) && ~~EsPlural(obj)) {
         print "del";
     }
@@ -221,8 +221,8 @@ Constant SPANISH_GRAMMAR_VERSION = "1.2-complete-fixed";
 ! ==============================================================================
 
 [ ConcordarAdjetivo adj obj tipo;
-    ! ✅ CORREGIDO: Función completa de concordancia de adjetivos
-    ! tipo: 0 = normal, 1 = invariable en género, 2 = invariable total
+    ! [OK] CORREGIDO: Funcion completa de concordancia de adjetivos
+    ! tipo: 0 = normal, 1 = invariable en genero, 2 = invariable total
     local adj_str len last_char;
     
     if (tipo == 2) {
@@ -230,7 +230,7 @@ Constant SPANISH_GRAMMAR_VERSION = "1.2-complete-fixed";
         return;
     }
     
-    ! Convertir a string para análisis
+    ! Convertir a string para analisis
     len = PrintToBuffer(spanish_temp_buffer, 100, adj);
     
     if (tipo == 1) {
@@ -249,13 +249,13 @@ Constant SPANISH_GRAMMAR_VERSION = "1.2-complete-fixed";
     
     last_char = spanish_temp_buffer->(len-1);
     
-    ! Ajustar terminación según género (solo si termina en -o y es femenino)
+    ! Ajustar terminacion segun genero (solo si termina en -o y es femenino)
     if (last_char == 'o' && ~~EsGeneroMasculino(obj)) {
         print "a";
         last_char = 'a'; ! Actualizar para plural
     }
     
-    ! Añadir plural si es necesario
+    ! Anadir plural si es necesario
     if (EsPlural(obj)) {
         if (last_char == 'z') {
             print "ces"; ! feliz -> felices
@@ -266,11 +266,11 @@ Constant SPANISH_GRAMMAR_VERSION = "1.2-complete-fixed";
 ];
 
 ! ==============================================================================
-! PRONOMBRES - ✅ SISTEMA COMPLETO
+! PRONOMBRES - [OK] SISTEMA COMPLETO
 ! ==============================================================================
 
 [ PronombrePersonal persona genero numero caso;
-    ! ✅ CORREGIDO: Función completa de pronombres
+    ! [OK] CORREGIDO: Funcion completa de pronombres
     ! caso: 1=nominativo, 2=acusativo, 3=dativo
     ! genero y numero solo relevantes para 3a persona
     
@@ -281,7 +281,7 @@ Constant SPANISH_GRAMMAR_VERSION = "1.2-complete-fixed";
                3: print "me";
            }
         2: switch(caso) {
-               1: if (FormalityLevel == FORMAL) print "usted"; else print "tú";
+               1: if (FormalityLevel == FORMAL) print "usted"; else print "tu";
                2: if (FormalityLevel == FORMAL) print "le"; else print "te";
                3: if (FormalityLevel == FORMAL) print "le"; else print "te";
            }
@@ -289,7 +289,7 @@ Constant SPANISH_GRAMMAR_VERSION = "1.2-complete-fixed";
                1: if (numero == PLURAL) {
                       if (genero == FEMININE) print "ellas"; else print "ellos";
                   } else {
-                      if (genero == FEMININE) print "ella"; else print "él";
+                      if (genero == FEMININE) print "ella"; else print "el";
                   }
                2: if (numero == PLURAL) {
                       if (genero == FEMININE) print "las"; else print "los";
@@ -321,7 +321,7 @@ Constant SPANISH_GRAMMAR_VERSION = "1.2-complete-fixed";
     if (distancia == 0) distancia = 2;
     
     if (EsAnimado(obj)) {
-        ! Para personas, usar formas específicas
+        ! Para personas, usar formas especificas
         ArticuloDemostrativo(obj, distancia);
     } else {
         ! Para cosas, usar formas neutras o concordadas
@@ -338,13 +338,13 @@ Constant SPANISH_GRAMMAR_VERSION = "1.2-complete-fixed";
 ];
 
 ! ==============================================================================
-! FUNCIONES DE IMPRESIÓN CON ARTÍCULOS - ✅ INTEGRADAS
+! FUNCIONES DE IMPRESION CON ARTICULOS - [OK] INTEGRADAS
 ! ==============================================================================
 
 [ LanguageA obj;
-    ! Imprime artículo indefinido + objeto
+    ! Imprime articulo indefinido + objeto
     if (obj == nothing) { print "nada"; rtrue; }
-    if (obj == player) { print "tú mismo"; rtrue; }
+    if (obj == player) { print "tu mismo"; rtrue; }
     
     ArticuloIndefinido(obj);
     print " ";
@@ -353,9 +353,9 @@ Constant SPANISH_GRAMMAR_VERSION = "1.2-complete-fixed";
 ];
 
 [ LanguageThe obj;
-    ! Imprime artículo definido + objeto
+    ! Imprime articulo definido + objeto
     if (obj == nothing) { print "nada"; rtrue; }
-    if (obj == player) { print "tú"; rtrue; }
+    if (obj == player) { print "tu"; rtrue; }
     
     ArticuloDefinido(obj);
     print " ";
@@ -366,12 +366,12 @@ Constant SPANISH_GRAMMAR_VERSION = "1.2-complete-fixed";
 [ A obj; return LanguageA(obj); ];
 [ The obj; return LanguageThe(obj); ];
 
-! Compatibilidad con sintaxis estándar
+! Compatibilidad con sintaxis estandar
 [ a obj; return LanguageA(obj); ];
 [ the obj; return LanguageThe(obj); ];
 
 ! ==============================================================================
-! UTILIDADES DE IMPRESIÓN CON CONCORDANCIA
+! UTILIDADES DE IMPRESION CON CONCORDANCIA
 ! ==============================================================================
 
 [ LanguageIsOrAre obj;
@@ -380,20 +380,20 @@ Constant SPANISH_GRAMMAR_VERSION = "1.2-complete-fixed";
 ];
 
 [ LanguageTheyreOrThats obj;
-    if (obj == player) { print "estás"; return; }
-    if (obj has pluralname or multitude) print "están";
-    else print "está";
+    if (obj == player) { print "estas"; return; }
+    if (obj has pluralname or multitude) print "estan";
+    else print "esta";
 ];
 
 [ LanguageAnimateGender person;
-    ! Función para determinar género de personas
+    ! Funcion para determinar genero de personas
     if (person has female) return FEMININE;
     if (person has male) return MASCULINE;
     return MASCULINE; ! Por defecto masculino
 ];
 
 [ LanguageGenderNumber obj;
-    ! Función que devuelve código de género y número
+    ! Funcion que devuelve codigo de genero y numero
     ! 1 = masculino singular, 2 = femenino singular
     ! 3 = masculino plural, 4 = femenino plural
     if (EsPlural(obj)) {
@@ -406,11 +406,11 @@ Constant SPANISH_GRAMMAR_VERSION = "1.2-complete-fixed";
 ];
 
 ! ==============================================================================
-! NÚMEROS Y CANTIDADES - ✅ IMPLEMENTADO
+! NUMEROS Y CANTIDADES - [OK] IMPLEMENTADO
 ! ==============================================================================
 
 [ EscribirNumero n;
-    ! ✅ AÑADIDO: Función para escribir números en español
+    ! [OK] ANADIDO: Funcion para escribir numeros en espanol
     if (n == 0) { print "cero"; return; }
     if (n == 1) { print "uno"; return; }
     if (n == 2) { print "dos"; return; }
@@ -427,18 +427,18 @@ Constant SPANISH_GRAMMAR_VERSION = "1.2-complete-fixed";
     if (n == 13) { print "trece"; return; }
     if (n == 14) { print "catorce"; return; }
     if (n == 15) { print "quince"; return; }
-    if (n == 16) { print "dieciséis"; return; }
+    if (n == 16) { print "dieciseis"; return; }
     if (n == 17) { print "diecisiete"; return; }
     if (n == 18) { print "dieciocho"; return; }
     if (n == 19) { print "diecinueve"; return; }
     if (n == 20) { print "veinte"; return; }
     
-    ! Para números mayores, usar cifras
+    ! Para numeros mayores, usar cifras
     print n;
 ];
 
 [ LanguageNumber n obj;
-    ! Función estándar para números con concordancia
+    ! Funcion estandar para numeros con concordancia
     if (n == 1) {
         if (obj == 0) print "uno";
         else if (EsGeneroMasculino(obj)) print "un";
@@ -453,7 +453,7 @@ Constant SPANISH_GRAMMAR_VERSION = "1.2-complete-fixed";
 ! ==============================================================================
 
 [ LanguageDirection dir;
-    ! ✅ AÑADIDO: Función para direcciones en español
+    ! [OK] ANADIDO: Funcion para direcciones en espanol
     switch (dir) {
         n_to: print "norte";
         s_to: print "sur";
@@ -467,14 +467,14 @@ Constant SPANISH_GRAMMAR_VERSION = "1.2-complete-fixed";
         d_to: print "abajo";
         in_to: print "adentro";
         out_to: print "afuera";
-        default: print "dirección desconocida";
+        default: print "direccion desconocida";
     }
 ];
 
 [ LanguageTimeOfDay hours mins;
-    ! ✅ AÑADIDO: Función para tiempo en español
+    ! [OK] ANADIDO: Funcion para tiempo en espanol
     if (hours == 0) print "medianoche";
-    else if (hours == 12) print "mediodía";
+    else if (hours == 12) print "mediodia";
     else {
         if (hours > 12) hours = hours - 12;
         EscribirNumero(hours);
@@ -487,42 +487,45 @@ Constant SPANISH_GRAMMAR_VERSION = "1.2-complete-fixed";
         if (hours == 1) print " de la ";
         else print " de las ";
         if (hours < 6 || hours > 20) print "noche";
-        else if (hours < 12) print "mañana";
+        else if (hours < 12) print "manana";
         else if (hours < 19) print "tarde";
         else print "noche";
     }
 ];
 
 ! ==============================================================================
-! INICIALIZACIÓN Y FINALIZACIÓN
+! INICIALIZACION Y FINALIZACION
 ! ==============================================================================
 
 [ SpanishGrammarInitialise;
-    ! ✅ CORREGIDO: Inicialización completa del módulo
-    ! Marcar que el módulo está listo
+    ! [OK] CORREGIDO: Inicializacion completa del modulo
+    ! Marcar que el modulo esta listo
     spanish_grammar_ready = true;
     MarkModuleLoaded('grammar');
     
     #Ifdef DEBUG;
         print "[SpanishGrammar v", (string) SPANISH_GRAMMAR_VERSION, " inicializado]^";
-        print "[Funciones de impresión, artículos, pronombres y concordancia cargadas]^";
+        print "[Funciones de impresion, articulos, pronombres y concordancia cargadas]^";
         print "[", SPANISH_GRAMMAR_FUNCTIONS, " funciones disponibles]^";
     #Endif;
 ];
 
 ! ==============================================================================
-! CONSTANTES DE FINALIZACIÓN
+! CONSTANTES DE FINALIZACION
 ! ==============================================================================
 
 Constant SPANISH_GRAMMAR_COMPLETE;
 Constant SPANISH_GRAMMAR_READY;
-Constant SPANISH_GRAMMAR_FUNCTIONS = 25; ! Número de funciones públicas
+Constant SPANISH_GRAMMAR_FUNCTIONS = 25; ! Numero de funciones publicas
 
-! Información del módulo
-Constant SPANISH_GRAMMAR_FEATURES = "Artículos, pronombres, concordancia, género, número, direcciones, tiempo";
+! Informacion del modulo
+Constant SPANISH_GRAMMAR_FEATURES = "Articulos, pronombres, concordancia, genero, numero, direcciones, tiempo";
+
+! Marcar completitud del modulo
+Constant SPANISH_GRAMMAR_COMPLETE;
 
 #Endif; ! SPANISH_GRAMMAR_INCLUDED
 
 ! ==============================================================================
-! Fin de SpanishGrammar.h - Sistema completo y consolidado de gramática española
+! Fin de SpanishGrammar.h - Sistema completo y consolidado de gramatica espanola
 ! ==============================================================================

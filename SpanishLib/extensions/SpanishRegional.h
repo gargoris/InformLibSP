@@ -1,7 +1,7 @@
 ! ==============================================================================
 ! SPANISHREGIONAL.H - Sistema modular de variantes regionales
-! Extensión OPCIONAL para la librería española existente
-! Compatible con Inform 6.42 y librería estándar 6.12.7
+! Extension OPCIONAL para la libreria espanola existente
+! Compatible con Inform 6.42 y libreria estandar 6.12.7
 ! ==============================================================================
 
 System_file;
@@ -11,7 +11,7 @@ Constant SPANISH_REGIONAL_INCLUDED;
 Constant SPANISH_REGIONAL_VERSION = "2.1-complete-fixed";
 
 ! ==============================================================================
-! VERIFICACIÓN DE DEPENDENCIAS
+! VERIFICACION DE DEPENDENCIAS
 ! ==============================================================================
 
 #Ifndef SPANISH_CONSTANTS_INCLUDED;
@@ -23,36 +23,36 @@ Constant SPANISH_REGIONAL_VERSION = "2.1-complete-fixed";
 #Endif;
 
 ! ==============================================================================
-! CONFIGURACIÓN REGIONAL - ACTIVACIÓN OPCIONAL
+! CONFIGURACION REGIONAL - ACTIVACION OPCIONAL
 ! ==============================================================================
 
 ! El desarrollador puede definir estas constantes ANTES de Include SpanishLib.h
-! Si no se define nada, usa comportamiento estándar (neutral)
+! Si no se define nada, usa comportamiento estandar (neutral)
 
 #Ifndef SPANISH_REGION;
     Constant SPANISH_REGION = REGION_NEUTRAL;  ! Usar constante de SpanishConstants.h
 #Endif;
 
-! Variables locales específicas del módulo regional
+! Variables locales especificas del modulo regional
 Global spanish_regional_ready = false;
 
 ! ==============================================================================
-! DETECCIÓN Y CONFIGURACIÓN AUTOMÁTICA
+! DETECCION Y CONFIGURACION AUTOMATICA
 ! ==============================================================================
 
 [ SpanishRegionalInit;
-    ! ✅ CORREGIDO: Usar variables globales de SpanishConstants.h, no duplicar
+    ! [OK] CORREGIDO: Usar variables globales de SpanishConstants.h, no duplicar
     current_spanish_region = SPANISH_REGION;
     
-    ! Configuración automática basada en región
+    ! Configuracion automatica basada en region
     switch (current_spanish_region) {
         REGION_ARGENTINA:
             voseo_enabled = true;
-            FormalityLevel = INFORMAL;  ! Argentina es más informal
+            FormalityLevel = INFORMAL;  ! Argentina es mas informal
             
         REGION_SPAIN:
             voseo_enabled = false;
-            FormalityLevel = FORMAL;  ! España tiende a ser más formal
+            FormalityLevel = FORMAL;  ! Espana tiende a ser mas formal
             
         REGION_MEXICO:
             voseo_enabled = false;
@@ -75,11 +75,11 @@ Global spanish_regional_ready = false;
     
     #Ifdef DEBUG;
         print "^[SpanishRegional v", (string) SPANISH_REGIONAL_VERSION, " inicializado]^";
-        print "[Región: ";
+        print "[Region: ";
         switch (current_spanish_region) {
-            REGION_MEXICO: print "México";
+            REGION_MEXICO: print "Mexico";
             REGION_ARGENTINA: print "Argentina";
-            REGION_SPAIN: print "España";
+            REGION_SPAIN: print "Espana";
             REGION_COLOMBIA: print "Colombia";
             REGION_CHILE: print "Chile";
             default: print "Neutral";
@@ -92,17 +92,17 @@ Global spanish_regional_ready = false;
 ];
 
 ! ==============================================================================
-! SISTEMA DE CONJUGACIÓN CON VOSEO - ✅ COMPLETO
+! SISTEMA DE CONJUGACION CON VOSEO - [OK] COMPLETO
 ! ==============================================================================
 
 [ SpanishRegionalConjugarVerbo verbo persona tiempo tipo;
-    ! ✅ CORREGIDO: Función completa de integración con voseo
-    ! Si no hay voseo o no es segunda persona, usar sistema estándar
+    ! [OK] CORREGIDO: Funcion completa de integracion con voseo
+    ! Si no hay voseo o no es segunda persona, usar sistema estandar
     if (~~voseo_enabled || persona ~= SEGUNDA_PERSONA) {
         #Ifdef SPANISH_VERBS_INCLUDED;
             return ConjugarVerbo(verbo, persona, tiempo, tipo);
         #Ifnot;
-            ! Fallback básico
+            ! Fallback basico
             print (address) verbo;
             return true;
         #Endif;
@@ -113,7 +113,7 @@ Global spanish_regional_ready = false;
         return ConjugarVoseo(verbo, tiempo, tipo);
     }
     
-    ! Fallback al sistema estándar
+    ! Fallback al sistema estandar
     #Ifdef SPANISH_VERBS_INCLUDED;
         return ConjugarVerbo(verbo, persona, tiempo, tipo);
     #Ifnot;
@@ -123,8 +123,8 @@ Global spanish_regional_ready = false;
 ];
 
 [ ConjugarVoseo verbo tiempo tipo   raiz;
-    ! ✅ CORREGIDO: Función completa de conjugación con voseo argentino
-    ! Solo implementar los casos más comunes
+    ! [OK] CORREGIDO: Funcion completa de conjugacion con voseo argentino
+    ! Solo implementar los casos mas comunes
     if (tipo == 0) {
         #Ifdef SPANISH_VERBS_INCLUDED;
             tipo = DetectarTipoVerbo(verbo);
@@ -136,17 +136,17 @@ Global spanish_regional_ready = false;
     ! Intentar primero verbos irregulares con voseo
     if (ConjugarVoseoIrregular(verbo, tiempo)) return true;
     
-    ! Si no es irregular, usar conjugación regular con voseo
+    ! Si no es irregular, usar conjugacion regular con voseo
     if (tipo == 0) {
         print (address) verbo; ! Fallback
         return false;
     }
     
-    ! Obtener raíz del verbo
+    ! Obtener raiz del verbo
     #Ifdef SPANISH_VERBS_INCLUDED;
         raiz = ObtenerRaizVerbo(verbo, spanish_temp_buffer);
     #Ifnot;
-        ! Fallback básico - asumir que es la palabra sin las últimas 2 letras
+        ! Fallback basico - asumir que es la palabra sin las ultimas 2 letras
         raiz = spanish_temp_buffer;
         PrintToBuffer(raiz, 100, verbo);
         raiz->0 = raiz->0 - 2; ! Quitar -ar, -er, -ir
@@ -157,16 +157,16 @@ Global spanish_regional_ready = false;
         return false;
     }
     
-    ! Conjugar según tipo y tiempo para voseo
+    ! Conjugar segun tipo y tiempo para voseo
     print (string) raiz;
     
     switch(tiempo) {
         PRESENTE_T:
             switch(tipo) {
-                1: print "ás";     ! vos caminás
-                2: print "és";     ! vos comés  
-                3: print "ís";     ! vos vivís
-                default: print "ás";
+                1: print "as";     ! vos caminas
+                2: print "es";     ! vos comes  
+                3: print "is";     ! vos vivis
+                default: print "as";
             }
             
         PRETERITO_T:
@@ -180,30 +180,30 @@ Global spanish_regional_ready = false;
         IMPERFECTO_T:
             switch(tipo) {
                 1: print "abas";   ! vos caminabas
-                2: print "ías";    ! vos comías
-                3: print "ías";    ! vos vivías
+                2: print "ias";    ! vos comias
+                3: print "ias";    ! vos vivias
                 default: print "abas";
             }
             
         FUTURO_T:
-            ! Para futuro, usar infinitivo + terminación
+            ! Para futuro, usar infinitivo + terminacion
             switch(tipo) {
                 1: print "ar"; break;
                 2: print "er"; break;
                 3: print "ir"; break;
             }
-            print "ás";           ! vos caminarás, comerás, vivirás
+            print "as";           ! vos caminaras, comeras, viviras
             
         IMPERATIVO_T:
             switch(tipo) {
-                1: print "á";      ! ¡caminá!
-                2: print "é";      ! ¡comé!
-                3: print "í";      ! ¡viví!
-                default: print "á";
+                1: print "a";      ! !camina!
+                2: print "e";      ! !come!
+                3: print "i";      ! !vivi!
+                default: print "a";
             }
             
         default:
-            ! Para otros tiempos, usar conjugación estándar
+            ! Para otros tiempos, usar conjugacion estandar
             #Ifdef SPANISH_VERBS_INCLUDED;
                 return ConjugarVerbo(verbo, SEGUNDA_PERSONA, tiempo, tipo);
             #Ifnot;
@@ -215,103 +215,103 @@ Global spanish_regional_ready = false;
 ];
 
 [ ConjugarVoseoIrregular verbo tiempo;
-    ! ✅ CORREGIDO: Función completa de verbos irregulares con voseo
+    ! [OK] CORREGIDO: Funcion completa de verbos irregulares con voseo
     switch(verbo) {
         'ser':
             switch(tiempo) {
                 PRESENTE_T: print "sos"; rtrue;         ! vos sos
                 PRETERITO_T: print "fuiste"; rtrue;     ! vos fuiste
                 IMPERFECTO_T: print "eras"; rtrue;      ! vos eras
-                IMPERATIVO_T: print "sé"; rtrue;        ! ¡sé!
+                IMPERATIVO_T: print "se"; rtrue;        ! !se!
             }
         'tener':
             switch(tiempo) {
-                PRESENTE_T: print "tenés"; rtrue;       ! vos tenés
+                PRESENTE_T: print "tenes"; rtrue;       ! vos tenes
                 PRETERITO_T: print "tuviste"; rtrue;    ! vos tuviste
-                IMPERFECTO_T: print "tenías"; rtrue;    ! vos tenías
-                IMPERATIVO_T: print "tené"; rtrue;      ! ¡tené!
+                IMPERFECTO_T: print "tenias"; rtrue;    ! vos tenias
+                IMPERATIVO_T: print "tene"; rtrue;      ! !tene!
             }
         'estar':
             switch(tiempo) {
-                PRESENTE_T: print "estás"; rtrue;       ! vos estás
+                PRESENTE_T: print "estas"; rtrue;       ! vos estas
                 PRETERITO_T: print "estuviste"; rtrue;  ! vos estuviste
                 IMPERFECTO_T: print "estabas"; rtrue;   ! vos estabas
-                IMPERATIVO_T: print "está"; rtrue;      ! ¡está!
+                IMPERATIVO_T: print "esta"; rtrue;      ! !esta!
             }
         'ir':
             switch(tiempo) {
                 PRESENTE_T: print "vas"; rtrue;         ! vos vas
                 PRETERITO_T: print "fuiste"; rtrue;     ! vos fuiste (igual que SER)
                 IMPERFECTO_T: print "ibas"; rtrue;      ! vos ibas
-                IMPERATIVO_T: print "andá"; rtrue;      ! ¡andá! (forma especial argentina)
+                IMPERATIVO_T: print "anda"; rtrue;      ! !anda! (forma especial argentina)
             }
         'venir':
             switch(tiempo) {
-                PRESENTE_T: print "venís"; rtrue;       ! vos venís
+                PRESENTE_T: print "venis"; rtrue;       ! vos venis
                 PRETERITO_T: print "viniste"; rtrue;    ! vos viniste
-                IMPERFECTO_T: print "venías"; rtrue;    ! vos venías
-                IMPERATIVO_T: print "vení"; rtrue;      ! ¡vení!
+                IMPERFECTO_T: print "venias"; rtrue;    ! vos venias
+                IMPERATIVO_T: print "veni"; rtrue;      ! !veni!
             }
         'hacer':
             switch(tiempo) {
-                PRESENTE_T: print "hacés"; rtrue;       ! vos hacés
+                PRESENTE_T: print "haces"; rtrue;       ! vos haces
                 PRETERITO_T: print "hiciste"; rtrue;    ! vos hiciste
-                IMPERFECTO_T: print "hacías"; rtrue;    ! vos hacías
-                IMPERATIVO_T: print "hacé"; rtrue;      ! ¡hacé!
+                IMPERFECTO_T: print "hacias"; rtrue;    ! vos hacias
+                IMPERATIVO_T: print "hace"; rtrue;      ! !hace!
             }
         'poder':
             switch(tiempo) {
-                PRESENTE_T: print "podés"; rtrue;       ! vos podés
+                PRESENTE_T: print "podes"; rtrue;       ! vos podes
                 PRETERITO_T: print "pudiste"; rtrue;    ! vos pudiste
-                IMPERFECTO_T: print "podías"; rtrue;    ! vos podías
+                IMPERFECTO_T: print "podias"; rtrue;    ! vos podias
             }
         'querer':
             switch(tiempo) {
-                PRESENTE_T: print "querés"; rtrue;      ! vos querés
+                PRESENTE_T: print "queres"; rtrue;      ! vos queres
                 PRETERITO_T: print "quisiste"; rtrue;   ! vos quisiste
-                IMPERFECTO_T: print "querías"; rtrue;   ! vos querías
-                IMPERATIVO_T: print "queré"; rtrue;     ! ¡queré!
+                IMPERFECTO_T: print "querias"; rtrue;   ! vos querias
+                IMPERATIVO_T: print "quere"; rtrue;     ! !quere!
             }
         'ver':
             switch(tiempo) {
                 PRESENTE_T: print "ves"; rtrue;         ! vos ves
-                IMPERFECTO_T: print "veías"; rtrue;     ! vos veías
-                IMPERATIVO_T: print "ve"; rtrue;        ! ¡ve!
+                IMPERFECTO_T: print "veias"; rtrue;     ! vos veias
+                IMPERATIVO_T: print "ve"; rtrue;        ! !ve!
             }
         'dar':
             switch(tiempo) {
                 PRESENTE_T: print "das"; rtrue;         ! vos das
                 PRETERITO_T: print "diste"; rtrue;      ! vos diste
-                IMPERATIVO_T: print "da"; rtrue;        ! ¡da!
+                IMPERATIVO_T: print "da"; rtrue;        ! !da!
             }
     }
     return false; ! No es irregular conocido para voseo
 ];
 
 ! ==============================================================================
-! VOCABULARIO REGIONAL - ✅ SISTEMA COMPLETO
+! VOCABULARIO REGIONAL - [OK] SISTEMA COMPLETO
 ! ==============================================================================
 
-! Tabla de equivalencias léxicas regional
+! Tabla de equivalencias lexicas regional
 Array regional_vocabulary_table table
-    ! formato: palabra_estándar, región, palabra_regional
+    ! formato: palabra_estandar, region, palabra_regional
     'coche'     REGION_MEXICO     'carro'
     'coche'     REGION_ARGENTINA  'auto'  
     'coche'     REGION_SPAIN      'coche'
     'coche'     REGION_COLOMBIA   'carro'
     'coche'     REGION_CHILE      'auto'
     
-    'autobús'   REGION_MEXICO     'camión'
-    'autobús'   REGION_ARGENTINA  'colectivo'
-    'autobús'   REGION_SPAIN      'autobús'
-    'autobús'   REGION_COLOMBIA   'bus'
-    'autobús'   REGION_CHILE      'micro'
+    'autobus'   REGION_MEXICO     'camion'
+    'autobus'   REGION_ARGENTINA  'colectivo'
+    'autobus'   REGION_SPAIN      'autobus'
+    'autobus'   REGION_COLOMBIA   'bus'
+    'autobus'   REGION_CHILE      'micro'
     
-    'móvil'     REGION_MEXICO     'celular'
-    'móvil'     REGION_ARGENTINA  'celular'
-    'móvil'     REGION_SPAIN      'móvil'
-    'móvil'     REGION_COLOMBIA   'celular'
-    'móvil'     REGION_CHILE      'celular'
+    'movil'     REGION_MEXICO     'celular'
+    'movil'     REGION_ARGENTINA  'celular'
+    'movil'     REGION_SPAIN      'movil'
+    'movil'     REGION_COLOMBIA   'celular'
+    'movil'     REGION_CHILE      'celular'
     
     'ordenador' REGION_MEXICO     'computadora'
     'ordenador' REGION_ARGENTINA  'computadora'
@@ -338,7 +338,7 @@ Array regional_vocabulary_table table
     'zumo'      REGION_CHILE      'jugo';
 
 [ GetRegionalWord standard_word;
-    ! ✅ CORREGIDO: Función completa para obtener equivalencia regional
+    ! [OK] CORREGIDO: Funcion completa para obtener equivalencia regional
     local i;
     
     if (~~regional_vocabulary) return 0; ! Vocabulario regional desactivado
@@ -356,7 +356,7 @@ Array regional_vocabulary_table table
 ];
 
 [ GetStandardWord regional_word;
-    ! ✅ CORREGIDO: Función inversa completa
+    ! [OK] CORREGIDO: Funcion inversa completa
     local i;
     
     if (~~regional_vocabulary) return 0;
@@ -372,49 +372,49 @@ Array regional_vocabulary_table table
 ];
 
 ! ==============================================================================
-! EXPRESIONES IDIOMÁTICAS REGIONALES - ✅ COMPLETO
+! EXPRESIONES IDIOMATICAS REGIONALES - [OK] COMPLETO
 ! ==============================================================================
 
 [ GetRegionalExpression expression_type;
-    ! ✅ CORREGIDO: Función completa de expresiones idiomáticas
+    ! [OK] CORREGIDO: Funcion completa de expresiones idiomaticas
     switch(expression_type) {
         1: ! Expresiones de asentimiento
             switch(current_spanish_region) {
-                REGION_MEXICO: print "¡Órale, sí!";
-                REGION_ARGENTINA: print "¡Dale!";
-                REGION_SPAIN: print "¡Vale!";
-                REGION_COLOMBIA: print "¡Listo, sí!";
-                REGION_CHILE: print "¡Ya, sí!";
-                default: print "Sí, de acuerdo.";
+                REGION_MEXICO: print "!Orale, si!";
+                REGION_ARGENTINA: print "!Dale!";
+                REGION_SPAIN: print "!Vale!";
+                REGION_COLOMBIA: print "!Listo, si!";
+                REGION_CHILE: print "!Ya, si!";
+                default: print "Si, de acuerdo.";
             }
             
         2: ! Expresiones de sorpresa
             switch(current_spanish_region) {
-                REGION_MEXICO: print "¡No manches!";
-                REGION_ARGENTINA: print "¡No me digas!";
-                REGION_SPAIN: print "¡No me jodas!";
-                REGION_COLOMBIA: print "¡Uy, no!";
-                REGION_CHILE: print "¡No puede ser, weon!";
-                default: print "¡No puede ser!";
+                REGION_MEXICO: print "!No manches!";
+                REGION_ARGENTINA: print "!No me digas!";
+                REGION_SPAIN: print "!No me jodas!";
+                REGION_COLOMBIA: print "!Uy, no!";
+                REGION_CHILE: print "!No puede ser, weon!";
+                default: print "!No puede ser!";
             }
             
         3: ! Expresiones de despedida
             switch(current_spanish_region) {
-                REGION_MEXICO: print "¡Órale, nos vemos!";
-                REGION_ARGENTINA: print "¡Chau!";
-                REGION_SPAIN: print "¡Hasta luego!";
-                REGION_COLOMBIA: print "¡Que te vaya bien!";
-                REGION_CHILE: print "¡Chao!";
-                default: print "Adiós.";
+                REGION_MEXICO: print "!Orale, nos vemos!";
+                REGION_ARGENTINA: print "!Chau!";
+                REGION_SPAIN: print "!Hasta luego!";
+                REGION_COLOMBIA: print "!Que te vaya bien!";
+                REGION_CHILE: print "!Chao!";
+                default: print "Adios.";
             }
             
-        4: ! Expresiones de saludo según hora
+        4: ! Expresiones de saludo segun hora
             local time_of_day;
             time_of_day = (the_time / 60); ! Convertir a horas
             
-            if (time_of_day < 12) print "¡Buenos días!";
-            else if (time_of_day < 19) print "¡Buenas tardes!";
-            else print "¡Buenas noches!";
+            if (time_of_day < 12) print "!Buenos dias!";
+            else if (time_of_day < 19) print "!Buenas tardes!";
+            else print "!Buenas noches!";
             
         default:
             print "Hola."; ! Fallback neutral
@@ -423,36 +423,36 @@ Array regional_vocabulary_table table
 ];
 
 [ GetRegionalGreeting;
-    ! ✅ AÑADIDO: Saludos específicos por región
+    ! [OK] ANADIDO: Saludos especificos por region
     switch(current_spanish_region) {
-        REGION_MEXICO: print "¡Órale, qué tal!";
-        REGION_ARGENTINA: print "¡Hola, che!";
-        REGION_SPAIN: print "¡Hola, qué tal!";
-        REGION_COLOMBIA: print "¡Hola, ¿qué más?";
-        REGION_CHILE: print "¡Hola, weon!";
+        REGION_MEXICO: print "!Orale, que tal!";
+        REGION_ARGENTINA: print "!Hola, che!";
+        REGION_SPAIN: print "!Hola, que tal!";
+        REGION_COLOMBIA: print "!Hola, ?que mas?";
+        REGION_CHILE: print "!Hola, weon!";
         default: print "Hola.";
     }
 ];
 
 ! ==============================================================================
-! CONFIGURACIÓN DINÁMICA - API PARA EL DESARROLLADOR
+! CONFIGURACION DINAMICA - API PARA EL DESARROLLADOR
 ! ==============================================================================
 
 [ SetSpanishRegion new_region;
-    ! ✅ CORREGIDO: Función completa de configuración de región
+    ! [OK] CORREGIDO: Funcion completa de configuracion de region
     if (new_region < REGION_NEUTRAL || new_region > REGION_CHILE) {
-        print "Región inválida. Regiones disponibles: 0-5.^";
+        print "Region invalida. Regiones disponibles: 0-5.^";
         return false;
     }
     
     current_spanish_region = new_region;
-    SpanishRegionalInit();  ! Reconfigurar según nueva región
+    SpanishRegionalInit();  ! Reconfigurar segun nueva region
     
-    print "Región española cambiada a: ";
+    print "Region espanola cambiada a: ";
     switch(new_region) {
-        REGION_MEXICO: print "México";
+        REGION_MEXICO: print "Mexico";
         REGION_ARGENTINA: print "Argentina";  
-        REGION_SPAIN: print "España";
+        REGION_SPAIN: print "Espana";
         REGION_COLOMBIA: print "Colombia";
         REGION_CHILE: print "Chile";
         default: print "Neutral";
@@ -463,15 +463,15 @@ Array regional_vocabulary_table table
 ];
 
 [ ToggleVoseo;
-    ! ✅ CORREGIDO: Función completa para alternar voseo
+    ! [OK] CORREGIDO: Funcion completa para alternar voseo
     if (current_spanish_region ~= REGION_ARGENTINA) {
-        print "El voseo solo está disponible para la región Argentina.^";
+        print "El voseo solo esta disponible para la region Argentina.^";
         return false;
     }
     
     if (voseo_enabled) {
         voseo_enabled = false;
-        print "Voseo desactivado. Usando formas estándar con ~tú~.^";
+        print "Voseo desactivado. Usando formas estandar con ~tu~.^";
     } else {
         voseo_enabled = true; 
         print "Voseo activado. Usando formas argentinas con ~vos~.^";
@@ -480,10 +480,10 @@ Array regional_vocabulary_table table
 ];
 
 [ ToggleRegionalVocabulary;
-    ! ✅ CORREGIDO: Función completa para alternar vocabulario regional
+    ! [OK] CORREGIDO: Funcion completa para alternar vocabulario regional
     if (regional_vocabulary) {
         regional_vocabulary = false;
-        print "Vocabulario regional desactivado. Usando términos neutros.^";
+        print "Vocabulario regional desactivado. Usando terminos neutros.^";
     } else {
         regional_vocabulary = true;
         print "Vocabulario regional activado.^";
@@ -492,28 +492,28 @@ Array regional_vocabulary_table table
 ];
 
 [ GetAvailableRegions;
-    ! ✅ CORREGIDO: Función completa de información de regiones
+    ! [OK] CORREGIDO: Funcion completa de informacion de regiones
     print "Regiones disponibles:^";
     print "0 - Neutral (sin regionalismos)^";
-    print "1 - México^";
+    print "1 - Mexico^";
     print "2 - Argentina^";
-    print "3 - España^";
+    print "3 - Espana^";
     print "4 - Colombia^";
     print "5 - Chile^";
-    print "^Características por región:^";
-    print "• México: carro, camión, celular, computadora^";
-    print "• Argentina: auto, colectivo, voseo (vos tenés)^";
-    print "• España: coche, autobús, móvil, ordenador^";
-    print "• Colombia: carro, bus, apartamento^";
-    print "• Chile: auto, micro, weon^";
+    print "^Caracteristicas por region:^";
+    print "- Mexico: carro, camion, celular, computadora^";
+    print "- Argentina: auto, colectivo, voseo (vos tenes)^";
+    print "- Espana: coche, autobus, movil, ordenador^";
+    print "- Colombia: carro, bus, apartamento^";
+    print "- Chile: auto, micro, weon^";
 ];
 
 ! ==============================================================================
-! DETECCIÓN DE PRONOMBRES REGIONALES
+! DETECCION DE PRONOMBRES REGIONALES
 ! ==============================================================================
 
 [ LanguageRefersRegional obj wn   word;
-    ! ✅ CORREGIDO: Función completa de pronombres regionales
+    ! [OK] CORREGIDO: Funcion completa de pronombres regionales
     word = wn-->0;
     
     ! Si es voseo argentino, manejar "vos"
@@ -522,7 +522,7 @@ Array regional_vocabulary_table table
         if (obj == player) return true;
     }
     
-    ! Manejar pronombres regionales específicos
+    ! Manejar pronombres regionales especificos
     if (current_spanish_region == REGION_ARGENTINA) {
         if (word == 'che' && obj == player) return true;  ! "che" como referencia informal
     }
@@ -536,11 +536,11 @@ Array regional_vocabulary_table table
 ];
 
 ! ==============================================================================
-! MENSAJES REGIONALES ESPECÍFICOS
+! MENSAJES REGIONALES ESPECIFICOS
 ! ==============================================================================
 
 [ GetRegionalMessage message_type obj;
-    ! ✅ CORREGIDO: Función completa de mensajes regionales
+    ! [OK] CORREGIDO: Funcion completa de mensajes regionales
     switch(message_type) {
         1: ! Tomar objeto
             switch(current_spanish_region) {
@@ -552,18 +552,18 @@ Array regional_vocabulary_table table
             
         2: ! No puedes ver eso
             switch(current_spanish_region) {
-                REGION_MEXICO: print "No miras eso por aquí, amigo.";
-                REGION_ARGENTINA: print "No ves eso por acá, che.";
-                REGION_SPAIN: print "No ves tal cosa aquí.";
-                REGION_COLOMBIA: print "No ves eso por acá.";
+                REGION_MEXICO: print "No miras eso por aqui, amigo.";
+                REGION_ARGENTINA: print "No ves eso por aca, che.";
+                REGION_SPAIN: print "No ves tal cosa aqui.";
+                REGION_COLOMBIA: print "No ves eso por aca.";
                 REGION_CHILE: print "No ves esa cosa, weon.";
                 default: print "No puedes ver tal cosa.";
             }
             
-        3: ! Inventario vacío
+        3: ! Inventario vacio
             switch(current_spanish_region) {
                 REGION_MEXICO: print "No cargas nada, compadre.";
-                REGION_ARGENTINA: print "No tenés nada encima, che.";
+                REGION_ARGENTINA: print "No tenes nada encima, che.";
                 REGION_SPAIN: print "No llevas nada.";
                 REGION_COLOMBIA: print "No llevas nada, parcero.";
                 REGION_CHILE: print "No llevas nada, weon.";
@@ -577,23 +577,23 @@ Array regional_vocabulary_table table
 ];
 
 ! ==============================================================================
-! FUNCIONES DE DEPURACIÓN Y TESTING
+! FUNCIONES DE DEPURACION Y TESTING
 ! ==============================================================================
 
 #Ifdef DEBUG;
 [ TestRegionalFeatures;
-    print "^=== PRUEBA DE CARACTERÍSTICAS REGIONALES ===^";
-    print "Región actual: ";
+    print "^=== PRUEBA DE CARACTERISTICAS REGIONALES ===^";
+    print "Region actual: ";
     switch(current_spanish_region) {
-        REGION_MEXICO: print "México^";
+        REGION_MEXICO: print "Mexico^";
         REGION_ARGENTINA: print "Argentina^";
-        REGION_SPAIN: print "España^";
+        REGION_SPAIN: print "Espana^";
         REGION_COLOMBIA: print "Colombia^";
         REGION_CHILE: print "Chile^";
         default: print "Neutral^";
     }
     
-    ! Probar conjugación voseo
+    ! Probar conjugacion voseo
     if (voseo_enabled) {
         print "^Prueba de voseo:^";
         print "  tener (vos): "; ConjugarVoseo('tener', PRESENTE_T, 0); print "^";
@@ -609,11 +609,11 @@ Array regional_vocabulary_table table
 
 [ TestRegionalVocabulary;
     print "^=== PRUEBA DE VOCABULARIO REGIONAL ===^";
-    print "Región actual: ";
+    print "Region actual: ";
     switch(current_spanish_region) {
-        REGION_MEXICO: print "México^";
+        REGION_MEXICO: print "Mexico^";
         REGION_ARGENTINA: print "Argentina^";
-        REGION_SPAIN: print "España^";
+        REGION_SPAIN: print "Espana^";
         REGION_COLOMBIA: print "Colombia^";
         REGION_CHILE: print "Chile^";
         default: print "Neutral^";
@@ -626,113 +626,113 @@ Array regional_vocabulary_table table
         print "  coche → "; print (address) regional_word; print "^";
     }
     
-    regional_word = GetRegionalWord('autobús');
+    regional_word = GetRegionalWord('autobus');
     if (regional_word) {
-        print "  autobús → "; print (address) regional_word; print "^";
+        print "  autobus → "; print (address) regional_word; print "^";
     }
     
-    regional_word = GetRegionalWord('móvil');
+    regional_word = GetRegionalWord('movil');
     if (regional_word) {
-        print "  móvil → "; print (address) regional_word; print "^";
+        print "  movil → "; print (address) regional_word; print "^";
     }
     
     print "^=== FIN DE PRUEBA ===^";
 ];
 
 [ SpanishRegionalStats;
-    print "^=== ESTADÍSTICAS REGIONALES ===^";
-    print "Versión: ", (string) SPANISH_REGIONAL_VERSION, "^";
+    print "^=== ESTADISTICAS REGIONALES ===^";
+    print "Version: ", (string) SPANISH_REGIONAL_VERSION, "^";
     print "Regiones soportadas: ", SPANISH_REGIONS_SUPPORTED, "^";
     print "Vocabulario regional: ", SPANISH_REGIONAL_VOCAB_ENTRIES, " entradas^";
     print "^Estado actual:^";
-    print "• Región activa: ";
+    print "- Region activa: ";
     switch(current_spanish_region) {
-        REGION_MEXICO: print "México";
+        REGION_MEXICO: print "Mexico";
         REGION_ARGENTINA: print "Argentina";
-        REGION_SPAIN: print "España";
+        REGION_SPAIN: print "Espana";
         REGION_COLOMBIA: print "Colombia";
         REGION_CHILE: print "Chile";
         default: print "Neutral";
     }
-    print "^• Voseo: ";
-    if (voseo_enabled) print "✅ Activo"; else print "❌ Inactivo";
-    print "^• Vocabulario regional: ";
-    if (regional_vocabulary) print "✅ Activo"; else print "❌ Inactivo";
-    print "^• Formalidad: ";
+    print "^- Voseo: ";
+    if (voseo_enabled) print "[OK] Activo"; else print "[X] Inactivo";
+    print "^- Vocabulario regional: ";
+    if (regional_vocabulary) print "[OK] Activo"; else print "[X] Inactivo";
+    print "^- Formalidad: ";
     if (FormalityLevel == FORMAL) print "FORMAL"; else print "INFORMAL";
     print "^";
 ];
 #Endif;
 
 ! ==============================================================================
-! FUNCIÓN DE ESTADO Y DIAGNÓSTICO
+! FUNCION DE ESTADO Y DIAGNOSTICO
 ! ==============================================================================
 
 [ SpanishRegionalStatus;
-    ! ✅ CORREGIDO: Función completa de estado
+    ! [OK] CORREGIDO: Funcion completa de estado
     print "^=== ESTADO REGIONAL ===^";
-    print "Módulo: "; 
-    if (spanish_regional_ready) print "✅ Listo"; else print "❌ No inicializado";
+    print "Modulo: "; 
+    if (spanish_regional_ready) print "[OK] Listo"; else print "[X] No inicializado";
     print "^";
-    print "Región activa: ", current_spanish_region, "^";
+    print "Region activa: ", current_spanish_region, "^";
     print "Voseo: ";
-    if (voseo_enabled) print "✅"; else print "❌";
+    if (voseo_enabled) print "[OK]"; else print "[X]";
     print "^";
     print "Vocabulario regional: ";
-    if (regional_vocabulary) print "✅"; else print "❌";
+    if (regional_vocabulary) print "[OK]"; else print "[X]";
     print "^";
 ];
 
 ! ==============================================================================
-! RUTINA DE INICIALIZACIÓN PRINCIPAL
+! RUTINA DE INICIALIZACION PRINCIPAL
 ! ==============================================================================
 
 [ SpanishRegionalInitialise;
-    ! ✅ CORREGIDO: Inicialización completa sin duplicaciones
+    ! [OK] CORREGIDO: Inicializacion completa sin duplicaciones
     SpanishRegionalInit();
     MarkModuleLoaded('regional');
     
     #Ifdef DEBUG;
         print "^[SpanishRegional v", (string) SPANISH_REGIONAL_VERSION, " inicializado]^";
-        print "[✅ Soporte para ", SPANISH_REGIONS_SUPPORTED, " regiones: Neutral, México, Argentina, España, Colombia, Chile]^";
+        print "[[OK] Soporte para ", SPANISH_REGIONS_SUPPORTED, " regiones: Neutral, Mexico, Argentina, Espana, Colombia, Chile]^";
         
         if (voseo_enabled) {
             print "[🇦🇷 Voseo argentino activado]^";
         }
         
         if (regional_vocabulary && current_spanish_region ~= REGION_NEUTRAL) {
-            print "[✅ Vocabulario regional para ";
+            print "[[OK] Vocabulario regional para ";
             switch(current_spanish_region) {
-                REGION_MEXICO: print "México";
+                REGION_MEXICO: print "Mexico";
                 REGION_ARGENTINA: print "Argentina";
-                REGION_SPAIN: print "España";
+                REGION_SPAIN: print "Espana";
                 REGION_COLOMBIA: print "Colombia";
                 REGION_CHILE: print "Chile";
             }
             print " activado]^";
         }
         
-        print "[✅ Expresiones idiomáticas regionales disponibles]^";
+        print "[[OK] Expresiones idiomaticas regionales disponibles]^";
         print "[", SPANISH_REGIONAL_FUNCTIONS, " funciones disponibles]^";
     #Endif;
 ];
 
 ! ==============================================================================
-! CONSTANTES DE FINALIZACIÓN
+! CONSTANTES DE FINALIZACION
 ! ==============================================================================
 
 Constant SPANISH_REGIONAL_COMPLETE;
 Constant SPANISH_REGIONAL_READY;
 Constant SPANISH_REGIONS_SUPPORTED = 6;
 Constant SPANISH_REGIONAL_VOCAB_ENTRIES = 21;  ! 7 palabras × 3 regiones principales
-Constant SPANISH_REGIONAL_FUNCTIONS = 15; ! Número de funciones públicas
+Constant SPANISH_REGIONAL_FUNCTIONS = 15; ! Numero de funciones publicas
 
-! Información del módulo
-Constant SPANISH_REGIONAL_FEATURES = "6 regiones, voseo argentino, vocabulario regional 21 entradas, expresiones idiomáticas, configuración dinámica";
+! Informacion del modulo
+Constant SPANISH_REGIONAL_FEATURES = "6 regiones, voseo argentino, vocabulario regional 21 entradas, expresiones idiomaticas, configuracion dinamica";
 
 #Endif; ! SPANISH_REGIONAL_INCLUDED
 
 ! ==============================================================================
 ! Fin de SpanishRegional.h - Sistema regional completo y funcional
-! Actualizado para integración completa con el sistema modular
+! Actualizado para integracion completa con el sistema modular
 ! ==============================================================================

@@ -1,7 +1,7 @@
 ! ==============================================================================
-! SPANISHLIB.H - Librería Española Completa para Inform 6
-! Punto de entrada único del sistema modular CORREGIDO
-! Compatible con Inform 6.42 y librería estándar 6.12.7
+! SPANISHLIB.H - Libreria Espanola Completa para Inform 6
+! Punto de entrada unico del sistema modular CORREGIDO
+! Compatible con Inform 6.42 y libreria estandar 6.12.7
 ! ==============================================================================
 
 System_file;
@@ -11,7 +11,7 @@ Constant SPANISH_LIB_MAIN_INCLUDED;
 Constant SPANISH_LIB_VERSION = "6.12.7-modular-1.2-fixed";
 
 ! ==============================================================================
-! VERIFICACIÓN DE ENTORNO
+! VERIFICACION DE ENTORNO
 ! ==============================================================================
 
 #Ifdef LIBRARY_STAGE;
@@ -21,13 +21,13 @@ Constant SPANISH_LIB_VERSION = "6.12.7-modular-1.2-fixed";
 #Endif;
 
 ! ==============================================================================
-! CONFIGURACIÓN DE CARACTERÍSTICAS OPCIONALES
+! CONFIGURACION DE CARACTERISTICAS OPCIONALES
 ! ==============================================================================
 
 ! El usuario puede definir estas constantes ANTES de incluir SpanishLib.h
-! para activar características específicas:
+! para activar caracteristicas especificas:
 
-! Si no está definido SPANISH_MINIMAL, cargar características completas
+! Si no esta definido SPANISH_MINIMAL, cargar caracteristicas completas
 #Ifndef SPANISH_MINIMAL;
     #Ifndef SPANISH_FULL_MESSAGES; Constant SPANISH_FULL_MESSAGES; #Endif;
     #Ifndef SPANISH_META_COMMANDS; Constant SPANISH_META_COMMANDS; #Endif;
@@ -36,45 +36,44 @@ Constant SPANISH_LIB_VERSION = "6.12.7-modular-1.2-fixed";
 #Endif;
 
 ! ==============================================================================
-! NÚCLEO OBLIGATORIO - ORDEN CRÍTICO CORREGIDO
+! NUCLEO OBLIGATORIO - ORDEN CRITICO CORREGIDO
 ! ==============================================================================
 
-! 1. Constantes centralizadas (debe ir PRIMERO - sin dependencias)
-Include "SpanishConstants.h";
+! 0. Configuracion de caracteres espanoles (debe ir PRIMERO de TODO)
+Include "/home/fran/inform/InformLibSP_clean/SpanishLib/core/SpanishCharacters.h";
 
-! 2. Núcleo coordinador básico
-Include "SpanishCore.h";
+! 1. Constantes centralizadas (debe ir SEGUNDO - sin dependencias)
+Include "/home/fran/inform/InformLibSP_clean/SpanishLib/core/SpanishConstants.h";
 
-! 3. Módulos core en orden de dependencias CORREGIDO
+! 2. Nucleo coordinador basico
+Include "/home/fran/inform/InformLibSP_clean/SpanishLib/core/SpanishCore.h";
+
+! 3. Modulos core en orden de dependencias CORREGIDO
 #Ifdef SPANISH_ADVANCED_PARSER;
     ! Parser avanzado en 3 partes (nombres de archivos CORREGIDOS)
-    Include "SpanishParser1.h";      ! Parte 1: Manipulación y fundamentos
-    Include "SpanishParser2.h";      ! Parte 2: Procesamiento avanzado (¡minúscula!)
-    Include "SpanishParser3.h";      ! Parte 3: Análisis sintáctico
+    Include "/home/fran/inform/InformLibSP_clean/SpanishLib/core/SpanishParser1.h";      ! Parte 1: Manipulacion y fundamentos
+    Include "/home/fran/inform/InformLibSP_clean/SpanishLib/core/SpanishParser2.h";      ! Parte 2: Procesamiento avanzado
+    Include "/home/fran/inform/InformLibSP_clean/SpanishLib/core/SpanishParser3.h";      ! Parte 3: Analisis sintactico
 #Ifnot;
-    ! Parser básico incluido en Core
-    ! (SpanishCore.h ya incluye parsing básico)
+    ! Parser basico incluido en Core
+    ! (SpanishCore.h ya incluye parsing basico)
 #Endif;
 
-! Verificar disponibilidad antes de incluir
-#Ifdef SPANISH_GRAMMAR_AVAILABLE;
-    Include "SpanishGrammar.h";
-#Endif;
-#Ifdef SPANISH_VERBS_AVAILABLE;  
-    Include "SpanishVerbs.h";
-#Endif;
+! Incluir modulos core esenciales
+Include "/home/fran/inform/InformLibSP_clean/SpanishLib/core/SpanishGrammar.h";
+Include "/home/fran/inform/InformLibSP_clean/SpanishLib/core/SpanishVerbs.h";
 
 ! ==============================================================================
-! RECURSOS BÁSICOS
+! RECURSOS BASICOS
 ! ==============================================================================
 
 ! Sistema de mensajes (recomendado para funcionamiento completo)
 #Ifdef SPANISH_FULL_MESSAGES;
-    Include "SpanishMessages.h";
+    Include "/home/fran/inform/InformLibSP_clean/SpanishLib/resources/SpanishMessages.h";
 #Ifnot;
-    ! Solo mensajes básicos integrados en otros módulos
+    ! Solo mensajes basicos integrados en otros modulos
     #Ifdef DEBUG;
-        print "[AVISO: Usando solo mensajes básicos - define SPANISH_FULL_MESSAGES para completar]^";
+        print "[AVISO: Usando solo mensajes basicos - define SPANISH_FULL_MESSAGES para completar]^";
     #Endif;
 #Endif;
 
@@ -84,7 +83,7 @@ Include "SpanishCore.h";
 
 ! Verbos irregulares (muy recomendado)
 #Ifdef SPANISH_IRREGULAR_VERBS;
-    Include "SpanishIrregularVerbs.h";
+    Include "/home/fran/inform/InformLibSP_clean/SpanishLib/extensions/SpanishIrregularVerbs.h";
 #Ifnot;
     #Ifdef DEBUG;
         print "[AVISO: Solo verbos regulares - define SPANISH_IRREGULAR_VERBS para expandir]^";
@@ -93,49 +92,49 @@ Include "SpanishCore.h";
 
 ! Meta-comandos (UNDO, AGAIN, HELP, etc.)
 #Ifdef SPANISH_META_COMMANDS;
-    Include "SpanishMeta.h";
+    Include "/home/fran/inform/InformLibSP_clean/SpanishLib/extensions/SpanishMeta.h";
 #Ifnot;
     #Ifdef DEBUG;
-        print "[AVISO: Solo meta-comandos básicos - define SPANISH_META_COMMANDS para expandir]^";
+        print "[AVISO: Solo meta-comandos basicos - define SPANISH_META_COMMANDS para expandir]^";
     #Endif;
 #Endif;
 
 ! Variantes regionales (opcional)
 #Ifdef SPANISH_REGIONAL_VARIANTS;
-    Include "SpanishRegional.h";
+    Include "/home/fran/inform/InformLibSP_clean/SpanishLib/extensions/SpanishRegional.h";
 #Ifnot;
-    ! Sistema regional no requerido para funcionamiento básico
+    ! Sistema regional no requerido para funcionamiento basico
 #Endif;
 
 ! ==============================================================================
-! VERIFICACIÓN DE INTEGRIDAD POST-CARGA - CORREGIDA
+! VERIFICACION DE INTEGRIDAD POST-CARGA - CORREGIDA
 ! ==============================================================================
 
 [ SpanishLibValidateIntegrity   errors;
-    ! Verificar que todos los módulos críticos están cargados
+    ! Verificar que todos los modulos criticos estan cargados
     errors = 0;
     
     #Ifndef SPANISH_CONSTANTS_COMPLETE;
-        print "^[ERROR CRÍTICO: SpanishConstants.h no cargado correctamente]^";
+        print "^[ERROR CRITICO: SpanishConstants.h no cargado correctamente]^";
         errors++;
     #Endif;
     
     #Ifndef SPANISH_CORE_COMPLETE;
-        print "^[ERROR CRÍTICO: SpanishCore.h no cargado correctamente]^";
+        print "^[ERROR CRITICO: SpanishCore.h no cargado correctamente]^";
         errors++;
     #Endif;
     
     #Ifndef SPANISH_GRAMMAR_COMPLETE;
-        print "^[ERROR CRÍTICO: SpanishGrammar.h no cargado correctamente]^";
+        print "^[ERROR CRITICO: SpanishGrammar.h no cargado correctamente]^";
         errors++;
     #Endif;
     
     #Ifndef SPANISH_VERBS_COMPLETE;
-        print "^[ERROR CRÍTICO: SpanishVerbs.h no cargado correctamente]^";
+        print "^[ERROR CRITICO: SpanishVerbs.h no cargado correctamente]^";
         errors++;
     #Endif;
     
-    ! Verificar módulos opcionales con nombres CORREGIDOS
+    ! Verificar modulos opcionales con nombres CORREGIDOS
     #Ifdef SPANISH_FULL_MESSAGES;
         #Ifndef SPANISH_MESSAGES_COMPLETE;
             print "^[ADVERTENCIA: SpanishMessages.h solicitado pero no cargado]^";
@@ -171,7 +170,7 @@ Include "SpanishCore.h";
 ];
 
 ! ==============================================================================
-! RUTINA PRINCIPAL DE INICIALIZACIÓN CORREGIDA
+! RUTINA PRINCIPAL DE INICIALIZACION CORREGIDA
 ! ==============================================================================
 
 [ SpanishLibInitialise   integrity_errors;
@@ -180,14 +179,14 @@ Include "SpanishCore.h";
     ! Verificar integridad antes de inicializar
     integrity_errors = SpanishLibValidateIntegrity();
     if (integrity_errors > 0) {
-        print "^[ERROR: Sistema no puede inicializarse - ", integrity_errors, " errores críticos]^";
+        print "^[ERROR: Sistema no puede inicializarse - ", integrity_errors, " errores criticos]^";
         return false;
     }
     
-    ! Inicializar núcleo PRIMERO (siempre requerido)
+    ! Inicializar nucleo PRIMERO (siempre requerido)
     SpanishCoreInitialise();
     
-    ! Inicializar módulos principales (en orden CORREGIDO)
+    ! Inicializar modulos principales (en orden CORREGIDO)
     #Ifdef SPANISH_ADVANCED_PARSER;
         #Ifdef SPANISH_PARSER_PART1_COMPLETE;
             SpanishParserInitializePart1();
@@ -198,10 +197,10 @@ Include "SpanishCore.h";
         #Endif;
     #Endif;
     
-    ! SpanishGrammar y SpanishVerbs se inicializan automáticamente
-    ! cuando se cargan, vía sus propias rutinas
+    ! SpanishGrammar y SpanishVerbs se inicializan automaticamente
+    ! cuando se cargan, via sus propias rutinas
     
-    ! Inicializar extensiones opcionales (si están disponibles)
+    ! Inicializar extensiones opcionales (si estan disponibles)
     #Ifdef SPANISH_IRREGULAR_VERBS;
         #Ifdef SPANISH_IRREGULAR_VERBS_COMPLETE;
             SpanishIrregularVerbsInitialise();
@@ -226,10 +225,10 @@ Include "SpanishCore.h";
         #Endif;
     #Endif;
     
-    ! Mostrar configuración cargada
+    ! Mostrar configuracion cargada
     SpanishLibShowConfiguration();
     
-    ! Ejecutar verificaciones post-inicialización
+    ! Ejecutar verificaciones post-inicializacion
     SpanishLibPostInitChecks();
     
     print "^[Spanish Library lista para usar]^";
@@ -237,52 +236,52 @@ Include "SpanishCore.h";
 ];
 
 ! ==============================================================================
-! INFORMACIÓN DE CONFIGURACIÓN DETALLADA - CORREGIDA
+! INFORMACION DE CONFIGURACION DETALLADA - CORREGIDA
 ! ==============================================================================
 
 [ SpanishLibShowConfiguration;
-    print "^[===== CONFIGURACIÓN CARGADA =====]^";
-    print "[✅ Núcleo: SpanishCore + SpanishConstants]^";
-    print "[✅ Gramática: Artículos, concordancia, impresión]^";
-    print "[✅ Verbos: Conjugaciones AR/ER/IR básicas]^";
+    print "^[===== CONFIGURACION CARGADA =====]^";
+    print "[[OK] Nucleo: SpanishCore + SpanishConstants]^";
+    print "[[OK] Gramatica: Articulos, concordancia, impresion]^";
+    print "[[OK] Verbos: Conjugaciones AR/ER/IR basicas]^";
     
     #Ifdef SPANISH_ADVANCED_PARSER;
-        ! Verificación CORREGIDA del parser por partes
+        ! Verificacion CORREGIDA del parser por partes
         #Ifdef SPANISH_PARSER_PART1_COMPLETE;
             #Ifdef SPANISH_PARSER_PART2_COMPLETE;
                 #Ifdef SPANISH_PARSER_PART3_COMPLETE;
-                    print "[✅ Parser Avanzado: 3 partes completamente integradas]^";
-                    print "[    • Parte 1: Manipulación y normalización]^";
-                    print "[    • Parte 2: Preposiciones compuestas y contracciones]^";
-                    print "[    • Parte 3: Análisis sintáctico y corrección]^";
+                    print "[[OK] Parser Avanzado: 3 partes completamente integradas]^";
+                    print "[    - Parte 1: Manipulacion y normalizacion]^";
+                    print "[    - Parte 2: Preposiciones compuestas y contracciones]^";
+                    print "[    - Parte 3: Analisis sintactico y correccion]^";
                 #Ifnot;
-                    print "[⚠️  Parser Avanzado: Parte 3 (Análisis) no cargada]^";
+                    print "[[!]  Parser Avanzado: Parte 3 (Analisis) no cargada]^";
                 #Endif;
             #Ifnot;
-                print "[⚠️  Parser Avanzado: Parte 2 (Procesamiento) no cargada]^";
+                print "[[!]  Parser Avanzado: Parte 2 (Procesamiento) no cargada]^";
             #Endif;
         #Ifnot;
-            print "[⚠️  Parser Avanzado: Parte 1 (Manipulación) no cargada]^";
+            print "[[!]  Parser Avanzado: Parte 1 (Manipulacion) no cargada]^";
         #Endif;
     #Ifnot;
-        print "[ℹ️  Parser Básico: Funcionalidad mínima de parsing]^";
+        print "[ℹ️  Parser Basico: Funcionalidad minima de parsing]^";
     #Endif;
     
     #Ifdef SPANISH_FULL_MESSAGES;
         #Ifdef SPANISH_MESSAGES_COMPLETE;
-            print "[✅ Mensajes Completos: ~400 mensajes del sistema]^";
+            print "[[OK] Mensajes Completos: ~400 mensajes del sistema]^";
         #Ifnot;
-            print "[⚠️  Mensajes: Solicitados pero no completamente cargados]^";
+            print "[[!]  Mensajes: Solicitados pero no completamente cargados]^";
         #Endif;
     #Ifnot;
-        print "[ℹ️  Mensajes Básicos: Solo mensajes esenciales]^";
+        print "[ℹ️  Mensajes Basicos: Solo mensajes esenciales]^";
     #Endif;
     
     #Ifdef SPANISH_IRREGULAR_VERBS;
         #Ifdef SPANISH_IRREGULAR_VERBS_COMPLETE;
-            print "[✅ Verbos Irregulares: SER, ESTAR, TENER, HACER, etc.]^";
+            print "[[OK] Verbos Irregulares: SER, ESTAR, TENER, HACER, etc.]^";
         #Ifnot;
-            print "[⚠️  Verbos Irregulares: Solicitados pero no cargados]^";
+            print "[[!]  Verbos Irregulares: Solicitados pero no cargados]^";
         #Endif;
     #Ifnot;
         print "[ℹ️  Solo Verbos Regulares: Define SPANISH_IRREGULAR_VERBS para expandir]^";
@@ -290,19 +289,19 @@ Include "SpanishCore.h";
     
     #Ifdef SPANISH_META_COMMANDS;
         #Ifdef SPANISH_META_COMPLETE;
-            print "[✅ Meta-comandos: DESHACER, REPETIR, AYUDA, etc.]^";
+            print "[[OK] Meta-comandos: DESHACER, REPETIR, AYUDA, etc.]^";
         #Ifnot;
-            print "[⚠️  Meta-comandos: Solicitados pero no cargados]^";
+            print "[[!]  Meta-comandos: Solicitados pero no cargados]^";
         #Endif;
     #Ifnot;
-        print "[ℹ️  Meta-comandos Básicos: Define SPANISH_META_COMMANDS para expandir]^";
+        print "[ℹ️  Meta-comandos Basicos: Define SPANISH_META_COMMANDS para expandir]^";
     #Endif;
     
     #Ifdef SPANISH_REGIONAL_VARIANTS;
         #Ifdef SPANISH_REGIONAL_INCLUDED;
-            print "[✅ Variantes Regionales: Voseo, dialectos]^";
+            print "[[OK] Variantes Regionales: Voseo, dialectos]^";
         #Ifnot;
-            print "[⚠️  Variantes Regionales: Solicitadas pero no cargadas]^";
+            print "[[!]  Variantes Regionales: Solicitadas pero no cargadas]^";
         #Endif;
     #Endif;
     
@@ -310,29 +309,29 @@ Include "SpanishCore.h";
 ];
 
 ! ==============================================================================
-! VERIFICACIONES POST-INICIALIZACIÓN - CORREGIDAS
+! VERIFICACIONES POST-INICIALIZACION - CORREGIDAS
 ! ==============================================================================
 
 [ SpanishLibPostInitChecks   warnings;
     warnings = 0;
     
-    ! Verificar variables críticas
+    ! Verificar variables criticas
     if (FormalityLevel ~= FORMAL && FormalityLevel ~= INFORMAL) {
-        print "^[ADVERTENCIA: FormalityLevel tiene valor inválido: ", FormalityLevel, "]^";
-        FormalityLevel = INFORMAL; ! Corregir automáticamente
+        print "^[ADVERTENCIA: FormalityLevel tiene valor invalido: ", FormalityLevel, "]^";
+        FormalityLevel = INFORMAL; ! Corregir automaticamente
         warnings++;
     }
     
-    ! Verificar arrays críticos
+    ! Verificar arrays criticos
     if (LanguagePronouns-->0 == 0) {
         print "^[ADVERTENCIA: Array de pronombres no inicializado correctamente]^";
         warnings++;
     }
     
-    ! Verificar integración del parser - CORREGIDO
+    ! Verificar integracion del parser - CORREGIDO
     #Ifdef SPANISH_ADVANCED_PARSER;
         #Ifdef SPANISH_PARSER_PART3_COMPLETE;
-            ! Verificar que el parser está realmente operativo
+            ! Verificar que el parser esta realmente operativo
             if (spanish_parse_stage == 0) {
                 print "^[ADVERTENCIA: Parser avanzado cargado pero no inicializado]^";
                 warnings++;
@@ -340,7 +339,7 @@ Include "SpanishCore.h";
         #Endif;
     #Endif;
     
-    ! Mostrar estadísticas del sistema
+    ! Mostrar estadisticas del sistema
     SpanishLibShowStatistics();
     
     if (warnings > 0) {
@@ -351,9 +350,9 @@ Include "SpanishCore.h";
 ];
 
 [ SpanishLibShowStatistics;
-    print "^[===== ESTADÍSTICAS DEL SISTEMA =====]^";
+    print "^[===== ESTADISTICAS DEL SISTEMA =====]^";
     print "[Cobertura estimada: ", SPANISH_COVERAGE_ESTIMATED, "%]^";
-    print "[Módulos activos: ";
+    print "[Modulos activos: ";
     
     if (SPANISH_CORE_LOADED) print "Core ";
     if (SPANISH_PARSER_LOADED) print "Parser ";
@@ -366,32 +365,32 @@ Include "SpanishCore.h";
     print "]^";
     
     print "[Estado del sistema: ";
-    if (spanish_initialized) print "✅ Operativo";
-    else print "❌ No inicializado";
+    if (spanish_initialized) print "[OK] Operativo";
+    else print "[X] No inicializado";
     print "]^";
     
-    print "[Configuración: ";
+    print "[Configuracion: ";
     if (FormalityLevel == FORMAL) print "Formal (usted)";
-    else print "Informal (tú)";
+    else print "Informal (tu)";
     print "]^";
     
     #Ifdef SPANISH_REGIONAL_VARIANTS;
-        print "[Región: ";
+        print "[Region: ";
         switch(current_spanish_region) {
-            REGION_MEXICO: print "México";
+            REGION_MEXICO: print "Mexico";
             REGION_ARGENTINA: print "Argentina";  
-            REGION_SPAIN: print "España";
+            REGION_SPAIN: print "Espana";
             default: print "Neutral";
         }
         print "]^";
     #Endif;
     
-    ! Estadísticas específicas del parser
+    ! Estadisticas especificas del parser
     #Ifdef SPANISH_ADVANCED_PARSER;
         #Ifdef SPANISH_PARSER_PART3_COMPLETE;
-            print "[Parser: Última etapa procesada: ", spanish_parse_stage, "]^";
+            print "[Parser: Ultima etapa procesada: ", spanish_parse_stage, "]^";
             if (spanish_last_verb ~= 0) {
-                print "[Parser: Último verbo detectado: '", (address) spanish_last_verb, "']^";
+                print "[Parser: Ultimo verbo detectado: '", (address) spanish_last_verb, "']^";
             }
         #Endif;
     #Endif;
@@ -400,73 +399,73 @@ Include "SpanishCore.h";
 ];
 
 ! ==============================================================================
-! RUTINAS DE INFORMACIÓN Y DIAGNÓSTICO
+! RUTINAS DE INFORMACION Y DIAGNOSTICO
 ! ==============================================================================
 
 [ SpanishLibInfo;
     print "^=== SPANISH LIBRARY PARA INFORM 6 ===^";
-    print "Versión: ", (string) SPANISH_LIB_VERSION, "^";
-    print "Compatibilidad: Inform 6.42+ / Librería 6.12.7+^";
+    print "Version: ", (string) SPANISH_LIB_VERSION, "^";
+    print "Compatibilidad: Inform 6.42+ / Libreria 6.12.7+^";
     print "Arquitectura: Sistema modular corregido^";
-    print "^Módulos disponibles:^";
-    print "• SpanishConstants.h - Constantes y variables centralizadas^";
-    print "• SpanishCore.h - Coordinación y núcleo básico^";
-    print "• SpanishParser1.h - Manipulación y fundamentos de parsing^";
-    print "• Spanishparser2.h - Procesamiento avanzado y preposiciones^";
-    print "• SpanishParser3.h - Análisis sintáctico y corrección^";
-    print "• SpanishGrammar.h - Género, número, impresión, concordancia^";
-    print "• SpanishVerbs.h - Conjugaciones regulares y detección^";
-    print "• SpanishMessages.h - Sistema completo de mensajes (~400)^";
-    print "• SpanishIrregularVerbs.h - Verbos irregulares principales^";
-    print "• SpanishMeta.h - Meta-comandos del sistema^";
-    print "• SpanishRegional.h - Variantes dialectales (opcional)^";
-    print "^Características destacadas:^";
-    print "• Sin duplicaciones entre módulos^";
-    print "• Inicialización automática coordinada^";
-    print "• Verificación de integridad corregida^";
-    print "• Configuración modular flexible^";
-    print "• Sistema de fallbacks inteligente^";
-    print "^Para más información, usa SPANISH_DEBUG_INFO.^";
+    print "^Modulos disponibles:^";
+    print "- SpanishConstants.h - Constantes y variables centralizadas^";
+    print "- SpanishCore.h - Coordinacion y nucleo basico^";
+    print "- SpanishParser1.h - Manipulacion y fundamentos de parsing^";
+    print "- Spanishparser2.h - Procesamiento avanzado y preposiciones^";
+    print "- SpanishParser3.h - Analisis sintactico y correccion^";
+    print "- SpanishGrammar.h - Genero, numero, impresion, concordancia^";
+    print "- SpanishVerbs.h - Conjugaciones regulares y deteccion^";
+    print "- SpanishMessages.h - Sistema completo de mensajes (~400)^";
+    print "- SpanishIrregularVerbs.h - Verbos irregulares principales^";
+    print "- SpanishMeta.h - Meta-comandos del sistema^";
+    print "- SpanishRegional.h - Variantes dialectales (opcional)^";
+    print "^Caracteristicas destacadas:^";
+    print "- Sin duplicaciones entre modulos^";
+    print "- Inicializacion automatica coordinada^";
+    print "- Verificacion de integridad corregida^";
+    print "- Configuracion modular flexible^";
+    print "- Sistema de fallbacks inteligente^";
+    print "^Para mas informacion, usa SPANISH_DEBUG_INFO.^";
 ];
 
 [ SpanishLibTest;
-    print "^=== PRUEBA RÁPIDA DEL SISTEMA ===^";
+    print "^=== PRUEBA RAPIDA DEL SISTEMA ===^";
     
-    ! Probar funciones básicas de gramática
-    print "✓ Probando artículos: ";
+    ! Probar funciones basicas de gramatica
+    print "✓ Probando articulos: ";
     print "el libro, la mesa, los libros, las mesas^";
     
-    ! Probar conjugaciones básicas
+    ! Probar conjugaciones basicas
     print "✓ Probando verbos regulares: ";
     print "camino, comes, vive^";
     
-    ! Probar verbos irregulares si están disponibles
+    ! Probar verbos irregulares si estan disponibles
     #Ifdef SPANISH_IRREGULAR_VERBS_COMPLETE;
         print "✓ Probando verbos irregulares: ";
         print "soy, tienes, va, hacemos^";
     #Endif;
     
-    ! Probar parser si está disponible - CORREGIDO
+    ! Probar parser si esta disponible - CORREGIDO
     #Ifdef SPANISH_PARSER_PART3_COMPLETE;
         print "✓ Parser avanzado: 3 partes completamente integradas^";
     #Ifnot;
         #Ifdef SPANISH_PARSER_PART1_COMPLETE;
-            print "ℹ️ Parser parcial: Solo manipulación básica^";
+            print "ℹ️ Parser parcial: Solo manipulacion basica^";
         #Ifnot;
-            print "ℹ️ Parser básico: funcional^";
+            print "ℹ️ Parser basico: funcional^";
         #Endif;
     #Endif;
     
-    ! Probar meta-comandos si están disponibles
+    ! Probar meta-comandos si estan disponibles
     #Ifdef SPANISH_META_COMPLETE;
         print "✓ Meta-comandos: DESHACER, REPETIR, AYUDA disponibles^";
     #Endif;
     
     ! Probar estado del sistema
     if (spanish_initialized) {
-        print "✅ Sistema completamente operativo^";
+        print "[OK] Sistema completamente operativo^";
     } else {
-        print "⚠️ Sistema no inicializado - llamar SpanishLibInitialise()^";
+        print "[!] Sistema no inicializado - llamar SpanishLibInitialise()^";
     }
     
     print "^=== PRUEBA COMPLETADA ===^";
@@ -474,49 +473,49 @@ Include "SpanishCore.h";
 
 #Ifdef DEBUG;
 [ SPANISH_DEBUG_INFO;
-    ! Función de debug completa del sistema
+    ! Funcion de debug completa del sistema
     print "^======= DEBUG COMPLETO DEL SISTEMA =======^";
     
-    ! Estado de módulos - CORREGIDO
-    print "^MÓDULOS CARGADOS:^";
+    ! Estado de modulos - CORREGIDO
+    print "^MODULOS CARGADOS:^";
     #Ifdef SPANISH_CONSTANTS_COMPLETE;
-        print "✅ SpanishConstants.h v", (string) SPANISH_CONSTANTS_VERSION, "^";
+        print "[OK] SpanishConstants.h v", (string) SPANISH_CONSTANTS_VERSION, "^";
     #Endif;
     #Ifdef SPANISH_CORE_COMPLETE;
-        print "✅ SpanishCore.h v", (string) SPANISH_CORE_VERSION, "^";
+        print "[OK] SpanishCore.h v", (string) SPANISH_CORE_VERSION, "^";
     #Endif;
     #Ifdef SPANISH_PARSER_PART1_COMPLETE;
-        print "✅ SpanishParser1.h v", (string) SPANISH_PARSER_VERSION, " (Parte 1)^";
+        print "[OK] SpanishParser1.h v", (string) SPANISH_PARSER_VERSION, " (Parte 1)^";
     #Endif;
     #Ifdef SPANISH_PARSER_PART2_COMPLETE;
-        print "✅ Spanishparser2.h v", (string) SPANISH_PARSER_VERSION, " (Parte 2)^";
+        print "[OK] Spanishparser2.h v", (string) SPANISH_PARSER_VERSION, " (Parte 2)^";
     #Endif;
     #Ifdef SPANISH_PARSER_PART3_COMPLETE;
-        print "✅ SpanishParser3.h v", (string) SPANISH_PARSER_VERSION, " (Parte 3)^";
+        print "[OK] SpanishParser3.h v", (string) SPANISH_PARSER_VERSION, " (Parte 3)^";
     #Endif;
     #Ifdef SPANISH_GRAMMAR_COMPLETE;
-        print "✅ SpanishGrammar.h v", (string) SPANISH_GRAMMAR_VERSION, "^";
+        print "[OK] SpanishGrammar.h v", (string) SPANISH_GRAMMAR_VERSION, "^";
     #Endif;
     #Ifdef SPANISH_VERBS_COMPLETE;
-        print "✅ SpanishVerbs.h v", (string) SPANISH_VERBS_VERSION, "^";
+        print "[OK] SpanishVerbs.h v", (string) SPANISH_VERBS_VERSION, "^";
     #Endif;
     #Ifdef SPANISH_MESSAGES_COMPLETE;
-        print "✅ SpanishMessages.h v", (string) SPANISH_MESSAGES_VERSION, "^";
+        print "[OK] SpanishMessages.h v", (string) SPANISH_MESSAGES_VERSION, "^";
     #Endif;
     #Ifdef SPANISH_IRREGULAR_VERBS_COMPLETE;
-        print "✅ SpanishIrregularVerbs.h v", (string) SPANISH_IRREGULAR_VERBS_VERSION, "^";
+        print "[OK] SpanishIrregularVerbs.h v", (string) SPANISH_IRREGULAR_VERBS_VERSION, "^";
     #Endif;
     #Ifdef SPANISH_META_COMPLETE;
-        print "✅ SpanishMeta.h v", (string) SPANISH_META_VERSION, "^";
+        print "[OK] SpanishMeta.h v", (string) SPANISH_META_VERSION, "^";
     #Endif;
     #Ifdef SPANISH_REGIONAL_INCLUDED;
-        print "✅ SpanishRegional.h v", (string) SPANISH_REGIONAL_VERSION, "^";
+        print "[OK] SpanishRegional.h v", (string) SPANISH_REGIONAL_VERSION, "^";
     #Endif;
     
     ! Estado del sistema
     SpanishSystemStatus();
     
-    ! Estadísticas avanzadas del parser - CORREGIDO
+    ! Estadisticas avanzadas del parser - CORREGIDO
     #Ifdef SPANISH_PARSER_PART3_COMPLETE;
         SpanishParserStats();
     #Endif;
@@ -526,28 +525,28 @@ Include "SpanishCore.h";
 #Endif;
 
 ! ==============================================================================
-! COMPATIBILIDAD Y INTEGRACIÓN AUTOMÁTICA - CORREGIDA
+! COMPATIBILIDAD Y INTEGRACION AUTOMATICA - CORREGIDA
 ! ==============================================================================
 
-! Integración automática con LanguageInitialise (si no se desactiva)
+! Integracion automatica con LanguageInitialise (si no se desactiva)
 #Ifndef SPANISH_MANUAL_INIT;
 [ LanguageInitialise; 
     return SpanishLibInitialise(); 
 ];
 #Endif;
 
-! Alias para compatibilidad con código existente
+! Alias para compatibilidad con codigo existente
 [ InitSpanishLib; 
     return SpanishLibInitialise(); 
 ];
 
-! Función principal del parser (integración con Inform) - CORREGIDA
+! Funcion principal del parser (integracion con Inform) - CORREGIDA
 #Ifndef LanguageToInformese;
 [ LanguageToInformese;
     #Ifdef SPANISH_PARSER_PART3_COMPLETE;
-        return SpanishParserMain();  ! Función que existe en la Parte 3
+        return SpanishParserMain();  ! Funcion que existe en la Parte 3
     #Ifnot;
-        ! Usar el procesamiento básico del Core
+        ! Usar el procesamiento basico del Core
         return SpanishBasicParsing();
     #Endif;
 ];
@@ -557,29 +556,29 @@ Include "SpanishCore.h";
 ! CONFIGURACIONES PREDEFINIDAS PARA FACILIDAD DE USO
 ! ==============================================================================
 
-! Para usar configuración mínima:
+! Para usar configuracion minima:
 ! #define SPANISH_MINIMAL antes de incluir SpanishLib.h
 
-! Para usar configuración completa (por defecto):
-! No definir nada, o definir explícitamente:
+! Para usar configuracion completa (por defecto):
+! No definir nada, o definir explicitamente:
 ! #define SPANISH_FULL_MESSAGES
 ! #define SPANISH_META_COMMANDS  
 ! #define SPANISH_IRREGULAR_VERBS
 ! #define SPANISH_ADVANCED_PARSER
 
-! Para usar configuración personalizada:
+! Para usar configuracion personalizada:
 ! Definir solo las constantes deseadas antes de incluir SpanishLib.h
 
 ! ==============================================================================
-! CONSTANTES DE COBERTURA Y ESTADÍSTICAS DINÁMICAS - CORREGIDAS
+! CONSTANTES DE COBERTURA Y ESTADISTICAS DINAMICAS - CORREGIDAS
 ! ==============================================================================
 
-! Cálculo dinámico de cobertura basado en módulos cargados
+! Calculo dinamico de cobertura basado en modulos cargados
 #Ifdef SPANISH_IRREGULAR_VERBS_COMPLETE;
     #Ifdef SPANISH_MESSAGES_COMPLETE;
         #Ifdef SPANISH_META_COMPLETE;
             #Ifdef SPANISH_PARSER_PART3_COMPLETE;
-                Constant SPANISH_COVERAGE_ESTIMATED = 98;  ! Configuración máxima
+                Constant SPANISH_COVERAGE_ESTIMATED = 98;  ! Configuracion maxima
             #Ifnot;
                 #Ifdef SPANISH_PARSER_PART1_COMPLETE;
                     Constant SPANISH_COVERAGE_ESTIMATED = 94;  ! Parser parcial
@@ -635,28 +634,28 @@ Include "SpanishCore.h";
             #Ifdef SPANISH_PARSER_PART3_COMPLETE;
                 Constant SPANISH_COVERAGE_ESTIMATED = 60;
             #Ifnot;
-                Constant SPANISH_COVERAGE_ESTIMATED = 50;  ! Solo núcleo básico
+                Constant SPANISH_COVERAGE_ESTIMATED = 50;  ! Solo nucleo basico
             #Endif;
         #Endif;
     #Endif;
 #Endif;
 
 ! ==============================================================================
-! MARCADORES DE FINALIZACIÓN Y INFORMACIÓN DE BUILD
+! MARCADORES DE FINALIZACION Y INFORMACION DE BUILD
 ! ==============================================================================
 
 Constant SPANISH_LIB_COMPLETE;
 Constant SPANISH_MODULAR_READY;
 Constant SPANISH_SYSTEM_INTEGRATED;
 
-! Información de build
+! Informacion de build
 Constant SPANISH_BUILD_INFO = "Modular corrected build with full integration - Fixed includes and dependencies";
 Constant SPANISH_BUILD_DATE = "2024-12-27-fully-corrected";
 Constant SPANISH_ARCHITECTURE = "Centralized constants + Modular components + Smart coordination + Fixed file references";
 
 ! Contador de funcionalidades
-Constant SPANISH_TOTAL_FUNCTIONS_ESTIMATED = 200;  ! Aproximación
-Constant SPANISH_TOTAL_MESSAGES_ESTIMATED = 400;   ! Con módulo completo
+Constant SPANISH_TOTAL_FUNCTIONS_ESTIMATED = 200;  ! Aproximacion
+Constant SPANISH_TOTAL_MESSAGES_ESTIMATED = 400;   ! Con modulo completo
 Constant SPANISH_TOTAL_VERBS_ESTIMATED = 250;      ! Con irregulares
 
 #Endif; ! SPANISH_LIB_MAIN_INCLUDED

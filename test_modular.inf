@@ -1,0 +1,33 @@
+!% -~S~D
+!
+! Test del sistema modular SpanishLib
+!
+
+Constant Story "Test Modular";
+Constant Headline "^Test sistema modular^";
+
+! Incluir librerías estándar de Inform primero
+Include "Parser";
+Include "VerbLib";
+
+! Configurar sistema español modular
+Constant SPANISH_MINIMAL;  ! Configuración mínima para evitar dependencias externas
+
+! Incluir nuestro sistema modular
+Include "SpanishLib/SpanishLib";
+
+Object TestRoom "Habitacion"
+  with description "Habitacion de prueba.",
+  has light;
+
+Object -> TestObject "objeto"
+  with name 'objeto',
+       description "Un objeto simple.",
+  has;
+
+[ Initialise;
+  location = TestRoom;
+  print "^Sistema modular SpanishLib inicializado.^";
+];
+
+Include "Grammar";

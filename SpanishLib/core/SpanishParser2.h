@@ -1,11 +1,11 @@
 ! ==============================================================================
 ! SPANISHPARSER.H - PARTE 2: PROCESAMIENTO AVANZADO
-! Preposiciones compuestas, contracciones y eliminación de palabras superfluas
+! Preposiciones compuestas, contracciones y eliminacion de palabras superfluas
 ! Parte del sistema modular Spanish Library para Inform 6
-! Compatible con Inform 6.42 y librería estándar 6.12.7
+! Compatible con Inform 6.42 y libreria estandar 6.12.7
 ! ==============================================================================
 
-! Requiere que la Parte 1 ya esté incluida
+! Requiere que la Parte 1 ya este incluida
 #Ifndef SPANISH_PARSER_PART1_COMPLETE;
   Message fatalerror "*** Include SpanishParser Parte 1 antes de Parte 2 ***";
 #Endif;
@@ -15,7 +15,7 @@
 ! ==============================================================================
 
 [ SpanishProcessCompoundPrepositions   i j k l result;
-    ! Procesa preposiciones compuestas españolas complejas
+    ! Procesa preposiciones compuestas espanolas complejas
     spanish_compound_prep_found = 0;
     result = 0;
     
@@ -34,7 +34,7 @@
             #Ifdef DEBUG;
                 SpanishDebugManipulation(6, i, j);
             #Endif;
-            continue; ! i ya se ajustó automáticamente
+            continue; ! i ya se ajusto automaticamente
         }
         
         ! Preposiciones de tres palabras (verificar que hay suficientes palabras)
@@ -45,7 +45,7 @@
                 #Ifdef DEBUG;
                     SpanishDebugManipulation(6, i, j);
                 #Endif;
-                continue; ! i ya se ajustó automáticamente
+                continue; ! i ya se ajusto automaticamente
             }
         }
     }
@@ -99,9 +99,9 @@
         return true;
     }
     
-    ! detrás de  
-    if (word1 == 'detrás' && word2 == 'de') {
-        SpanishReplaceWord(pos, 'detrás_de', 'detrás_de');
+    ! detras de  
+    if (word1 == 'detras' && word2 == 'de') {
+        SpanishReplaceWord(pos, 'detras_de', 'detras_de');
         SpanishRemoveWord(pos+1);
         return true;
     }
@@ -120,9 +120,9 @@
         return true;
     }
     
-    ! a través (primera parte - se completará en 3 palabras)
-    if (word1 == 'a' && word2 == 'través') {
-        SpanishReplaceWord(pos, 'a_través', 'a_través');
+    ! a traves (primera parte - se completara en 3 palabras)
+    if (word1 == 'a' && word2 == 'traves') {
+        SpanishReplaceWord(pos, 'a_traves', 'a_traves');
         SpanishRemoveWord(pos+1);
         return true;
     }
@@ -183,9 +183,9 @@
         return true;
     }
     
-    ! a través de (completar)
-    if (word1 == 'a_través' && word2 == 'de') {
-        SpanishReplaceWord(pos, 'a_través_de', 'a_través_de');
+    ! a traves de (completar)
+    if (word1 == 'a_traves' && word2 == 'de') {
+        SpanishReplaceWord(pos, 'a_traves_de', 'a_traves_de');
         SpanishRemoveWord(pos+1);
         return true;
     }
@@ -265,7 +265,7 @@
 ! ==============================================================================
 
 [ SpanishProcessContractions   i j result changed max_iterations;
-    ! Procesa contracciones españolas (del, al) de forma robusta
+    ! Procesa contracciones espanolas (del, al) de forma robusta
     spanish_contraction_processed = 0;
     result = 0;
     changed = true;
@@ -275,7 +275,7 @@
         print "[PARSER] Iniciando procesamiento de contracciones^";
     #Endif;
     
-    ! Procesar múltiples pasadas hasta que no haya cambios
+    ! Procesar multiples pasadas hasta que no haya cambios
     while (changed && max_iterations > 0) {
         changed = false;
         max_iterations--;
@@ -290,7 +290,7 @@
                 result++;
                 changed = true;
                 #Ifdef DEBUG;
-                    print "[PARSER] Contracción: del -> de + el^";
+                    print "[PARSER] Contraccion: del -> de + el^";
                 #Endif;
                 i++; ! Saltar la palabra insertada
                 continue;
@@ -303,7 +303,7 @@
                 result++;
                 changed = true;
                 #Ifdef DEBUG;
-                    print "[PARSER] Contracción: al -> a + el^";
+                    print "[PARSER] Contraccion: al -> a + el^";
                 #Endif;
                 i++; ! Saltar la palabra insertada
                 continue;
@@ -316,7 +316,7 @@
                 result++;
                 changed = true;
                 #Ifdef DEBUG;
-                    print "[PARSER] Contracción: conmigo -> con + mi^";
+                    print "[PARSER] Contraccion: conmigo -> con + mi^";
                 #Endif;
                 i++; ! Saltar la palabra insertada
                 continue;
@@ -328,7 +328,7 @@
                 result++;
                 changed = true;
                 #Ifdef DEBUG;
-                    print "[PARSER] Contracción: contigo -> con + ti^";
+                    print "[PARSER] Contraccion: contigo -> con + ti^";
                 #Endif;
                 i++; ! Saltar la palabra insertada
                 continue;
@@ -340,7 +340,7 @@
                 result++;
                 changed = true;
                 #Ifdef DEBUG;
-                    print "[PARSER] Contracción: consigo -> con + si^";
+                    print "[PARSER] Contraccion: consigo -> con + si^";
                 #Endif;
                 i++; ! Saltar la palabra insertada
                 continue;
@@ -368,7 +368,7 @@
     removed = 0;
     
     #Ifdef DEBUG;
-        print "[PARSER] Iniciando eliminación de palabras superfluas^";
+        print "[PARSER] Iniciando eliminacion de palabras superfluas^";
     #Endif;
     
     i = 0;
@@ -379,7 +379,7 @@
         if (j == 'que') {
             if (SpanishShouldRemoveQue(i)) {
                 #Ifdef DEBUG;
-                    print "[PARSER] Eliminando 'que' superfluo en posición ", i, "^";
+                    print "[PARSER] Eliminando 'que' superfluo en posicion ", i, "^";
                 #Endif;
                 SpanishRemoveWord(i);
                 removed++;
@@ -387,10 +387,10 @@
             }
         }
         
-        ! Eliminar muletillas y palabras de cortesía
+        ! Eliminar muletillas y palabras de cortesia
         if (j == 'por_favor' or 'porfavor' or 'porfa' or 'please') {
             #Ifdef DEBUG;
-                print "[PARSER] Eliminando muletilla de cortesía: ", (address) j, "^";
+                print "[PARSER] Eliminando muletilla de cortesia: ", (address) j, "^";
             #Endif;
             SpanishRemoveWord(i);
             removed++;
@@ -409,7 +409,7 @@
         ! Eliminar interjecciones comunes
         if (j == 'eh' or 'este' or 'bueno' or 'pues' or 'bien' or 'ah' or 'oh') {
             #Ifdef DEBUG;
-                print "[PARSER] Eliminando interjección: ", (address) j, "^";
+                print "[PARSER] Eliminando interjeccion: ", (address) j, "^";
             #Endif;
             SpanishRemoveWord(i);
             removed++;
@@ -420,7 +420,7 @@
         if (j == 'mira' or 'oye' or 'escucha' or 'atiende') {
             if (SpanishShouldRemoveInterjection(i)) {
                 #Ifdef DEBUG;
-                    print "[PARSER] Eliminando expresión de inicio: ", (address) j, "^";
+                    print "[PARSER] Eliminando expresion de inicio: ", (address) j, "^";
                 #Endif;
                 SpanishRemoveWord(i);
                 removed++;
@@ -428,11 +428,11 @@
             }
         }
         
-        ! Eliminar artículos redundantes en algunos contextos
+        ! Eliminar articulos redundantes en algunos contextos
         if (j == 'el' or 'la' or 'los' or 'las') {
             if (SpanishShouldRemoveArticle(i)) {
                 #Ifdef DEBUG;
-                    print "[PARSER] Eliminando artículo redundante: ", (address) j, "^";
+                    print "[PARSER] Eliminando articulo redundante: ", (address) j, "^";
                 #Endif;
                 SpanishRemoveWord(i);
                 removed++;
@@ -444,7 +444,7 @@
         if (j == 'de' or 'en' or 'con' or 'para') {
             if (SpanishShouldRemovePreposition(i)) {
                 #Ifdef DEBUG;
-                    print "[PARSER] Eliminando preposición redundante: ", (address) j, "^";
+                    print "[PARSER] Eliminando preposicion redundante: ", (address) j, "^";
                 #Endif;
                 SpanishRemoveWord(i);
                 removed++;
@@ -452,7 +452,7 @@
             }
         }
         
-        i++; ! Solo incrementar si no se eliminó nada
+        i++; ! Solo incrementar si no se elimino nada
     }
     
     spanish_words_removed += removed;
@@ -467,7 +467,7 @@
 ];
 
 [ SpanishShouldRemoveQue pos   prev_word next_word;
-    ! Determina si "que" debe eliminarse según el contexto
+    ! Determina si "que" debe eliminarse segun el contexto
     if (pos == 0) return true; ! "Que" al inicio generalmente sobra
     
     prev_word = 0;
@@ -476,7 +476,7 @@
     if (pos > 0) prev_word = SpanishGetWordAt(pos-1);
     if (pos < parse->1 - 1) next_word = SpanishGetWordAt(pos+1);
     
-    ! No eliminar después de verbos declarativos
+    ! No eliminar despues de verbos declarativos
     if (prev_word == 'preguntar' or 'decir' or 'saber' or 'esperar' or 'querer' 
                   or 'pedir' or 'creer' or 'pensar' or 'contar' or 'explicar'
                   or 'afirmar' or 'negar' or 'dudar' or 'suponer') {
@@ -484,12 +484,12 @@
     }
     
     ! No eliminar en construcciones comparativas
-    if (prev_word == 'más' or 'menos' or 'mejor' or 'peor' or 'mayor' or 'menor') {
+    if (prev_word == 'mas' or 'menos' or 'mejor' or 'peor' or 'mayor' or 'menor') {
         return false;
     }
     
     ! No eliminar en construcciones temporales
-    if (prev_word == 'antes' or 'después' or 'mientras' or 'cuando') {
+    if (prev_word == 'antes' or 'despues' or 'mientras' or 'cuando') {
         return false;
     }
     
@@ -498,7 +498,7 @@
 ];
 
 [ SpanishShouldRemoveArticle pos   next_word prev_word;
-    ! Determina si un artículo debe eliminarse
+    ! Determina si un articulo debe eliminarse
     if (pos >= parse->1 - 1) return false; ! No hay palabra siguiente
     
     next_word = SpanishGetWordAt(pos+1);
@@ -511,34 +511,34 @@
     ! No eliminar en construcciones "todo el/la/los/las"
     if (prev_word == 'todo' or 'toda' or 'todos' or 'todas') return false;
     
-    ! No eliminar después de preposiciones importantes
+    ! No eliminar despues de preposiciones importantes
     if (prev_word == 'hacia' or 'hasta' or 'desde' or 'contra') return false;
     
-    ! En comandos muy cortos, mantener artículos
+    ! En comandos muy cortos, mantener articulos
     if (parse->1 <= 3) return false;
     
-    ! En general, mantener artículos (política conservadora)
+    ! En general, mantener articulos (politica conservadora)
     return false;
 ];
 
 [ SpanishShouldRemovePreposition pos   next_word prev_word;
-    ! Determina si una preposición debe eliminarse
+    ! Determina si una preposicion debe eliminarse
     if (pos >= parse->1 - 1) return false; ! No hay palabra siguiente
-    if (pos == 0) return false; ! Preposición al inicio es importante
+    if (pos == 0) return false; ! Preposicion al inicio es importante
     
     next_word = SpanishGetWordAt(pos+1);
     prev_word = SpanishGetWordAt(pos-1);
     
     ! No eliminar preposiciones que conectan objetos importantes
-    return false; ! Política muy conservadora por ahora
+    return false; ! Politica muy conservadora por ahora
 ];
 
 [ SpanishShouldRemoveInterjection pos   next_word;
-    ! Determina si una interjección de inicio debe eliminarse
+    ! Determina si una interjeccion de inicio debe eliminarse
     if (pos ~= 0) return false; ! Solo al inicio de frase
     if (parse->1 <= 2) return false; ! Frase muy corta
     
-    ! Si hay un verbo después, probablemente es interjección
+    ! Si hay un verbo despues, probablemente es interjeccion
     if (pos < parse->1 - 1) {
         next_word = SpanishGetWordAt(pos+1);
         if (SpanishIsVerbCandidate(pos+1)) return true;
@@ -548,7 +548,7 @@
 ];
 
 ! ==============================================================================
-! RUTINAS DE ANÁLISIS DE CONTEXTO
+! RUTINAS DE ANALISIS DE CONTEXTO
 ! ==============================================================================
 
 [ SpanishAnalyzeContext pos   prev_word next_word context;
@@ -568,7 +568,7 @@
     if (SpanishIsObjectCandidate(pos-1)) context = context | 4;
     if (SpanishIsObjectCandidate(pos+1)) context = context | 8;
     
-    ! Contexto de preposición
+    ! Contexto de preposicion
     if (SpanishIsPreposition(prev_word)) context = context | 16;
     if (SpanishIsPreposition(next_word)) context = context | 32;
     
@@ -590,26 +590,26 @@
     ! Importancia media para preposiciones
     if (SpanishIsPreposition(word)) importance += 5;
     
-    ! Importancia baja para artículos y muletillas
+    ! Importancia baja para articulos y muletillas
     if (SpanishIsArticle(word)) importance += 2;
     if (word == 'que' or 'muy' or 'bastante') importance += 1;
     
     ! Modificadores de contexto
-    if (context & 1) importance += 2; ! Después de verbo
-    if (context & 16) importance += 3; ! Después de preposición
+    if (context & 1) importance += 2; ! Despues de verbo
+    if (context & 16) importance += 3; ! Despues de preposicion
     
     return importance;
 ];
 
 ! ==============================================================================
-! CONSTANTES DE FINALIZACIÓN PARTE 2
+! CONSTANTES DE FINALIZACION PARTE 2
 ! ==============================================================================
 
 Constant SPANISH_PARSER_PART2_COMPLETE;
 Constant SPANISH_PARSER_ADVANCED_READY;
 
-! Información de la Parte 2
-Constant SPANISH_PARSER_PART2_FEATURES = "Preposiciones compuestas (20+), contracciones robustas, eliminación inteligente";
+! Informacion de la Parte 2
+Constant SPANISH_PARSER_PART2_FEATURES = "Preposiciones compuestas (20+), contracciones robustas, eliminacion inteligente";
 
 ! ==============================================================================
 ! Fin de SpanishParser.h - Parte 2: Procesamiento Avanzado

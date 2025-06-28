@@ -1,9 +1,9 @@
 ! ==============================================================================
-! SPANISHMETA.H - Sistema de Meta-comandos para la librería española de Inform 6
-! Compatible con Inform 6.42 y librería estándar 6.12.7
+! SPANISHMETA.H - Sistema de Meta-comandos para la libreria espanola de Inform 6
+! Compatible con Inform 6.42 y libreria estandar 6.12.7
 ! 
 ! Meta-comandos completos (UNDO, AGAIN, OOPS, HELP, etc.)
-! Implementación modular que extiende el sistema principal SpanishLib
+! Implementacion modular que extiende el sistema principal SpanishLib
 ! ==============================================================================
 
 System_file;
@@ -12,7 +12,7 @@ System_file;
 Constant SPANISH_META_INCLUDED;
 Constant SPANISH_META_VERSION = "3.1-metacommands-fixed";
 
-! ✅ CORREGIDO: Verificación de dependencias del sistema modular
+! [OK] CORREGIDO: Verificacion de dependencias del sistema modular
 #Ifndef SPANISH_CONSTANTS_INCLUDED;
   Message fatalerror "*** Include SpanishConstants.h antes de SpanishMeta.h ***";
 #Endif;
@@ -43,7 +43,7 @@ Constant META_SUPERBRIEF = 13;
 ! ARRAYS PARA COMANDOS (sin duplicar variables globales)
 ! ==============================================================================
 
-! Buffer para el último comando ejecutado
+! Buffer para el ultimo comando ejecutado
 Array last_command_buffer -> 120;
 Array last_command_parse table 32;
 
@@ -56,7 +56,7 @@ Global commands_shown = false;
 ! ==============================================================================
 
 [ SpanishSaveCommand;
-    ! Guarda el último comando ejecutado para AGAIN
+    ! Guarda el ultimo comando ejecutado para AGAIN
     if (parse->1 > 0) {
         VM_CopyBufferFrom(buffer, last_command_buffer);
         VM_CopyParseFrom(parse, last_command_parse);
@@ -65,7 +65,7 @@ Global commands_shown = false;
 ];
 
 [ SpanishRestoreCommand;
-    ! Restaura el último comando para AGAIN
+    ! Restaura el ultimo comando para AGAIN
     if (last_command_valid) {
         VM_CopyBufferTo(last_command_buffer, buffer);
         VM_CopyParseTo(last_command_parse, parse);
@@ -82,29 +82,29 @@ Global commands_shown = false;
 ];
 
 ! ==============================================================================
-! IMPLEMENTACIÓN DE UNDO EN ESPAÑOL
+! IMPLEMENTACION DE UNDO EN ESPANOL
 ! ==============================================================================
 
 [ SpanishUndo result_code;
     if (undo_disabled) {
-        print "El comando DESHACER está deshabilitado en este juego.";
+        print "El comando DESHACER esta deshabilitado en este juego.";
         rtrue;
     }
     
     if (~~SpanishCheckUndoSupport()) {
-        print "Tu intérprete no soporta la función DESHACER.";
+        print "Tu interprete no soporta la funcion DESHACER.";
         rtrue;
     }
     
     #Ifdef TARGET_ZCODE;
         @save_undo result_code;
         if (result_code == -1) {
-            print "Lo siento, no se puede deshacer la acción anterior.";
-            print " (Tu intérprete puede no soportar esta función.)";
+            print "Lo siento, no se puede deshacer la accion anterior.";
+            print " (Tu interprete puede no soportar esta funcion.)";
             rtrue;
         }
         if (result_code == 0) {
-            print "No se puede deshacer más.";
+            print "No se puede deshacer mas.";
             rtrue;
         }
         @restore_undo result_code;
@@ -112,12 +112,12 @@ Global commands_shown = false;
             print "No hay nada que deshacer.";
             rtrue;
         }
-        print "[Acción anterior deshecha.]";
+        print "[Accion anterior deshecha.]";
     #Ifnot; ! TARGET_GLULX
         @saveundo result_code;
         if (result_code == -1) {
             GGRecoverObjects();
-            print "[Acción anterior deshecha.]";
+            print "[Accion anterior deshecha.]";
             rtrue;
         }
         if (result_code == 0) {
@@ -134,12 +134,12 @@ Global commands_shown = false;
 ];
 
 ! ==============================================================================
-! IMPLEMENTACIÓN DE AGAIN/REPETIR EN ESPAÑOL  
+! IMPLEMENTACION DE AGAIN/REPETIR EN ESPANOL  
 ! ==============================================================================
 
 [ SpanishAgain;
     if (~~again_enabled) {
-        print "El comando REPETIR está deshabilitado.";
+        print "El comando REPETIR esta deshabilitado.";
         rtrue;
     }
     
@@ -148,14 +148,14 @@ Global commands_shown = false;
         rtrue;
     }
     
-    ! Mostrar qué comando se está repitiendo
+    ! Mostrar que comando se esta repitiendo
     print "[Repitiendo: ~";
     VM_PrintCommandWords(last_command_buffer);
     print "~]^";
     
     ! Restaurar y ejecutar el comando anterior
     if (SpanishRestoreCommand()) {
-        ! El comando se ejecutará automáticamente al retornar false
+        ! El comando se ejecutara automaticamente al retornar false
         rfalse;
     } else {
         print "Error al repetir el comando anterior.";
@@ -164,12 +164,12 @@ Global commands_shown = false;
 ];
 
 ! ==============================================================================
-! IMPLEMENTACIÓN DE OOPS/CORRECCIÓN EN ESPAÑOL - ✅ COMPLETA
+! IMPLEMENTACION DE OOPS/CORRECCION EN ESPANOL - [OK] COMPLETA
 ! ==============================================================================
 
 [ SpanishOops word i j k found;
     if (~~oops_enabled) {
-        print "El comando CORRECCIÓN está deshabilitado.";
+        print "El comando CORRECCION esta deshabilitado.";
         rtrue;
     }
     
@@ -179,8 +179,8 @@ Global commands_shown = false;
     }
     
     if (word == 0) {
-        print "Debes decir con qué palabra quieres corregir.";
-        print "^Por ejemplo: CORRECCIÓN LLAVE";
+        print "Debes decir con que palabra quieres corregir.";
+        print "^Por ejemplo: CORRECCION LLAVE";
         rtrue;
     }
     
@@ -201,7 +201,7 @@ Global commands_shown = false;
     }
     
     if (~~found) {
-        print "No se encontró la palabra que querías corregir.";
+        print "No se encontro la palabra que querias corregir.";
         rtrue;
     }
     
@@ -219,11 +219,11 @@ Global commands_shown = false;
 ];
 
 ! ==============================================================================
-! SISTEMA DE AYUDA INTEGRADO EN ESPAÑOL - ✅ COMPLETO
+! SISTEMA DE AYUDA INTEGRADO EN ESPANOL - [OK] COMPLETO
 ! ==============================================================================
 
 [ SpanishHelp topic;
-    if (topic == 0 || topic == 'general' or 'básico' or 'ayuda') {
+    if (topic == 0 || topic == 'general' or 'basico' or 'ayuda') {
         SpanishHelpGeneral();
         rtrue;
     }
@@ -255,36 +255,36 @@ Global commands_shown = false;
 
 [ SpanishHelpGeneral;
     print "^=== AYUDA GENERAL ===^";
-    print "Este es un juego de ficción interactiva. Controlas la historia escribiendo";
-    print " comandos en español natural.^";
-    print "^Comandos básicos:^";
-    print "• MIRAR - Observar el entorno^";
-    print "• INVENTARIO - Ver qué llevas^";
-    print "• NORTE/SUR/ESTE/OESTE - Moverte^";
-    print "• TOMAR [objeto] - Coger algo^";
-    print "• USAR [objeto] - Usar algo^";
-    print "• HABLAR CON [persona] - Conversar^";
-    print "^Para más ayuda específica:^";
-    print "• AYUDA COMANDOS - Lista completa de verbos^";
-    print "• AYUDA NAVEGACION - Cómo moverte^";
-    print "• AYUDA OBJETOS - Interactuar con cosas^";
-    print "• AYUDA META - Comandos del sistema^";
-    print "^¡Experimenta y diviértete!^";
+    print "Este es un juego de ficcion interactiva. Controlas la historia escribiendo";
+    print " comandos en espanol natural.^";
+    print "^Comandos basicos:^";
+    print "- MIRAR - Observar el entorno^";
+    print "- INVENTARIO - Ver que llevas^";
+    print "- NORTE/SUR/ESTE/OESTE - Moverte^";
+    print "- TOMAR [objeto] - Coger algo^";
+    print "- USAR [objeto] - Usar algo^";
+    print "- HABLAR CON [persona] - Conversar^";
+    print "^Para mas ayuda especifica:^";
+    print "- AYUDA COMANDOS - Lista completa de verbos^";
+    print "- AYUDA NAVEGACION - Como moverte^";
+    print "- AYUDA OBJETOS - Interactuar con cosas^";
+    print "- AYUDA META - Comandos del sistema^";
+    print "^!Experimenta y diviertete!^";
 ];
 
 [ SpanishHelpCommands;
     print "^=== COMANDOS DISPONIBLES ===^";
-    print "^Observación:^";
+    print "^Observacion:^";
     print "MIRAR, EXAMINAR, VER, OBSERVAR^";
-    print "^Manipulación:^";
+    print "^Manipulacion:^";
     print "TOMAR, COGER, DEJAR, SOLTAR, DAR^";
     print "^Movimiento:^";
     print "IR, CAMINAR, SUBIR, BAJAR, ENTRAR, SALIR^";
     print "NORTE/N, SUR/S, ESTE/E, OESTE/O^";
     print "NORDESTE/NE, NOROESTE/NO, SUDESTE/SE, SUDOESTE/SO^";
-    print "^Interacción:^";
+    print "^Interaccion:^";
     print "ABRIR, CERRAR, ENCENDER, APAGAR, PULSAR, EMPUJAR^";
-    print "^Comunicación:^";
+    print "^Comunicacion:^";
     print "HABLAR CON, DECIR, PREGUNTAR, GRITAR^";
     print "^Inventario:^";
     print "INVENTARIO/I, LLEVAR^";
@@ -295,124 +295,124 @@ Global commands_shown = false;
 ];
 
 [ SpanishHelpNavigation;
-    print "^=== NAVEGACIÓN ===^";
+    print "^=== NAVEGACION ===^";
     print "Para moverte por el mundo del juego:^";
-    print "^Direcciones básicas:^";
-    print "• NORTE, SUR, ESTE, OESTE (o N, S, E, O)^";
-    print "• NORDESTE, NOROESTE, SUDESTE, SUDOESTE (o NE, NO, SE, SO)^";
-    print "• ARRIBA, ABAJO^";
+    print "^Direcciones basicas:^";
+    print "- NORTE, SUR, ESTE, OESTE (o N, S, E, O)^";
+    print "- NORDESTE, NOROESTE, SUDESTE, SUDOESTE (o NE, NO, SE, SO)^";
+    print "- ARRIBA, ABAJO^";
     print "^Otros comandos de movimiento:^";
-    print "• IR A [lugar] - Ir a un lugar específico^";
-    print "• ENTRAR EN [lugar] - Entrar en un edificio o habitación^";
-    print "• SALIR DE [lugar] - Salir de donde estés^";
-    print "• SUBIR A/POR [cosa] - Subir escaleras, colinas, etc.^";
-    print "• BAJAR DE/POR [cosa] - Bajar^";
-    print "^¡Usa MIRAR para orientarte en cada nueva ubicación!^";
+    print "- IR A [lugar] - Ir a un lugar especifico^";
+    print "- ENTRAR EN [lugar] - Entrar en un edificio o habitacion^";
+    print "- SALIR DE [lugar] - Salir de donde estes^";
+    print "- SUBIR A/POR [cosa] - Subir escaleras, colinas, etc.^";
+    print "- BAJAR DE/POR [cosa] - Bajar^";
+    print "^!Usa MIRAR para orientarte en cada nueva ubicacion!^";
 ];
 
 [ SpanishHelpObjects;
     print "^=== INTERACTUAR CON OBJETOS ===^";
     print "^Examinar objetos:^";
-    print "• EXAMINAR [objeto] - Ver detalles^";
-    print "• MIRAR [objeto] - Observar algo específico^";
+    print "- EXAMINAR [objeto] - Ver detalles^";
+    print "- MIRAR [objeto] - Observar algo especifico^";
     print "^Manipular objetos:^";
-    print "• TOMAR [objeto] - Coger algo^";
-    print "• DEJAR [objeto] - Soltar algo que llevas^";
-    print "• DAR [objeto] A [persona] - Dar algo a alguien^";
+    print "- TOMAR [objeto] - Coger algo^";
+    print "- DEJAR [objeto] - Soltar algo que llevas^";
+    print "- DAR [objeto] A [persona] - Dar algo a alguien^";
     print "^Usar objetos:^";
-    print "• USAR [objeto] - Usar algo^";
-    print "• ABRIR/CERRAR [objeto] - Puertas, cajas, etc.^";
-    print "• ENCENDER/APAGAR [objeto] - Luces, máquinas, etc.^";
-    print "• PULSAR [objeto] - Botones, interruptores^";
-    print "• EMPUJAR/TIRAR [objeto] - Mover cosas^";
-    print "^¡Muchos objetos tienen usos especiales que descubrirás experimentando!^";
+    print "- USAR [objeto] - Usar algo^";
+    print "- ABRIR/CERRAR [objeto] - Puertas, cajas, etc.^";
+    print "- ENCENDER/APAGAR [objeto] - Luces, maquinas, etc.^";
+    print "- PULSAR [objeto] - Botones, interruptores^";
+    print "- EMPUJAR/TIRAR [objeto] - Mover cosas^";
+    print "^!Muchos objetos tienen usos especiales que descubriras experimentando!^";
 ];
 
 [ SpanishHelpMeta;
     print "^=== COMANDOS DEL SISTEMA ===^";
     print "^Meta-comandos disponibles:^";
-    print "• DESHACER/UNDO - Deshacer la última acción^";
-    print "• REPETIR/AGAIN - Repetir el último comando^";
-    print "• CORRECCIÓN [palabra]/OOPS [palabra] - Corregir un error^";
-    print "• AYUDA [tema]/HELP [tema] - Ver ayuda^";
-    print "• COMANDOS - Ver lista de verbos^";
-    print "^Configuración:^";
-    print "• DETALLADO - Descripciones completas^";
-    print "• BREVE - Descripciones resumidas^";
-    print "• NOTIFICAR ON/OFF - Activar/desactivar notificaciones^";
+    print "- DESHACER/UNDO - Deshacer la ultima accion^";
+    print "- REPETIR/AGAIN - Repetir el ultimo comando^";
+    print "- CORRECCION [palabra]/OOPS [palabra] - Corregir un error^";
+    print "- AYUDA [tema]/HELP [tema] - Ver ayuda^";
+    print "- COMANDOS - Ver lista de verbos^";
+    print "^Configuracion:^";
+    print "- DETALLADO - Descripciones completas^";
+    print "- BREVE - Descripciones resumidas^";
+    print "- NOTIFICAR ON/OFF - Activar/desactivar notificaciones^";
     print "^Archivo:^";
-    print "• GUARDAR/SAVE - Guardar partida^";
-    print "• CARGAR/RESTORE - Cargar partida^";
-    print "• REINICIAR/RESTART - Empezar de nuevo^";
-    print "• SALIR/QUIT - Terminar el juego^";
+    print "- GUARDAR/SAVE - Guardar partida^";
+    print "- CARGAR/RESTORE - Cargar partida^";
+    print "- REINICIAR/RESTART - Empezar de nuevo^";
+    print "- SALIR/QUIT - Terminar el juego^";
     print "^Estado:^";
-    print "• PUNTUACION/SCORE - Ver puntuación^";
-    print "• TIEMPO/TIME - Ver tiempo transcurrido^";
-    print "• VERSION - Ver información del juego^";
+    print "- PUNTUACION/SCORE - Ver puntuacion^";
+    print "- TIEMPO/TIME - Ver tiempo transcurrido^";
+    print "- VERSION - Ver informacion del juego^";
 ];
 
 ! ==============================================================================
-! RUTINAS DE MANEJO DE ERRORES EN ESPAÑOL
+! RUTINAS DE MANEJO DE ERRORES EN ESPANOL
 ! ==============================================================================
 
 [ SpanishParseError error_type word_number;
-    ! Manejo de errores de parsing específicos para español
+    ! Manejo de errores de parsing especificos para espanol
     ! con mejor contexto y sugerencias
     
     switch (error_type) {
         STUCK_PE:
-            print "No entendí esa instrucción. ";
+            print "No entendi esa instruccion. ";
             if (commands_shown == false) {
-                print "Usa COMANDOS para ver qué puedes hacer.";
+                print "Usa COMANDOS para ver que puedes hacer.";
             } else {
-                print "Prueba con frases más simples.";
+                print "Prueba con frases mas simples.";
             }
             
         UPTO_PE:
-            print "Solo entendí hasta: ~";
+            print "Solo entendi hasta: ~";
             for (word_number = 2: word_number <= parse->1: word_number++) {
                 print (address) parse-->(2*word_number-1), " ";
             }
             print "~";
             
         CANTSEE_PE:
-            print "No puedes ver tal cosa aquí. ";
-            print "Usa MIRAR para ver qué hay disponible.";
+            print "No puedes ver tal cosa aqui. ";
+            print "Usa MIRAR para ver que hay disponible.";
             
         TOOLIT_PE:
             print "Dijiste muy poco. ";
-            print "¿Qué quieres hacer exactamente? ";
+            print "?Que quieres hacer exactamente? ";
             print "Prueba AYUDA si necesitas ideas.";
             
         VAGUE_PE:
-            print "No está claro a qué te refieres. ";
-            print "Intenta ser más específico.";
+            print "No esta claro a que te refieres. ";
+            print "Intenta ser mas especifico.";
             
         VERB_PE:
             print "Ese no es un verbo que reconozca. ";
             print "Usa COMANDOS para ver los verbos disponibles.";
             
         default:
-            ! Usar manejo de errores estándar
+            ! Usar manejo de errores estandar
             return false;
     }
     return true;
 ];
 
 ! ==============================================================================
-! DETECCIÓN DE META-COMANDOS
+! DETECCION DE META-COMANDOS
 ! ==============================================================================
 
 [ SpanishDetectMetaCommand word;
     ! Identifica si una palabra es un meta-comando
-    ! Retorna el código del meta-comando o 0 si no lo es
+    ! Retorna el codigo del meta-comando o 0 si no lo es
     
     switch (word) {
         'deshacer', 'undo':
             return META_UNDO;
         'repetir', 'again', 'g':
             return META_AGAIN;
-        'corrección', 'correccion', 'oops':
+        'correccion', 'correccion', 'oops':
             return META_OOPS;
         'ayuda', 'help':
             return META_HELP;
@@ -425,19 +425,19 @@ Global commands_shown = false;
         'superbreve', 'superbrief':
             return META_SUPERBRIEF;
         'notificar':
-            return META_NOTIFY_ON; ! Se detectará ON/OFF después
+            return META_NOTIFY_ON; ! Se detectara ON/OFF despues
         default:
             return 0; ! No es un meta-comando reconocido
     }
 ];
 
 ! ==============================================================================
-! RUTINAS DE INICIALIZACIÓN 
+! RUTINAS DE INICIALIZACION 
 ! ==============================================================================
 
 [ SpanishMetaInitialise;
     ! Inicializar sistema de meta-comandos
-    ! ✅ CORREGIDO: No duplicar inicialización de variables globales
+    ! [OK] CORREGIDO: No duplicar inicializacion de variables globales
     commands_shown = false;
     help_context = 0;
     
@@ -445,11 +445,11 @@ Global commands_shown = false;
     SpanishClearCommand();
     
     #Ifdef DEBUG;
-        print "^[Sistema de meta-comandos en español inicializado]^";
-        print "[✅ DESHACER, REPETIR, CORRECCIÓN disponibles]^";
-        print "[✅ Sistema de ayuda integrado: AYUDA, COMANDOS]^";
-        print "[✅ Configuración: DETALLADO, BREVE, NOTIFICAR]^";
-        print "^[Usa AYUDA para empezar o COMANDOS para ver qué puedes hacer]^";
+        print "^[Sistema de meta-comandos en espanol inicializado]^";
+        print "[[OK] DESHACER, REPETIR, CORRECCION disponibles]^";
+        print "[[OK] Sistema de ayuda integrado: AYUDA, COMANDOS]^";
+        print "[[OK] Configuracion: DETALLADO, BREVE, NOTIFICAR]^";
+        print "^[Usa AYUDA para empezar o COMANDOS para ver que puedes hacer]^";
     #Endif;
 ];
 
@@ -464,16 +464,16 @@ Global commands_shown = false;
 ];
 
 ! ==============================================================================
-! CONSTANTES Y MARCADORES DE FINALIZACIÓN
+! CONSTANTES Y MARCADORES DE FINALIZACION
 ! ==============================================================================
 
 Constant SPANISH_META_COMPLETE;
-Constant SPANISH_META_FUNCTIONS = 15; ! Número de funciones implementadas
+Constant SPANISH_META_FUNCTIONS = 15; ! Numero de funciones implementadas
 Constant SPANISH_META_COMMANDS_SUPPORTED = 13; ! Meta-comandos soportados
 Constant SPANISH_COVERAGE_ESTIMATED = 85; ! % de cobertura con meta-comandos
 
 #Endif; ! SPANISH_META_INCLUDED
 
 ! ==============================================================================
-! Fin de SpanishMeta.h - Sistema completo de meta-comandos en español
+! Fin de SpanishMeta.h - Sistema completo de meta-comandos en espanol
 ! ==============================================================================

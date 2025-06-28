@@ -1,0 +1,321 @@
+!% -~S~D
+!
+! EJEMPLO COMPLETO de SpanishLib Compatible
+! Demuestra todas las características del sistema español
+!
+
+Constant Story "Aventura Completa en Espanol";
+Constant Headline "^Demostracion completa de SpanishLib^";
+
+Include "Parser";
+Include "VerbLib";
+
+! Activar TODAS las características
+Constant SPANISH_FULL_MESSAGES;
+Constant SPANISH_META_COMMANDS;
+Constant SPANISH_IRREGULAR_VERBS;
+Constant SPANISH_REGIONAL_VARIANTS;
+
+! Incluir nuestro sistema completo
+Include "/home/fran/inform/InformLibSP_clean/SpanishLibCompatible";
+
+! ==============================================================================
+! HABITACIONES
+! ==============================================================================
+
+Object Sala "Sala de estar"
+  with description [;
+           print "Una acogedora sala de estar. Ves ";
+           SpanishIndefiniteArticle(sillon);
+           print " sillon y ";
+           SpanishIndefiniteArticle(mesa_cafe);
+           print " mesa de cafe. Al norte esta el dormitorio.";
+       ],
+       n_to Dormitorio,
+  has light;
+
+Object Dormitorio "Dormitorio" 
+  with description [;
+           print "Un dormitorio sencillo. En ";
+           SpanishDefiniteArticle(cama);
+           print " cama hay algunos objetos. Al sur vuelves a la sala.";
+       ],
+       s_to Sala,
+  has light;
+
+! ==============================================================================
+! OBJETOS CON GENERO Y NUMERO
+! ==============================================================================
+
+Object -> sillon "sillon"
+  with name 'sillon',
+       description [;
+           print "Un comodo sillon de cuero. Es ";
+           SpanishDefiniteArticle(self);
+           print " sillon perfecto para relajarse.";
+       ],
+  has supporter; ! masculino por defecto
+
+Object -> mesa_cafe "mesa de cafe"
+  with name 'mesa' 'cafe',
+       description [;
+           print "Una elegante mesa de cafe. ";
+           SpanishDefiniteArticle(self);
+           print " mesa tiene una superficie brillante.";
+       ],
+  has female supporter;
+
+Object -> -> libro_misterio "libro de misterio"
+  with name 'libro' 'misterio',
+       description [;
+           print "Un fascinante libro de misterio. ";
+           SpanishDefiniteArticle(self);
+           print " libro parece muy interesante.";
+       ],
+  has;
+
+Object -> -> llaves "llaves"
+  with name 'llaves' 'llave',
+       description [;
+           print "Un manojo de llaves plateadas. ";
+           SpanishDefiniteArticle(self);
+           print " llaves brillan bajo la luz.";
+       ],
+  has pluralname female;
+
+Object -> cama "cama"
+  with name 'cama',
+       description [;
+           print "Una comoda cama doble. ";
+           SpanishDefiniteArticle(self);
+           print " cama esta bien hecha.";
+       ],
+  has female supporter;
+
+Object -> -> cartas "cartas"
+  with name 'cartas' 'carta',
+       description [;
+           print "Varias cartas importantes. ";
+           SpanishDefiniteArticle(self);
+           print " cartas estan selladas.";
+       ],
+  has pluralname female;
+
+Object -> -> reloj "reloj"
+  with name 'reloj',
+       description [;
+           print "Un elegante reloj de oro. ";
+           SpanishDefiniteArticle(self);
+           print " reloj marca las 3:30.";
+       ],
+  has;
+
+! ==============================================================================
+! VERBOS PERSONALIZADOS PARA DEMOSTRAR CONJUGACIONES
+! ==============================================================================
+
+Verb 'mirar' 'observar' 'examinar' 'ver'
+    * noun -> Examine
+    * -> Look;
+
+Verb 'tomar' 'coger' 'agarrar'
+    * noun -> Take;
+
+Verb 'dejar' 'soltar' 'tirar'
+    * noun -> Drop;
+
+Verb 'conjugar'
+    * 'ser' -> ConjugarSer
+    * 'estar' -> ConjugarEstar  
+    * 'tener' -> ConjugarTener
+    * 'caminar' -> ConjugarCaminar
+    * 'comer' -> ConjugarComer
+    * 'vivir' -> ConjugarVivir;
+
+[ ConjugarSerSub;
+    print "^=== CONJUGACION DEL VERBO SER ===^";
+    #Ifdef SPANISH_IRREGULAR_VERBS;
+    print "Presente:^";
+    print "Yo "; ConjugarSER(SP_PRIMERA_PERSONA, SP_PRESENTE); print "^";
+    print "Tu "; ConjugarSER(SP_SEGUNDA_PERSONA, SP_PRESENTE); print "^";
+    print "El/Ella "; ConjugarSER(SP_TERCERA_PERSONA, SP_PRESENTE); print "^";
+    
+    print "^Preterito:^";
+    print "Yo "; ConjugarSER(SP_PRIMERA_PERSONA, SP_PRETERITO); print "^";
+    print "Tu "; ConjugarSER(SP_SEGUNDA_PERSONA, SP_PRETERITO); print "^";
+    print "El/Ella "; ConjugarSER(SP_TERCERA_PERSONA, SP_PRETERITO); print "^";
+    #Ifnot;
+    print "Los verbos irregulares no estan habilitados.^";
+    #Endif;
+];
+
+[ ConjugarEstarSub;
+    print "^=== CONJUGACION DEL VERBO ESTAR ===^";
+    #Ifdef SPANISH_IRREGULAR_VERBS;
+    print "Presente:^";
+    print "Yo "; ConjugarESTAR(SP_PRIMERA_PERSONA, SP_PRESENTE); print "^";
+    print "Tu "; ConjugarESTAR(SP_SEGUNDA_PERSONA, SP_PRESENTE); print "^";
+    print "El/Ella "; ConjugarESTAR(SP_TERCERA_PERSONA, SP_PRESENTE); print "^";
+    #Ifnot;
+    print "Los verbos irregulares no estan habilitados.^";
+    #Endif;
+];
+
+[ ConjugarTenerSub;
+    print "^=== CONJUGACION DEL VERBO TENER ===^";
+    #Ifdef SPANISH_IRREGULAR_VERBS;
+    print "Presente:^";
+    print "Yo "; ConjugarTENER(SP_PRIMERA_PERSONA, SP_PRESENTE); print "^";
+    print "Tu "; ConjugarTENER(SP_SEGUNDA_PERSONA, SP_PRESENTE); print "^";
+    print "El/Ella "; ConjugarTENER(SP_TERCERA_PERSONA, SP_PRESENTE); print "^";
+    #Ifnot;
+    print "Los verbos irregulares no estan habilitados.^";
+    #Endif;
+];
+
+[ ConjugarCaminarSub;
+    print "^=== CONJUGACION DEL VERBO CAMINAR (AR) ===^";
+    print "Presente:^";
+    print "Yo "; ConjugarAR("camin", SP_PRIMERA_PERSONA, SP_PRESENTE); print "^";
+    print "Tu "; ConjugarAR("camin", SP_SEGUNDA_PERSONA, SP_PRESENTE); print "^";
+    print "El/Ella "; ConjugarAR("camin", SP_TERCERA_PERSONA, SP_PRESENTE); print "^";
+];
+
+[ ConjugarComerSub;
+    print "^=== CONJUGACION DEL VERBO COMER (ER) ===^";
+    print "Presente:^";
+    print "Yo "; ConjugarER("com", SP_PRIMERA_PERSONA, SP_PRESENTE); print "^";
+    print "Tu "; ConjugarER("com", SP_SEGUNDA_PERSONA, SP_PRESENTE); print "^";
+    print "El/Ella "; ConjugarER("com", SP_TERCERA_PERSONA, SP_PRESENTE); print "^";
+];
+
+[ ConjugarVivirSub;
+    print "^=== CONJUGACION DEL VERBO VIVIR (IR) ===^";
+    print "Presente:^";
+    print "Yo "; ConjugarIR("viv", SP_PRIMERA_PERSONA, SP_PRESENTE); print "^";
+    print "Tu "; ConjugarIR("viv", SP_SEGUNDA_PERSONA, SP_PRESENTE); print "^";
+    print "El/Ella "; ConjugarIR("viv", SP_TERCERA_PERSONA, SP_PRESENTE); print "^";
+];
+
+! ==============================================================================
+! META-COMANDOS DEL SISTEMA
+! ==============================================================================
+
+#Ifdef SPANISH_META_COMMANDS;
+
+Verb 'deshacer'
+    * -> SpanishUndo;
+
+Verb 'repetir' 'again'
+    * -> SpanishAgain;
+
+Verb 'ayuda' 'help'
+    * -> SpanishHelp;
+
+Verb 'verbos'
+    * -> SpanishVerbs;
+
+#Endif;
+
+! ==============================================================================
+! COMANDOS DE CONFIGURACION
+! ==============================================================================
+
+Verb 'formalidad'
+    * 'formal' -> SetFormal
+    * 'informal' -> SetInformal;
+
+[ SetFormalSub;
+    sp_formality_level = SP_FORMAL;
+    print "Nivel de formalidad cambiado a FORMAL (usted).^";
+];
+
+[ SetInformalSub;
+    sp_formality_level = SP_INFORMAL;
+    print "Nivel de formalidad cambiado a INFORMAL (tu).^";
+];
+
+#Ifdef SPANISH_REGIONAL_VARIANTS;
+
+Verb 'region' 'dialecto'
+    * 'espana' -> SetSpain
+    * 'mexico' -> SetMexico
+    * 'argentina' -> SetArgentina
+    * 'colombia' -> SetColombia;
+
+[ SetSpainSub; SetSpanishRegion(SP_REGION_SPAIN); ];
+[ SetMexicoSub; SetSpanishRegion(SP_REGION_MEXICO); ];
+[ SetArgentinaSub; SetSpanishRegion(SP_REGION_ARGENTINA); ];
+[ SetColombiaSub; SetSpanishRegion(SP_REGION_COLOMBIA); ];
+
+#Endif;
+
+Verb 'sistema' 'spanish' 'info'
+    * -> SystemInfo;
+
+[ SystemInfoSub;
+    SpanishLibCompatibleInfo();
+];
+
+! ==============================================================================
+! DEMOSTRACION DE ARTICULOS
+! ==============================================================================
+
+Verb 'articulos'
+    * -> ShowArticles;
+
+[ ShowArticlesSub;
+    print "^=== DEMOSTRACION DE ARTICULOS ===^";
+    print "Definidos:^";
+    print "- "; SpanishDefiniteArticle(sillon); print " sillon (masculino singular)^";
+    print "- "; SpanishDefiniteArticle(mesa_cafe); print " mesa (femenino singular)^";
+    print "- "; SpanishDefiniteArticle(llaves); print " llaves (femenino plural)^";
+    print "- "; SpanishDefiniteArticle(cartas); print " cartas (femenino plural)^";
+    
+    print "^Indefinidos:^";
+    print "- "; SpanishIndefiniteArticle(sillon); print " sillon^";
+    print "- "; SpanishIndefiniteArticle(mesa_cafe); print " mesa^";  
+    print "- "; SpanishIndefiniteArticle(llaves); print " llaves^";
+    print "- "; SpanishIndefiniteArticle(cartas); print " cartas^";
+];
+
+! ==============================================================================
+! INICIALIZACION
+! ==============================================================================
+
+[ Initialise;
+    location = Sala;
+    
+    ! Inicializar el sistema español
+    SpanishLibCompatibleInit();
+    
+    print "^=== BIENVENIDO A LA DEMOSTRACION COMPLETA ===^";
+    print "Este juego demuestra todas las caracteristicas de SpanishLib:^";
+    print "^COMANDOS BASICOS:^";
+    print "- 'mirar [objeto]' - examinar objetos^";
+    print "- 'tomar [objeto]' - tomar objetos^";
+    print "- 'ir norte/sur' - moverse entre habitaciones^";
+    print "^DEMOSTRACIONES:^";
+    print "- 'articulos' - ver articulos definidos/indefinidos^";
+    print "- 'conjugar ser/estar/tener' - verbos irregulares^";
+    print "- 'conjugar caminar/comer/vivir' - verbos regulares^";
+    print "^CONFIGURACION:^";
+    print "- 'formalidad formal/informal' - cambiar tu/usted^";
+    
+    #Ifdef SPANISH_REGIONAL_VARIANTS;
+    print "- 'region espana/mexico/argentina/colombia' - dialectos^";
+    #Endif;
+    
+    print "^META-COMANDOS:^";
+    
+    #Ifdef SPANISH_META_COMMANDS;
+    print "- 'ayuda' - ayuda completa del sistema^";
+    print "- 'verbos' - lista de verbos irregulares^";
+    print "- 'deshacer' - deshacer ultima accion^";
+    #Endif;
+    
+    print "- 'sistema' - informacion del sistema^";
+    print "^Empieza explorando: 'mirar'";
+];
+
+Include "Grammar";
