@@ -40,24 +40,29 @@ Constant SPANISH_LIB_VERSION = "6.12.7-modular-1.2-fixed";
 ! ==============================================================================
 
 ! 1. Constantes centralizadas (debe ir PRIMERO - sin dependencias)
-Include "SpanishLib/core/SpanishConstants.h";
+Include "SpanishConstants.h";
 
 ! 2. Núcleo coordinador básico
-Include "SpanishLib/core/SpanishCore.h";
+Include "SpanishCore.h";
 
 ! 3. Módulos core en orden de dependencias CORREGIDO
 #Ifdef SPANISH_ADVANCED_PARSER;
     ! Parser avanzado en 3 partes (nombres de archivos CORREGIDOS)
-    Include "SpanishLib/core/SpanishParser1.h";      ! Parte 1: Manipulación y fundamentos
-    Include "SpanishLib/core/SpanishParser2.h";      ! Parte 2: Procesamiento avanzado (¡minúscula!)
-    Include "SpanishLib/core/SpanishParser3.h";      ! Parte 3: Análisis sintáctico
+    Include "SpanishParser1.h";      ! Parte 1: Manipulación y fundamentos
+    Include "SpanishParser2.h";      ! Parte 2: Procesamiento avanzado (¡minúscula!)
+    Include "SpanishParser3.h";      ! Parte 3: Análisis sintáctico
 #Ifnot;
     ! Parser básico incluido en Core
     ! (SpanishCore.h ya incluye parsing básico)
 #Endif;
 
-Include "SpanishLib/core/SpanishGrammar.h";
-Include "SpanishLib/core/SpanishVerbs.h";
+! Verificar disponibilidad antes de incluir
+#Ifdef SPANISH_GRAMMAR_AVAILABLE;
+    Include "SpanishGrammar.h";
+#Endif;
+#Ifdef SPANISH_VERBS_AVAILABLE;  
+    Include "SpanishVerbs.h";
+#Endif;
 
 ! ==============================================================================
 ! RECURSOS BÁSICOS

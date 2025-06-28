@@ -8,7 +8,7 @@ System_file;
 
 #Ifndef SPANISH_CORE_INCLUDED;
 Constant SPANISH_CORE_INCLUDED;
-Constant SPANISH_CORE_VERSION = "1.1-coordinator-only";
+Constant SPANISH_CORE_VERSION = "1.2-coordinator-fixed";
 
 ! ==============================================================================
 ! VERIFICACIÓN DE DEPENDENCIAS
@@ -35,39 +35,65 @@ Constant SPANISH_CORE_VERSION = "1.1-coordinator-only";
     local modules_ok;
     modules_ok = 0;
     
+    #Ifdef DEBUG;
+        print "^[SpanishCore: Coordinando módulos...]^";
+    #Endif;
+    
     ! Verificar que los módulos principales estén listos
     #Ifdef SPANISH_PARSER_INCLUDED;
         spanish_parser_ready = true;
         MarkModuleLoaded('parser');
         modules_ok++;
+        #Ifdef DEBUG;
+            print "[✅ Parser cargado]^";
+        #Endif;
     #Ifnot;
-        print "^[ADVERTENCIA: SpanishParser.h no está cargado]^";
+        #Ifdef DEBUG;
+            print "[⚠️ Parser básico solamente]^";
+        #Endif;
     #Endif;
     
     #Ifdef SPANISH_VERBS_INCLUDED;
         spanish_verbs_ready = true;
         MarkModuleLoaded('verbs');
         modules_ok++;
+        #Ifdef DEBUG;
+            print "[✅ Verbos cargados]^";
+        #Endif;
     #Ifnot;
-        print "^[ADVERTENCIA: SpanishVerbs.h no está cargado]^";
+        #Ifdef DEBUG;
+            print "[❌ Sin sistema de verbos]^";
+        #Endif;
     #Endif;
     
     #Ifdef SPANISH_GRAMMAR_INCLUDED;
         spanish_grammar_ready = true;
         MarkModuleLoaded('grammar');
         modules_ok++;
+        #Ifdef DEBUG;
+            print "[✅ Gramática cargada]^";
+        #Endif;
     #Ifnot;
-        print "^[ADVERTENCIA: SpanishGrammar.h no está cargado]^";
+        #Ifdef DEBUG;
+            print "[❌ Sin sistema de gramática]^";
+        #Endif;
     #Endif;
     
     #Ifdef SPANISH_MESSAGES_COMPLETE;
         spanish_messages_ready = true;
         MarkModuleLoaded('messages');
         modules_ok++;
+        #Ifdef DEBUG;
+            print "[✅ Mensajes completos cargados]^";
+        #Endif;
     #Endif;
     
     ! Marcar este módulo como cargado
     MarkModuleLoaded('core');
+    
+    #Ifdef DEBUG;
+        print "[SpanishCore: ", modules_ok, " módulos principales coordinados]^";
+    #Endif;
     
     return modules_ok;
 ];
@@ -88,17 +114,21 @@ Constant SPANISH_CORE_VERSION = "1.1-coordinator-only";
     #Endif;
 ];
 
-[ SpanishBasicParsing   i j k;
-    ! Procesamiento mínimo si SpanishParser.h no está disponible
+[ SpanishBasicParsing   i j k changes;
+    ! ✅ CORREGIDO: Función completa de procesamiento mínimo
     ! Solo contracciones básicas para mantener funcionalidad mínima
     
-    local changes;
     changes = 0;
+    
+    #Ifdef DEBUG;
+        print "[CORE] Procesamiento básico: ", parse->1, " palabras^";
+    #Endif;
     
     ! Solo procesar contracciones básicas
     for (i=0 : i<parse->1 : i++) {
         j = parse-->(2*i+1);
         
+        ! Contracción DEL = DE + EL
         if (j == 'del') {
             parse-->(2*i+1) = 'de';
             ! Insertar 'el' después
@@ -110,8 +140,13 @@ Constant SPANISH_CORE_VERSION = "1.1-coordinator-only";
             parse-->(2*i+3) = 'el';
             parse-->(2*i+4) = 1;
             changes++;
+            
+            #Ifdef DEBUG;
+                print "[CORE] Contracción procesada: del -> de el^";
+            #Endif;
         }
         
+        ! Contracción AL = A + EL
         if (j == 'al') {
             parse-->(2*i+1) = 'a';
             ! Insertar 'el' después
@@ -123,93 +158,20 @@ Constant SPANISH_CORE_VERSION = "1.1-coordinator-only";
             parse-->(2*i+3) = 'el';
             parse-->(2*i+4) = 1;
             changes++;
+            
+            #Ifdef DEBUG;
+                print "[CORE] Contracción procesada: al -> a el^";
+            #Endif;
         }
     }
     
+    #Ifdef DEBUG;
+        if (changes > 0) {
+            print "[CORE] ", changes, " contracciones procesadas^";
+        }
+    #Endif;
+    
     return changes;
-];
-
-! ==============================================================================
-! RUTINAS DE ESTADO Y MONITOREO
-! ==============================================================================
-
-[ SpanishCoreStatus;
-    print "^=== ESTADO DEL NÚCLEO ESPAÑOL ===^";
-    print "Versión del núcleo: ", (string) SPANISH_CORE_VERSION, "^";
-    print "Inicializado: ";
-    if (spanish_initialized) print "Sí"; else print "No";
-    print "^";
-    
-    print "Formalidad: ";
-    if (FormalityLevel == FORMAL) print "Formal (usted)";
-    else print "Informal (tú)";
-    print "^";
-    
-    print "^Módulos coordinados:^";
-    print "• Parser: ";
-    if (spanish_parser_ready) print "✅"; else print "❌";
-    print "^• Verbos: ";
-    if (spanish_verbs_ready) print "✅"; else print "❌";
-    print "^• Gramática: ";
-    if (spanish_grammar_ready) print "✅"; else print "❌";
-    print "^• Mensajes: ";
-    if (spanish_messages_ready) print "✅"; else print "❌";
-    print "^";
-    
-    print "Último comando: ", last_command_length, " palabras^";
-];
-
-! ==============================================================================
-! RUTINAS DE EMERGENCIA Y FALLBACK
-! ==============================================================================
-
-[ SpanishEmergencyFallback;
-    ! Rutinas básicas en caso de que otros módulos fallen
-    print "^[MODO DE EMERGENCIA: Funcionalidad básica del español]^";
-    print "[Solo contracciones y parsing mínimo disponibles]^";
-    
-    ! Configurar valores seguros
-    FormalityLevel = INFORMAL;
-    spanish_initialized = true;
-    MarkModuleLoaded('core');
-    
-    return true;
-];
-
-[ SpanishValidateSystem;
-    ! Verificar integridad del sistema
-    local errors;
-    errors = 0;
-    
-    ! Verificar constantes críticas
-    if (PRESENTE_T == 0) {
-        print "^[ERROR: Constantes de tiempo verbal no definidas]^";
-        errors++;
-    }
-    
-    if (MASCULINE == 0) {
-        print "^[ERROR: Constantes de género no definidas]^";
-        errors++;
-    }
-    
-    ! Verificar arrays críticos
-    if (LanguagePronouns-->0 == 0) {
-        print "^[ERROR: Array de pronombres no inicializado]^";
-        errors++;
-    }
-    
-    ! Verificar variables centralizadas
-    if (spanish_buffer == 0) {
-        print "^[ERROR: Buffer principal no disponible]^";
-        errors++;
-    }
-    
-    if (errors > 0) {
-        print "^[SISTEMA ESPAÑOL: ", errors, " errores detectados]^";
-        return false;
-    }
-    
-    return true;
 ];
 
 ! ==============================================================================
@@ -217,22 +179,29 @@ Constant SPANISH_CORE_VERSION = "1.1-coordinator-only";
 ! ==============================================================================
 
 [ SpanishCoreCallInitializers;
+    ! ✅ CORREGIDO: Función completa para llamar inicializadores
     ! Llama a los inicializadores de todos los módulos en orden
     
-    print "^[Inicializando módulos del sistema español...]^";
+    #Ifdef DEBUG;
+        print "^[Inicializando módulos del sistema español...]^";
+    #Endif;
     
     ! 1. Constantes (ya inicializadas)
     SpanishConstantsInit();
     
     ! 2. Parser (si está disponible)
     #Ifdef SPANISH_PARSER_INCLUDED;
-        SpanishParserInitialize();
+        #Ifdef SPANISH_PARSER_PART3_COMPLETE;
+            SpanishParserInitialize();
+        #Endif;
     #Endif;
     
     ! 3. Gramática (si está disponible)
     #Ifdef SPANISH_GRAMMAR_INCLUDED;
         ! La gramática se inicializa automáticamente
-        print "[SpanishGrammar cargado]^";
+        #Ifdef DEBUG;
+            print "[SpanishGrammar cargado]^";
+        #Endif;
     #Endif;
     
     ! 4. Verbos (si está disponible)
@@ -259,73 +228,159 @@ Constant SPANISH_CORE_VERSION = "1.1-coordinator-only";
     
     ! 8. Regional (si está disponible)
     #Ifdef SPANISH_REGIONAL_INCLUDED;
-        SpanishRegionalAutoInit();
+        SpanishRegionalInit();
         MarkModuleLoaded('regional');
     #Endif;
     
-    print "^[Inicialización de módulos completada]^";
-];
-
-! ==============================================================================
-! RUTINA PRINCIPAL DE INICIALIZACIÓN
-! ==============================================================================
-
-[ SpanishCoreInitialise   i modules_loaded;
-    if (spanish_initialized) return;
-    
-    print "^[SpanishCore v", (string) SPANISH_CORE_VERSION, " inicializando...]^";
-    
-    ! Validar sistema antes de inicializar
-    if (~~SpanishValidateSystem()) {
-        print "^[ACTIVANDO MODO DE EMERGENCIA]^";
-        return SpanishEmergencyFallback();
-    }
-    
-    ! Limpiar buffers del sistema
-    for (i = 0: i < 120: i++) spanish_buffer->i = 0;
-    
-    ! Coordinar con otros módulos
-    modules_loaded = SpanishCoreCoordinate();
-    
-    ! Llamar inicializadores de todos los módulos
-    SpanishCoreCallInitializers();
-    
-    ! Establecer que ya estamos inicializados
+    ! Marcar sistema como inicializado
     spanish_initialized = true;
     
-    print "^[SpanishCore inicializado correctamente - ";
-    print modules_loaded, " módulos principales detectados]^";
-    print "[Coordinación activa para: Parser, Gramática, Verbos, Mensajes]^";
+    #Ifdef DEBUG;
+        print "[Sistema español completamente inicializado]^";
+    #Endif;
 ];
 
 ! ==============================================================================
-! RUTINAS DE INFORMACIÓN DEL SISTEMA
+! RUTINAS DE ESTADO Y MONITOREO
 ! ==============================================================================
 
-[ SpanishCoreInfo;
-    print "^=== SPANISH CORE PARA INFORM 6 ===^";
-    print "Versión: ", (string) SPANISH_CORE_VERSION, "^";
-    print "Función: Coordinación y núcleo básico^";
-    print "^Responsabilidades:^";
-    print "• Coordinación entre módulos^";
-    print "• Inicialización centralizada^";
-    print "• Procesamiento básico fallback^";
-    print "• Validación de integridad del sistema^";
-    print "• Gestión de estado global^";
-    print "^Este módulo NO contiene:^";
-    print "• Funciones de gramática (ver SpanishGrammar.h)^";
-    print "• Conjugaciones (ver SpanishVerbs.h)^";
-    print "• Parsing avanzado (ver SpanishParser.h)^";
-    print "• Variables globales (ver SpanishConstants.h)^";
-    print "^Para funcionalidad completa, incluye todos los módulos.^";
+[ SpanishCoreStatus;
+    print "^=== ESTADO DEL NÚCLEO ESPAÑOL ===^";
+    print "Versión del núcleo: ", (string) SPANISH_CORE_VERSION, "^";
+    print "Inicializado: ";
+    if (spanish_initialized) print "Sí"; else print "No";
+    print "^";
+    
+    print "Formalidad: ";
+    if (FormalityLevel == FORMAL) print "Formal (usted)";
+    else print "Informal (tú)";
+    print "^";
+    
+    print "Región: ";
+    switch (current_spanish_region) {
+        REGION_NEUTRAL: print "Neutral";
+        REGION_MEXICO: print "México";
+        REGION_ARGENTINA: print "Argentina";
+        REGION_SPAIN: print "España";
+        REGION_COLOMBIA: print "Colombia";
+        REGION_CHILE: print "Chile";
+        default: print "Desconocida";
+    }
+    print "^";
+    
+    print "Voseo: ";
+    if (voseo_enabled) print "Activo"; else print "Inactivo";
+    print "^";
+    
+    print "^Módulos coordinados:^";
+    print "• Parser: ";
+    if (spanish_parser_ready) print "✅"; else print "❌";
+    print "^• Verbos: ";
+    if (spanish_verbs_ready) print "✅"; else print "❌";
+    print "^• Gramática: ";
+    if (spanish_grammar_ready) print "✅"; else print "❌";
+    print "^• Mensajes: ";
+    if (spanish_messages_ready) print "✅"; else print "❌";
+    print "^";
+    
+    print "Último comando: ", last_command_length, " palabras^";
+    print "Estado del parser: Etapa ", spanish_parse_stage, "^";
+];
+
+! ==============================================================================
+! RUTINAS DE EMERGENCIA Y FALLBACK
+! ==============================================================================
+
+[ SpanishEmergencyFallback;
+    ! ✅ CORREGIDO: Función completa de rutinas de emergencia
+    ! Rutinas básicas en caso de que otros módulos fallen
+    
+    print "^[MODO DE EMERGENCIA: Funcionalidad básica del español]^";
+    print "[Solo contracciones y parsing mínimo disponibles]^";
+    
+    ! Configurar valores seguros
+    FormalityLevel = INFORMAL;
+    current_spanish_region = REGION_NEUTRAL;
+    voseo_enabled = false;
+    spanish_initialized = true;
+    
+    ! Marcar este módulo como cargado
+    MarkModuleLoaded('core');
+    
+    ! Limpiar buffers
+    spanish_buffer->0 = 0;
+    if (spanish_temp_buffer) spanish_temp_buffer->0 = 0;
+    
+    #Ifdef DEBUG;
+        print "[Modo de emergencia activado - funcionalidad limitada]^";
+    #Endif;
+    
+    return true;
+];
+
+[ SpanishValidateSystem;
+    ! ✅ CORREGIDO: Función completa de validación del sistema
+    ! Verificar integridad del sistema
+    local errors;
+    errors = 0;
+    
+    #Ifdef DEBUG;
+        print "^[Validando integridad del sistema español...]^";
+    #Endif;
+    
+    ! Verificar constantes críticas
+    if (PRESENTE_T == 0) {
+        print "^[ERROR: Constantes de tiempo verbal no definidas]^";
+        errors++;
+    }
+    
+    if (MASCULINE == 0) {
+        print "^[ERROR: Constantes de género no definidas]^";
+        errors++;
+    }
+    
+    ! Verificar arrays críticos (solo si están definidos)
+    #Ifdef LIBRARY_STAGE;
+    #Iffalse LIBRARY_STAGE >= AFTER_PARSER;
+        ! Aún no se pueden verificar los arrays
+    #Ifnot;
+        if (LanguagePronouns-->0 == 0) {
+            print "^[ERROR: Array de pronombres no inicializado]^";
+            errors++;
+        }
+    #Endif;
+    #Endif;
+    
+    ! Verificar variables centralizadas
+    if (spanish_buffer == 0) {
+        print "^[ERROR: Buffer principal no disponible]^";
+        errors++;
+    }
+    
+    ! Verificar inicialización de módulos críticos
+    if (~~spanish_initialized) {
+        print "^[ADVERTENCIA: Sistema no completamente inicializado]^";
+    }
+    
+    if (errors > 0) {
+        print "^[SISTEMA ESPAÑOL: ", errors, " errores detectados]^";
+        print "[Recomendación: Usar SpanishEmergencyFallback()]^";
+        return false;
+    }
+    
+    #Ifdef DEBUG;
+        print "[Validación completa: Sistema OK]^";
+    #Endif;
+    
+    return true;
 ];
 
 ! ==============================================================================
 ! HOOKS PARA INTEGRACIÓN AUTOMÁTICA
 ! ==============================================================================
 
-! Hook para procesamiento de comandos
 [ SpanishCoreProcessCommand;
+    ! Hook para procesamiento de comandos
     ! Actualizar estadísticas de comando
     last_command_length = parse->1;
     
@@ -337,21 +392,57 @@ Constant SPANISH_CORE_VERSION = "1.1-coordinator-only";
     return false; ! Continuar procesamiento normal
 ];
 
-! Hook para manejo de errores
 [ SpanishCoreHandleError error_type;
+    ! Hook para manejo de errores
     ! Delegar al sistema de meta-comandos si está disponible
     #Ifdef SPANISH_META_INCLUDED;
         return SpanishParseError(error_type, 0);
     #Ifnot;
         ! Manejo básico de errores
         switch(error_type) {
-            1: print "No entendí esa instrucción.";
-            2: print "No puedes ver tal cosa aquí.";
-            3: print "No está claro a qué te refieres.";
+            STUCK_PE: print "No entendí esa instrucción.";
+            CANTSEE_PE: print "No puedes ver tal cosa aquí.";
+            VAGUE_PE: print "No está claro a qué te refieres.";
+            VERB_PE: print "Ese no es un verbo que reconozca.";
             default: print "Error en el comando.";
         }
         return true;
     #Endif;
+];
+
+! ==============================================================================
+! RUTINAS PRINCIPALES DE INICIALIZACIÓN
+! ==============================================================================
+
+[ SpanishCoreInit;
+    ! ✅ AÑADIDO: Rutina principal de inicialización del core
+    ! Inicialización principal del núcleo coordinador
+    
+    #Ifdef DEBUG;
+        print "^[SpanishCore v", (string) SPANISH_CORE_VERSION, " iniciando...]^";
+    #Endif;
+    
+    ! Verificar dependencias críticas
+    if (~~SpanishValidateSystem()) {
+        print "^[ERROR CRÍTICO: Sistema español no puede inicializarse]^";
+        return SpanishEmergencyFallback();
+    }
+    
+    ! Coordinar módulos
+    SpanishCoreCoordinate();
+    
+    ! Llamar inicializadores
+    SpanishCoreCallInitializers();
+    
+    ! Marcar como completo
+    spanish_initialized = true;
+    
+    #Ifdef DEBUG;
+        print "[SpanishCore inicializado correctamente]^";
+        SpanishCoreStatus();
+    #Endif;
+    
+    return true;
 ];
 
 ! ==============================================================================
@@ -363,6 +454,7 @@ Constant SPANISH_COORDINATOR_READY;
 
 ! Información del módulo
 Constant SPANISH_CORE_FEATURES = "Coordinación, inicialización, fallback, validación";
+Constant SPANISH_CORE_FUNCTIONS = 10; ! Número de funciones públicas
 
 #Endif; ! SPANISH_CORE_INCLUDED
 

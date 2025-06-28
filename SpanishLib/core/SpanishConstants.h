@@ -8,19 +8,7 @@ System_file;
 
 #Ifndef SPANISH_CONSTANTS_INCLUDED;
 Constant SPANISH_CONSTANTS_INCLUDED;
-Constant SPANISH_CONSTANTS_VERSION = "1.1-centralized-fixed";
-
-Zcharacter table
-    '@{00E1}' '@{00E9}' '@{00ED}' '@{00F3}' '@{00FA}'  ! á é í ó ú (minúsculas con acento)
-    '@{00C1}' '@{00C9}' '@{00CD}' '@{00D3}' '@{00DA}'  ! Á É Í Ó Ú (mayúsculas con acento)
-    '@{00F1}' '@{00D1}'                                ! ñ Ñ
-    '@{00FC}' '@{00DC}'                                ! ü Ü
-    '@{00A1}' '@{00BF}'                                ! ¡ ¿
-    '@{00C3}'
-    '@{00A9}'                                          ! © (símbolo de copyright)
-    '@{00B1}' '@{00B3}'                                ! ± ³ (otros símbolos)
-    '@{00E2}' '@{00A2}' '@{00BA}'                                       
-;
+Constant SPANISH_CONSTANTS_VERSION = "1.2-centralized-fixed";
 
 ! ==============================================================================
 ! CONSTANTES DE TIEMPOS VERBALES
@@ -66,40 +54,51 @@ Constant FORMAL = 1;
 #Endif;
 
 ! ==============================================================================
-! VARIABLES GLOBALES CENTRALIZADAS
+! CONSTANTES REGIONALES
 ! ==============================================================================
 
-! Variable principal de formalidad (antes estaba duplicada)
-Global FormalityLevel = SPANISH_FORMALITY_DEFAULT;
+Constant REGION_NEUTRAL = 0;
+Constant REGION_MEXICO = 1;
+Constant REGION_ARGENTINA = 2;
+Constant REGION_SPAIN = 3;
+Constant REGION_COLOMBIA = 4;
+Constant REGION_CHILE = 5;
 
-! Variables de estado del sistema
-Global spanish_initialized = false;
-Global spanish_parser_ready = false;
-Global spanish_verbs_ready = false;
-Global spanish_grammar_ready = false;
-Global spanish_messages_ready = false;
-
-! Variables para comandos
-Global last_command_length = 0;
-Global spanish_parse_stage = 0;
-Global spanish_last_verb = 0;
-
-! Variables para meta-comandos
-Global undo_disabled = false;
-Global again_enabled = true;
-Global oops_enabled = true;
-Global last_command_valid = false;
-Global oops_word = 0;
-Global oops_position = 0;
-
-! Variables regionales
 #Ifndef SPANISH_REGION_DEFAULT;
     Constant SPANISH_REGION_DEFAULT = 0;     ! Neutral por defecto
 #Endif;
 
-Global current_spanish_region = SPANISH_REGION_DEFAULT;
-Global voseo_enabled = false;
-Global regional_vocabulary = true;
+! ==============================================================================
+! CONSTANTES DE META-COMANDOS
+! ==============================================================================
+
+Constant META_UNDO = 1;
+Constant META_AGAIN = 2;
+Constant META_OOPS = 3;
+Constant META_HELP = 4;
+Constant META_COMMANDS = 5;
+Constant META_SCRIPT_ON = 6;
+Constant META_SCRIPT_OFF = 7;
+Constant META_PRONOUNS = 8;
+Constant META_NOTIFY_ON = 9;
+Constant META_NOTIFY_OFF = 10;
+Constant META_BRIEF = 11;
+Constant META_VERBOSE = 12;
+Constant META_SUPERBRIEF = 13;
+
+! ==============================================================================
+! CONSTANTES DE PARSING
+! ==============================================================================
+
+Constant PREP_SIMPLE = 1;
+Constant PREP_COMPOUND_START = 2;
+Constant PREP_COMPOUND_MIDDLE = 3;
+Constant PREP_COMPOUND_END = 4;
+
+Constant SPANISH_VERB_POSITION = 1;
+Constant SPANISH_OBJECT_POSITION = 2;
+Constant SPANISH_PREPOSITION_POSITION = 3;
+Constant SPANISH_SECONDARY_OBJECT_POSITION = 4;
 
 ! ==============================================================================
 ! DIRECCIONES EN ESPAÑOL
@@ -161,54 +160,54 @@ Constant THEN4__WD  = 'y_luego';
 Constant THEN5__WD  = 'y_después';
 
 ! ==============================================================================
-! CONSTANTES DE PARSING
+! VARIABLES GLOBALES CENTRALIZADAS - ✅ SIN DUPLICACIONES
 ! ==============================================================================
 
-Constant PREP_SIMPLE = 1;
-Constant PREP_COMPOUND_START = 2;
-Constant PREP_COMPOUND_MIDDLE = 3;
-Constant PREP_COMPOUND_END = 4;
+! Variable principal de formalidad
+Global FormalityLevel = SPANISH_FORMALITY_DEFAULT;
 
-Constant SPANISH_VERB_POSITION = 1;
-Constant SPANISH_OBJECT_POSITION = 2;
-Constant SPANISH_PREPOSITION_POSITION = 3;
-Constant SPANISH_SECONDARY_OBJECT_POSITION = 4;
+! Variables de estado del sistema
+Global spanish_initialized = false;
+Global spanish_parser_ready = false;
+Global spanish_verbs_ready = false;
+Global spanish_grammar_ready = false;
+Global spanish_messages_ready = false;
+
+! Variables para comandos
+Global last_command_length = 0;
+Global spanish_parse_stage = 0;
+Global spanish_last_verb = 0;
+
+! Variables para meta-comandos
+Global undo_disabled = false;
+Global again_enabled = true;
+Global oops_enabled = true;
+Global last_command_valid = false;
+Global oops_word = 0;
+Global oops_position = 0;
+
+! Variables regionales
+Global current_spanish_region = SPANISH_REGION_DEFAULT;
+Global voseo_enabled = false;
+Global regional_vocabulary = true;
+
+! Marcadores de módulos cargados
+Global SPANISH_CORE_LOADED = false;
+Global SPANISH_PARSER_LOADED = false;
+Global SPANISH_GRAMMAR_LOADED = false;
+Global SPANISH_VERBS_LOADED = false;
+Global SPANISH_MESSAGES_LOADED = false;
+Global SPANISH_IRREGULAR_VERBS_LOADED = false;
+Global SPANISH_META_LOADED = false;
+Global SPANISH_REGIONAL_LOADED = false;
 
 ! ==============================================================================
-! CONSTANTES REGIONALES
-! ==============================================================================
-
-Constant REGION_NEUTRAL = 0;
-Constant REGION_MEXICO = 1;
-Constant REGION_ARGENTINA = 2;
-Constant REGION_SPAIN = 3;
-Constant REGION_COLOMBIA = 4;
-Constant REGION_CHILE = 5;
-
-! ==============================================================================
-! CONSTANTES DE META-COMANDOS
-! ==============================================================================
-
-Constant META_UNDO = 1;
-Constant META_AGAIN = 2;
-Constant META_OOPS = 3;
-Constant META_HELP = 4;
-Constant META_COMMANDS = 5;
-Constant META_SCRIPT_ON = 6;
-Constant META_SCRIPT_OFF = 7;
-Constant META_PRONOUNS = 8;
-Constant META_NOTIFY_ON = 9;
-Constant META_NOTIFY_OFF = 10;
-Constant META_BRIEF = 11;
-Constant META_VERBOSE = 12;
-Constant META_SUPERBRIEF = 13;
-
-! ==============================================================================
-! ARRAYS BÁSICOS COMPARTIDOS - CENTRALIZADOS
+! ARRAYS BÁSICOS COMPARTIDOS - ✅ CENTRALIZADOS
 ! ==============================================================================
 
 ! Buffer principal del sistema
 Array spanish_buffer -> 120;
+Array spanish_temp_buffer -> 100;
 
 ! Buffers para comandos
 Array last_command_buffer -> 120;
@@ -217,6 +216,16 @@ Array last_command_parse table 32;
 ! Buffers para parsing
 Array spanish_parse_buffer --> 64;
 Array spanish_temp_parse --> 32;
+
+! ==============================================================================
+! ARRAYS LINGÜÍSTICOS PRINCIPALES
+! ==============================================================================
+
+! ✅ CORREGIDO: Arrays con verificación de compatibilidad
+#Ifdef LIBRARY_STAGE;
+#Iffalse LIBRARY_STAGE >= AFTER_PARSER;
+  ! Los arrays se definirán después del parser
+#Ifnot;
 
 Array LanguagePronouns table
     'me'       $$000001   NULL     
@@ -266,85 +275,108 @@ Array LanguageNumbers table
     'once' 11, 'doce' 12, 'trece' 13, 'catorce' 14, 'quince' 15,
     'dieciséis' 16, 'diecisiete' 17, 'dieciocho' 18, 'diecinueve' 19, 'veinte' 20;
 
-! ==============================================================================
-! CONSTANTES DE VERSIÓN Y COMPATIBILIDAD
-! ==============================================================================
-
-Constant LIBRARY_SPANISH;
-Constant SPANISH_MODULAR_SYSTEM;
-Constant SPANISH_CONSTANTS_COMPLETE;
-Constant SPANISH_SYSTEM_VERSION = "1.1-modular-fixed";
-
-! Marcadores de módulos disponibles (se activan cuando se cargan)
-Global SPANISH_CORE_LOADED = false;
-Global SPANISH_PARSER_LOADED = false;
-Global SPANISH_GRAMMAR_LOADED = false;
-Global SPANISH_VERBS_LOADED = false;
-Global SPANISH_MESSAGES_LOADED = false;
-Global SPANISH_IRREGULAR_VERBS_LOADED = false;
-Global SPANISH_META_LOADED = false;
-Global SPANISH_REGIONAL_LOADED = false;
+#Endif;
+#Endif;
 
 ! ==============================================================================
 ! FUNCIONES BÁSICAS DE CONFIGURACIÓN
 ! ==============================================================================
 
 [ SpanishSetFormality level;
-    ! Cambiar nivel de formalidad dinámicamente
+    ! ✅ CORREGIDO: Función completa de configuración de formalidad
     if (level == FORMAL || level == INFORMAL) {
         FormalityLevel = level;
+        
+        #Ifdef DEBUG;
+            print "[Formalidad cambiada a: ";
+            if (level == FORMAL) print "FORMAL";
+            else print "INFORMAL";
+            print "]^";
+        #Endif;
+        
         return true;
     }
+    
+    #Ifdef DEBUG;
+        print "[ERROR: Nivel de formalidad inválido: ", level, "]^";
+    #Endif;
+    
+    return false;
+];
+
+[ SpanishSetRegion region;
+    ! ✅ AÑADIDO: Función de configuración regional
+    if (region >= REGION_NEUTRAL && region <= REGION_CHILE) {
+        current_spanish_region = region;
+        
+        ! Configuración automática basada en región
+        switch (region) {
+            REGION_ARGENTINA:
+                voseo_enabled = true;
+                FormalityLevel = INFORMAL;
+            REGION_SPAIN:
+                voseo_enabled = false;
+                FormalityLevel = FORMAL;
+            default:
+                voseo_enabled = false;
+                FormalityLevel = INFORMAL;
+        }
+        
+        #Ifdef DEBUG;
+            print "[Región cambiada a: ";
+            switch (region) {
+                REGION_NEUTRAL: print "NEUTRAL";
+                REGION_MEXICO: print "MÉXICO";
+                REGION_ARGENTINA: print "ARGENTINA";
+                REGION_SPAIN: print "ESPAÑA";
+                REGION_COLOMBIA: print "COLOMBIA";
+                REGION_CHILE: print "CHILE";
+            }
+            print "]^";
+        #Endif;
+        
+        return true;
+    }
+    
     return false;
 ];
 
 [ SpanishGetFormality;
+    ! ✅ AÑADIDO: Obtener nivel de formalidad actual
     return FormalityLevel;
 ];
 
-[ SpanishToggleFormality;
-    if (FormalityLevel == FORMAL) {
-        return SpanishSetFormality(INFORMAL);
-    } else {
-        return SpanishSetFormality(FORMAL);
-    }
+[ SpanishGetRegion;
+    ! ✅ AÑADIDO: Obtener región actual
+    return current_spanish_region;
+];
+
+[ SpanishIsVoseoEnabled;
+    ! ✅ AÑADIDO: Verificar si el voseo está activo
+    return voseo_enabled;
+];
+
+[ SpanishToggleVoseo;
+    ! ✅ AÑADIDO: Alternar voseo manualmente
+    voseo_enabled = ~~voseo_enabled;
+    
+    #Ifdef DEBUG;
+        print "[Voseo: ";
+        if (voseo_enabled) print "ACTIVADO";
+        else print "DESACTIVADO";
+        print "]^";
+    #Endif;
+    
+    return voseo_enabled;
 ];
 
 ! ==============================================================================
-! FUNCIONES DE ESTADO DEL SISTEMA
+! SISTEMA DE TRACKING DE MÓDULOS
 ! ==============================================================================
-
-[ SpanishSystemStatus;
-    print "^=== ESTADO DEL SISTEMA ESPAÑOL ===^";
-    print "Versión: ", (string) SPANISH_SYSTEM_VERSION, "^";
-    
-    print "Módulos cargados:^";
-    print "• Core: "; if (SPANISH_CORE_LOADED) print "✅"; else print "❌"; print "^";
-    print "• Parser: "; if (SPANISH_PARSER_LOADED) print "✅"; else print "❌"; print "^";
-    print "• Grammar: "; if (SPANISH_GRAMMAR_LOADED) print "✅"; else print "❌"; print "^";
-    print "• Verbs: "; if (SPANISH_VERBS_LOADED) print "✅"; else print "❌"; print "^";
-    print "• Messages: "; if (SPANISH_MESSAGES_LOADED) print "✅"; else print "❌"; print "^";
-    print "• Irregular Verbs: "; if (SPANISH_IRREGULAR_VERBS_LOADED) print "✅"; else print "❌"; print "^";
-    print "• Meta Commands: "; if (SPANISH_META_LOADED) print "✅"; else print "❌"; print "^";
-    print "• Regional: "; if (SPANISH_REGIONAL_LOADED) print "✅"; else print "❌"; print "^";
-    
-    print "^Configuración:^";
-    print "• Formalidad: ";
-    if (FormalityLevel == FORMAL) print "Formal (usted)"; else print "Informal (tú)";
-    print "^• Región: ";
-    switch(current_spanish_region) {
-        REGION_MEXICO: print "México";
-        REGION_ARGENTINA: print "Argentina";
-        REGION_SPAIN: print "España";
-        default: print "Neutral";
-    }
-    print "^• Voseo: ";
-    if (voseo_enabled) print "Sí"; else print "No";
-    print "^";
-];
 
 [ MarkModuleLoaded module_name;
-    switch(module_name) {
+    ! ✅ AÑADIDO: Marcar un módulo como cargado
+    switch (module_name) {
         'core': SPANISH_CORE_LOADED = true;
         'parser': SPANISH_PARSER_LOADED = true;
         'grammar': SPANISH_GRAMMAR_LOADED = true;
@@ -356,18 +388,48 @@ Global SPANISH_REGIONAL_LOADED = false;
     }
 ];
 
+[ IsModuleLoaded module_name;
+    ! ✅ AÑADIDO: Verificar si un módulo está cargado
+    switch (module_name) {
+        'core': return SPANISH_CORE_LOADED;
+        'parser': return SPANISH_PARSER_LOADED;
+        'grammar': return SPANISH_GRAMMAR_LOADED;
+        'verbs': return SPANISH_VERBS_LOADED;
+        'messages': return SPANISH_MESSAGES_LOADED;
+        'irregular': return SPANISH_IRREGULAR_VERBS_LOADED;
+        'meta': return SPANISH_META_LOADED;
+        'regional': return SPANISH_REGIONAL_LOADED;
+        default: return false;
+    }
+];
+
+[ SpanishModuleStatus;
+    ! ✅ AÑADIDO: Mostrar estado de todos los módulos
+    print "^=== ESTADO DE MÓDULOS SPANISH LIBRARY ===^";
+    print "• Core: "; if (SPANISH_CORE_LOADED) print "✅"; else print "❌"; print "^";
+    print "• Parser: "; if (SPANISH_PARSER_LOADED) print "✅"; else print "❌"; print "^";
+    print "• Grammar: "; if (SPANISH_GRAMMAR_LOADED) print "✅"; else print "❌"; print "^";
+    print "• Verbs: "; if (SPANISH_VERBS_LOADED) print "✅"; else print "❌"; print "^";
+    print "• Messages: "; if (SPANISH_MESSAGES_LOADED) print "✅"; else print "❌"; print "^";
+    print "• Irregular Verbs: "; if (SPANISH_IRREGULAR_VERBS_LOADED) print "✅"; else print "❌"; print "^";
+    print "• Meta Commands: "; if (SPANISH_META_LOADED) print "✅"; else print "❌"; print "^";
+    print "• Regional: "; if (SPANISH_REGIONAL_LOADED) print "✅"; else print "❌"; print "^";
+    print "========================================^";
+];
+
 ! ==============================================================================
 ! INICIALIZACIÓN DE CONSTANTES
 ! ==============================================================================
 
 [ SpanishConstantsInit;
-    ! Inicializar valores por defecto
+    ! ✅ CORREGIDO: Inicialización completa sin duplicaciones
     FormalityLevel = SPANISH_FORMALITY_DEFAULT;
     current_spanish_region = SPANISH_REGION_DEFAULT;
     spanish_initialized = false;
     
     ! Limpiar arrays
     spanish_buffer->0 = 0;
+    spanish_temp_buffer->0 = 0;
     last_command_buffer->0 = 0;
     
     ! Configurar sistema
@@ -378,10 +440,29 @@ Global SPANISH_REGIONAL_LOADED = false;
     voseo_enabled = false;
     regional_vocabulary = true;
     
+    ! Limpiar marcadores de módulos
+    SPANISH_CORE_LOADED = false;
+    SPANISH_PARSER_LOADED = false;
+    SPANISH_GRAMMAR_LOADED = false;
+    SPANISH_VERBS_LOADED = false;
+    SPANISH_MESSAGES_LOADED = false;
+    SPANISH_IRREGULAR_VERBS_LOADED = false;
+    SPANISH_META_LOADED = false;
+    SPANISH_REGIONAL_LOADED = false;
+    
     #Ifdef DEBUG;
-    print "[SpanishConstants v", (string) SPANISH_CONSTANTS_VERSION, " inicializado]^";
+        print "[SpanishConstants v", (string) SPANISH_CONSTANTS_VERSION, " inicializado]^";
     #Endif;
 ];
+
+! ==============================================================================
+! CONSTANTES DE VERSIÓN Y COMPATIBILIDAD
+! ==============================================================================
+
+Constant LIBRARY_SPANISH;
+Constant SPANISH_MODULAR_SYSTEM;
+Constant SPANISH_CONSTANTS_COMPLETE;
+Constant SPANISH_SYSTEM_VERSION = "1.2-modular-fixed";
 
 #Endif; ! SPANISH_CONSTANTS_INCLUDED
 

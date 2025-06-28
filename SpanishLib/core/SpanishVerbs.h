@@ -8,9 +8,12 @@ System_file;
 
 #Ifndef SPANISH_VERBS_INCLUDED;
 Constant SPANISH_VERBS_INCLUDED;
-Constant SPANISH_VERBS_VERSION = "1.1-cleaned";
+Constant SPANISH_VERBS_VERSION = "1.2-complete-fixed";
 
-! Verificación de dependencias
+! ==============================================================================
+! VERIFICACIÓN DE DEPENDENCIAS
+! ==============================================================================
+
 #Ifndef SPANISH_CONSTANTS_INCLUDED;
   Message fatalerror "*** Include SpanishConstants.h antes de SpanishVerbs.h ***";
 #Endif;
@@ -20,39 +23,40 @@ Constant SPANISH_VERBS_VERSION = "1.1-cleaned";
 #Endif;
 
 ! ==============================================================================
-! SISTEMA DE CONJUGACIÓN DE VERBOS REGULARES
+! UTILIDADES DE ANÁLISIS DE VERBOS
 ! ==============================================================================
 
-! Detectar el tipo de verbo según su terminación
-[ DetectarTipoVerbo verbo;
-    ! Esta función asume que 'verbo' es una string o dictionary word
+[ DetectarTipoVerbo verbo   len buffer;
+    ! ✅ CORREGIDO: Función completa para detectar tipo de verbo
     ! Devuelve: 1 = -AR, 2 = -ER, 3 = -IR, 0 = irregular o no reconocido
     
-    local len;
+    if (verbo == 0) return 0;
     
-    ! Si es dictionary word, convertir a string para análisis
-    if (verbo < 256) return 0; ! No es string válida
+    ! Convertir dictionary word a string para análisis
+    len = PrintToBuffer(spanish_temp_buffer, 100, verbo);
     
-    len = verbo->0;
-    if (len < 2) return 0; ! Muy corto para ser verbo
+    if (len < 3) return 0; ! Muy corto para ser verbo
     
-    if (verbo->(len) == 'r') { ! Última letra es 'r'
-        if (verbo->(len-1) == 'a') return 1; ! -AR
-        if (verbo->(len-1) == 'e') return 2; ! -ER
-        if (verbo->(len-1) == 'i') return 3; ! -IR
+    ! Verificar terminación
+    if (spanish_temp_buffer->(len-1) == 'r') { ! Última letra es 'r'
+        if (spanish_temp_buffer->(len-2) == 'a') return 1; ! -AR
+        if (spanish_temp_buffer->(len-2) == 'e') return 2; ! -ER  
+        if (spanish_temp_buffer->(len-2) == 'i') return 3; ! -IR
     }
     
     return 0; ! No reconocido como verbo regular
 ];
 
-! Obtener la raíz de un verbo (sin -ar, -er, -ir)
 [ ObtenerRaizVerbo verbo buffer   len i;
-    len = verbo->0;
+    ! ✅ CORREGIDO: Función completa para obtener raíz
+    ! Obtiene la raíz de un verbo (sin -ar, -er, -ir)
+    
+    len = PrintToBuffer(spanish_temp_buffer, 100, verbo);
     if (len < 3) return 0;
     
-    ! Copiar todo excepto las últimas 2 letras
+    ! Copiar todo excepto las últimas 2 letras (-ar, -er, -ir)
     for (i = 0: i < len - 2: i++) {
-        buffer->(i+1) = verbo->(i+1);
+        buffer->(i+1) = spanish_temp_buffer->(i+1);
     }
     buffer->0 = len - 2;
     
@@ -60,448 +64,455 @@ Constant SPANISH_VERBS_VERSION = "1.1-cleaned";
 ];
 
 ! ==============================================================================
-! CONJUGACIONES DE VERBOS REGULARES - CORREGIDAS
+! CONJUGACIONES DE VERBOS REGULARES - ✅ COMPLETAS
 ! ==============================================================================
 
 [ ConjugarAR raiz persona tiempo;
-    ! raiz debe ser la raíz del verbo sin -ar
-    switch(tiempo) {
-        PRESENTE_T:
-            print (string) raiz;
-            switch(persona) {
-                1: print "o";
-                2: print "as";
-                3: print "a";
-                4: print "amos";
-                5: print "áis";
-                6: print "an";
-            }
-        PRETERITO_T:
-            print (string) raiz;
-            switch(persona) {
-                1: print "é";
-                2: print "aste";
-                3: print "ó";
-                4: print "amos";
-                5: print "asteis";
-                6: print "aron";
-            }
-        IMPERFECTO_T:
-            print (string) raiz;
-            switch(persona) {
-                1: print "aba";
-                2: print "abas";
-                3: print "aba";
-                4: print "ábamos";
-                5: print "abais";
-                6: print "aban";
-            }
-        FUTURO_T:
-            print (string) raiz; print "ar";
-            switch(persona) {
-                1: print "é";
-                2: print "ás";
-                3: print "á";
-                4: print "emos";
-                5: print "éis";
-                6: print "án";
-            }
-        CONDICIONAL_T:
-            print (string) raiz; print "ar";
-            switch(persona) {
-                1: print "ía";
-                2: print "ías";
-                3: print "ía";
-                4: print "íamos";
-                5: print "íais";
-                6: print "ían";
-            }
-        SUBJUNTIVO_T:
-            print (string) raiz;
-            switch(persona) {
-                1: print "e";
-                2: print "es";
-                3: print "e";
-                4: print "emos";
-                5: print "éis";
-                6: print "en";
-            }
-        IMPERATIVO_T:
-            print (string) raiz;
-            switch(persona) {
-                2: print "a";
-                3: print "e";
-                4: print "emos";
-                5: print "ad";
-                6: print "en";
-            }
-    }
-];
-
-[ ConjugarER raiz persona tiempo;
-    ! raiz debe ser la raíz del verbo sin -er
-    switch(tiempo) {
-        PRESENTE_T:
-            print (string) raiz;
-            switch(persona) {
-                1: print "o";
-                2: print "es";
-                3: print "e";
-                4: print "emos";
-                5: print "éis";
-                6: print "en";
-            }
-        PRETERITO_T:
-            print (string) raiz;
-            switch(persona) {
-                1: print "í";
-                2: print "iste";
-                3: print "ió";
-                4: print "imos";
-                5: print "isteis";
-                6: print "ieron";
-            }
-        IMPERFECTO_T:
-            print (string) raiz;
-            switch(persona) {
-                1: print "ía";
-                2: print "ías";
-                3: print "ía";
-                4: print "íamos";
-                5: print "íais";
-                6: print "ían";
-            }
-        FUTURO_T:
-            print (string) raiz; print "er";
-            switch(persona) {
-                1: print "é";
-                2: print "ás";
-                3: print "á";
-                4: print "emos";
-                5: print "éis";
-                6: print "án";
-            }
-        CONDICIONAL_T:
-            print (string) raiz; print "er";
-            switch(persona) {
-                1: print "ía";
-                2: print "ías";
-                3: print "ía";
-                4: print "íamos";
-                5: print "íais";
-                6: print "ían";
-            }
-        SUBJUNTIVO_T:
-            print (string) raiz;
-            switch(persona) {
-                1: print "a";
-                2: print "as";
-                3: print "a";
-                4: print "amos";
-                5: print "áis";
-                6: print "an";
-            }
-        IMPERATIVO_T:
-            print (string) raiz;
-            switch(persona) {
-                2: print "e";
-                3: print "a";
-                4: print "amos";
-                5: print "ed";
-                6: print "an";
-            }
-    }
-];
-
-[ ConjugarIR raiz persona tiempo;
-    ! raiz debe ser la raíz del verbo sin -ir
-    switch(tiempo) {
-        PRESENTE_T:
-            print (string) raiz;
-            switch(persona) {
-                1: print "o";
-                2: print "es";
-                3: print "e";
-                4: print "imos";
-                5: print "ís";
-                6: print "en";
-            }
-        PRETERITO_T:
-            print (string) raiz;
-            switch(persona) {
-                1: print "í";
-                2: print "iste";
-                3: print "ió";
-                4: print "imos";
-                5: print "isteis";
-                6: print "ieron";
-            }
-        IMPERFECTO_T:
-            print (string) raiz;
-            switch(persona) {
-                1: print "ía";
-                2: print "ías";
-                3: print "ía";
-                4: print "íamos";
-                5: print "íais";
-                6: print "ían";
-            }
-        FUTURO_T:
-            print (string) raiz; print "ir";
-            switch(persona) {
-                1: print "é";
-                2: print "ás";
-                3: print "á";
-                4: print "emos";
-                5: print "éis";
-                6: print "án";
-            }
-        CONDICIONAL_T:
-            print (string) raiz; print "ir";
-            switch(persona) {
-                1: print "ía";
-                2: print "ías";
-                3: print "ía";
-                4: print "íamos";
-                5: print "íais";
-                6: print "ían";
-            }
-        SUBJUNTIVO_T:
-            print (string) raiz;
-            switch(persona) {
-                1: print "a";
-                2: print "as";
-                3: print "a";
-                4: print "amos";
-                5: print "áis";
-                6: print "an";
-            }
-        IMPERATIVO_T:
-            print (string) raiz;
-            switch(persona) {
-                2: print "e";
-                3: print "a";
-                4: print "amos";
-                5: print "id";
-                6: print "an";
-            }
-    }
-];
-
-! ==============================================================================
-! SISTEMA PRINCIPAL DE CONJUGACIÓN - PREPARADO PARA IRREGULARES
-! ==============================================================================
-
-[ ConjugarVerbo_Regular verbo persona tiempo tipo   raiz_buffer;
-    ! Función base para verbos regulares - preparada para ser extendida
+    ! ✅ CORREGIDO: Función completa de conjugación de verbos -AR
     
-    ! Si no se especifica tipo, detectarlo
-    if (tipo == 0) tipo = DetectarTipoVerbo(verbo);
+    if (raiz == 0) return false;
     
-    ! Obtener raíz del verbo
-    if (ObtenerRaizVerbo(verbo, raiz_buffer) == 0) {
-        ! Si no se puede obtener raíz, imprimir infinitivo
-        print (string) verbo;
-        return false;
+    ! Imprimir la raíz
+    print (string) raiz;
+    
+    ! Añadir terminación según persona y tiempo
+    switch (tiempo) {
+        PRESENTE_T:
+            switch (persona) {
+                1: print "o";      ! yo camino
+                2: if (FormalityLevel == FORMAL) print "a"; else print "as"; ! usted camina / tú caminas
+                3: print "a";      ! él/ella camina
+                4: print "amos";   ! nosotros caminamos
+                5: if (FormalityLevel == FORMAL) print "an"; else print "áis"; ! ustedes caminan / vosotros camináis
+                6: print "an";     ! ellos/ellas caminan
+            }
+            
+        PRETERITO_T:
+            switch (persona) {
+                1: print "é";      ! yo caminé
+                2: if (FormalityLevel == FORMAL) print "ó"; else print "aste"; ! usted caminó / tú caminaste
+                3: print "ó";      ! él/ella caminó
+                4: print "amos";   ! nosotros caminamos
+                5: if (FormalityLevel == FORMAL) print "aron"; else print "asteis"; ! ustedes caminaron / vosotros caminasteis
+                6: print "aron";   ! ellos/ellas caminaron
+            }
+            
+        IMPERFECTO_T:
+            switch (persona) {
+                1: print "aba";    ! yo caminaba
+                2: print "aba";    ! tú/usted caminaba
+                3: print "aba";    ! él/ella caminaba
+                4: print "ábamos"; ! nosotros caminábamos
+                5: if (FormalityLevel == FORMAL) print "aban"; else print "abais"; ! ustedes caminaban / vosotros caminabais
+                6: print "aban";   ! ellos/ellas caminaban
+            }
+            
+        FUTURO_T:
+            ! Para futuro, usar infinitivo completo + terminación
+            print "ar";
+            switch (persona) {
+                1: print "é";      ! yo caminaré
+                2: print "ás";     ! tú/usted caminarás/á
+                3: print "á";      ! él/ella caminará
+                4: print "emos";   ! nosotros caminaremos
+                5: print "éis";    ! vosotros/ustedes caminaréis/án
+                6: print "án";     ! ellos/ellas caminarán
+            }
+            
+        CONDICIONAL_T:
+            print "ar";
+            switch (persona) {
+                1: print "ía";     ! yo caminaría
+                2: print "ías";    ! tú/usted caminarías/ía
+                3: print "ía";     ! él/ella caminaría
+                4: print "íamos";  ! nosotros caminaríamos
+                5: print "íais";   ! vosotros/ustedes caminaríais/ían
+                6: print "ían";    ! ellos/ellas caminarían
+            }
+            
+        SUBJUNTIVO_T:
+            switch (persona) {
+                1: print "e";      ! que yo camine
+                2: print "es";     ! que tú camines
+                3: print "e";      ! que él/ella camine
+                4: print "emos";   ! que nosotros caminemos
+                5: print "éis";    ! que vosotros caminéis
+                6: print "en";     ! que ellos/ellas caminen
+            }
+            
+        IMPERATIVO_T:
+            switch (persona) {
+                2: if (FormalityLevel == FORMAL) print "e"; else print "a"; ! ¡camine! / ¡camina!
+                3: print "e";      ! ¡que camine!
+                4: print "emos";   ! ¡caminemos!
+                5: if (FormalityLevel == FORMAL) print "en"; else print "ad"; ! ¡caminen! / ¡caminad!
+                6: print "en";     ! ¡que caminen!
+            }
     }
     
-    switch(tipo) {
-        1: ConjugarAR(raiz_buffer, persona, tiempo);
-        2: ConjugarER(raiz_buffer, persona, tiempo);
-        3: ConjugarIR(raiz_buffer, persona, tiempo);
-        default:
-            ! No se puede conjugar, imprimir infinitivo
-            print (string) verbo;
-            return false;
-    }
     return true;
 ];
 
-[ ConjugarVerbo verbo persona tiempo tipo;
-    ! Función principal que será extendida por SpanishIrregularVerbs.h
-    ! Por ahora solo maneja verbos regulares
+[ ConjugarER raiz persona tiempo;
+    ! ✅ CORREGIDO: Función completa de conjugación de verbos -ER
     
+    if (raiz == 0) return false;
+    
+    print (string) raiz;
+    
+    switch (tiempo) {
+        PRESENTE_T:
+            switch (persona) {
+                1: print "o";      ! yo como
+                2: if (FormalityLevel == FORMAL) print "e"; else print "es"; ! usted come / tú comes
+                3: print "e";      ! él/ella come
+                4: print "emos";   ! nosotros comemos
+                5: if (FormalityLevel == FORMAL) print "en"; else print "éis"; ! ustedes comen / vosotros coméis
+                6: print "en";     ! ellos/ellas comen
+            }
+            
+        PRETERITO_T:
+            switch (persona) {
+                1: print "í";      ! yo comí
+                2: if (FormalityLevel == FORMAL) print "ió"; else print "iste"; ! usted comió / tú comiste
+                3: print "ió";     ! él/ella comió
+                4: print "imos";   ! nosotros comimos
+                5: if (FormalityLevel == FORMAL) print "ieron"; else print "isteis"; ! ustedes comieron / vosotros comisteis
+                6: print "ieron";  ! ellos/ellas comieron
+            }
+            
+        IMPERFECTO_T:
+            switch (persona) {
+                1: print "ía";     ! yo comía
+                2: print "ías";    ! tú/usted comías/ía
+                3: print "ía";     ! él/ella comía
+                4: print "íamos";  ! nosotros comíamos
+                5: if (FormalityLevel == FORMAL) print "ían"; else print "íais"; ! ustedes comían / vosotros comíais
+                6: print "ían";    ! ellos/ellas comían
+            }
+            
+        FUTURO_T:
+            print "er";
+            switch (persona) {
+                1: print "é";      ! yo comeré
+                2: print "ás";     ! tú/usted comerás/á
+                3: print "á";      ! él/ella comerá
+                4: print "emos";   ! nosotros comeremos
+                5: print "éis";    ! vosotros/ustedes comeréis/án
+                6: print "án";     ! ellos/ellas comerán
+            }
+            
+        CONDICIONAL_T:
+            print "er";
+            switch (persona) {
+                1: print "ía";     ! yo comería
+                2: print "ías";    ! tú/usted comerías/ía
+                3: print "ía";     ! él/ella comería
+                4: print "íamos";  ! nosotros comeríamos
+                5: print "íais";   ! vosotros/ustedes comeríais/ían
+                6: print "ían";    ! ellos/ellas comerían
+            }
+            
+        SUBJUNTIVO_T:
+            switch (persona) {
+                1: print "a";      ! que yo coma
+                2: print "as";     ! que tú comas
+                3: print "a";      ! que él/ella coma
+                4: print "amos";   ! que nosotros comamos
+                5: print "áis";    ! que vosotros comáis
+                6: print "an";     ! que ellos/ellas coman
+            }
+            
+        IMPERATIVO_T:
+            switch (persona) {
+                2: if (FormalityLevel == FORMAL) print "a"; else print "e"; ! ¡coma! / ¡come!
+                3: print "a";      ! ¡que coma!
+                4: print "amos";   ! ¡comamos!
+                5: if (FormalityLevel == FORMAL) print "an"; else print "ed"; ! ¡coman! / ¡comed!
+                6: print "an";     ! ¡que coman!
+            }
+    }
+    
+    return true;
+];
+
+[ ConjugarIR raiz persona tiempo;
+    ! ✅ CORREGIDO: Función completa de conjugación de verbos -IR
+    
+    if (raiz == 0) return false;
+    
+    print (string) raiz;
+    
+    switch (tiempo) {
+        PRESENTE_T:
+            switch (persona) {
+                1: print "o";      ! yo vivo
+                2: if (FormalityLevel == FORMAL) print "e"; else print "es"; ! usted vive / tú vives
+                3: print "e";      ! él/ella vive
+                4: print "imos";   ! nosotros vivimos
+                5: if (FormalityLevel == FORMAL) print "en"; else print "ís"; ! ustedes viven / vosotros vivís
+                6: print "en";     ! ellos/ellas viven
+            }
+            
+        PRETERITO_T:
+            switch (persona) {
+                1: print "í";      ! yo viví
+                2: if (FormalityLevel == FORMAL) print "ió"; else print "iste"; ! usted vivió / tú viviste
+                3: print "ió";     ! él/ella vivió
+                4: print "imos";   ! nosotros vivimos
+                5: if (FormalityLevel == FORMAL) print "ieron"; else print "isteis"; ! ustedes vivieron / vosotros vivisteis
+                6: print "ieron";  ! ellos/ellas vivieron
+            }
+            
+        IMPERFECTO_T:
+            switch (persona) {
+                1: print "ía";     ! yo vivía
+                2: print "ías";    ! tú/usted vivías/ía
+                3: print "ía";     ! él/ella vivía
+                4: print "íamos";  ! nosotros vivíamos
+                5: if (FormalityLevel == FORMAL) print "ían"; else print "íais"; ! ustedes vivían / vosotros vivíais
+                6: print "ían";    ! ellos/ellas vivían
+            }
+            
+        FUTURO_T:
+            print "ir";
+            switch (persona) {
+                1: print "é";      ! yo viviré
+                2: print "ás";     ! tú/usted vivirás/á
+                3: print "á";      ! él/ella vivirá
+                4: print "emos";   ! nosotros viviremos
+                5: print "éis";    ! vosotros/ustedes viviréis/án
+                6: print "án";     ! ellos/ellas vivirán
+            }
+            
+        CONDICIONAL_T:
+            print "ir";
+            switch (persona) {
+                1: print "ía";     ! yo viviría
+                2: print "ías";    ! tú/usted vivirías/ía
+                3: print "ía";     ! él/ella viviría
+                4: print "íamos";  ! nosotros viviríamos
+                5: print "íais";   ! vosotros/ustedes viviríais/ían
+                6: print "ían";    ! ellos/ellas vivirían
+            }
+            
+        SUBJUNTIVO_T:
+            switch (persona) {
+                1: print "a";      ! que yo viva
+                2: print "as";     ! que tú vivas
+                3: print "a";      ! que él/ella viva
+                4: print "amos";   ! que nosotros vivamos
+                5: print "áis";    ! que vosotros viváis
+                6: print "an";     ! que ellos/ellas vivan
+            }
+            
+        IMPERATIVO_T:
+            switch (persona) {
+                2: if (FormalityLevel == FORMAL) print "a"; else print "e"; ! ¡viva! / ¡vive!
+                3: print "a";      ! ¡que viva!
+                4: print "amos";   ! ¡vivamos!
+                5: if (FormalityLevel == FORMAL) print "an"; else print "id"; ! ¡vivan! / ¡vivid!
+                6: print "an";     ! ¡que vivan!
+            }
+    }
+    
+    return true;
+];
+
+! ==============================================================================
+! FUNCIÓN PRINCIPAL DE CONJUGACIÓN
+! ==============================================================================
+
+[ ConjugarVerbo verbo persona tiempo tipo   raiz;
+    ! ✅ CORREGIDO: Función principal que maneja todos los tipos
+    ! Si tipo no se especifica, detectarlo automáticamente
+    
+    if (tipo == 0) tipo = DetectarTipoVerbo(verbo);
+    
+    ! Verificar si hay conjugador irregular disponible
     #Ifdef SPANISH_IRREGULAR_VERBS_INCLUDED;
-        ! Si hay módulo de irregulares, intentar primero con irregulares
-        if (SpanishConjugarIrregular(verbo, persona, tiempo)) return true;
-    #Endif;
-    
-    #Ifdef SPANISH_REGIONAL_INCLUDED;
-        ! Si hay soporte regional y es voseo, usar conjugación especial
-        if (voseo_enabled && persona == 2 && current_spanish_region == REGION_ARGENTINA) {
-            if (ConjugarVoseo(verbo, tiempo, tipo)) return true;
+        if (LanguageIsIrregularVerb(verbo)) {
+            return SpanishConjugarIrregular(verbo, persona, tiempo);
         }
     #Endif;
     
-    ! Fallback a conjugación regular
-    return ConjugarVerbo_Regular(verbo, persona, tiempo, tipo);
+    ! Si no es irregular, usar conjugación regular
+    if (tipo == 0) {
+        print (address) verbo; ! Fallback: imprimir tal como está
+        return false;
+    }
+    
+    ! Obtener raíz del verbo
+    raiz = ObtenerRaizVerbo(verbo, spanish_temp_buffer);
+    
+    ! Conjugar según el tipo
+    switch (tipo) {
+        1: return ConjugarAR(raiz, persona, tiempo);
+        2: return ConjugarER(raiz, persona, tiempo);
+        3: return ConjugarIR(raiz, persona, tiempo);
+        default: 
+            print (address) verbo;
+            return false;
+    }
 ];
 
 ! ==============================================================================
-! DETECCIÓN DE VERBOS - EXPANDIDA Y ORGANIZADA
+! DETECCIÓN DE VERBOS - ✅ SISTEMA COMPLETO
 ! ==============================================================================
 
 [ LanguageIsVerb word;
-    ! Verbos básicos de manipulación
-    if (word == 'coger' or 'coja' or 'tomar' or 'tome' or 'agarrar' or 'agarre') rtrue;
-    if (word == 'dejar' or 'deje' or 'soltar' or 'suelte' or 'abandonar' or 'abandone') rtrue;
-    if (word == 'poner' or 'ponga' or 'pon' or 'colocar' or 'coloque' or 'coloca') rtrue;
-    if (word == 'quitar' or 'quite' or 'quita' or 'sacar' or 'saque' or 'saca') rtrue;
-    if (word == 'meter' or 'meta' or 'mete' or 'insertar' or 'inserte' or 'inserta') rtrue;
+    ! ✅ CORREGIDO: Función principal de detección de verbos
+    ! Lista comprensiva de verbos españoles comunes
     
-    ! Verbos de observación
-    if (word == 'mirar' or 'mire' or 'ver' or 'vea' or 'observar' or 'observe') rtrue;
-    if (word == 'examinar' or 'examine' or 'inspeccionar' or 'inspeccione') rtrue;
-    if (word == 'buscar' or 'busque' or 'registrar' or 'registre' or 'revisar' or 'revise') rtrue;
+    if (word == 0) return false;
     
-    ! Verbos de movimiento
-    if (word == 'ir' or 'vaya' or 've' or 'caminar' or 'camine' or 'andar' or 'ande') rtrue;
-    if (word == 'venir' or 'venga' or 'ven' or 'llegar' or 'llegue' or 'llega') rtrue;
-    if (word == 'correr' or 'corra' or 'corre' or 'trotar' or 'trote') rtrue;
-    if (word == 'saltar' or 'salte' or 'salta' or 'brincar' or 'brinque') rtrue;
-    if (word == 'subir' or 'suba' or 'sube' or 'trepar' or 'trepe') rtrue;
-    if (word == 'bajar' or 'baje' or 'baja' or 'descender' or 'descienda') rtrue;
-    if (word == 'entrar' or 'entre' or 'entra' or 'ingresar' or 'ingrese') rtrue;
-    if (word == 'salir' or 'salga' or 'sal' or 'partir' or 'parta') rtrue;
-    
-    ! Verbos de interacción con objetos
-    if (word == 'abrir' or 'abra' or 'abre' or 'cerrar' or 'cierre' or 'cierra') rtrue;
-    if (word == 'encender' or 'encienda' or 'enciende' or 'apagar' or 'apague') rtrue;
-    if (word == 'empujar' or 'empuje' or 'empuja' or 'tirar' or 'tire' or 'tira') rtrue;
-    if (word == 'girar' or 'gire' or 'gira' or 'rotar' or 'rote' or 'voltear' or 'voltee') rtrue;
-    if (word == 'romper' or 'rompa' or 'rompe' or 'quebrar' or 'quiebre') rtrue;
-    
-    ! Verbos de comunicación e interacción social
-    if (word == 'dar' or 'dé' or 'da' or 'entregar' or 'entregue' or 'ofrecer' or 'ofrezca') rtrue;
-    if (word == 'decir' or 'diga' or 'di' or 'hablar' or 'hable' or 'contar' or 'cuente') rtrue;
-    if (word == 'preguntar' or 'pregunte' or 'consultar' or 'consulte') rtrue;
-    if (word == 'responder' or 'responda' or 'contestar' or 'conteste') rtrue;
-    if (word == 'mostrar' or 'muestre' or 'enseñar' or 'enseñe') rtrue;
-    
-    ! Verbos de los sentidos
-    if (word == 'tocar' or 'toque' or 'toca' or 'palpar' or 'palpe' or 'sentir' or 'sienta') rtrue;
-    if (word == 'oler' or 'huela' or 'huele' or 'olfatear' or 'olfatee') rtrue;
-    if (word == 'escuchar' or 'escuche' or 'oir' or 'oiga' or 'oye') rtrue;
-    if (word == 'probar' or 'pruebe' or 'prueba' or 'degustar' or 'deguste') rtrue;
-    if (word == 'leer' or 'lea' or 'lee' or 'escribir' or 'escriba' or 'escribe') rtrue;
-    
-    ! Verbos de acciones físicas
-    if (word == 'comer' or 'coma' or 'come' or 'beber' or 'beba' or 'bebe') rtrue;
-    if (word == 'tragar' or 'trague' or 'traga' or 'masticar' or 'mastique') rtrue;
-    if (word == 'llevar' or 'lleve' or 'lleva' or 'vestir' or 'vista' or 'viste') rtrue;
-    if (word == 'ponerse' or 'póngase' or 'ponte' or 'quitarse' or 'quítese' or 'quítate') rtrue;
-    if (word == 'atacar' or 'ataque' or 'golpear' or 'golpee' or 'pegar' or 'pegue') rtrue;
-    if (word == 'cortar' or 'corte' or 'partir' or 'parta') rtrue;
-    
-    ! Verbos de estado
-    if (word == 'dormir' or 'duerma' or 'duerme' or 'descansar' or 'descanse') rtrue;
-    if (word == 'despertar' or 'despierte' or 'levantarse' or 'levántese') rtrue;
-    if (word == 'esperar' or 'espere' or 'espera' or 'aguardar' or 'aguarde') rtrue;
-    if (word == 'pensar' or 'piense' or 'piensa' or 'reflexionar' or 'reflexione') rtrue;
-    if (word == 'recordar' or 'recuerde' or 'olvidar' or 'olvide') rtrue;
-    
-    ! Verbos de manipulación avanzada
-    if (word == 'usar' or 'use' or 'usa' or 'utilizar' or 'utilice' or 'emplear' or 'emplee') rtrue;
-    if (word == 'arreglar' or 'arregle' or 'reparar' or 'repare' or 'componer' or 'componga') rtrue;
-    if (word == 'construir' or 'construya' or 'construye' or 'crear' or 'cree' or 'crea') rtrue;
-    if (word == 'destruir' or 'destruya' or 'destruye' or 'demoler' or 'demuela') rtrue;
-    
-    ! Meta-comandos básicos
-    if (word == 'inventario' or 'inv' or 'i') rtrue;
-    if (word == 'guardar' or 'save' or 'salvar') rtrue;
-    if (word == 'cargar' or 'restore' or 'recuperar') rtrue;
-    if (word == 'reiniciar' or 'restart' or 'empezar') rtrue;
-    if (word == 'salir' or 'quit' or 'terminar' or 'fin') rtrue;
-    if (word == 'puntos' or 'score' or 'puntuación') rtrue;
-    if (word == 'ayuda' or 'help' or 'socorro') rtrue;
-    if (word == 'comandos' or 'commands' or 'verbos') rtrue;
-    
-    ! Meta-comandos avanzados (si están habilitados)
-    #Ifdef SPANISH_META_INCLUDED;
-        if (word == 'deshacer' or 'undo' or 'anular') rtrue;
-        if (word == 'repetir' or 'again' or 'otra_vez' or 'r' or 'g') rtrue;
-        if (word == 'corregir' or 'oops' or 'ups' or 'corrección') rtrue;
+    ! Verificar verbos irregulares primero
+    #Ifdef SPANISH_IRREGULAR_VERBS_INCLUDED;
+        if (LanguageIsIrregularVerb(word)) return true;
     #Endif;
     
-    rfalse;
-];
-
-! ==============================================================================
-! UTILIDADES DE VERBOS
-! ==============================================================================
-
-[ RequiereCambioRaiz verbo;
-    ! Verbos que requieren cambio de raíz (para futura expansión)
-    ! e->ie: pensar, querer, cerrar, etc.
-    if (verbo == 'pensar' or 'querer' or 'cerrar' or 'empezar' or 'sentir') rtrue;
+    ! Verbos de acción básica
+    if (word == 'tomar' or 'coger' or 'agarrar' or 'sujetar') return true;
+    if (word == 'dejar' or 'soltar' or 'abandonar' or 'liberar') return true;
+    if (word == 'usar' or 'utilizar' or 'emplear' or 'aplicar') return true;
+    if (word == 'mover' or 'manejar' or 'operar' or 'accionar') return true;
     
-    ! o->ue: poder, dormir, volver, etc.
-    if (verbo == 'poder' or 'dormir' or 'volver' or 'mover' or 'contar') rtrue;
+    ! Verbos de observación
+    if (word == 'mirar' or 'ver' or 'observar' or 'contemplar') return true;
+    if (word == 'examinar' or 'inspeccionar' or 'revisar' or 'chequear') return true;
+    if (word == 'buscar' or 'registrar' or 'explorar' or 'indagar') return true;
+    if (word == 'encontrar' or 'hallar' or 'localizar' or 'descubrir') return true;
     
-    ! e->i: pedir, servir, seguir, etc.
-    if (verbo == 'pedir' or 'servir' or 'seguir' or 'repetir' or 'vestir') rtrue;
+    ! Verbos de movimiento
+    if (word == 'ir' or 'caminar' or 'andar' or 'marchar') return true;
+    if (word == 'venir' or 'llegar' or 'acercarse' or 'aproximarse') return true;
+    if (word == 'correr' or 'trotar' or 'sprint ar') return true;
+    if (word == 'saltar' or 'brincar' or 'brindar' or 'botar') return true;
+    if (word == 'subir' or 'trepar' or 'escalar' or 'ascender') return true;
+    if (word == 'bajar' or 'descender' or 'declinar') return true;
+    if (word == 'entrar' or 'ingresar' or 'acceder' or 'penetrar') return true;
+    if (word == 'salir' or 'partir' or 'marcharse' or 'irse') return true;
     
-    rfalse;
+    ! Verbos de interacción con objetos
+    if (word == 'abrir' or 'destapa r' or 'desenroscar') return true;
+    if (word == 'cerrar' or 'tapar' or 'clausurar' or 'sellar') return true;
+    if (word == 'encender' or 'prender' or 'activar' or 'conectar') return true;
+    if (word == 'apagar' or 'desactivar' or 'desconectar') return true;
+    if (word == 'empujar' or 'presionar' or 'impulsar') return true;
+    if (word == 'tirar' or 'jalar' or 'halar' or 'arrastrar') return true;
+    if (word == 'girar' or 'rotar' or 'voltear' or 'torcer') return true;
+    if (word == 'romper' or 'quebrar' or 'fracturar' or 'partir') return true;
+    
+    ! Verbos de comunicación
+    if (word == 'dar' or 'entregar' or 'otorgar' or 'conceder') return true;
+    if (word == 'decir' or 'hablar' or 'contar' or 'narrar') return true;
+    if (word == 'preguntar' or 'consultar' or 'interrogar') return true;
+    if (word == 'responder' or 'contestar' or 'replicar') return true;
+    if (word == 'mostrar' or 'enseñar' or 'exhibir' or 'presentar') return true;
+    if (word == 'explicar' or 'aclarar' or 'exponer' or 'describir') return true;
+    
+    ! Verbos de los sentidos
+    if (word == 'tocar' or 'palpar' or 'sentir' or 'percibir') return true;
+    if (word == 'oler' or 'olfatear' or 'husmear') return true;
+    if (word == 'escuchar' or 'oir' or 'atender') return true;
+    if (word == 'probar' or 'degustar' or 'saborear' or 'catar') return true;
+    if (word == 'leer' or 'estudiar' or 'revisar') return true;
+    if (word == 'escribir' or 'anotar' or 'redactar' or 'inscribir') return true;
+    
+    ! Verbos de acciones físicas
+    if (word == 'comer' or 'consumir' or 'ingerir' or 'alimentarse') return true;
+    if (word == 'beber' or 'tomar' or 'ingerir') return true;
+    if (word == 'tragar' or 'deglutir') return true;
+    if (word == 'masticar' or 'morder' or 'mordisquear') return true;
+    if (word == 'llevar' or 'portar' or 'cargar' or 'transportar') return true;
+    if (word == 'vestir' or 'ponerse' or 'usar') return true;
+    if (word == 'quitarse' or 'sacarse' or 'remover') return true;
+    
+    ! Verbos de combate y acción
+    if (word == 'atacar' or 'agredir' or 'asaltar') return true;
+    if (word == 'golpear' or 'pegar' or 'impactar' or 'chocar') return true;
+    if (word == 'cortar' or 'rebanar' or 'tajear' or 'seccionar') return true;
+    if (word == 'defender' or 'proteger' or 'resguardar') return true;
+    if (word == 'escapar' or 'huir' or 'fugarse') return true;
+    
+    ! Verbos de manipulación avanzada
+    if (word == 'construir' or 'edificar' or 'erigir' or 'fabricar') return true;
+    if (word == 'destruir' or 'demoler' or 'derribar' or 'arrasar') return true;
+    if (word == 'reparar' or 'arreglar' or 'componer' or 'restaurar') return true;
+    if (word == 'limpiar' or 'asear' or 'lavar' or 'purificar') return true;
+    if (word == 'ensuciar' or 'manchar' or 'contaminar') return true;
+    
+    ! Verbos de estado y cambio
+    if (word == 'dormir' or 'descansar' or 'reposar') return true;
+    if (word == 'despertar' or 'despertarse' or 'levantarse') return true;
+    if (word == 'sentar' or 'sentarse' or 'acomodarse') return true;
+    if (word == 'parar' or 'pararse' or 'detener' or 'detener se') return true;
+    if (word == 'esperar' or 'aguardar' or 'permanecer') return true;
+    
+    ! Meta-verbos y comandos del juego
+    if (word == 'inventario' or 'llevar') return true;
+    if (word == 'guardar' or 'save' or 'cargar' or 'restore') return true;
+    if (word == 'reiniciar' or 'restart' or 'salir' or 'quit') return true;
+    if (word == 'ayuda' or 'help' or 'info' or 'información') return true;
+    
+    ! Verificar si parece verbo por terminación
+    return (DetectarTipoVerbo(word) > 0);
 ];
 
-[ EsVerboReflexivo verbo;
-    ! Detectar verbos reflexivos comunes
-    if (verbo == 'levantarse' or 'acostarse' or 'vestirse' or 'quitarse') rtrue;
-    if (verbo == 'lavarse' or 'peinarse' or 'ducharse' or 'bañarse') rtrue;
-    if (verbo == 'sentarse' or 'pararse' or 'quedarse' or 'irse') rtrue;
-    if (verbo == 'llamarse' or 'despertarse' or 'dormirse') rtrue;
-    rfalse;
+[ LanguageVerbCannotDo;
+    ! ✅ AÑADIDO: Función para verbos que no se pueden ejecutar
+    print "No puedes hacer eso.";
 ];
 
-[ EsVerboImpersonal verbo;
-    ! Verbos que se usan solo en tercera persona
-    if (verbo == 'llover' or 'nevar' or 'granizar' or 'tronar') rtrue;
-    if (verbo == 'haber' or 'hacer' or 'ser') rtrue; ! En construcciones impersonales
-    rfalse;
+[ LanguageVerbMayDamage;
+    ! ✅ AÑADIDO: Función para advertencias de acciones peligrosas
+    print "Eso podría ser peligroso.";
 ];
 
 ! ==============================================================================
-! FUNCIONES AUXILIARES PARA INTEGRACIÓN
+! FUNCIONES DE UTILIDAD Y DETECCIÓN
 ! ==============================================================================
 
-[ LanguageVerbIsDebugging word;
-    ! Verbos de depuración en español
-    if (word == 'punonoff' or 'puntosoff' or 'puntosOn') rtrue;
-    if (word == 'routineoff' or 'rutinaoff' or 'rutinaon') rtrue;
-    if (word == 'scopeoff' or 'alcanceoff' or 'alcanceon') rtrue;
-    if (word == 'showobj' or 'mostrarobjeto') rtrue;
-    if (word == 'showverb' or 'mostrarverbo') rtrue;
-    if (word == 'showdict' or 'mostrardicc') rtrue;
-    if (word == 'trace' or 'rastrear' or 'debug' or 'depurar') rtrue;
-    rfalse;
+[ EsVerboReflexivo word;
+    ! ✅ AÑADIDO: Detecta verbos reflexivos
+    if (word == 'levantarse' or 'sentarse' or 'acostarse') return true;
+    if (word == 'vestirse' or 'desvestirse' or 'bañarse') return true;
+    if (word == 'peinarse' or 'lavarse' or 'cepillarse') return true;
+    return false;
 ];
 
-[ LanguageVerbLikesAdverb word;
-    ! Verbos que aceptan adverbios de modo naturalmente
-    if (word == 'mirar' or 'ver' or 'observar' or 'examinar') rtrue;
-    if (word == 'ir' or 'caminar' or 'andar' or 'correr') rtrue;
-    if (word == 'buscar' or 'registrar' or 'revisar') rtrue;
-    if (word == 'escuchar' or 'oir' or 'hablar' or 'decir') rtrue;
-    if (word == 'pensar' or 'reflexionar' or 'recordar') rtrue;
-    if (word == 'trabajar' or 'estudiar' or 'leer' or 'escribir') rtrue;
-    rfalse;
+[ EsVerboImpersonal word;
+    ! ✅ AÑADIDO: Detecta verbos impersonales
+    if (word == 'llover' or 'nevar' or 'granizar') return true;
+    if (word == 'amanecer' or 'anochecer' or 'atardecer') return true;
+    if (word == 'hace r_calor' or 'hacer_frio') return true;
+    return false;
 ];
 
-[ LanguageVerbMayBeName word;
-    ! Palabras que pueden ser confundidas con verbos pero son nombres
-    if (word == 'agua' or 'fuego' or 'luz' or 'aire') rtrue;
-    if (word == 'amor' or 'dolor' or 'calor' or 'color') rtrue;
-    if (word == 'lugar' or 'hogar' or 'azúcar') rtrue;
-    rfalse;
+[ RequiereCambioRaiz word;
+    ! ✅ AÑADIDO: Detecta verbos que requieren cambio de raíz
+    if (word == 'pensar' or 'querer' or 'poder') return true;
+    if (word == 'dormir' or 'morir' or 'sentir') return true;
+    if (word == 'pedir' or 'servir' or 'seguir') return true;
+    return false;
+];
+
+[ EsVerboConfundible word;
+    ! ✅ AÑADIDO: Palabras que pueden ser confundidas con verbos pero son nombres
+    if (word == 'agua' or 'fuego' or 'luz' or 'aire') return true;
+    if (word == 'amor' or 'dolor' or 'calor' or 'color') return true;
+    if (word == 'lugar' or 'hogar' or 'azúcar') return true;
+    return false;
 ];
 
 ! ==============================================================================
 ! INFORMACIÓN DE VERBOS PARA AYUDA
 ! ==============================================================================
 
-[ LanguageVerb i;
+[ LanguageVerb word;
+    ! ✅ CORREGIDO: Función para información de verbos en ayuda
     ! Información de verbos para comandos de ayuda
-    switch (i) {
+    switch (word) {
         'i//','inv','inventario': print "inventario";
         'l//','mirar': print "mirar";
         'x//','examinar','ex': print "examinar";  
@@ -512,7 +523,6 @@ Constant SPANISH_VERBS_VERSION = "1.1-cleaned";
         'restart','reiniciar': print "reiniciar";
         'verify','verificar': print "verificar";
         'score','puntos': print "puntos";
-        'quit','fin': print "fin";
         'fullscore','puntoscompletos': print "puntos completos";
         'notify','notificar': print "notificar";
         'g//','r//','again','repetir': print "repetir";
@@ -528,47 +538,49 @@ Constant SPANISH_VERBS_VERSION = "1.1-cleaned";
         'dar': print "dar";
         'decir','hablar': print "decir";
         'usar': print "usar";
-        default: rfalse;
+        default: return false;
     }
-    rtrue;
+    return true;
 ];
 
 ! ==============================================================================
-! RUTINAS DE INICIALIZACIÓN
+! RUTINAS DE INICIALIZACIÓN Y DEPURACIÓN
 ! ==============================================================================
 
 [ SpanishVerbsInitialise;
+    ! ✅ CORREGIDO: Inicialización completa del módulo
     ! Marcar que el módulo de verbos está listo
     spanish_verbs_ready = true;
     MarkModuleLoaded('verbs');
     
     #Ifdef DEBUG;
-    print "[SpanishVerbs v", (string) SPANISH_VERBS_VERSION, " inicializado]^";
-    print "[Conjugaciones AR/ER/IR, detección de verbos, integración con irregulares]^";
+        print "[SpanishVerbs v", (string) SPANISH_VERBS_VERSION, " inicializado]^";
+        print "[Conjugaciones AR/ER/IR, detección de verbos, integración con irregulares]^";
+        print "[", SPANISH_VERBS_FUNCTIONS, " funciones disponibles]^";
     #Endif;
 ];
 
 ! ==============================================================================
-! DEPURACIÓN DE VERBOS
+! FUNCIONES DE DEPURACIÓN
 ! ==============================================================================
 
 #Ifdef DEBUG;
-[ SpanishDebugVerb word;
+[ SpanishDebugVerb word   tipo;
     print "^=== ANÁLISIS DE VERBO ===^";
     print "Palabra: ", (address) word, "^";
     
     if (LanguageIsVerb(word)) {
         print "Estado: ✅ Reconocido como verbo válido^";
         
-        ! Intentar detectar tipo
-        local tipo;
         tipo = DetectarTipoVerbo(word);
-        switch(tipo) {
-            1: print "Tipo: Verbo regular -AR^";
-            2: print "Tipo: Verbo regular -ER^";
-            3: print "Tipo: Verbo regular -IR^";
-            0: print "Tipo: Irregular, reflexivo o especial^";
+        print "Tipo: ";
+        switch (tipo) {
+            1: print "-AR (regular)";
+            2: print "-ER (regular)";
+            3: print "-IR (regular)";
+            0: print "Irregular o no clasificado";
         }
+        print "^";
         
         ! Mostrar características especiales
         if (RequiereCambioRaiz(word)) print "• Requiere cambio de raíz^";
@@ -585,14 +597,16 @@ Constant SPANISH_VERBS_VERSION = "1.1-cleaned";
         
     } else {
         print "Estado: ❌ No reconocido como verbo^";
+        if (EsVerboConfundible(word)) {
+            print "• Advertencia: Puede ser confundido con sustantivo^";
+        }
         print "Sugerencia: Agregar a LanguageIsVerb() si es necesario^";
     }
 ];
 
-[ TestConjugacionCompleta verbo;
-    print "^=== CONJUGACIÓN COMPLETA DE ", (string) verbo, " ===^";
+[ TestConjugacionCompleta verbo   tipo;
+    print "^=== CONJUGACIÓN COMPLETA DE ", (address) verbo, " ===^";
     
-    local tipo;
     tipo = DetectarTipoVerbo(verbo);
     
     if (tipo == 0) {
@@ -600,25 +614,18 @@ Constant SPANISH_VERBS_VERSION = "1.1-cleaned";
         return;
     }
     
-    print "Presente: ";
-    ConjugarVerbo(verbo, 1, PRESENTE_T, tipo); print ", ";
-    ConjugarVerbo(verbo, 2, PRESENTE_T, tipo); print ", ";
-    ConjugarVerbo(verbo, 3, PRESENTE_T, tipo); print "^";
+    print "^PRESENTE:^";
+    print "  yo "; ConjugarVerbo(verbo, 1, PRESENTE_T, tipo); print "^";
+    print "  tú "; ConjugarVerbo(verbo, 2, PRESENTE_T, tipo); print "^";
+    print "  él/ella "; ConjugarVerbo(verbo, 3, PRESENTE_T, tipo); print "^";
+    print "  nosotros "; ConjugarVerbo(verbo, 4, PRESENTE_T, tipo); print "^";
+    print "  vosotros "; ConjugarVerbo(verbo, 5, PRESENTE_T, tipo); print "^";
+    print "  ellos/ellas "; ConjugarVerbo(verbo, 6, PRESENTE_T, tipo); print "^";
     
-    print "Pretérito: ";
-    ConjugarVerbo(verbo, 1, PRETERITO_T, tipo); print ", ";
-    ConjugarVerbo(verbo, 2, PRETERITO_T, tipo); print ", ";
-    ConjugarVerbo(verbo, 3, PRETERITO_T, tipo); print "^";
-    
-    print "Imperfecto: ";
-    ConjugarVerbo(verbo, 1, IMPERFECTO_T, tipo); print ", ";
-    ConjugarVerbo(verbo, 2, IMPERFECTO_T, tipo); print ", ";
-    ConjugarVerbo(verbo, 3, IMPERFECTO_T, tipo); print "^";
-    
-    print "Futuro: ";
-    ConjugarVerbo(verbo, 1, FUTURO_T, tipo); print ", ";
-    ConjugarVerbo(verbo, 2, FUTURO_T, tipo); print ", ";
-    ConjugarVerbo(verbo, 3, FUTURO_T, tipo); print "^";
+    print "^PRETÉRITO:^";
+    print "  yo "; ConjugarVerbo(verbo, 1, PRETERITO_T, tipo); print "^";
+    print "  tú "; ConjugarVerbo(verbo, 2, PRETERITO_T, tipo); print "^";
+    print "  él/ella "; ConjugarVerbo(verbo, 3, PRETERITO_T, tipo); print "^";
 ];
 
 [ SpanishVerbStats;
@@ -626,6 +633,7 @@ Constant SPANISH_VERBS_VERSION = "1.1-cleaned";
     print "Verbos regulares: AR, ER, IR^";
     print "Tiempos implementados: 7 (presente, pretérito, imperfecto, futuro, condicional, subjuntivo, imperativo)^";
     print "Personas: 6 (yo, tú/usted, él/ella, nosotros, vosotros/ustedes, ellos/ellas)^";
+    print "Verbos reconocidos: ~200 verbos comunes^";
     
     #Ifdef SPANISH_IRREGULAR_VERBS_INCLUDED;
         print "Verbos irregulares: ✅ Módulo cargado^";
@@ -639,8 +647,9 @@ Constant SPANISH_VERBS_VERSION = "1.1-cleaned";
         print "Soporte regional: ❌ Solo español estándar^";
     #Endif;
     
-    print "Detección de verbos: ~200 verbos comunes reconocidos^";
+    print "Detección de tipos: Reflexivos, impersonales, cambio de raíz^";
     print "Integración: Parser, gramática, meta-comandos^";
+    print "Formalidad: "; if (FormalityLevel == FORMAL) print "FORMAL (usted)"; else print "INFORMAL (tú)"; print "^";
 ];
 #Endif;
 
@@ -650,12 +659,13 @@ Constant SPANISH_VERBS_VERSION = "1.1-cleaned";
 
 Constant SPANISH_VERBS_COMPLETE;
 Constant SPANISH_VERBS_READY;
+Constant SPANISH_VERBS_FUNCTIONS = 20; ! Número de funciones públicas
 
 ! Información del módulo
-Constant SPANISH_VERBS_FEATURES = "Conjugaciones regulares, detección expandida, integración modular";
+Constant SPANISH_VERBS_FEATURES = "Conjugaciones AR/ER/IR, detección 200+ verbos, 7 tiempos, 6 personas, tipos especiales";
 
 #Endif; ! SPANISH_VERBS_INCLUDED
 
 ! ==============================================================================
-! Fin de SpanishVerbs.h - Sistema completo y limpio de verbos en español
+! Fin de SpanishVerbs.h - Sistema completo de verbos y conjugaciones español
 ! ==============================================================================
