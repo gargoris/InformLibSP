@@ -1,0 +1,318 @@
+! ==============================================================================
+!   EJEMPLO COMPLETO: Demostración de las características de la librería en español
+!
+!   Basado en la librería Inform 6 -- Release 6.12.7 -- Serial number 240410
+!
+!   Copyright Graham Nelson 1993-2004 and David Griffith 2012-2024
+!   Adaptación al español por Francisco Fuentes, 2025
+!
+! ==============================================================================
+
+! Incluir la librería estándar
+Include "Parser";
+Include "VerbLib";
+
+! Incluir la librería en español
+Include "SpanishLib";
+
+! ==============================================================================
+!   Constantes del juego
+! ==============================================================================
+
+Constant Story "EJEMPLO DE LIBRERÍA ESPAÑOLA";
+Constant Headline "^Un ejemplo completo de las características de la librería en español.^";
+
+! ==============================================================================
+!   Objetos del juego
+! ==============================================================================
+
+! Habitaciones
+Room    Vestibulo "Vestíbulo"
+  with  description "Un amplio vestíbulo con suelo de mármol. Al norte se encuentra
+                     la sala principal y al este la biblioteca.",
+        n_to Sala,
+        e_to Biblioteca;
+
+Room    Sala "Sala Principal"
+  with  description "Una elegante sala con muebles antiguos. Al sur está el vestíbulo.",
+        s_to Vestibulo;
+
+Room    Biblioteca "Biblioteca"
+  with  description "Las paredes están cubiertas de estanterías llenas de libros.
+                     Al oeste se encuentra el vestíbulo.",
+        w_to Vestibulo;
+
+! Objetos masculinos singulares
+Object  libro "libro antiguo" Biblioteca
+  with  name 'libro' 'antiguo' 'tomo' 'volumen',
+        description "Un libro antiguo con tapas de cuero y páginas amarillentas.",
+        before [;
+            Read:
+                print "El libro contiene historias fascinantes de tiempos pasados.^";
+                rtrue;
+        ];
+
+Object  sillon "sillón" Sala
+  with  name 'sillon' 'sillón' 'asiento',
+        description "Un cómodo sillón tapizado en terciopelo rojo.",
+  has   supporter;
+
+! Objetos femeninos singulares
+Object  mesa "mesa" Sala
+  with  name 'mesa' 'mesita',
+        description "Una mesa de madera tallada con patas ornamentadas.",
+  has   female supporter;
+
+Object  lampara "lámpara" Sala
+  with  name 'lampara' 'lámpara' 'luz',
+        description "Una elegante lámpara de pie con pantalla de cristal.",
+        before [;
+            SwitchOn:
+                print "La lámpara ilumina la habitación con una luz cálida.^";
+                rtrue;
+            SwitchOff:
+                print "La lámpara se apaga, dejando la habitación en penumbra.^";
+                rtrue;
+        ],
+  has   female switchable;
+
+! Objetos masculinos plurales
+Object  libros "libros viejos" Biblioteca
+  with  name 'libros' 'viejos' 'tomos' 'volumenes' 'volúmenes',
+        description "Una colección de libros viejos con encuadernaciones diversas.",
+  has   pluralname;
+
+! Objetos femeninos plurales
+Object  llaves "llaves antiguas" Vestibulo
+  with  name 'llaves' 'antiguas' 'llavero',
+        description "Un manojo de llaves antiguas, probablemente de las puertas de la casa.",
+  has   female pluralname;
+
+! ==============================================================================
+!   Inicialización
+! ==============================================================================
+
+[ Initialise;
+    ! Inicializar la librería en español
+    SpanishLibInitialise();
+    
+    ! Mostrar la configuración cargada
+    SpanishLibShowConfiguration();
+    
+    ! Ubicar al jugador
+    location = Vestibulo;
+    
+    ! Mensaje de bienvenida
+    print "^¡Bienvenido a este ejemplo de la librería en español para Inform 6!^";
+    print "Este ejemplo demuestra las características de manejo de género, número y conjugación verbal.^";
+    
+    ! Demostración de funciones de género y número
+    print "^[DEMOSTRACIÓN DE GÉNERO Y NÚMERO]^";
+    
+    ! Ejemplos con objetos masculinos singulares
+    print "El libro ", (es) libro, " interesante.^";
+    print "El sillón ", (esta) sillon, " en la sala.^";
+    
+    ! Ejemplos con objetos femeninos singulares
+    print "La mesa ", (es) mesa, " bonita.^";
+    print "La lámpara ", (esta) lampara, " apagada.^";
+    
+    ! Ejemplos con objetos masculinos plurales
+    print "Los libros ", (es) libros, " interesantes.^";
+    
+    ! Ejemplos con objetos femeninos plurales
+    print "Las llaves ", (es) llaves, " antiguas.^";
+    
+    ! Demostración de adjetivos
+    print "^[DEMOSTRACIÓN DE ADJETIVOS]^";
+    
+    print "El libro ", (es_adj) "viejo" libro, ".^";
+    print "La mesa ", (es_adj) "viejo" mesa, ".^";
+    print "Los libros ", (es_adj) "viejo" libros, ".^";
+    print "Las llaves ", (es_adj) "viejo" llaves, ".^";
+    
+    print "El libro ", (esta_adj) "abierto" libro, ".^";
+    print "La mesa ", (esta_adj) "limpio" mesa, ".^";
+    print "Los libros ", (esta_adj) "ordenado" libros, ".^";
+    print "Las llaves ", (esta_adj) "guardado" llaves, ".^";
+    
+    ! Demostración de verbos
+    print "^[DEMOSTRACIÓN DE VERBOS]^";
+    
+    ! Verbos regulares
+    print "El libro: ";
+    ConjugarVerbo("leer", TIEMPO_PRESENTE, PERSONA_EL);
+    print "^";
+    
+    print "La mesa: ";
+    ConjugarVerbo("limpiar", TIEMPO_PRESENTE, PERSONA_ELLA);
+    print "^";
+    
+    print "Los libros: ";
+    ConjugarVerbo("caer", TIEMPO_PRESENTE, PERSONA_ELLOS);
+    print "^";
+    
+    print "Las llaves: ";
+    ConjugarVerbo("brillar", TIEMPO_PRESENTE, PERSONA_ELLAS);
+    print "^";
+    
+    ! Verbos irregulares
+    print "El libro: ";
+    ConjugarVerbo("ser", TIEMPO_PRESENTE, PERSONA_EL);
+    print " interesante^";
+    
+    print "La mesa: ";
+    ConjugarVerbo("estar", TIEMPO_PRESENTE, PERSONA_ELLA);
+    print " limpia^";
+    
+    print "Los libros: ";
+    ConjugarVerbo("tener", TIEMPO_PRESENTE, PERSONA_ELLOS);
+    print " muchas páginas^";
+    
+    print "Las llaves: ";
+    ConjugarVerbo("poder", TIEMPO_PRESENTE, PERSONA_ELLAS);
+    print " abrir puertas^";
+    
+    ! Conjugación para objetos
+    print "^[DEMOSTRACIÓN DE CONJUGACIÓN PARA OBJETOS]^";
+    
+    print "El libro ";
+    ConjugarParaObjeto("brillar", libro);
+    print " en la oscuridad.^";
+    
+    print "La lámpara ";
+    ConjugarParaObjeto("iluminar", lampara);
+    print " la habitación.^";
+    
+    print "Los libros ";
+    ConjugarParaObjeto("contener", libros);
+    print " historias interesantes.^";
+    
+    print "Las llaves ";
+    ConjugarParaObjeto("abrir", llaves);
+    print " las puertas antiguas.^";
+    
+    ! Conjugación en pasado
+    print "^[DEMOSTRACIÓN DE CONJUGACIÓN EN PASADO]^";
+    
+    print "El libro ";
+    ConjugarPasadoParaObjeto("caer", libro);
+    print " al suelo.^";
+    
+    print "La lámpara ";
+    ConjugarPasadoParaObjeto("romper", lampara);
+    print " al caer.^";
+    
+    print "Los libros ";
+    ConjugarPasadoParaObjeto("desaparecer", libros);
+    print " misteriosamente.^";
+    
+    print "Las llaves ";
+    ConjugarPasadoParaObjeto("oxidar", llaves);
+    print " con el tiempo.^";
+    
+    ! Demostración de adverbios y preposiciones espaciales
+    print "^[DEMOSTRACIÓN DE ADVERBIOS Y PREPOSICIONES ESPACIALES]^";
+    
+    ! Relaciones espaciales simples
+    print "El libro está ";
+    dentro_de(mesa);
+    print ".^";
+    
+    print "La lámpara está ";
+    sobre(mesa);
+    print ".^";
+    
+    print "Las llaves están ";
+    debajo_de(mesa);
+    print ".^";
+    
+    print "El sillón está ";
+    delante_de(mesa);
+    print ".^";
+    
+    print "Los libros están ";
+    detras_de(sillon);
+    print ".^";
+    
+    ! Frases completas con relaciones espaciales
+    print "^[FRASES COMPLETAS CON RELACIONES ESPACIALES]^";
+    
+    verbo_obj_adv_obj2("poner", libro, "dentro", mesa, REL_DENTRO);
+    print ".^";
+    
+    verbo_obj_adv_obj2("colocar", lampara, "sobre", mesa, REL_SOBRE);
+    print ".^";
+    
+    verbo_obj_adv_obj2("dejar", llaves, "debajo", mesa, REL_DEBAJO);
+    print ".^";
+    
+    verbo_obj_adv_obj2("mover", sillon, "delante", mesa, REL_DELANTE);
+    print ".^";
+    
+    verbo_obj_adv_obj2("guardar", libros, "detrás", sillon, REL_DETRAS);
+    print ".^";
+    
+    ! Frases con adjetivos y adverbios
+    print "^[FRASES CON ADJETIVOS Y ADVERBIOS]^";
+    
+    print "El libro ";
+    adv_adj("muy", "interesante", libro);
+    print " está ";
+    dentro_de(mesa);
+    print ".^";
+    
+    print "La lámpara ";
+    adv_adj("bastante", "bonito", lampara);
+    print " está ";
+    sobre(mesa);
+    print ".^";
+    
+    print "Las llaves ";
+    adv_adj("extremadamente", "viejo", llaves);
+    print " están ";
+    debajo_de(mesa);
+    print ".^";
+    
+    ! Impresión de relaciones espaciales completas
+    print "^[RELACIONES ESPACIALES COMPLETAS]^";
+    
+    ImprimirRelacionEspacial(REL_DENTRO, libro, mesa);
+    print ".^";
+    
+    ImprimirRelacionEspacial(REL_SOBRE, lampara, mesa);
+    print ".^";
+    
+    ImprimirRelacionEspacial(REL_DEBAJO, llaves, mesa);
+    print ".^";
+    
+    ImprimirRelacionEspacial(REL_DETRAS, libros, sillon);
+    print ".^";
+    
+    ImprimirRelacionEspacial(REL_DELANTE, sillon, mesa);
+    print ".^";
+    
+    ! Mensaje final
+    print "^¡Comienza a explorar!^";
+];
+
+! ==============================================================================
+!   Gramática adicional
+! ==============================================================================
+
+Verb 'leer' 'ojear' 'hojear'
+    * noun                                    -> Read;
+
+! ==============================================================================
+!   Rutinas estándar
+! ==============================================================================
+
+[ ReadSub;
+    if (noun == 0) return L__M(##Read, 1);
+    if (noun hasnt readable) return L__M(##Read, 2);
+    return L__M(##Read, 3);
+];
+
+Include "Grammar";
+
+! ==============================================================================
