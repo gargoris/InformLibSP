@@ -6,16 +6,23 @@
 !   Adaptación al español por Francisco Fuentes, 2025
 !
 ! ==============================================================================
-Zcharacter table + '@{E1}' '@{E9}' '@{ED}' '@{F3}' '@{FA}' '@{F1}' '@{DC}' '@{FC}' '@{BF}' '@{A1}';  ! á é í ó ú ñ Ü ü ¿ ¡
+! Definir la tabla de caracteres para soportar acentos y caracteres especiales
+Zcharacter table + '@{b3}' '@{b1}' '@{E1}' '@{E9}' '@{ED}' '@{F3}' '@{FA}' '@{F1}' '@{DC}' '@{FC}' '@{BF}' '@{A1}';  ! á é í ó ú ñ Ü ü ¿ ¡
+
+! Definir el idioma español como idioma principal
+Constant language__ = "spanish";
+Replace DeathMessage;
+Replace PrintRank;
+Replace PrintTaskName;
+Replace PrintVerb;
+
+Constant Story "EJEMPLO DE AVENTURA";
+Constant Headline "^Una pequeña demostración de la librería en español^";
+
 ! Incluir la librería estándar
 Include "Parser";
 Include "VerbLib";
-
-! Incluir la librería en español
-Include "SpanishLib";
-
-Constant Story "EJEMPLO DE AVENTURA";
-Constant Headline "^Una pequeña demostración de la librería en español^";
+Include "Grammar";
 
 ! ==============================================================================
 !   Definición de las localidades
@@ -124,7 +131,7 @@ Object armario "armario" Dormitorio
            Unlock:
                "Usas la llave para desbloquear el armario.";
            Open:
-               if (self has locked == false && tesoro in self) {
+               if ((self has locked) == false && tesoro in self) {
                    move tesoro to player;
                    "Al abrir el armario, encuentras un tesoro escondido que cae a tus manos.";
                }
@@ -184,189 +191,3 @@ Object tesoro "tesoro" armario
         default: print (address) i;
     }
 ];
-
-! ==============================================================================! ==============================================================================
-!   EJEMPLO: Pequeño juego de demostración para la librería en español
-!
-!   Basado en la librería Inform 6 -- Release 6.12.7 -- Serial number 240410
-!
-!   Adaptación al español por Francisco Fuentes, 2025
-!
-! ==============================================================================
-
-Constant Story "EJEMPLO DE AVENTURA";
-Constant Headline "^Una pequeña demostración de la librería en español^";
-
-Include "Parser";
-Include "VerbLib";
-Include "SpanishLib";
-
-! ==============================================================================
-!   Definición de las localidades
-! ==============================================================================
-
-Object Salon "Salón"
-  with description
-       "Un acogedor salón con una alfombra en el suelo. Puedes ver una puerta
-        que conduce al norte hacia la cocina y otra al este hacia el dormitorio.",
-  n_to Cocina,
-  e_to Dormitorio,
-  has light;
-
-Object Cocina "Cocina"
-  with description
-       "Una cocina pequeña pero funcional. La única salida es hacia el sur,
-        de vuelta al salón.",
-  s_to Salon,
-  has light;
-
-Object Dormitorio "Dormitorio"
-  with description
-       "Un dormitorio con una cama grande. La única salida es hacia el oeste,
-        de vuelta al salón.",
-  w_to Salon,
-  has light;
-
-! ==============================================================================
-!   Definición de los objetos
-! ==============================================================================
-
-Object alfombra "alfombra" Salon
-  with name 'alfombra' 'tapete',
-       description "Una bonita alfombra de color rojo.",
-  has female static;
-
-Object mesa "mesa" Salon
-  with name 'mesa' 'mesita',
-       description "Una mesa de madera con un cajón.",
-       before [;
-           Open:
-               if (self hasnt open) {
-                   give self open;
-                   move llave to player;
-                   "Abres el cajón de la mesa y encuentras una pequeña llave.";
-               }
-       ],
-  has female openable container;
-
-Object sofa "sofá" Salon
-  with name 'sofa' 'sillon' 'sillón',
-       description "Un cómodo sofá de color azul.",
-  has male supporter;
-
-Object libro "libro" sofa
-  with name 'libro' 'tomo',
-       description "Un libro sobre programación en Inform 6.",
-  has male;
-
-Object nevera "nevera" Cocina
-  with name 'nevera' 'refrigerador' 'frigorifico' 'frigorífico',
-       description "Una nevera blanca.",
-       before [;
-           Open:
-               if (self hasnt open) {
-                   give self open;
-                   move manzana to player;
-                   "Abres la nevera y encuentras una manzana que parece deliciosa.";
-               }
-       ],
-  has female openable container;
-
-Object manzana "manzana"
-  with name 'manzana' 'fruta',
-       description "Una manzana roja y brillante.",
-       before [;
-           Eat:
-               remove self;
-               "Te comes la manzana. ¡Estaba deliciosa!";
-       ],
-  has female edible;
-
-Object cama "cama" Dormitorio
-  with name 'cama' 'lecho',
-       description "Una cama grande y cómoda.",
-  has female supporter;
-
-Object almohada "almohada" cama
-  with name 'almohada' 'cojin' 'cojín',
-       description "Una almohada suave y mullida.",
-  has female;
-
-Object armario "armario" Dormitorio
-  with name 'armario' 'ropero' 'guardarropa',
-       description "Un armario de madera oscura.",
-       door_to Dormitorio,
-       door_dir e_to,
-       with_key llave,
-       before [;
-           Open:
-               if (self hasnt open && self has locked) {
-                   "El armario está cerrado con llave.";
-               }
-       ],
-       after [;
-           Unlock:
-               "Usas la llave para desbloquear el armario.";
-           Open:
-               if (self has locked == false && tesoro in self) {
-                   move tesoro to player;
-                   "Al abrir el armario, encuentras un tesoro escondido que cae a tus manos.";
-               }
-       ],
-  has male openable lockable locked container;
-
-Object llave "llave pequeña"
-  with name 'llave' 'pequeña',
-       description "Una pequeña llave de metal que podría abrir un mueble.",
-  has female;
-
-Object tesoro "tesoro" armario
-  with name 'tesoro' 'joya' 'gema',
-       description "¡Un valioso tesoro! Has ganado el juego.",
-  has male;
-
-! ==============================================================================
-!   Rutinas principales
-! ==============================================================================
-
-[ Initialise;
-    SpanishLibInitialise();
-    SpanishLibShowConfiguration();
-    
-    location = Salon;
-    
-    "^¡Bienvenido a esta pequeña aventura de demostración de la librería en español para Inform 6!
-    ^
-    ^Tu objetivo es encontrar el tesoro escondido en algún lugar de la casa.
-    ^
-    ^";
-];
-
-[ DeathMessage;
-    print "Has muerto. Fin del juego.";
-];
-
-[ PrintRank;
-    print "Tu rango es: Aventurero Novato";
-];
-
-[ PrintTaskName n;
-    switch (n) {
-        1: "encontrar el tesoro";
-    }
-];
-
-[ PrintVerb i;
-    switch (i) {
-        'toma': print "tomar";
-        'coge': print "coger";
-        'deja': print "dejar";
-        'mira': print "mirar";
-        'examina': print "examinar";
-        'abre': print "abrir";
-        'cierra': print "cerrar";
-        default: print (address) i;
-    }
-];
-
-! ==============================================================================

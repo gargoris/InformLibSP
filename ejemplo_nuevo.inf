@@ -1,0 +1,108 @@
+! ==============================================================================
+!   EJEMPLO NUEVO: Prueba con librería en español
+!
+!   Basado en la librería Inform 6 -- Release 6.12.7 -- Serial number 240410
+!
+! ==============================================================================
+
+! Definir la tabla de caracteres para soportar acentos y caracteres especiales
+Zcharacter table + '@{E1}' '@{E9}' '@{ED}' '@{F3}' '@{FA}' '@{F1}' '@{DC}' '@{FC}' '@{BF}' '@{A1}';  ! á é í ó ú ñ Ü ü ¿ ¡
+Replace DeathMessage;
+
+! Definir el idioma español como idioma principal
+Constant language__ = "spanish";
+
+! Incluir la librería estándar
+Include "Parser";
+Include "VerbLib";
+Include "Grammar";
+
+! ==============================================================================
+!   Información del juego
+! ==============================================================================
+
+Release 1;
+Serial "240501";
+
+! ==============================================================================
+!   Objetos del juego
+! ==============================================================================
+
+! Habitaciones
+Object Salon "Salon"
+  with description "Un acogedor salon con una alfombra en el suelo. Puedes ver una puerta
+        que conduce al norte hacia la cocina y otra al este hacia el dormitorio.",
+  n_to Cocina,
+  e_to Dormitorio,
+  has light;
+
+Object Cocina "Cocina"
+  with description "Una cocina pequena pero funcional. La unica salida es hacia el sur,
+        de vuelta al salon.",
+  s_to Salon,
+  has light;
+
+Object Dormitorio "Dormitorio"
+  with description "Un dormitorio con una cama grande. La unica salida es hacia el oeste,
+        de vuelta al salon.",
+  w_to Salon,
+  has light;
+
+! ==============================================================================
+!   Objetos
+! ==============================================================================
+
+Object alfombra "alfombra" Salon
+  with name 'alfombra',
+       description "Una alfombra de colores vivos que cubre parte del suelo.",
+  has  female static;
+
+Object mesa "mesa" Salon
+  with name 'mesa',
+       description "Una mesa de madera con un cajon.",
+  has  female supporter;
+
+Object cajon "cajon" mesa
+  with name 'cajon',
+       description "Un cajon de madera que parece poder abrirse.",
+       when_closed "El cajon de la mesa esta cerrado.",
+       when_open "El cajon de la mesa esta abierto.",
+       after [;
+         Open:
+           if (llave in player)
+             print_ret "Abres el cajon de la mesa y encuentras una pequena llave.";
+       ],
+  has  openable lockable locked container;
+
+Object sofa "sofa" Salon
+  with name 'sofa' 'sillon',
+       description "Un comodo sofa de color azul.",
+  has  male supporter;
+
+Object libro "libro" sofa
+  with name 'libro',
+       description "Un libro sobre programacion en Inform 6.",
+  has  male;
+
+Object cama "cama" Dormitorio
+  with name 'cama',
+       description "Una cama grande y comoda.",
+  has  female supporter;
+
+Object llave "llave" Dormitorio
+  with name 'llave',
+       description "Una pequena llave de metal que podria abrir un cajon.",
+  has  female;
+
+! ==============================================================================
+!   Inicialización
+! ==============================================================================
+
+[ Initialise;
+    ! Ubicar al jugador
+    location = Salon;
+    
+    ! Mensaje de bienvenida
+    print "^Bienvenido a este ejemplo en espanol!^";
+    print "^Explora la casa y descubre lo que puedes hacer.^";
+];

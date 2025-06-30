@@ -1,15 +1,12 @@
 ! ==============================================================================
-!   EJEMPLO SIMPLE: Prueba de la librería en español
+!   EJEMPLO SIMPLE: Prueba básica en español
 !
 !   Basado en la librería Inform 6 -- Release 6.12.7 -- Serial number 240410
-!
-!   Copyright Graham Nelson 1993-2004 and David Griffith 2012-2024
-!   Adaptación al español por Francisco Fuentes, 2025
 !
 ! ==============================================================================
 
 ! Definir la tabla de caracteres para soportar acentos y caracteres especiales
-Zcharacter table +  '@{BA}'  '@{A9}'  '@{B3}' '@{E1}' '@{E9}' '@{ED}' '@{F3}' '@{FA}' '@{F1}' '@{DC}' '@{FC}' '@{BF}' '@{A1}';  ! á é í ó ú ñ Ü ü ¿ ¡
+Zcharacter table + '@{E1}' '@{E9}' '@{ED}' '@{F3}' '@{FA}' '@{F1}' '@{DC}' '@{FC}' '@{BF}' '@{A1}';  ! á é í ó ú ñ Ü ü ¿ ¡
 
 ! Definir el idioma español como idioma principal
 Constant language__ = "spanish";
@@ -17,48 +14,40 @@ Constant language__ = "spanish";
 ! Incluir la librería estándar
 Include "Parser";
 Include "VerbLib";
-
-! Definir que ya se ha incluido la librería española
-Constant LIBRARY_SPANISH;
-
-! Incluir la librería en español
-Include "SpanishLib";
+Include "Grammar";
 
 ! ==============================================================================
 !   Constantes del juego
 ! ==============================================================================
 
-Constant Story "EJEMPLO SIMPLE";
-Constant Headline "^Un ejemplo simple de la libreria en espanol.^";
+! Las constantes Story y Headline ya están definidas en Grammar.h
+! Vamos a redefinirlas
+Release 1;
+Serial "240501";
 
 ! ==============================================================================
 !   Objetos del juego
 ! ==============================================================================
 
 ! Habitaciones
-Room    Vestibulo "Vestíbulo"
-  with  description "Un amplio vestíbulo con suelo de mármol.",
-        n_to Sala;
+Object Vestibulo "Vestibulo"
+  with description "Un amplio vestibulo con suelo de marmol.",
+       n_to Sala,
+  has  light;
 
-Room    Sala "Sala Principal"
-  with  description "Una elegante sala con muebles antiguos. Al sur está el vestíbulo.",
-        s_to Vestibulo;
+Object Sala "Sala Principal"
+  with description "Una elegante sala con muebles antiguos. Al sur esta el vestibulo.",
+       s_to Vestibulo,
+  has  light;
 
 ! ==============================================================================
 !   Inicialización
 ! ==============================================================================
 
 [ Initialise;
-    ! Inicializar la librería en español
-    SpanishLibInitialise();
-    
     ! Ubicar al jugador
     location = Vestibulo;
     
     ! Mensaje de bienvenida
-    print "^¡Bienvenido a este ejemplo simple de la librería en español para Inform 6!^";
+    print "^Bienvenido a este ejemplo simple en espanol!^";
 ];
-
-Include "Grammar";
-
-! ==============================================================================
