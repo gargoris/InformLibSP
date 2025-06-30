@@ -1,0 +1,137 @@
+! ==============================================================================
+!   EJEMPLO DE ACENTOS: Demostración del uso de caracteres acentuados en español
+!
+!   Basado en la librería Inform 6 -- Release 6.12.7 -- Serial number 240410
+!
+!   Copyright Graham Nelson 1993-2004 and David Griffith 2012-2024
+!   Adaptación al español por Francisco Fuentes, 2025
+!
+! ==============================================================================
+
+! Definir la tabla de caracteres para soportar acentos y caracteres especiales
+Zcharacter table + '@{E1}' '@{E9}' '@{ED}' '@{F3}' '@{FA}' '@{F1}' '@{C1}' '@{C9}' '@{CD}' '@{D3}' '@{DA}' '@{D1}' '@{FC}' '@{DC}' '@{BF}' '@{A1}';
+
+! Incluir la librería estándar
+Include "Parser";
+Include "VerbLib";
+
+! Incluir la librería en español
+Include "SpanishLib";
+
+! ==============================================================================
+!   Constantes del juego
+! ==============================================================================
+
+Constant Story "EJEMPLO DE ACENTOS";
+Constant Headline "^Demostración del uso de caracteres acentuados en español.^";
+
+! ==============================================================================
+!   Objetos del juego
+! ==============================================================================
+
+! Habitaciones
+Room    SalaDeEstar "Sala de Estar"
+  with  description "Una acogedora sala de estar con sofás y una pequeña mesa. 
+                     Al norte está el comedor y al este la cocina.",
+        n_to Comedor,
+        e_to Cocina;
+
+Room    Comedor "Comedor"
+  with  description "Un elegante comedor con una gran mesa y sillas. 
+                     Al sur está la sala de estar.",
+        s_to SalaDeEstar;
+
+Room    Cocina "Cocina"
+  with  description "Una cocina moderna con todos los electrodomésticos necesarios. 
+                     Al oeste está la sala de estar.",
+        w_to SalaDeEstar;
+
+! Objetos con nombres acentuados
+Object  sofa "sofá" SalaDeEstar
+  with  name 'sofa' 'sofá' 'sillon' 'sillón',
+        description "Un cómodo sofá tapizado en color azul.",
+  has   supporter;
+
+Object  lampara "lámpara" SalaDeEstar
+  with  name 'lampara' 'lámpara' 'luz',
+        description "Una elegante lámpara de pie con pantalla de cristal.",
+  has   female switchable;
+
+Object  telefono "teléfono" SalaDeEstar
+  with  name 'telefono' 'teléfono' 'móvil' 'movil',
+        description "Un teléfono móvil de última generación.",
+  has   switchable;
+
+Object  cafe "café" Cocina
+  with  name 'cafe' 'café' 'taza' 'bebida',
+        description "Una taza de café recién hecho, aún humeante.",
+  has   female;
+
+Object  azucar "azúcar" Cocina
+  with  name 'azucar' 'azúcar',
+        description "Un pequeño recipiente con azúcar.",
+  has   female;
+
+! ==============================================================================
+!   Inicialización
+! ==============================================================================
+
+[ Initialise;
+    ! Inicializar la librería en español
+    SpanishLibInitialise();
+    
+    ! Mostrar la configuración cargada
+    SpanishLibShowConfiguration();
+    
+    ! Ubicar al jugador
+    location = SalaDeEstar;
+    
+    ! Mensaje de bienvenida
+    print "^¡Bienvenido a este ejemplo de uso de caracteres acentuados en español!^";
+    print "Este ejemplo demuestra cómo usar correctamente los acentos y caracteres especiales del español.^";
+    
+    ! Demostración de caracteres acentuados
+    print "^[DEMOSTRACIÓN DE CARACTERES ACENTUADOS]^";
+    
+    print "Caracteres acentuados minúsculos: á é í ó ú^";
+    print "Caracteres acentuados mayúsculos: Á É Í Ó Ú^";
+    print "Letra ñ: ñ Ñ^";
+    print "Diéresis: ü Ü^";
+    print "Signos de puntuación: ¿ ¡^";
+    
+    ! Demostración de objetos con nombres acentuados
+    print "^[OBJETOS CON NOMBRES ACENTUADOS]^";
+    
+    print "En la sala hay un ", (name) sofa, ".^";
+    print "También hay una ", (name) lampara, ".^";
+    print "Sobre el sofá hay un ", (name) telefono, ".^";
+    
+    print "^[FRASES CON ACENTOS Y CONCORDANCIA]^";
+    
+    print "El sofá ", (es_adj) "cómodo" sofa, ".^";
+    print "La lámpara ", (esta_adj) "apagado" lampara, ".^";
+    print "El teléfono ", (esta) telefono, " sobre el sofá.^";
+    
+    ! Mensaje final
+    print "^¡Explora la casa y prueba los comandos con acentos!^";
+];
+
+! ==============================================================================
+!   Gramática adicional
+! ==============================================================================
+
+! Verbos con acentos
+Verb 'encendé' 'prende' 'activá'
+    * noun                                    -> SwitchOn;
+
+Verb 'apagá' 'desactivá'
+    * noun                                    -> SwitchOff;
+
+Verb 'tomá' 'bebé'
+    * noun                                    -> Drink;
+
+! ==============================================================================
+
+Include "Grammar";
+
+! ==============================================================================

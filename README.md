@@ -311,11 +311,30 @@ Los verbos como 'deja', 'pon', 'coloca', 'mete', etc. han sido extendidos para s
 ];
 ```
 
+## Caracteres especiales en español
+
+Para usar caracteres acentuados y especiales del español en tus juegos, debes declararlos explícitamente:
+
+```inform
+! Definir la tabla de caracteres para soportar acentos y caracteres especiales
+Zcharacter table + '@{E1}' '@{E9}' '@{ED}' '@{F3}' '@{FA}' '@{F1}' '@{DC}' '@{FC}' '@{BF}' '@{A1}';  ! á é í ó ú ñ Ü ü ¿ ¡
+
+! Incluir la librería estándar
+Include "Parser";
+Include "VerbLib";
+
+! Incluir la librería en español
+Include "SpanishLib";
+```
+
+Para más información sobre el manejo de caracteres especiales, consulta el documento `docs/CaracteresEspeciales.md`.
+
 ## Ejemplos
 
 La librería incluye varios ejemplos que demuestran su uso:
 
 - `samples/EjemploCompleto.inf`: Demostración completa de todas las características
+- `samples/EjemploAcentos.inf`: Demostración del uso de caracteres acentuados
 - `samples/Elena.h`: Ejemplo de NPC con personalidad compleja
 
 ## Licencia

@@ -6,13 +6,16 @@
 !   Adaptación al español por Francisco Fuentes, 2025
 !
 ! ==============================================================================
+Zcharacter table + '@{E1}' '@{E9}' '@{ED}' '@{F3}' '@{FA}' '@{F1}' '@{DC}' '@{FC}' '@{BF}' '@{A1}';  ! á é í ó ú ñ Ü ü ¿ ¡
+! Incluir la librería estándar
+Include "Parser";
+Include "VerbLib";
+
+! Incluir la librería en español
+Include "SpanishLib";
 
 Constant Story "EJEMPLO DE AVENTURA";
 Constant Headline "^Una pequeña demostración de la librería en español^";
-
-Include "Parser";
-Include "VerbLib";
-Include "SpanishLib";
 
 ! ==============================================================================
 !   Definición de las localidades

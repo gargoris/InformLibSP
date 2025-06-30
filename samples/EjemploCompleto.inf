@@ -8,6 +8,12 @@
 !
 ! ==============================================================================
 
+! Definir la tabla de caracteres para soportar acentos y caracteres especiales
+Zcharacter table + '@{E1}' '@{E9}' '@{ED}' '@{F3}' '@{FA}' '@{F1}' '@{DC}' '@{FC}' '@{BF}' '@{A1}';  ! á é í ó ú ñ Ü ü ¿ ¡
+
+! Definir el idioma español como idioma principal
+Constant language__ = "spanish";
+
 ! Incluir la librería estándar
 Include "Parser";
 Include "VerbLib";
@@ -19,8 +25,8 @@ Include "SpanishLib";
 !   Constantes del juego
 ! ==============================================================================
 
-Constant Story "EJEMPLO DE LIBRERÍA ESPAÑOLA";
-Constant Headline "^Un ejemplo completo de las características de la librería en español.^";
+Constant Story "EJEMPLO DE LIBRERIA ESPANOLA";
+Constant Headline "^Un ejemplo completo de las caracteristicas de la libreria en espanol.^";
 
 ! ==============================================================================
 !   Objetos del juego
