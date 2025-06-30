@@ -1,5 +1,5 @@
 ! ==============================================================================
-!   EJEMPLO SIMPLE: Prueba de la librería en español
+!   EJEMPLO MUY SIMPLE: Prueba básica en español
 !
 !   Basado en la librería Inform 6 -- Release 6.12.7 -- Serial number 240410
 !
@@ -11,25 +11,20 @@
 ! Definir la tabla de caracteres para soportar acentos y caracteres especiales
 Zcharacter table + '@{E1}' '@{E9}' '@{ED}' '@{F3}' '@{FA}' '@{F1}' '@{DC}' '@{FC}' '@{BF}' '@{A1}';  ! á é í ó ú ñ Ü ü ¿ ¡
 
-! Definir que usaremos el idioma español
-Constant SPANISH_LANGUAGE;
-
-! Incluir la configuración de idioma
-Include "language_config";
+! Definir el idioma español como idioma principal
+Constant language__ = "spanish";
 
 ! Incluir la librería estándar
 Include "Parser";
 Include "VerbLib";
-
-! Incluir la librería en español
-Include "SpanishLib";
+Include "Grammar";
 
 ! ==============================================================================
 !   Constantes del juego
 ! ==============================================================================
 
 Constant Story "EJEMPLO SIMPLE";
-Constant Headline "^Un ejemplo simple de la libreria en espanol.^";
+Constant Headline "^Un ejemplo simple en espanol.^";
 
 ! ==============================================================================
 !   Objetos del juego
@@ -49,16 +44,11 @@ Room    Sala "Sala Principal"
 ! ==============================================================================
 
 [ Initialise;
-    ! Inicializar la librería en español
-    SpanishLibInitialise();
-    
     ! Ubicar al jugador
     location = Vestibulo;
     
     ! Mensaje de bienvenida
-    print "^¡Bienvenido a este ejemplo simple de la librería en español para Inform 6!^";
+    print "^¡Bienvenido a este ejemplo simple en español para Inform 6!^";
 ];
-
-Include "Grammar";
 
 ! ==============================================================================

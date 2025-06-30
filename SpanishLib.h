@@ -45,7 +45,9 @@ Constant SPANISH_LIB_VERSION = "6.12.7-1.1";
 ! ==============================================================================
 
 ! Incluir el archivo de definición del lenguaje español
-Include "spanish.h";
+#Ifndef LIBRARY_SPANISH;
+    Include "spanish.h";
+#Endif;
 
 ! Incluir mensajes en español
 #Ifdef SPANISH_FULL_MESSAGES;

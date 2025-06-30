@@ -1,0 +1,80 @@
+! ==============================================================================
+!   EJEMPLO EN ESPAÑOL: Prueba con librería en español
+!
+!   Basado en la librería Inform 6 -- Release 6.12.7 -- Serial number 240410
+!
+! ==============================================================================
+
+! Definir la tabla de caracteres para soportar acentos y caracteres especiales
+Zcharacter table + '@{E1}' '@{E9}' '@{ED}' '@{F3}' '@{FA}' '@{F1}' '@{DC}' '@{FC}' '@{BF}' '@{A1}';  ! á é í ó ú ñ Ü ü ¿ ¡
+
+! Definir constantes para evitar conflictos
+#Ifndef LIBRARY_ENGLISH;
+Constant LIBRARY_ENGLISH;
+#Endif;
+
+Constant Story "EJEMPLO EN ESPANOL";
+Constant Headline "^Un ejemplo en espanol con libreria en espanol.^";
+
+! Incluir la librería estándar
+Include "Parser";
+Include "VerbLib";
+
+! Incluir la librería en español (solo componentes específicos)
+Include "SpanishVerbs";
+Include "SpanishAdjectives";
+Include "SpanishGender";
+Include "SpanishAdverbs";
+
+! ==============================================================================
+!   Objetos del juego
+! ==============================================================================
+
+Object Vestibulo "Vestíbulo"
+  with description "Un amplio vestíbulo con suelo de mármol.",
+       n_to Sala,
+  has  light;
+
+Object Sala "Sala Principal"
+  with description "Una elegante sala con muebles antiguos. Al sur está el vestíbulo.",
+       s_to Vestibulo,
+  has  light;
+
+Object -> libro "libro antiguo"
+  with name 'libro' 'antiguo',
+       description "Un libro antiguo con tapas de cuero.";
+
+Object -> mesa "mesa"
+  with name 'mesa',
+       description "Una mesa de madera.",
+  has  female supporter;
+
+! ==============================================================================
+!   Inicialización
+! ==============================================================================
+
+[ Initialise;
+    location = Vestibulo;
+    
+    ! Mensaje de bienvenida
+    print "^¡Bienvenido a este ejemplo en español!^";
+    
+    ! Demostración de funciones de género y número
+    print "^[DEMOSTRACIÓN DE GÉNERO Y NÚMERO]^";
+    
+    ! Ejemplos con objetos masculinos singulares
+    print "El libro ", (es) libro, " interesante.^";
+    
+    ! Ejemplos con objetos femeninos singulares
+    print "La mesa ", (es) mesa, " bonita.^";
+    
+    ! Demostración de adjetivos
+    print "^[DEMOSTRACIÓN DE ADJETIVOS]^";
+    
+    print "El libro ", (es_adj) "viejo" libro, ".^";
+    print "La mesa ", (es_adj) "viejo" mesa, ".^";
+];
+
+Include "Grammar";
+
+! ==============================================================================

@@ -1,0 +1,48 @@
+! ==============================================================================
+!   EJEMPLO ESTÁNDAR: Prueba simple en español
+!
+!   Basado en la librería Inform 6 -- Release 6.12.7 -- Serial number 240410
+!
+! ==============================================================================
+
+Constant Story "EJEMPLO ESTANDAR";
+Constant Headline "^Un ejemplo estandar en espanol.^";
+
+Include "Parser";
+Include "VerbLib";
+
+! ==============================================================================
+!   Objetos del juego
+! ==============================================================================
+
+Object Vestibulo "Vestibulo"
+  with description "Un amplio vestibulo con suelo de marmol.",
+       n_to Sala,
+  has  light;
+
+Object Sala "Sala Principal"
+  with description "Una elegante sala con muebles antiguos. Al sur esta el vestibulo.",
+       s_to Vestibulo,
+  has  light;
+
+Object -> libro "libro antiguo"
+  with name 'libro' 'antiguo',
+       description "Un libro antiguo con tapas de cuero.";
+
+Object -> mesa "mesa"
+  with name 'mesa',
+       description "Una mesa de madera.",
+  has  female supporter;
+
+! ==============================================================================
+!   Inicialización
+! ==============================================================================
+
+[ Initialise;
+    location = Vestibulo;
+    print "^Bienvenido a este ejemplo estandar en espanol!^";
+];
+
+Include "Grammar";
+
+! ==============================================================================

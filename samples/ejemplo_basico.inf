@@ -1,62 +1,54 @@
 ! ==============================================================================
-!   EJEMPLO SIMPLE: Prueba de la librería en español
+!   EJEMPLO BÁSICO: Prueba simple en español
 !
 !   Basado en la librería Inform 6 -- Release 6.12.7 -- Serial number 240410
 !
-!   Copyright Graham Nelson 1993-2004 and David Griffith 2012-2024
-!   Adaptación al español por Francisco Fuentes, 2025
-!
 ! ==============================================================================
-
-! Definir la tabla de caracteres para soportar acentos y caracteres especiales
-Zcharacter table + '@{E1}' '@{E9}' '@{ED}' '@{F3}' '@{FA}' '@{F1}' '@{DC}' '@{FC}' '@{BF}' '@{A1}';  ! á é í ó ú ñ Ü ü ¿ ¡
-
-! Definir que usaremos el idioma español
-Constant SPANISH_LANGUAGE;
-
-! Incluir la configuración de idioma
-Include "language_config";
 
 ! Incluir la librería estándar
 Include "Parser";
 Include "VerbLib";
 
-! Incluir la librería en español
-Include "SpanishLib";
-
 ! ==============================================================================
 !   Constantes del juego
 ! ==============================================================================
 
-Constant Story "EJEMPLO SIMPLE";
-Constant Headline "^Un ejemplo simple de la libreria en espanol.^";
+Constant Story "EJEMPLO BASICO";
+Constant Headline "^Un ejemplo basico en espanol.^";
 
 ! ==============================================================================
 !   Objetos del juego
 ! ==============================================================================
 
 ! Habitaciones
-Room    Vestibulo "Vestíbulo"
-  with  description "Un amplio vestíbulo con suelo de mármol.",
+Room    Vestibulo "Vestibulo"
+  with  description "Un amplio vestibulo con suelo de marmol.",
         n_to Sala;
 
 Room    Sala "Sala Principal"
-  with  description "Una elegante sala con muebles antiguos. Al sur está el vestíbulo.",
+  with  description "Una elegante sala con muebles antiguos. Al sur esta el vestibulo.",
         s_to Vestibulo;
+
+! Objetos
+Object  libro "libro antiguo" Sala
+  with  name 'libro' 'antiguo',
+        description "Un libro antiguo con tapas de cuero.";
+
+Object  mesa "mesa" Sala
+  with  name 'mesa',
+        description "Una mesa de madera.",
+  has   female supporter;
 
 ! ==============================================================================
 !   Inicialización
 ! ==============================================================================
 
 [ Initialise;
-    ! Inicializar la librería en español
-    SpanishLibInitialise();
-    
     ! Ubicar al jugador
     location = Vestibulo;
     
     ! Mensaje de bienvenida
-    print "^¡Bienvenido a este ejemplo simple de la librería en español para Inform 6!^";
+    print "^Bienvenido a este ejemplo basico en espanol!^";
 ];
 
 Include "Grammar";
