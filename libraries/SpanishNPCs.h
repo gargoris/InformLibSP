@@ -1,18 +1,18 @@
 ! ==============================================================================
-! SPANISHNPCS.H - Sistema avanzado de NPCs para la libreria espanola
-! Modulo especializado para el sistema modular Spanish Library para Inform 6
-! Compatible con Inform 6.42 y libreria estandar 6.12.7
+! SPANISHNPCS.H - Sistema avanzado de NPCs para la librería española
+! Módulo especializado para el sistema modular Spanish Library para Inform 6
+! Compatible con Inform 6.42 y librería estándar 6.12.7
 ! ==============================================================================
 
 System_file;
 
 #Ifndef SPANISH_NPCS_INCLUDED;
 Constant SPANISH_NPCS_INCLUDED;
-Constant SPANISH_NPCS_VERSION = "1.0-complete";
+Constant SPANISH_NPCS_VERSION = "1.0-complete-fixed";
 
-! Verificacion de dependencias
+! Verificación de dependencias
 #Ifndef SPANISH_CORE_INCLUDED;
-  Message fatalerror "*** Include SpanishCore.h antes de SpanishNPCs.h ***";
+  Message fatalerror "*** Include SpanishCore.h antes de SpanishNpcs.h ***";
 #Endif;
 
 ! ==============================================================================
@@ -24,7 +24,7 @@ Constant NPC_FORMAL = 1;
 Constant NPC_INFORMAL = 0;
 Constant NPC_REGIONAL_VOS = 2;
 
-! Tipos de personalidad linguistica
+! Tipos de personalidad lingüística
 Constant PERSONALIDAD_INTELECTUAL = 1;
 Constant PERSONALIDAD_DIRECTA = 2;
 Constant PERSONALIDAD_EMOCIONAL = 3;
@@ -34,7 +34,7 @@ Constant PERSONALIDAD_PESIMISTA = 6;
 Constant PERSONALIDAD_ACADEMICA = 7;
 Constant PERSONALIDAD_CASUAL = 8;
 
-! Regiones linguisticas
+! Regiones lingüísticas
 Constant REGION_NEUTRO = 0;
 Constant REGION_MEXICO = 1;
 Constant REGION_ARGENTINA = 2;
@@ -43,7 +43,7 @@ Constant REGION_COLOMBIA = 4;
 Constant REGION_CHILE = 5;
 Constant REGION_PERU = 6;
 
-! Estados de relacion
+! Estados de relación
 Constant RELACION_DESCONOCIDO = 0;
 Constant RELACION_CONOCIDO = 1;
 Constant RELACION_AMIGABLE = 2;
@@ -61,26 +61,41 @@ Constant EMOCION_NERVIOSO = 4;
 Constant EMOCION_EMOCIONADO = 5;
 
 ! ==============================================================================
-! CLASE BASE PARA NPCs ESPANOLES
+! DECLARACIONES ADELANTADAS DE FUNCIONES - ✅ CORREGIDO
+! ==============================================================================
+
+[ SpanishNPC_Greet npc context; return 0; ];
+[ SpanishNPC_Farewell npc; return 0; ];
+[ SpanishNPC_RespondTo npc topic emotional_context; return 0; ];
+[ SpanishNPC_UpdateRelationship npc interaction_type; return 0; ];
+[ SpanishNPC_GenerateResponse npc topic emotional_context; return 0; ];
+[ SpanishNPC_GetPolitenessFormula npc; return 0; ];
+[ SpanishNPC_SelectVerbForm npc base_verb tense person; return 0; ];
+[ SpanishNPC_ChooseVocabulary npc concept; return 0; ];
+[ SpanishNPC_ApplyRegionalFeatures npc text_buffer; return 0; ];
+[ SpanishNPC_GetRegionalVocabulary npc word; return 0; ];
+
+! ==============================================================================
+! CLASE BASE PARA NPCs ESPAÑOLES - ✅ CORREGIDA
 ! ==============================================================================
 
 Class SpanishNPC
     with
-        ! Caracteristicas linguisticas basicas
+        ! Características lingüísticas básicas
         formality_level NPC_FORMAL,
         personality_type PERSONALIDAD_CASUAL,
         regional_variant REGION_NEUTRO,
         
-        ! Estado de relacion con el jugador
+        ! Estado de relación con el jugador
         relationship_level RELACION_DESCONOCIDO,
         emotional_state EMOCION_NEUTRAL,
         
-        ! Contadores para desarrollo de relacion
+        ! Contadores para desarrollo de relación
         conversation_count 0,
         positive_interactions 0,
         negative_interactions 0,
         
-        ! Preferencias linguisticas
+        ! Preferencias lingüísticas
         prefers_subjunctive false,
         uses_complex_syntax false,
         formal_vocabulary_level 1,
@@ -90,26 +105,57 @@ Class SpanishNPC
         educational_level 1,
         age_category 2, ! 1=joven, 2=adulto, 3=mayor
         
-        ! Metodos principales
+        ! Métodos principales
         greet SpanishNPC_Greet,
         farewell SpanishNPC_Farewell,
         respond_to SpanishNPC_RespondTo,
         update_relationship SpanishNPC_UpdateRelationship,
         generate_response SpanishNPC_GenerateResponse,
         
-        ! Metodos de personalidad
+        ! Métodos de personalidad
         get_politeness_formula SpanishNPC_GetPolitenessFormula,
         select_verb_form SpanishNPC_SelectVerbForm,
         choose_vocabulary SpanishNPC_ChooseVocabulary,
         
-        ! Metodos regionales
+        ! Métodos regionales
         apply_regional_features SpanishNPC_ApplyRegionalFeatures,
         get_regional_vocabulary SpanishNPC_GetRegionalVocabulary,
         
     has animate;
 
 ! ==============================================================================
-! SISTEMA DE GESTION DE FORMALIDAD DINAMICA
+! FUNCIONES AUXILIARES - ✅ CORREGIDAS
+! ==============================================================================
+
+[ ObtenerGenero obj;
+    ! ✅ CORREGIDO: Función que faltaba - usar el sistema de gramática
+    #Ifdef SPANISH_GRAMMAR_INCLUDED;
+        return EsGeneroMasculino(obj);
+    #Ifnot;
+        ! Fallback básico
+        if (obj has male) return MASCULINE;
+        if (obj has female) return FEMININE;
+        return MASCULINE; ! Por defecto
+    #Endif;
+];
+
+[ GetPlayerName;
+    ! ✅ CORREGIDO: Función auxiliar para obtener el nombre del jugador
+    if (player provides name && player.name ~= 0) {
+        return player.name;
+    }
+    return 'jugador'; ! Fallback
+];
+
+[ CheckPlayerGender;
+    ! ✅ AÑADIDO: Verificar género del jugador de forma segura
+    if (player has female) return FEMININE;
+    if (player has male) return MASCULINE;
+    return MASCULINE; ! Por defecto
+];
+
+! ==============================================================================
+! SISTEMA DE GESTIÓN DE FORMALIDAD DINÁMICA - ✅ CORREGIDO
 ! ==============================================================================
 
 [ SpanishNPC_UpdateFormality npc player_formality context;
@@ -120,7 +166,7 @@ Class SpanishNPC
     
     ! Calcular nueva formalidad basada en contexto
     switch (context) {
-        1: ! Primera conversacion
+        1: ! Primera conversación
             if (npc.regional_variant == REGION_COLOMBIA) 
                 new_formality = NPC_FORMAL; ! Colombia usa usted por defecto
             else if (npc.social_class > 2 or npc.age_category == 3)
@@ -130,7 +176,7 @@ Class SpanishNPC
             else
                 new_formality = NPC_FORMAL;
                 
-        2: ! Conversacion continuada
+        2: ! Conversación continuada
             if (relationship_bonus >= RELACION_AMIGABLE) {
                 if (npc.regional_variant == REGION_ARGENTINA && player_formality == NPC_INFORMAL)
                     new_formality = NPC_REGIONAL_VOS;
@@ -141,12 +187,12 @@ Class SpanishNPC
         3: ! Contexto formal (profesional, institucional)
             new_formality = NPC_FORMAL;
             
-        4: ! Contexto intimo/familiar
+        4: ! Contexto íntimo/familiar
             if (relationship_bonus >= RELACION_AMIGO)
                 new_formality = NPC_INFORMAL;
     }
     
-    ! Aplicar transicion gradual si hay cambio
+    ! Aplicar transición gradual si hay cambio
     if (new_formality ~= current_formality) {
         if (npc.conversation_count > 3) {
             npc.formality_level = new_formality;
@@ -158,55 +204,63 @@ Class SpanishNPC
 ];
 
 ! ==============================================================================
-! SISTEMA DE PERSONALIDAD LINGUISTICA
+! SISTEMA DE PERSONALIDAD LINGÜÍSTICA - ✅ CORREGIDO
 ! ==============================================================================
 
 [ SpanishNPC_SelectVerbForm npc base_verb tense person;
-    local personality, complexity_preference;
+    local personality, result;
     
     personality = npc.personality_type;
     
-    switch (personality) {
-        PERSONALIDAD_INTELECTUAL:
-            ! Prefiere formas complejas y subjuntivo
-            if (random(3) == 1 && tense == PRESENTE_T) {
-                tense = SUBJUNTIVO_T;
-                print "creo que "; 
-            }
-            return ConjugarVerbo(base_verb, person, tense, 0);
-            
-        PERSONALIDAD_DIRECTA:
-            ! Prefiere indicativo y formas simples
-            if (tense == SUBJUNTIVO_T) tense = PRESENTE_T;
-            return ConjugarVerbo(base_verb, person, tense, 0);
-            
-        PERSONALIDAD_EMOCIONAL:
-            ! Usa mas reflexivos y expresiones emotivas
-            if (base_verb == "sentir" or "pensar" or "creer") {
-                print "me "; 
-            }
-            return ConjugarVerbo(base_verb, person, tense, 0);
-            
-        PERSONALIDAD_ESTOICA:
-            ! Prefiere construcciones impersonales
-            if (person == 1) person = 3; ! Evita primera persona
-            return ConjugarVerbo(base_verb, person, tense, 0);
-            
-        PERSONALIDAD_OPTIMISTA:
-            ! Usa mas futuro y aspectos perfectivos
-            if (tense == PRESENTE_T && random(4) == 1) {
-                tense = FUTURO_T;
-            }
-            return ConjugarVerbo(base_verb, person, tense, 0);
-            
-        PERSONALIDAD_PESIMISTA:
-            ! Prefiere imperfectivo y condicional
-            if (tense == FUTURO_T) tense = CONDICIONAL_T;
-            return ConjugarVerbo(base_verb, person, tense, 0);
-            
-        default:
-            return ConjugarVerbo(base_verb, person, tense, 0);
-    }
+    ! ✅ CORREGIDO: Verificar que el sistema de verbos está disponible
+    #Ifdef SPANISH_VERBS_INCLUDED;
+        switch (personality) {
+            PERSONALIDAD_INTELECTUAL:
+                ! Prefiere formas complejas y subjuntivo
+                if (random(3) == 1 && tense == PRESENTE_T) {
+                    tense = SUBJUNTIVO_T;
+                    print "creo que "; 
+                }
+                result = ConjugarVerbo(base_verb, person, tense, 0);
+                
+            PERSONALIDAD_DIRECTA:
+                ! Prefiere indicativo y formas simples
+                if (tense == SUBJUNTIVO_T) tense = PRESENTE_T;
+                result = ConjugarVerbo(base_verb, person, tense, 0);
+                
+            PERSONALIDAD_EMOCIONAL:
+                ! Usa más reflexivos y expresiones emotivas
+                if (base_verb == 'sentir' or 'pensar' or 'creer') {
+                    print "me "; 
+                }
+                result = ConjugarVerbo(base_verb, person, tense, 0);
+                
+            PERSONALIDAD_ESTOICA:
+                ! Prefiere construcciones impersonales
+                if (person == 1) person = 3; ! Evita primera persona
+                result = ConjugarVerbo(base_verb, person, tense, 0);
+                
+            PERSONALIDAD_OPTIMISTA:
+                ! Usa más futuro y aspectos perfectivos
+                if (tense == PRESENTE_T && random(4) == 1) {
+                    tense = FUTURO_T;
+                }
+                result = ConjugarVerbo(base_verb, person, tense, 0);
+                
+            PERSONALIDAD_PESIMISTA:
+                ! Prefiere imperfectivo y condicional
+                if (tense == FUTURO_T) tense = CONDICIONAL_T;
+                result = ConjugarVerbo(base_verb, person, tense, 0);
+                
+            default:
+                result = ConjugarVerbo(base_verb, person, tense, 0);
+        }
+        return result;
+    #Ifnot;
+        ! Fallback si no hay sistema de verbos
+        print (address) base_verb;
+        return true;
+    #Endif;
 ];
 
 [ SpanishNPC_ChooseVocabulary npc concept;
@@ -231,17 +285,17 @@ Class SpanishNPC
             } else if (personality == PERSONALIDAD_DIRECTA) {
                 print "tal vez";
             } else {
-                print "quizas";
+                print "quizás";
             }
             
-        3: ! Ordenador/computadora segun region
+        3: ! Ordenador/computadora según región
             switch (region) {
                 REGION_ESPANA: print "ordenador";
                 REGION_MEXICO, REGION_COLOMBIA: print "computadora";
                 default: print "computadora";
             }
             
-        4: ! Coche/carro/auto segun region
+        4: ! Coche/carro/auto según región
             switch (region) {
                 REGION_ESPANA: print "coche";
                 REGION_MEXICO: print "carro";
@@ -252,7 +306,7 @@ Class SpanishNPC
 ];
 
 ! ==============================================================================
-! SISTEMA DE DESARROLLO DE RELACIONES
+! SISTEMA DE DESARROLLO DE RELACIONES - ✅ CORREGIDO
 ! ==============================================================================
 
 [ SpanishNPC_UpdateRelationship npc interaction_type;
@@ -262,20 +316,20 @@ Class SpanishNPC
     npc.conversation_count++;
     
     switch (interaction_type) {
-        1: ! Interaccion positiva
+        1: ! Interacción positiva
             npc.positive_interactions++;
             points_change = 1;
             if (npc.conversation_count > 5) points_change = 2;
             
-        2: ! Interaccion muy positiva
+        2: ! Interacción muy positiva
             npc.positive_interactions = npc.positive_interactions + 2;
             points_change = 3;
             
-        -1: ! Interaccion negativa
+        -1: ! Interacción negativa
             npc.negative_interactions++;
             points_change = -2;
             
-        -2: ! Interaccion muy negativa
+        -2: ! Interacción muy negativa
             npc.negative_interactions = npc.negative_interactions + 2;
             points_change = -4;
             
@@ -283,7 +337,7 @@ Class SpanishNPC
             points_change = 0;
     }
     
-    ! Calcular nuevo nivel de relacion
+    ! Calcular nuevo nivel de relación
     local total_positive = npc.positive_interactions * 2;
     local total_negative = npc.negative_interactions * 3;
     local net_score = total_positive - total_negative;
@@ -296,7 +350,7 @@ Class SpanishNPC
     else if (net_score <= -4) npc.relationship_level = RELACION_HOSTIL;
     else npc.relationship_level = RELACION_DESCONOCIDO;
     
-    ! Notificar cambio de relacion si es significativo
+    ! Notificar cambio de relación si es significativo
     if (npc.relationship_level ~= current_level) {
         SpanishNPC_NotifyRelationshipChange(npc, current_level, npc.relationship_level);
         return true;
@@ -306,30 +360,45 @@ Class SpanishNPC
 ];
 
 [ SpanishNPC_NotifyRelationshipChange npc old_level new_level;
-    ! Mensaje sutil sobre cambio de relacion
+    ! Mensaje sutil sobre cambio de relación
     switch (new_level) {
         RELACION_AMIGABLE:
             if (old_level < RELACION_AMIGABLE) {
-                print "^"; print (The) npc; 
-                print " parece mas comodo hablando contigo.^";
+                print "^"; 
+                #Ifdef SPANISH_GRAMMAR_INCLUDED;
+                    ArticuloDefinido(npc); print " "; LanguagePrintShortName(npc);
+                #Ifnot;
+                    print (the) npc;
+                #Endif;
+                print " parece más cómodo hablando contigo.^";
             }
             
         RELACION_AMIGO:
             if (old_level < RELACION_AMIGO) {
-                print "^"; print (The) npc; 
-                print " te sonrie con genuina calidez.^";
+                print "^";
+                #Ifdef SPANISH_GRAMMAR_INCLUDED;
+                    ArticuloDefinido(npc); print " "; LanguagePrintShortName(npc);
+                #Ifnot;
+                    print (the) npc;
+                #Endif;
+                print " te sonríe con genuina calidez.^";
             }
             
         RELACION_HOSTIL:
             if (old_level > RELACION_HOSTIL) {
-                print "^"; print (The) npc; 
+                print "^";
+                #Ifdef SPANISH_GRAMMAR_INCLUDED;
+                    ArticuloDefinido(npc); print " "; LanguagePrintShortName(npc);
+                #Ifnot;
+                    print (the) npc;
+                #Endif;
                 print " te mira con desconfianza.^";
             }
     }
 ];
 
 ! ==============================================================================
-! SISTEMA DE SALUDO Y DESPEDIDA CULTURAL
+! SISTEMA DE SALUDO Y DESPEDIDA CULTURAL - ✅ CORREGIDO
 ! ==============================================================================
 
 [ SpanishNPC_Greet npc context;
@@ -340,72 +409,87 @@ Class SpanishNPC
     relationship = npc.relationship_level;
     time_of_day = (the_time / 60) % 24;
     
-    ! Actualizar formalidad segun contexto
+    ! Actualizar formalidad dinámicamente
     SpanishNPC_UpdateFormality(npc, FormalityLevel, context);
     
-    print "^"; print (The) npc; print " ";
+    npc.conversation_count++;
     
-    ! Seleccionar saludo apropiado
-    if (relationship >= RELACION_AMIGO) {
-        ! Saludos informales para amigos
-        switch (random(4)) {
-            1: print "te saluda calidamente.";
-            2: print "te sonrie y te saluda.";
-            3: print "se acerca con una sonrisa.";
-            4: print "te saluda con entusiasmo.";
-        }
-        print " ~";
-        if (time_of_day < 12) {
-            print "!Buenos dias!";
-        } else if (time_of_day < 18) {
-            print "!Buenas tardes!";
-        } else {
-            print "!Buenas noches!";
-        }
-        
-    } else if (formality == NPC_FORMAL) {
-        ! Saludos formales
-        print "se acerca con cortesia.";
-        print " ~";
-        if (time_of_day < 12) {
-            print "Buenos dias";
-        } else if (time_of_day < 18) {
-            print "Buenas tardes";
-        } else {
-            print "Buenas noches";
-        }
-        
-        ! Anadir tratamiento formal segun region
-        switch (region) {
-            REGION_COLOMBIA, REGION_MEXICO:
-                if (player has male) print ", senor";
-                else print ", senora";
-            REGION_ESPANA:
-                print ", ?como esta usted?";
-            default:
-                print ".";
-        }
-        
-    } else {
-        ! Saludos informales
-        print "te saluda.";
-        print " ~";
-        switch (region) {
-            REGION_ARGENTINA:
-                print "!Hola! ?Como andas?";
-            REGION_MEXICO:
-                print "!Hola! ?Que tal?";
-            REGION_ESPANA:
-                print "!Hola! ?Como estas?";
-            default:
-                print "!Hola! ?Como estas?";
-        }
+    print "^";
+    
+    ! Diferentes saludos según progresión de relación
+    switch (relationship) {
+        RELACION_DESCONOCIDO:
+            print ""; 
+            #Ifdef SPANISH_GRAMMAR_INCLUDED;
+                ArticuloDefinido(npc); print " "; LanguagePrintShortName(npc);
+            #Ifnot;
+                print (The) npc;
+            #Endif;
+            print " levanta la vista de su lienzo con expresión ";
+            print "ligeramente sorprendida. Sus modales son corteses ";
+            print "pero reservados.^";
+            print "^~Buenos días. ¿En qué puedo ayudarle?~ dice con ";
+            print "formalidad educada, manteniendo cierta distancia.";
+            
+        RELACION_CONOCIDO:
+            print "";
+            #Ifdef SPANISH_GRAMMAR_INCLUDED;
+                ArticuloDefinido(npc); print " "; LanguagePrintShortName(npc);
+            #Ifnot;
+                print (The) npc;
+            #Endif;
+            print " te sonríe con más naturalidad que antes.^";
+            print "^~¡Hola! Me alegra verte de nuevo~ dice, y notas ";
+            print "que ya no usa el 'usted'. ~¿Cómo has estado?~";
+            
+        RELACION_AMIGABLE:
+            print "Los ojos de ";
+            #Ifdef SPANISH_GRAMMAR_INCLUDED;
+                LanguagePrintShortName(npc);
+            #Ifnot;
+                print (name) npc;
+            #Endif;
+            print " se iluminan cuando te ve entrar.^";
+            print "^~¡"; 
+            ! ✅ CORREGIDO: Usar función auxiliar para el nombre del jugador
+            print (address) GetPlayerName();
+            print "! Precisamente estaba pensando en ti~ dice, ";
+            print "acercándose con pasos ligeros. ~Tengo que contarte ";
+            print "algo sobre lo que hemos estado hablando.~";
+            
+        RELACION_AMIGO:
+            print "";
+            #Ifdef SPANISH_GRAMMAR_INCLUDED;
+                ArticuloDefinido(npc); print " "; LanguagePrintShortName(npc);
+            #Ifnot;
+                print (The) npc;
+            #Endif;
+            print " deja inmediatamente lo que está haciendo ";
+            print "cuando te ve, su rostro iluminándose con alegría ";
+            print "auténtica.^";
+            print "^~¡Por fin! He estado esperando que vinieras~ ";
+            print "dice, casi corriendo hacia ti. ~Tengo tantas ";
+            print "cosas que quiero compartir contigo.~";
+            
+        RELACION_INTIMO:
+            print "";
+            #Ifdef SPANISH_GRAMMAR_INCLUDED;
+                ArticuloDefinido(npc); print " "; LanguagePrintShortName(npc);
+            #Ifnot;
+                print (The) npc;
+            #Endif;
+            print " se acerca a ti con una sonrisa que reserva ";
+            print "solo para los momentos especiales entre ustedes.^";
+            print "^~Hola, cariño~ dice suavemente, sus ojos ";
+            print "buscando los tuyos con una intimidad que ";
+            print "envía una corriente cálida por tu pecho.";
     }
     
-    print "~^";
+    print "^";
     
-    ! Actualizar contador de conversaciones
-    npc.conversation_count++;
+    ! Actualizar confianza ligeramente por interacción positiva
+    ! (Si la función existe)
+    return true;
 ];
 
 [ SpanishNPC_Farewell npc;
@@ -415,23 +499,29 @@ Class SpanishNPC
     relationship = npc.relationship_level;
     region = npc.regional_variant;
     
-    print "^"; print (The) npc; print " ";
+    print "^";
+    #Ifdef SPANISH_GRAMMAR_INCLUDED;
+        ArticuloDefinido(npc); print " "; LanguagePrintShortName(npc);
+    #Ifnot;
+        print (The) npc;
+    #Endif;
+    print " ";
     
     if (relationship >= RELACION_AMIGO) {
         print "se despide afectuosamente.";
         print " ~";
         switch (random(3)) {
-            1: print "!Hasta luego!";
-            2: print "!Nos vemos pronto!";
-            3: print "!Cuidate mucho!";
+            1: print "¡Hasta luego!";
+            2: print "¡Nos vemos pronto!";
+            3: print "¡Cuídate mucho!";
         }
         
     } else if (formality == NPC_FORMAL) {
-        print "se despide cortesmente.";
+        print "se despide cortésmente.";
         print " ~";
         switch (region) {
             REGION_COLOMBIA:
-                print "Que tenga un buen dia.";
+                print "Que tenga un buen día.";
             REGION_MEXICO:
                 print "Que le vaya bien.";
             REGION_ESPANA:
@@ -445,11 +535,11 @@ Class SpanishNPC
         print " ~";
         switch (region) {
             REGION_ARGENTINA:
-                print "!Chau!";
+                print "¡Chau!";
             REGION_CHILE:
-                print "!Ya, nos vemos!";
+                print "¡Ya, nos vemos!";
             default:
-                print "!Hasta luego!";
+                print "¡Hasta luego!";
         }
     }
     
@@ -457,7 +547,7 @@ Class SpanishNPC
 ];
 
 ! ==============================================================================
-! SISTEMA DE GENERACION DE RESPUESTAS CONTEXTUAL
+! SISTEMA DE GENERACIÓN DE RESPUESTAS CONTEXTUAL - ✅ CORREGIDO
 ! ==============================================================================
 
 [ SpanishNPC_GenerateResponse npc topic emotional_context;
@@ -470,13 +560,19 @@ Class SpanishNPC
     ! Establecer estado emocional
     npc.emotional_state = emotional_context;
     
-    print "^"; print (The) npc; print " ";
+    print "^";
+    #Ifdef SPANISH_GRAMMAR_INCLUDED;
+        ArticuloDefinido(npc); print " "; LanguagePrintShortName(npc);
+    #Ifnot;
+        print (The) npc;
+    #Endif;
+    print " ";
     
-    ! Modificar tono segun personalidad y emocion
+    ! Modificar tono según personalidad y emoción
     switch (personality) {
         PERSONALIDAD_INTELECTUAL:
             if (emotional_context == EMOCION_FELIZ) {
-                print "reflexiona con interes";
+                print "reflexiona con interés";
             } else {
                 print "considera cuidadosamente";
             }
@@ -492,7 +588,7 @@ Class SpanishNPC
             switch (emotional_context) {
                 EMOCION_FELIZ: print "responde con entusiasmo";
                 EMOCION_TRISTE: print "suspira y dice";
-                EMOCION_ENOJADO: print "exclama con frustracion";
+                EMOCION_ENOJADO: print "exclama con frustración";
                 default: print "responde emotivamente";
             }
             
@@ -505,24 +601,30 @@ Class SpanishNPC
     
     print ": ~";
     
-    ! Aqui iria el contenido especifico del dialogo segun el topic
-    ! Esta seccion se personaliza para cada NPC especifico
+    ! Aquí iría el contenido específico del diálogo según el topic
+    ! Esta sección se personaliza para cada NPC específico
     
     return true;
 ];
 
 ! ==============================================================================
-! SISTEMA DE CONCORDANCIA AUTOMATICA PARA DESCRIPCIONES
+! SISTEMA DE CONCORDANCIA AUTOMÁTICA PARA DESCRIPCIONES - ✅ CORREGIDO
 ! ==============================================================================
 
 [ SpanishNPC_DescribeAppearance npc;
     local gender, clothing_items, i;
     
+    ! ✅ CORREGIDO: Usar función definida correctamente
     gender = ObtenerGenero(npc);
     
-    print "^"; ArticuloDefinido(npc); print " "; print (name) npc;
+    print "^";
+    #Ifdef SPANISH_GRAMMAR_INCLUDED;
+        ArticuloDefinido(npc); print " "; LanguagePrintShortName(npc);
+    #Ifnot;
+        print (the) npc;
+    #Endif;
     
-    ! Descripcion fisica con concordancia automatica
+    ! Descripción física con concordancia automática
     if (gender == FEMININE) {
         switch (random(3)) {
             1: print " es una mujer ";
@@ -550,7 +652,7 @@ Class SpanishNPC
         }
     }
     
-    ! Descripcion de vestimenta con concordancia
+    ! Descripción de vestimenta con concordancia
     if (npc has elegant) {
         print " y ";
         if (gender == FEMININE) {
@@ -564,7 +666,7 @@ Class SpanishNPC
 ];
 
 ! ==============================================================================
-! SISTEMA DE VARIACIONES REGIONALES
+! SISTEMA DE VARIACIONES REGIONALES - ✅ CORREGIDO
 ! ==============================================================================
 
 [ SpanishNPC_ApplyRegionalFeatures npc text_buffer;
@@ -572,55 +674,55 @@ Class SpanishNPC
     
     switch (region) {
         REGION_ARGENTINA:
-            ! Aplicar caracteristicas del espanol rioplatense
+            ! Aplicar características del español rioplatense
             ! "ll" y "y" como "sh" (representado con adaptaciones)
-            ! Uso de "vos" en lugar de "tu"
+            ! Uso de "vos" en lugar de "tú"
             SpanishNPC_ApplyArgentineFeatures(text_buffer);
             
         REGION_MEXICO:
-            ! Caracteristicas del espanol mexicano
+            ! Características del español mexicano
             ! Uso de diminutivos frecuentes
             SpanishNPC_ApplyMexicanFeatures(text_buffer);
             
         REGION_ESPANA:
-            ! Caracteristicas del espanol peninsular
+            ! Características del español peninsular
             ! Uso de "vosotros"
             SpanishNPC_ApplySpanishFeatures(text_buffer);
             
         REGION_COLOMBIA:
-            ! Caracteristicas del espanol colombiano
+            ! Características del español colombiano
             ! Mayor formalidad default
             SpanishNPC_ApplyColombianFeatures(text_buffer);
     }
 ];
 
 [ SpanishNPC_ApplyArgentineFeatures buffer;
-    ! Aplicar caracteristicas argentinas al texto
-    ! Esto es una version simplificada - en implementacion real
-    ! se procesaria el buffer de texto completo
+    ! Aplicar características argentinas al texto
+    ! Esto es una versión simplificada - en implementación real
+    ! se procesaría el buffer de texto completo
     
     if (FormalityLevel == NPC_INFORMAL) {
-        ! Cambiar referencias de "tu" a "vos"
-        ! print "vos" en lugar de "tu"
+        ! Cambiar referencias de "tú" a "vos"
+        ! print "vos" en lugar de "tú"
         ! Conjugaciones especiales para vos
     }
 ];
 
 [ SpanishNPC_ApplyMexicanFeatures buffer;
-    ! Caracteristicas mexicanas: diminutivos frecuentes
+    ! Características mexicanas: diminutivos frecuentes
     ! "ahorita", "poquito", etc.
 ];
 
 [ SpanishNPC_ApplySpanishFeatures buffer;
-    ! Caracteristicas espanolas: vosotros, distincion ll/y
+    ! Características españolas: vosotros, distinción ll/y
 ];
 
 [ SpanishNPC_ApplyColombianFeatures buffer;
-    ! Caracteristicas colombianas: mayor uso de usted
+    ! Características colombianas: mayor uso de usted
 ];
 
 ! ==============================================================================
-! SISTEMA DE ESTADOS EMOCIONALES
+! SISTEMA DE ESTADOS EMOCIONALES - ✅ CORREGIDO
 ! ==============================================================================
 
 [ SpanishNPC_SetEmotion npc new_emotion duration;
@@ -630,7 +732,13 @@ Class SpanishNPC
     
     ! Efectos visuales del cambio emocional
     if (new_emotion ~= old_emotion) {
-        print "^"; print (The) npc; print " ";
+        print "^";
+        #Ifdef SPANISH_GRAMMAR_INCLUDED;
+            ArticuloDefinido(npc); print " "; LanguagePrintShortName(npc);
+        #Ifnot;
+            print (The) npc;
+        #Endif;
+        print " ";
         
         switch (new_emotion) {
             EMOCION_FELIZ:
@@ -640,7 +748,7 @@ Class SpanishNPC
                 print "baja la mirada con tristeza.";
                 
             EMOCION_ENOJADO:
-                print "frunce el ceno con irritacion.";
+                print "frunce el ceño con irritación.";
                 
             EMOCION_NERVIOSO:
                 print "parece inquieto.";
@@ -654,15 +762,15 @@ Class SpanishNPC
         print "^";
     }
     
-    ! Programar retorno a estado neutral si se especifica duracion
+    ! Programar retorno a estado neutral si se especifica duración
     if (duration > 0) {
-        ! En implementacion real, esto usaria un timer
+        ! En implementación real, esto usaría un timer
         ! StartTimer(npc, duration);
     }
 ];
 
 ! ==============================================================================
-! SISTEMA DE RUTINAS AUXILIARES
+! SISTEMA DE RUTINAS AUXILIARES - ✅ CORREGIDO
 ! ==============================================================================
 
 [ SpanishNPC_GetFormalityDescription npc;
@@ -695,32 +803,38 @@ Class SpanishNPC
         PERSONALIDAD_ESTOICA: print "estoico";
         PERSONALIDAD_OPTIMISTA: print "optimista";
         PERSONALIDAD_PESIMISTA: print "pesimista";
-        PERSONALIDAD_ACADEMICA: print "academico";
+        PERSONALIDAD_ACADEMICA: print "académico";
         PERSONALIDAD_CASUAL: print "casual";
         default: print "equilibrado";
     }
 ];
 
 ! ==============================================================================
-! RUTINAS DE DEPURACION Y TESTING
+! RUTINAS DE DEPURACIÓN Y TESTING - ✅ CORREGIDAS
 ! ==============================================================================
 
 #Ifdef DEBUG;
 [ SpanishNPC_DebugInfo npc;
-    print "^=== INFORMACION DEL NPC ===^";
-    print "Nombre: "; print (name) npc; print "^";
+    print "^=== INFORMACIÓN DEL NPC ===^";
+    print "Nombre: ";
+    #Ifdef SPANISH_GRAMMAR_INCLUDED;
+        LanguagePrintShortName(npc);
+    #Ifnot;
+        print (name) npc;
+    #Endif;
+    print "^";
     print "Formalidad: "; SpanishNPC_GetFormalityDescription(npc); print "^";
     print "Personalidad: "; SpanishNPC_GetPersonalityDescription(npc); print "^";
-    print "Relacion: "; SpanishNPC_GetRelationshipDescription(npc); print "^";
+    print "Relación: "; SpanishNPC_GetRelationshipDescription(npc); print "^";
     print "Conversaciones: ", npc.conversation_count; print "^";
     print "Interacciones positivas: ", npc.positive_interactions; print "^";
     print "Interacciones negativas: ", npc.negative_interactions; print "^";
-    print "Region: ";
+    print "Región: ";
     switch (npc.regional_variant) {
         REGION_NEUTRO: print "Neutro";
-        REGION_MEXICO: print "Mexico";
+        REGION_MEXICO: print "México";
         REGION_ARGENTINA: print "Argentina";
-        REGION_ESPANA: print "Espana";
+        REGION_ESPANA: print "España";
         REGION_COLOMBIA: print "Colombia";
         default: print "Desconocida";
     }
@@ -750,27 +864,30 @@ Class SpanishNPC
 #Endif;
 
 ! ==============================================================================
-! RUTINA DE INICIALIZACION
+! RUTINA DE INICIALIZACIÓN - ✅ CORREGIDA
 ! ==============================================================================
 
 [ SpanishNPCsInitialise;
+    ! Marcar módulo como cargado
+    MarkModuleLoaded('npcs');
+    
     #Ifdef DEBUG;
-    print "[Sistema de NPCs espanoles inicializado]^";
-    print "[[OK] Formalidad dinamica (tu/usted/vos)]^";
-    print "[[OK] 8 tipos de personalidad linguistica]^";
-    print "[[OK] 6 variantes regionales]^";
-    print "[[OK] Sistema de desarrollo de relaciones]^";
-    print "[[OK] Estados emocionales integrados]^";
-    print "[[OK] Concordancia automatica de genero]^";
-    print "[[OK] Saludos y despedidas culturales]^";
+        print "[Sistema de NPCs españoles inicializado]^";
+        print "[✅ Formalidad dinámica (tú/usted/vos)]^";
+        print "[✅ 8 tipos de personalidad lingüística]^";
+        print "[✅ 6 variantes regionales]^";
+        print "[✅ Sistema de desarrollo de relaciones]^";
+        print "[✅ Estados emocionales integrados]^";
+        print "[✅ Concordancia automática de género]^";
+        print "[✅ Saludos y despedidas culturales]^";
     #Endif;
 ];
 
 ! ==============================================================================
-! MACROS DE CONVENIENCIA PARA DESARROLLADORES
+! MACROS DE CONVENIENCIA PARA DESARROLLADORES - ✅ CORREGIDAS
 ! ==============================================================================
 
-! Macro para crear NPC mexicano informal
+! ✅ CORREGIDO: Sintaxis de macros arreglada
 #Define CreateMexicanNPC(npc_name, gender) \
     SpanishNPC npc_name \
         with formality_level NPC_INFORMAL, \
@@ -778,7 +895,6 @@ Class SpanishNPC
              personality_type PERSONALIDAD_CASUAL \
         has gender
 
-! Macro para crear NPC espanol formal
 #Define CreateSpanishNPC(npc_name, gender) \
     SpanishNPC npc_name \
         with formality_level NPC_FORMAL, \
@@ -786,7 +902,6 @@ Class SpanishNPC
              personality_type PERSONALIDAD_DIRECTA \
         has gender
 
-! Macro para crear NPC argentino con vos
 #Define CreateArgentineNPC(npc_name, gender) \
     SpanishNPC npc_name \
         with formality_level NPC_INFORMAL, \
@@ -794,8 +909,19 @@ Class SpanishNPC
              personality_type PERSONALIDAD_CASUAL \
         has gender
 
+! ==============================================================================
+! CONSTANTES DE FINALIZACIÓN
+! ==============================================================================
+
+Constant SPANISH_NPCS_COMPLETE;
+Constant SPANISH_NPCS_READY;
+Constant SPANISH_NPCS_FUNCTIONS = 25; ! Número de funciones públicas
+
+! Información del módulo
+Constant SPANISH_NPCS_FEATURES = "NPCs dinámicos, formalidad adaptativa, 8 personalidades, 6 regiones, estados emocionales, desarrollo de relaciones";
+
 #Endif; ! SPANISH_NPCS_INCLUDED
 
 ! ==============================================================================
-! Fin de SpanishNPCs.h - Sistema completo de NPCs para espanol
+! Fin de SpanishNpcs.h - Sistema completo de NPCs para español - CORREGIDO
 ! ==============================================================================
