@@ -10,12 +10,7 @@ Include "Parser";
 Include "VerbLib";
 
 ! Incluir todos los modulos necesarios en orden correcto
-Include "SpanishLib/core/SpanishConstants";
-Include "SpanishLib/core/SpanishCharacters";
-Include "SpanishLib/core/SpanishCore";
-Include "SpanishLib/core/SpanishGrammar";
-Include "SpanishLib/core/SpanishVerbs";
-Include "SpanishLib/resources/SpanishMessages";
+Include "SpanishLib";
 
 ! Definicion de las localizaciones
 Object  Bosque "Bosque"

@@ -59,7 +59,17 @@
     }
     
     ! Crear codigo de sintaxis
-    syntax_code = (verb_found ? 1 : 0) + (obj_found ? 2 : 0) + (prep_found ? 4 : 0);
+    if (verb_found) {
+        syntax_code= 1;
+    } else {
+        syntax_code = 0;
+    }
+    if (obj_found) {
+        syntax_code = syntax_code + 2;
+    }
+    if (prep_found) {
+        syntax_code = syntax_code + 4;
+    }
     
     ! Analisis adicional del tipo de comando
     SpanishAnalyzeCommandType();

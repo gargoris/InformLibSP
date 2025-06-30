@@ -377,18 +377,18 @@ Global spanish_corrections_made = 0;
     complexity = 0;
     
     ! Complejidad por longitud
-    if (parse->1 > 15) complexity += 5;
-    else if (parse->1 > 10) complexity += 3;
-    else if (parse->1 > 6) complexity += 2;
-    else if (parse->1 > 3) complexity += 1;
+    if (parse->1 > 15) complexity = complexity + 5;
+    else if (parse->1 > 10) complexity = complexity + 3;
+    else if (parse->1 > 6) complexity = complexity + 2;
+    else if (parse->1 > 3) complexity = complexity + 1;
     
     ! Complejidad por tipos de palabras
-    complexity += SpanishCountWordsOfType(3); ! Preposiciones
-    complexity += SpanishCountWordsOfType(1); ! Verbos adicionales
+    complexity = complexity + SpanishCountWordsOfType(3); ! Preposiciones
+    complexity = complexity + SpanishCountWordsOfType(1); ! Verbos adicionales
     
     ! Complejidad por procesamiento realizado
-    complexity += spanish_compound_prep_found;
-    complexity += spanish_contraction_processed;
+    complexity = complexity + spanish_compound_prep_found;
+    complexity = complexity + spanish_contraction_processed;
     
     return complexity;
 ];

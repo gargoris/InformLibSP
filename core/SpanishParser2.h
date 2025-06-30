@@ -455,7 +455,7 @@
         i++; ! Solo incrementar si no se elimino nada
     }
     
-    spanish_words_removed += removed;
+    spanish_words_removed = spanish_words_removed + removed;
     
     #Ifdef DEBUG;
         if (removed > 0) {
@@ -583,21 +583,21 @@
     context = SpanishAnalyzeContext(pos);
     
     ! Importancia alta para verbos
-    if (SpanishIsVerbCandidate(pos)) importance += 10;
+    if (SpanishIsVerbCandidate(pos)) importance = inportance + 10;
     
     ! Importancia alta para objetos
-    if (SpanishIsObjectCandidate(pos)) importance += 8;
+    if (SpanishIsObjectCandidate(pos)) importance = inportance + 8;
     
     ! Importancia media para preposiciones
-    if (SpanishIsPreposition(word)) importance += 5;
+    if (SpanishIsPreposition(word)) importance = inportance + 5;
     
     ! Importancia baja para articulos y muletillas
-    if (SpanishIsArticle(word)) importance += 2;
-    if (word == 'que' or 'muy' or 'bastante') importance += 1;
+    if (SpanishIsArticle(word)) importance = inportance + 2;
+    if (word == 'que' or 'muy' or 'bastante') importance = inportance + 1;
     
     ! Modificadores de contexto
-    if (context & 1) importance += 2; ! Despues de verbo
-    if (context & 16) importance += 3; ! Despues de preposicion
+    if (context & 1) importance = inportance + 2; ! Despues de verbo
+    if (context & 16) importance = inportance + 3; ! Despues de preposicion
     
     return importance;
 ];
