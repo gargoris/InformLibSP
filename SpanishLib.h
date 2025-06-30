@@ -40,28 +40,28 @@ Constant SPANISH_LIB_VERSION = "6.12.7-modular-1.2-fixed";
 ! ==============================================================================
 
 ! 0. Configuracion de caracteres espanoles (debe ir PRIMERO de TODO)
-Include "/home/fran/inform/InformLibSP_clean/SpanishLib/core/SpanishCharacters.h";
+Include "core/SpanishCharacters.h";
 
 ! 1. Constantes centralizadas (debe ir SEGUNDO - sin dependencias)
-Include "/home/fran/inform/InformLibSP_clean/SpanishLib/core/SpanishConstants.h";
+Include "core/SpanishConstants.h";
 
 ! 2. Nucleo coordinador basico
-Include "/home/fran/inform/InformLibSP_clean/SpanishLib/core/SpanishCore.h";
+Include "core/SpanishCore.h";
 
 ! 3. Modulos core en orden de dependencias CORREGIDO
 #Ifdef SPANISH_ADVANCED_PARSER;
     ! Parser avanzado en 3 partes (nombres de archivos CORREGIDOS)
-    Include "/home/fran/inform/InformLibSP_clean/SpanishLib/core/SpanishParser1.h";      ! Parte 1: Manipulacion y fundamentos
-    Include "/home/fran/inform/InformLibSP_clean/SpanishLib/core/SpanishParser2.h";      ! Parte 2: Procesamiento avanzado
-    Include "/home/fran/inform/InformLibSP_clean/SpanishLib/core/SpanishParser3.h";      ! Parte 3: Analisis sintactico
+    Include "core/SpanishParser1.h";      ! Parte 1: Manipulacion y fundamentos
+    Include "core/SpanishParser2.h";      ! Parte 2: Procesamiento avanzado
+    Include "core/SpanishParser3.h";      ! Parte 3: Analisis sintactico
 #Ifnot;
     ! Parser basico incluido en Core
     ! (SpanishCore.h ya incluye parsing basico)
 #Endif;
 
 ! Incluir modulos core esenciales
-Include "/home/fran/inform/InformLibSP_clean/SpanishLib/core/SpanishGrammar.h";
-Include "/home/fran/inform/InformLibSP_clean/SpanishLib/core/SpanishVerbs.h";
+Include "core/SpanishGrammar.h";
+Include "core/SpanishVerbs.h";
 
 ! ==============================================================================
 ! RECURSOS BASICOS
@@ -69,7 +69,7 @@ Include "/home/fran/inform/InformLibSP_clean/SpanishLib/core/SpanishVerbs.h";
 
 ! Sistema de mensajes (recomendado para funcionamiento completo)
 #Ifdef SPANISH_FULL_MESSAGES;
-    Include "/home/fran/inform/InformLibSP_clean/SpanishLib/resources/SpanishMessages.h";
+    Include "resources/SpanishMessages.h";
 #Ifnot;
     ! Solo mensajes basicos integrados en otros modulos
     #Ifdef DEBUG;
@@ -83,7 +83,7 @@ Include "/home/fran/inform/InformLibSP_clean/SpanishLib/core/SpanishVerbs.h";
 
 ! Verbos irregulares (muy recomendado)
 #Ifdef SPANISH_IRREGULAR_VERBS;
-    Include "/home/fran/inform/InformLibSP_clean/SpanishLib/extensions/SpanishIrregularVerbs.h";
+    Include "extensions/SpanishIrregularVerbs.h";
 #Ifnot;
     #Ifdef DEBUG;
         print "[AVISO: Solo verbos regulares - define SPANISH_IRREGULAR_VERBS para expandir]^";
@@ -92,7 +92,7 @@ Include "/home/fran/inform/InformLibSP_clean/SpanishLib/core/SpanishVerbs.h";
 
 ! Meta-comandos (UNDO, AGAIN, HELP, etc.)
 #Ifdef SPANISH_META_COMMANDS;
-    Include "/home/fran/inform/InformLibSP_clean/SpanishLib/extensions/SpanishMeta.h";
+    Include "extensions/SpanishMeta.h";
 #Ifnot;
     #Ifdef DEBUG;
         print "[AVISO: Solo meta-comandos basicos - define SPANISH_META_COMMANDS para expandir]^";
@@ -101,7 +101,7 @@ Include "/home/fran/inform/InformLibSP_clean/SpanishLib/core/SpanishVerbs.h";
 
 ! Variantes regionales (opcional)
 #Ifdef SPANISH_REGIONAL_VARIANTS;
-    Include "/home/fran/inform/InformLibSP_clean/SpanishLib/extensions/SpanishRegional.h";
+    Include "extensions/SpanishRegional.h";
 #Ifnot;
     ! Sistema regional no requerido para funcionamiento basico
 #Endif;
