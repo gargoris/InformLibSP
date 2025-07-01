@@ -738,7 +738,7 @@ Array LanguageArticles -->
     rtrue;
 ];
 
-! Rutina para convertir a mayusculas
+! Rutina para convertir a mayúsculas
 [ UpperCase c;
     switch (c) {
         'a': return 'A';
@@ -767,11 +767,18 @@ Array LanguageArticles -->
         'x': return 'X';
         'y': return 'Y';
         'z': return 'Z';
+        '@{E1}': return '@{C1}';  ! á -> Á
+        '@{E9}': return '@{C9}';  ! é -> É
+        '@{ED}': return '@{CD}';  ! í -> Í
+        '@{F3}': return '@{D3}';  ! ó -> Ó
+        '@{FA}': return '@{DA}';  ! ú -> Ú
+        '@{F1}': return '@{D1}';  ! ñ -> Ñ
+        '@{FC}': return '@{DC}';  ! ü -> Ü
         default: return c;
     }
 ];
 
-! Rutina para convertir a minusculas
+! Rutina para convertir a minúsculas
 [ LowerCase c;
     switch (c) {
         'A': return 'a';
@@ -800,6 +807,13 @@ Array LanguageArticles -->
         'X': return 'x';
         'Y': return 'y';
         'Z': return 'z';
+        '@{C1}': return '@{E1}';  ! Á -> á
+        '@{C9}': return '@{E9}';  ! É -> é
+        '@{CD}': return '@{ED}';  ! Í -> í
+        '@{D3}': return '@{F3}';  ! Ó -> ó
+        '@{DA}': return '@{FA}';  ! Ú -> ú
+        '@{D1}': return '@{F1}';  ! Ñ -> ñ
+        '@{DC}': return '@{FC}';  ! Ü -> ü
         default: return c;
     }
 ];
@@ -930,7 +944,7 @@ Constant COLON__TX        = ": ";
 Constant TIME__TX         = "Hora: ";
 #Endif;
 #Ifndef SCORE__TX;
-Constant SCORE__TX        = "Puntuacion: ";
+Constant SCORE__TX        = "Puntuaci@{F3}n: ";
 #Endif;
 #Ifndef MOVES__TX;
 Constant MOVES__TX        = "Movimientos: ";
@@ -938,7 +952,7 @@ Constant MOVES__TX        = "Movimientos: ";
 
 ! Constantes para versión
 #Ifndef RELEASE__TX;
-Constant RELEASE__TX      = "Version ";
+Constant RELEASE__TX      = "Versi@{F3}n ";
 #Endif;
 #Ifndef SERNUM__TX;
 Constant SERNUM__TX       = "Serie ";
@@ -947,24 +961,24 @@ Constant SERNUM__TX       = "Serie ";
 Constant INFORMV__TX      = "Inform v";
 #Endif;
 #Ifndef LIBRARYV__TX;
-Constant LIBRARYV__TX     = "Libreria v";
+Constant LIBRARYV__TX     = "Librer@{ED}a v";
 #Endif;
 
 ! Constantes para el intérprete
 #Ifndef STDTERP__TX;
-Constant STDTERP__TX      = "Interprete estandar";
+Constant STDTERP__TX      = "Int@{E9}rprete est@{E1}ndar";
 #Endif;
 #Ifndef TERP__TX;
-Constant TERP__TX         = "Interprete ";
+Constant TERP__TX         = "Int@{E9}rprete ";
 #Endif;
 #Ifndef VER__TX;
-Constant VER__TX          = "version ";
+Constant VER__TX          = "versi@{F3}n ";
 #Endif;
 #Ifndef LIBSER__TX;
-Constant LIBSER__TX       = "Numero de serie de la libreria: ";
+Constant LIBSER__TX       = "N@{FA}mero de serie de la librer@{ED}a: ";
 #Endif;
 #Ifndef LIBERROR__TX;
-Constant LIBERROR__TX     = "Error de libreria: ";
+Constant LIBERROR__TX     = "Error de librer@{ED}a: ";
 #Endif;
 
 ! Constantes para teclas especiales
@@ -1014,10 +1028,10 @@ Constant SIT__TX          = "sentado";
 
 ! Constantes para preguntas
 #Ifndef WHOM__TX;
-Constant WHOM__TX         = "quien";
+Constant WHOM__TX         = "qui@{E9}n";
 #Endif;
 #Ifndef WHICH__TX;
-Constant WHICH__TX        = "cual";
+Constant WHICH__TX        = "cu@{E1}l";
 #Endif;
 
 ! Constantes adicionales para el parser
