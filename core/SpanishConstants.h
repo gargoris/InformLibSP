@@ -149,6 +149,7 @@ Constant OUT_TO   = "fuera salir";
 ! PALABRAS ESPECIALES DEL PARSER
 ! ==============================================================================
 
+! Palabras para "todo/todos"
 #Ifndef ALL1__WD;
 Constant ALL1__WD   = 'todo';
 #Endif;
@@ -165,6 +166,75 @@ Constant ALL4__WD   = 'cada';
 Constant ALL5__WD   = 'ambos';
 #Endif;
 Constant ALL6__WD   = 'ambas';
+
+! Palabras para "sí/no"
+#Ifndef YES1__WD;
+Constant YES1__WD   = 'si';
+#Endif;
+#Ifndef YES2__WD;
+Constant YES2__WD   = 'afirmativo';
+#Endif;
+#Ifndef YES3__WD;
+Constant YES3__WD   = 'claro';
+#Endif;
+
+#Ifndef NO1__WD;
+Constant NO1__WD    = 'no';
+#Endif;
+#Ifndef NO2__WD;
+Constant NO2__WD    = 'negativo';
+#Endif;
+#Ifndef NO3__WD;
+Constant NO3__WD    = 'nunca';
+#Endif;
+
+! Palabras para "deshacer/repetir"
+#Ifndef UNDO1__WD;
+Constant UNDO1__WD  = 'deshacer';
+#Endif;
+#Ifndef UNDO2__WD;
+Constant UNDO2__WD  = 'undo';
+#Endif;
+#Ifndef UNDO3__WD;
+Constant UNDO3__WD  = 'anular';
+#Endif;
+
+#Ifndef AGAIN1__WD;
+Constant AGAIN1__WD = 'repetir';
+#Endif;
+#Ifndef AGAIN2__WD;
+Constant AGAIN2__WD = 'again';
+#Endif;
+#Ifndef AGAIN3__WD;
+Constant AGAIN3__WD = 'g//';
+#Endif;
+
+! Palabras para "oops"
+#Ifndef OOPS1__WD;
+Constant OOPS1__WD  = 'oops';
+#Endif;
+#Ifndef OOPS2__WD;
+Constant OOPS2__WD  = 'uy';
+#Endif;
+#Ifndef OOPS3__WD;
+Constant OOPS3__WD  = 'ay';
+#Endif;
+
+! Palabras para "salir/reiniciar/restaurar"
+#Ifndef QUIT1__WD;
+Constant QUIT1__WD  = 'salir';
+#Endif;
+#Ifndef QUIT2__WD;
+Constant QUIT2__WD  = 'terminar';
+#Endif;
+
+#Ifndef RESTART__WD;
+Constant RESTART__WD = 'reiniciar';
+#Endif;
+
+#Ifndef RESTORE__WD;
+Constant RESTORE__WD = 'restaurar';
+#Endif;
 
 #Ifndef AND1__WD;
 Constant AND1__WD   = 'y';
@@ -305,24 +375,31 @@ Array spanish_temp_parse --> 32;
 
 #Ifndef LanguagePronouns;
 Array LanguagePronouns table
+    ! Formato correcto: 'palabra' código_binario objeto_referido
+    ! Primera persona singular
     'me'       $$000001   0     
     'mi'       $$000001   0     
     'yo'       $$000001   0
+    ! Segunda persona singular
     'te'       $$000010   0     
     'tu'       $$000010   0
     'usted'    $$000010   0
+    ! Tercera persona singular
     'le'       $$000100   0     
     'la'       $$000100   0
     'lo'       $$000100   0
     'el'       $$000100   0
     'ella'     $$000100   0
+    ! Primera persona plural
     'nos'      $$001000   0     
     'nosotros' $$001000   0
     'nosotras' $$001000   0
+    ! Segunda persona plural
     'os'       $$010000   0     
     'vosotros' $$010000   0 
     'vosotras' $$010000   0
     'ustedes'  $$010000   0
+    ! Tercera persona plural
     'les'      $$100000   0     
     'las'      $$100000   0
     'los'      $$100000   0
@@ -332,32 +409,62 @@ Array LanguagePronouns table
 
 #Ifndef LanguageDescriptors;
 Array LanguageDescriptors table
-    'mi'       $$000001,
-    'mis'      $$000001,
-    'tu'       $$000010,
-    'tus'      $$000010,
-    'su'       $$000100,
-    'sus'      $$000100,
-    'nuestro'  $$001000,
-    'nuestra'  $$001000,
-    'nuestros' $$001000,
-    'nuestras' $$001000,
-    'vuestro'  $$010000,
-    'vuestra'  $$010000,
-    'vuestros' $$010000,
+    ! Formato correcto: 'palabra' código_binario
+    ! Primera persona singular
+    'mi'       $$000001
+    'mis'      $$000001
+    ! Segunda persona singular
+    'tu'       $$000010
+    'tus'      $$000010
+    ! Tercera persona singular/plural
+    'su'       $$000100
+    'sus'      $$000100
+    ! Primera persona plural
+    'nuestro'  $$001000
+    'nuestra'  $$001000
+    'nuestros' $$001000
+    'nuestras' $$001000
+    ! Segunda persona plural
+    'vuestro'  $$010000
+    'vuestra'  $$010000
+    'vuestros' $$010000
     'vuestras' $$010000;
 #Endif;
 
 #Ifndef LanguageNumbers;
 Array LanguageNumbers table
-    'uno' 1 'un' 1 'una' 1,
-    'dos' 2, 'tres' 3, 'cuatro' 4, 'cinco' 5,
-    'seis' 6, 'siete' 7, 'ocho' 8, 'nueve' 9, 'diez' 10,
-    'once' 11, 'doce' 12, 'trece' 13, 'catorce' 14, 'quince' 15,
-    'dieciseis' 16, 'diecisiete' 17, 'dieciocho' 18, 'diecinueve' 19, 'veinte' 20;
+    ! Formato correcto: 'palabra' número ['palabra' número] ...
+    ! Números del 1 al 20
+    'uno' 1 'un' 1 'una' 1
+    'dos' 2 'tres' 3 'cuatro' 4 'cinco' 5
+    'seis' 6 'siete' 7 'ocho' 8 'nueve' 9 'diez' 10
+    'once' 11 'doce' 12 'trece' 13 'catorce' 14 'quince' 15
+    'dieciseis' 16 'diecisiete' 17 'dieciocho' 18 'diecinueve' 19 'veinte' 20;
 #Endif;
 
 #Endif;
+
+! Definir array de artículos para géneros y números
+#Ifndef LanguageGNAsToArticles;
+Array LanguageGNAsToArticles --> 
+    ! Singular   Plural
+    "el "       "los "      ! Masculino
+    "la "       "las "      ! Femenino
+    "lo "       "los "      ! Neutro
+    "un "       "unos "     ! Masculino indefinido
+    "una "      "unas "     ! Femenino indefinido
+    "un "       "unos ";    ! Neutro indefinido
+#Endif;
+
+! Definir array de artículos para objetos
+#Ifndef LanguageArticles;
+Array LanguageArticles -->
+    ! Artículo definido
+    "el " "la " "los " "las "
+    ! Artículo indefinido
+    "un " "una " "unos " "unas ";
+#Endif;
+
 #Endif;
 
 ! ==============================================================================
@@ -500,6 +607,204 @@ Array LanguageNumbers table
 ];
 
 ! ==============================================================================
+! RUTINAS BÁSICAS PARA EL PARSER
+! ==============================================================================
+
+! Rutina para determinar si un verbo acepta adverbios
+[ LanguageVerbLikesAdverb w;
+    ! La mayoría de verbos en español aceptan adverbios
+    return true;
+];
+
+! Rutina para determinar si un verbo puede ser un nombre
+[ LanguageVerbMayBeName w;
+    ! En español, algunos verbos pueden ser nombres
+    ! Por ejemplo: "comer" (verbo) vs "el comer" (nombre)
+    return false;
+];
+
+! Rutina para determinar el género de objetos inanimados
+[ LanguageInanimateGender;
+    ! En español, los objetos inanimados tienen género gramatical
+    ! Por defecto, usamos masculino
+    return MASCULINE;
+];
+
+! Rutina para analizar sustantivos
+[ ParseNoun obj;
+    ! Implementación básica
+    return -1;
+];
+
+! Rutina para analizar números
+[ ParseNumber;
+    ! Implementación básica
+    return -1;
+];
+
+! Rutina para determinar si un objeto está en el ámbito
+[ InScope obj;
+    ! Implementación básica
+    rfalse;
+];
+
+! Rutina para elegir objetos
+[ ChooseObjects obj code;
+    ! Implementación básica
+    return code;
+];
+
+! Rutina para imprimir verbos
+[ PrintVerb verb;
+    ! Implementación básica
+    print (address) verb;
+];
+
+! Rutina para determinar si un objeto es "ese" o "esos"
+[ ThatOrThose obj;
+    ! En español, depende del número gramatical
+    if (obj has pluralname) print "esos";
+    else print "ese";
+];
+
+! Rutinas para eventos del juego
+[ GamePreRoutine;
+    ! Implementación básica
+    rtrue;
+];
+
+[ GamePostRoutine;
+    ! Implementación básica
+    rtrue;
+];
+
+[ AfterPrompt;
+    ! Implementación básica
+    rtrue;
+];
+
+[ BeforeParsing;
+    ! Implementación básica
+    rtrue;
+];
+
+[ AfterLife;
+    ! Implementación básica
+    rtrue;
+];
+
+[ TimePasses;
+    ! Implementación básica
+    rtrue;
+];
+
+[ DeathMessage;
+    ! Implementación básica
+    rtrue;
+];
+
+[ Epilogue;
+    ! Implementación básica
+    rtrue;
+];
+
+[ AfterRestore;
+    ! Implementación básica
+    rtrue;
+];
+
+[ AfterSave;
+    ! Implementación básica
+    rtrue;
+];
+
+[ PrintRank;
+    ! Implementación básica
+    rtrue;
+];
+
+[ Amusing;
+    ! Implementación básica
+    rtrue;
+];
+
+[ ParserError error_code;
+    ! Implementación básica
+    rtrue;
+];
+
+[ ObjectDoesNotFit;
+    ! Implementación básica
+    rtrue;
+];
+
+! Rutina para convertir a mayusculas
+[ UpperCase c;
+    switch (c) {
+        'a': return 'A';
+        'b': return 'B';
+        'c': return 'C';
+        'd': return 'D';
+        'e': return 'E';
+        'f': return 'F';
+        'g': return 'G';
+        'h': return 'H';
+        'i': return 'I';
+        'j': return 'J';
+        'k': return 'K';
+        'l': return 'L';
+        'm': return 'M';
+        'n': return 'N';
+        'o': return 'O';
+        'p': return 'P';
+        'q': return 'Q';
+        'r': return 'R';
+        's': return 'S';
+        't': return 'T';
+        'u': return 'U';
+        'v': return 'V';
+        'w': return 'W';
+        'x': return 'X';
+        'y': return 'Y';
+        'z': return 'Z';
+        default: return c;
+    }
+];
+
+! Rutina para convertir a minusculas
+[ LowerCase c;
+    switch (c) {
+        'A': return 'a';
+        'B': return 'b';
+        'C': return 'c';
+        'D': return 'd';
+        'E': return 'e';
+        'F': return 'f';
+        'G': return 'g';
+        'H': return 'h';
+        'I': return 'i';
+        'J': return 'j';
+        'K': return 'k';
+        'L': return 'l';
+        'M': return 'm';
+        'N': return 'n';
+        'O': return 'o';
+        'P': return 'p';
+        'Q': return 'q';
+        'R': return 'r';
+        'S': return 's';
+        'T': return 't';
+        'U': return 'u';
+        'V': return 'v';
+        'W': return 'w';
+        'X': return 'x';
+        'Y': return 'y';
+        'Z': return 'z';
+        default: return c;
+    }
+];
+
+! ==============================================================================
 ! INICIALIZACION DE CONSTANTES
 ! ==============================================================================
 
@@ -536,6 +841,222 @@ Array LanguageNumbers table
         print "[SpanishConstants v", (string) SPANISH_CONSTANTS_VERSION, " inicializado]^";
     #Endif;
 ];
+
+! ==============================================================================
+! CONSTANTES DE OBJETOS ESPECIALES
+! ==============================================================================
+
+! Objetos especiales para el parser
+#Ifndef out_obj;
+Constant out_obj = 1;
+#Endif;
+#Ifndef in_obj;
+Constant in_obj = 2;
+#Endif;
+#Ifndef d_obj;
+Constant d_obj = 3;
+#Endif;
+
+! ==============================================================================
+! CONSTANTES DE TEXTO PARA EL PARSER
+! ==============================================================================
+
+! Constantes de texto básicas
+#Ifndef DARKNESS__TX;
+Constant DARKNESS__TX     = "Oscuridad";
+#Endif;
+#Ifndef YOURSELF__TX;
+Constant YOURSELF__TX     = "ti mismo";
+#Endif;
+#Ifndef THE__TX;
+Constant THE__TX          = "el";
+#Endif;
+#Ifndef NOTHING__TX;
+Constant NOTHING__TX      = "nada";
+#Endif;
+#Ifndef MYSELF__TX;
+Constant MYSELF__TX       = "yo mismo";
+#Endif;
+#Ifndef COMMA__TX;
+Constant COMMA__TX        = ", ";
+#Endif;
+#Ifndef AND__TX;
+Constant AND__TX          = " y ";
+#Endif;
+#Ifndef OR__TX;
+Constant OR__TX           = " o ";
+#Endif;
+#Ifndef THAT__TX;
+Constant THAT__TX         = "eso";
+#Endif;
+#Ifndef THOSET__TX;
+Constant THOSET__TX       = "esos";
+#Endif;
+#Ifndef CANTGO__TX;
+Constant CANTGO__TX       = "No puedes ir por ahí.";
+#Endif;
+#Ifndef IS__TX;
+Constant IS__TX           = "es";
+#Endif;
+#Ifndef ARE__TX;
+Constant ARE__TX          = "son";
+#Endif;
+#Ifndef WAS__TX;
+Constant WAS__TX          = "era";
+#Endif;
+#Ifndef WERE__TX;
+Constant WERE__TX         = "eran";
+#Endif;
+#Ifndef IS2__TX;
+Constant IS2__TX          = "está";
+#Endif;
+#Ifndef ARE2__TX;
+Constant ARE2__TX         = "están";
+#Endif;
+#Ifndef WAS2__TX;
+Constant WAS2__TX         = "estaba";
+#Endif;
+#Ifndef WERE2__TX;
+Constant WERE2__TX        = "estaban";
+#Endif;
+
+! Constantes para puntuación
+#Ifndef COLON__TX;
+Constant COLON__TX        = ": ";
+#Endif;
+
+! Constantes para mensajes de estado
+#Ifndef TIME__TX;
+Constant TIME__TX         = "Hora: ";
+#Endif;
+#Ifndef SCORE__TX;
+Constant SCORE__TX        = "Puntuacion: ";
+#Endif;
+#Ifndef MOVES__TX;
+Constant MOVES__TX        = "Movimientos: ";
+#Endif;
+
+! Constantes para versión
+#Ifndef RELEASE__TX;
+Constant RELEASE__TX      = "Version ";
+#Endif;
+#Ifndef SERNUM__TX;
+Constant SERNUM__TX       = "Serie ";
+#Endif;
+#Ifndef INFORMV__TX;
+Constant INFORMV__TX      = "Inform v";
+#Endif;
+#Ifndef LIBRARYV__TX;
+Constant LIBRARYV__TX     = "Libreria v";
+#Endif;
+
+! Constantes para el intérprete
+#Ifndef STDTERP__TX;
+Constant STDTERP__TX      = "Interprete estandar";
+#Endif;
+#Ifndef TERP__TX;
+Constant TERP__TX         = "Interprete ";
+#Endif;
+#Ifndef VER__TX;
+Constant VER__TX          = "version ";
+#Endif;
+#Ifndef LIBSER__TX;
+Constant LIBSER__TX       = "Numero de serie de la libreria: ";
+#Endif;
+#Ifndef LIBERROR__TX;
+Constant LIBERROR__TX     = "Error de libreria: ";
+#Endif;
+
+! Constantes para teclas especiales
+#Ifndef NKEY__TX;
+Constant NKEY__TX         = "N = siguiente";
+#Endif;
+#Ifndef PKEY__TX;
+Constant PKEY__TX         = "P = anterior";
+#Endif;
+#Ifndef RKEY__TX;
+Constant RKEY__TX         = "R = restaurar";
+#Endif;
+#Ifndef QKEY1__TX;
+Constant QKEY1__TX        = "Q = salir";
+#Endif;
+#Ifndef QKEY2__TX;
+Constant QKEY2__TX        = "X = salir";
+#Endif;
+
+! Constantes para códigos de teclas
+#Ifndef NKEY1__KY;
+Constant NKEY1__KY        = 'N';
+#Endif;
+#Ifndef NKEY2__KY;
+Constant NKEY2__KY        = 'n';
+#Endif;
+#Ifndef PKEY1__KY;
+Constant PKEY1__KY        = 'P';
+#Endif;
+#Ifndef PKEY2__KY;
+Constant PKEY2__KY        = 'p';
+#Endif;
+#Ifndef QKEY1__KY;
+Constant QKEY1__KY        = 'Q';
+#Endif;
+#Ifndef QKEY2__KY;
+Constant QKEY2__KY        = 'q';
+#Endif;
+
+! Constantes para posiciones
+#Ifndef STAND__TX;
+Constant STAND__TX        = "de pie";
+#Endif;
+#Ifndef SIT__TX;
+Constant SIT__TX          = "sentado";
+#Endif;
+
+! Constantes para preguntas
+#Ifndef WHOM__TX;
+Constant WHOM__TX         = "quien";
+#Endif;
+#Ifndef WHICH__TX;
+Constant WHICH__TX        = "cual";
+#Endif;
+
+! Constantes adicionales para el parser
+#Ifndef FULLSCORE1__WD;
+Constant FULLSCORE1__WD   = "puntuacion";
+#Endif;
+#Ifndef FULLSCORE2__WD;
+Constant FULLSCORE2__WD   = "completa";
+#Endif;
+#Ifndef AMUSING__WD;
+Constant AMUSING__WD      = "curiosidades";
+#Endif;
+#Ifndef MYFORMER__TX;
+Constant MYFORMER__TX     = "mi anterior ";
+#Endif;
+#Ifndef FORMER__TX;
+Constant FORMER__TX       = "el anterior ";
+#Endif;
+#Ifndef LIE__TX;
+Constant LIE__TX          = "acostado";
+#Endif;
+
+! Constantes para objetos especiales
+#Ifndef u_obj;
+Constant u_obj = 4;
+#Endif;
+
+! Constantes para rutinas del juego
+Constant Compass = 0;
+Constant UnknownVerb = 0;
+Constant Tense = 0;
+Constant DarkToDark = 0;
+Constant NewRoom = 0;
+Constant LookRoutine = 0;
+
+! Constantes para el parser español
+Constant inportance = 0;
+Constant multitude = 0;
+Constant SpanishCoreInitialise = 0;
 
 ! ==============================================================================
 ! CONSTANTES DE VERSION Y COMPATIBILIDAD

@@ -526,15 +526,13 @@ Constant SPANISH_GRAMMAR_VERSION = "1.2-complete-fixed";
 ! CONSTANTES DE FINALIZACION
 ! ==============================================================================
 
-Constant SPANISH_GRAMMAR_COMPLETE;
-Constant SPANISH_GRAMMAR_READY;
+! Estas constantes ya están definidas en SpanishConstants.h
+! Constant SPANISH_GRAMMAR_COMPLETE;
+! Constant SPANISH_GRAMMAR_READY;
 Constant SPANISH_GRAMMAR_FUNCTIONS = 25; ! Numero de funciones publicas
 
 ! Informacion del modulo
 Constant SPANISH_GRAMMAR_FEATURES = "Articulos, pronombres, concordancia, genero, numero, direcciones, tiempo";
-
-! Marcar completitud del modulo
-Constant SPANISH_GRAMMAR_COMPLETE;
 
 #Endif; ! SPANISH_GRAMMAR_INCLUDED
 

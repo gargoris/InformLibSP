@@ -439,9 +439,10 @@
 ! CONSTANTES DE FINALIZACION COMPLETA
 ! ==============================================================================
 
-Constant SPANISH_PARSER_PART3_COMPLETE;
-Constant SPANISH_PARSER_COMPLETE;
-Constant SPANISH_PARSER_READY;
+! Estas constantes ya están definidas en SpanishConstants.h
+! Constant SPANISH_PARSER_PART3_COMPLETE;
+! Constant SPANISH_PARSER_COMPLETE;
+! Constant SPANISH_PARSER_READY;
 
 ! Informacion completa del sistema
 Constant SPANISH_PARSER_FEATURES = "Analisis sintactico completo, correccion automatica avanzada, validacion robusta, integracion total";

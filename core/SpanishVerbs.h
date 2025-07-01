@@ -657,8 +657,9 @@ Constant SPANISH_VERBS_VERSION = "1.2-complete-fixed";
 ! CONSTANTES DE FINALIZACION
 ! ==============================================================================
 
-Constant SPANISH_VERBS_COMPLETE;
-Constant SPANISH_VERBS_READY;
+! Estas constantes ya están definidas en SpanishConstants.h
+! Constant SPANISH_VERBS_COMPLETE;
+! Constant SPANISH_VERBS_READY;
 Constant SPANISH_VERBS_FUNCTIONS = 20; ! Numero de funciones publicas
 
 ! Informacion del modulo

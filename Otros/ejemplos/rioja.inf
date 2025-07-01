@@ -6,6 +6,12 @@
 Constant Story "AVENTURA DEL RIOJA";
 Constant Headline "^Una pequena aventura para disfrutar de un buen vino^";
 
+! Constantes de configuración recomendadas
+! IMPORTANTE: Deben definirse ANTES de incluir Parser.h
+Constant SPANISH_FULL_MESSAGES;    ! Sistema completo de mensajes
+Constant SPANISH_META_COMMANDS;    ! Meta-comandos (UNDO, AGAIN, etc.)
+Constant SPANISH_IRREGULAR_VERBS;  ! Verbos irregulares (SER, ESTAR, etc.)
+
 Include "Parser";
 Include "VerbLib";
 

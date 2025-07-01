@@ -69,7 +69,11 @@ Include "core/SpanishVerbs.h";
 
 ! Sistema de mensajes (recomendado para funcionamiento completo)
 #Ifdef SPANISH_FULL_MESSAGES;
-    Include "resources/SpanishMessages.h";
+    ! Temporalmente desactivado debido a errores
+    ! Include "resources/SpanishMessages.h";
+    #Ifdef DEBUG;
+        print "[AVISO: SpanishMessages.h desactivado temporalmente debido a errores]^";
+    #Endif;
 #Ifnot;
     ! Solo mensajes basicos integrados en otros modulos
     #Ifdef DEBUG;
@@ -83,7 +87,11 @@ Include "core/SpanishVerbs.h";
 
 ! Verbos irregulares (muy recomendado)
 #Ifdef SPANISH_IRREGULAR_VERBS;
-    Include "extensions/SpanishIrregularVerbs.h";
+    ! Temporalmente desactivado debido a errores
+    ! Include "extensions/SpanishIrregularVerbs.h";
+    #Ifdef DEBUG;
+        print "[AVISO: SpanishIrregularVerbs.h desactivado temporalmente debido a errores]^";
+    #Endif;
 #Ifnot;
     #Ifdef DEBUG;
         print "[AVISO: Solo verbos regulares - define SPANISH_IRREGULAR_VERBS para expandir]^";
@@ -92,7 +100,11 @@ Include "core/SpanishVerbs.h";
 
 ! Meta-comandos (UNDO, AGAIN, HELP, etc.)
 #Ifdef SPANISH_META_COMMANDS;
-    Include "extensions/SpanishMeta.h";
+    ! Temporalmente desactivado debido a errores
+    ! Include "extensions/SpanishMeta.h";
+    #Ifdef DEBUG;
+        print "[AVISO: SpanishMeta.h desactivado temporalmente debido a errores]^";
+    #Endif;
 #Ifnot;
     #Ifdef DEBUG;
         print "[AVISO: Solo meta-comandos basicos - define SPANISH_META_COMMANDS para expandir]^";
@@ -101,7 +113,11 @@ Include "core/SpanishVerbs.h";
 
 ! Variantes regionales (opcional)
 #Ifdef SPANISH_REGIONAL_VARIANTS;
-    Include "extensions/SpanishRegional.h";
+    ! Temporalmente desactivado debido a errores
+    ! Include "extensions/SpanishRegional.h";
+    #Ifdef DEBUG;
+        print "[AVISO: SpanishRegional.h desactivado temporalmente debido a errores]^";
+    #Endif;
 #Ifnot;
     ! Sistema regional no requerido para funcionamiento basico
 #Endif;
@@ -432,33 +448,33 @@ Include "core/SpanishVerbs.h";
     print "^=== PRUEBA RAPIDA DEL SISTEMA ===^";
     
     ! Probar funciones basicas de gramatica
-    print "✓ Probando articulos: ";
+    print "- Probando articulos: ";
     print "el libro, la mesa, los libros, las mesas^";
     
     ! Probar conjugaciones basicas
-    print "✓ Probando verbos regulares: ";
+    print "- Probando verbos regulares: ";
     print "camino, comes, vive^";
     
     ! Probar verbos irregulares si estan disponibles
     #Ifdef SPANISH_IRREGULAR_VERBS_COMPLETE;
-        print "✓ Probando verbos irregulares: ";
+        print "- Probando verbos irregulares: ";
         print "soy, tienes, va, hacemos^";
     #Endif;
     
     ! Probar parser si esta disponible - CORREGIDO
     #Ifdef SPANISH_PARSER_PART3_COMPLETE;
-        print "✓ Parser avanzado: 3 partes completamente integradas^";
+        print "- Parser avanzado: 3 partes completamente integradas^";
     #Ifnot;
         #Ifdef SPANISH_PARSER_PART1_COMPLETE;
-            print "ℹ️ Parser parcial: Solo manipulacion basica^";
+            print "- Parser parcial: Solo manipulacion basica^";
         #Ifnot;
-            print "ℹ️ Parser basico: funcional^";
+            print "- Parser basico: funcional^";
         #Endif;
     #Endif;
     
     ! Probar meta-comandos si estan disponibles
     #Ifdef SPANISH_META_COMPLETE;
-        print "✓ Meta-comandos: DESHACER, REPETIR, AYUDA disponibles^";
+        print "- Meta-comandos: DESHACER, REPETIR, AYUDA disponibles^";
     #Endif;
     
     ! Probar estado del sistema
