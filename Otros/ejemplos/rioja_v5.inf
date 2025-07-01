@@ -1,0 +1,294 @@
+!% -~S
+!%
+! AVENTURA DEL RIOJA (VERSIÓN V5)
+! Una pequeña aventura donde el objetivo es beber un vaso de vino Rioja
+
+Constant TARGET_ZCODE;
+Constant ZCODE_VERSION = 5;
+
+Constant Story "AVENTURA DEL RIOJA";
+Constant Headline "^Una pequena aventura para disfrutar de un buen vino^";
+
+! Constantes básicas para el idioma español
+Constant DARKNESS__TX     = "Oscuridad";
+Constant YOURSELF__TX     = "ti mismo";
+Constant THE__TX          = "el";
+
+! Incluir archivos estándar
+Include "Parser";
+Include "VerbLib";
+
+! Definición de las localizaciones
+Object  Bosque "Bosque"
+  with  description
+          "Te encuentras en un tranquilo bosque. Los arboles te rodean, 
+           permitiendo que algunos rayos de sol se filtren entre sus ramas.
+           Hacia el norte puedes ver una pequena cabana de madera.",
+        n_to Cabana,
+  has   light;
+
+Object  Cabana "Interior de la cabana"
+  with  description
+          "El interior de la cabana es acogedor y calido. Una pequena ventana
+           deja entrar la luz natural. El suelo de madera cruje ligeramente
+           bajo tus pies.",
+        s_to Bosque,
+  has   light;
+
+! Definición de la puerta entre el bosque y la cabaña
+Object  PuertaCabana "puerta de la cabana" Bosque
+  with  name 'puerta' 'cabana',
+        description
+          "Es una robusta puerta de madera que da acceso a la cabana.",
+        door_to [;
+            if (self in Bosque) return Cabana;
+            return Bosque;
+        ],
+        door_dir [;
+            if (self in Bosque) return n_to;
+            return s_to;
+        ],
+        found_in Bosque Cabana,
+  has   door openable ~open;
+
+! Definición de los objetos dentro de la cabaña
+Object  Mesa "mesa" Cabana
+  with  name 'mesa',
+        description "Una mesa de madera rustica pero resistente.",
+  has   static supporter;
+
+Object  Silla "silla" Cabana
+  with  name 'silla',
+        description "Una silla de madera con un cojin que parece comodo.",
+        before [;
+            Enter:
+                print "Te sientas comodamente en la silla.^";
+                if (VinoServido in Vaso && Vaso in Mesa) {
+                    print "Ahora podrias disfrutar del vino que has servido.^";
+                }
+                return true;
+        ],
+  has   static enterable;
+
+Object  Botella "botella de vino" Mesa
+  with  name 'botella' 'vino' 'rioja' 'tinto',
+        description 
+          "Una elegante botella de vino Rioja tinto. La etiqueta muestra
+           que es una cosecha especial.",
+        before [;
+            Open:
+                if (self hasnt open) {
+                    give self open;
+                    "Descorchas la botella de Rioja. Un aroma intenso y afrutado 
+                     llena inmediatamente el ambiente.";
+                }
+        ],
+  has   container openable ~open;
+
+Object  Vino "vino tinto" Botella
+  with  name 'vino' 'tinto' 'rioja' 'contenido',
+        description "Un vino tinto de color intenso y aspecto tentador.",
+  has   scenery;
+
+Object  VinoServido "vino servido"
+  with  name 'vino' 'tinto' 'rioja' 'servido',
+        description "Un vino tinto de color intenso y aspecto tentador.",
+  has   scenery;
+
+Object  Vaso "vaso" Mesa
+  with  name 'vaso' 'copa',
+        description [;
+            if (VinoServido in self)
+                "Un vaso de cristal con vino tinto en su interior.";
+            else
+                "Un vaso de cristal vacio, perfecto para servir vino.";
+        ],
+        before [;
+            Drink:
+                if (VinoServido in self) {
+                    remove VinoServido;
+                    deadflag = 2;
+                    "Bebes el Rioja lentamente, saboreando cada trago. 
+                     Es un vino excelente, con notas de frutos rojos y un 
+                     final largo y elegante. Has completado la aventura!";
+                }
+                else {
+                    "El vaso esta vacio.";
+                }
+        ],
+  has   container open transparent;
+
+! Verbos personalizados
+[ ServirSub;
+    if (noun ~= Vino && noun ~= Botella) {
+        "No puedes servir eso.";
+    }
+    
+    if (Botella hasnt open) {
+        "Primero deberias abrir la botella.";
+    }
+    
+    if (second == nothing) {
+        "Donde quieres servir el vino?";
+    }
+    
+    if (second ~= Vaso) {
+        "No puedes servir el vino ahi.";
+    }
+    
+    if (VinoServido in Vaso) {
+        "El vaso ya esta lleno de vino.";
+    }
+    
+    move VinoServido to Vaso;
+    "Sirves cuidadosamente el vino Rioja en el vaso. Su color rojo intenso
+     brilla a la luz que entra por la ventana.";
+];
+
+Verb 'servir' 'verter' 'echar'
+    * noun 'en' noun -> Servir
+    * noun -> Servir;
+
+! Implementación mejorada de LanguageLM para mensajes en español
+[ LanguageLM n x1 x2;
+    switch (n) {
+        ! Mensajes básicos para Inventory
+        Inventory: 
+            switch (x1) {
+                1: print "No llevas nada.^";
+                2: print "Llevas";
+                3: print "llevas";
+                default: print "[Mensaje Inventory ", x1, "]";
+            }
+            rtrue;
+        
+        ! Mensajes básicos para Take
+        Take:
+            switch (x1) {
+                1: print "Tomado.";
+                2: print "Siempre te tienes a ti mismo.";
+                5: print "Ya tienes eso.";
+                9: print "Llevas demasiadas cosas ya.";
+                10: print "(primero lo coges)^";
+                default: print "[Mensaje Take ", x1, "]";
+            }
+            rtrue;
+        
+        ! Mensajes básicos para Drop
+        Drop:
+            switch (x1) {
+                1: print "Eso ya esta aqui.";
+                2: print "No tienes eso.";
+                4: print "Dejado.";
+                default: print "[Mensaje Drop ", x1, "]";
+            }
+            rtrue;
+        
+        ! Mensajes básicos para Look
+        Look:
+            switch (x1) {
+                3: print "Esta demasiado oscuro, no puedes ver nada.";
+                default: print "[Mensaje Look ", x1, "]";
+            }
+            rtrue;
+        
+        ! Mensajes básicos para Examine
+        Examine:
+            switch (x1) {
+                1: print "La oscuridad, sustantivo. Una ausencia de luz que ver o por la que ver.";
+                2: print "No ves nada especial en eso.";
+                default: print "[Mensaje Examine ", x1, "]";
+            }
+            rtrue;
+        
+        ! Mensajes básicos para Open/Close
+        Open:
+            switch (x1) {
+                1: print "Eso no se puede abrir.";
+                2: print "Esta cerrado con llave.";
+                3: print "Ya esta abierto.";
+                5: print "Abierto.";
+                default: print "[Mensaje Open ", x1, "]";
+            }
+            rtrue;
+        
+        Close:
+            switch (x1) {
+                1: print "Eso no se puede cerrar.";
+                2: print "Ya esta cerrado.";
+                3: print "Cerrado.";
+                default: print "[Mensaje Close ", x1, "]";
+            }
+            rtrue;
+        
+        ! Mensajes básicos para Enter
+        Enter:
+            switch (x1) {
+                1: print "Ya estas ahi.";
+                2: print "No puedes entrar en eso.";
+                3: print "Esta cerrado.";
+                5: print "Entras.";
+                default: print "[Mensaje Enter ", x1, "]";
+            }
+            rtrue;
+        
+        ! Mensajes básicos para Drink
+        Drink:
+            switch (x1) {
+                1: print "Eso no parece potable.";
+                2: print "Bebes. No esta mal.";
+                default: print "[Mensaje Drink ", x1, "]";
+            }
+            rtrue;
+            
+        ! Mensajes básicos para Miscellany (varios)
+        Miscellany:
+            switch (x1) {
+                1: print "(Encendiendo la luz)";
+                2: print "(Apagando la luz)";
+                3: print "Esta demasiado oscuro para ver algo.";
+                4: print "No puedes hacer eso.";
+                5: print "No puedes ver nada.";
+                6: print "No tienes eso.";
+                7: print "No puedes tener eso.";
+                8: print "Ya tienes eso.";
+                9: print "No puedes ir por ahi.";
+                10: print "No puedes hacer eso.";
+                11: print "No ves eso.";
+                12: print "No puedes ver nada interesante.";
+                13: print "(No puedes llevar mas cosas)";
+                14: print "(Esta demasiado oscuro)";
+                15: print "Hecho.";
+                16: print "No tienes nada que dejar.";
+                17: print "No hay nada que hacer.";
+                18: print "No hay nada que examinar.";
+                19: print "No hay nada que tomar.";
+                20: print "No hay nada que abrir.";
+                21: print "No hay nada que cerrar.";
+                22: print "No hay nada que desbloquear.";
+                23: print "No hay nada que bloquear.";
+                24: print "No hay nada que encender.";
+                25: print "No hay nada que apagar.";
+                26: print "No hay nada que comer.";
+                27: print "No hay nada que beber.";
+                28: print "No hay nada que ponerse.";
+                29: print "No hay nada que quitarse.";
+                30: print "No hay nada que buscar.";
+                default: print "[Mensaje Miscellany ", x1, "]";
+            }
+            rtrue;
+        
+        ! Mensajes por defecto
+        default:
+            print "[Mensaje ", n, " ", x1, "]";
+            rtrue;
+    }
+];
+
+! Rutina de inicialización
+[ Initialise;
+    location = Bosque;
+    "^^Bienvenido a la Aventura del Rioja!^^
+     Te encuentras en un bosque tranquilo con ganas de disfrutar de un buen vino.
+     Para ganar, deberas sentarte, abrir la botella, servir el vino y beberlo.^^";
+];

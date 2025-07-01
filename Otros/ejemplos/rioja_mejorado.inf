@@ -1,0 +1,154 @@
+!% -~S~D
+!%
+! AVENTURA DEL RIOJA (VERSIÓN MEJORADA)
+! Una pequeña aventura donde el objetivo es beber un vaso de vino Rioja
+
+Constant Story "AVENTURA DEL RIOJA";
+Constant Headline "^Una pequena aventura para disfrutar de un buen vino^";
+
+! La tabla de caracteres para español se define en spanish.h
+
+! Incluir archivos estándar
+Include "Parser";
+Include "VerbLib";
+
+! Definición de las localizaciones
+Object  Bosque "Bosque"
+  with  description
+          "Te encuentras en un tranquilo bosque. Los @{E1}rboles te rodean, 
+           permitiendo que algunos rayos de sol se filtren entre sus ramas.
+           Hacia el norte puedes ver una pequena cabana de madera.",
+        n_to Cabana,
+  has   light;
+
+Object  Cabana "Interior de la cabana"
+  with  description
+          "El interior de la cabana es acogedor y c@{E1}lido. Una pequena ventana
+           deja entrar la luz natural. El suelo de madera cruje ligeramente
+           bajo tus pies.",
+        s_to Bosque,
+  has   light;
+
+! Definición de la puerta entre el bosque y la cabaña
+Object  PuertaCabana "puerta de la cabana" Bosque
+  with  name 'puerta' 'cabana',
+        description
+          "Es una robusta puerta de madera que da acceso a la cabana.",
+        door_to [;
+            if (self in Bosque) return Cabana;
+            return Bosque;
+        ],
+        door_dir [;
+            if (self in Bosque) return n_to;
+            return s_to;
+        ],
+        found_in Bosque Cabana,
+  has   door openable ~open;
+
+! Definición de los objetos dentro de la cabaña
+Object  Mesa "mesa" Cabana
+  with  name 'mesa',
+        description "Una mesa de madera r@{FA}stica pero resistente.",
+  has   static supporter;
+
+Object  Silla "silla" Cabana
+  with  name 'silla',
+        description "Una silla de madera con un coj@{ED}n que parece c@{F3}modo.",
+        before [;
+            Enter:
+                print "Te sientas c@{F3}modamente en la silla.^";
+                if (VinoServido in Vaso && Vaso in Mesa) {
+                    print "Ahora podr@{ED}as disfrutar del vino que has servido.^";
+                }
+                return true;
+        ],
+  has   static enterable;
+
+Object  Botella "botella de vino" Mesa
+  with  name 'botella' 'vino' 'rioja' 'tinto',
+        description 
+          "Una elegante botella de vino Rioja tinto. La etiqueta muestra
+           que es una cosecha especial.",
+        before [;
+            Open:
+                if (self hasnt open) {
+                    give self open;
+                    "Descorchas la botella de Rioja. Un aroma intenso y afrutado 
+                     llena inmediatamente el ambiente.";
+                }
+        ],
+  has   container openable ~open;
+
+Object  Vino "vino tinto" Botella
+  with  name 'vino' 'tinto' 'rioja' 'contenido',
+        description "Un vino tinto de color intenso y aspecto tentador.",
+  has   scenery;
+
+Object  VinoServido "vino servido"
+  with  name 'vino' 'tinto' 'rioja' 'servido',
+        description "Un vino tinto de color intenso y aspecto tentador.",
+  has   scenery;
+
+Object  Vaso "vaso" Mesa
+  with  name 'vaso' 'copa',
+        description [;
+            if (VinoServido in self)
+                "Un vaso de cristal con vino tinto en su interior.";
+            else
+                "Un vaso de cristal vac@{ED}o, perfecto para servir vino.";
+        ],
+        before [;
+            Drink:
+                if (VinoServido in self) {
+                    remove VinoServido;
+                    deadflag = 2;
+                    "Bebes el Rioja lentamente, saboreando cada trago. 
+                     Es un vino excelente, con notas de frutos rojos y un 
+                     final largo y elegante. @{A1}Has completado la aventura!";
+                }
+                else {
+                    "El vaso est@{E1} vac@{ED}o.";
+                }
+        ],
+  has   container open transparent;
+
+! Verbos personalizados
+[ ServirSub;
+    if (noun ~= Vino && noun ~= Botella) {
+        "No puedes servir eso.";
+    }
+    
+    if (Botella hasnt open) {
+        "Primero deber@{ED}as abrir la botella.";
+    }
+    
+    if (second == nothing) {
+        "@{BF}D@{F3}nde quieres servir el vino?";
+    }
+    
+    if (second ~= Vaso) {
+        "No puedes servir el vino ah@{ED}.";
+    }
+    
+    if (VinoServido in Vaso) {
+        "El vaso ya est@{E1} lleno de vino.";
+    }
+    
+    move VinoServido to Vaso;
+    "Sirves cuidadosamente el vino Rioja en el vaso. Su color rojo intenso
+     brilla a la luz que entra por la ventana.";
+];
+
+Verb 'servir' 'verter' 'echar'
+    * noun 'en' noun -> Servir
+    * noun -> Servir;
+
+! Los mensajes en español se definen en spanish.h
+
+! Rutina de inicialización
+[ Initialise;
+    location = Bosque;
+    "^^@{A1}Bienvenido a la Aventura del Rioja!^^
+     Te encuentras en un bosque tranquilo con ganas de disfrutar de un buen vino.
+     Para ganar, deber@{E1}s sentarte, abrir la botella, servir el vino y beberlo.^^";
+];
