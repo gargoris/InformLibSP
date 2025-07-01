@@ -18,8 +18,7 @@
 ! ==============================================================================
 
 System_file;
-
-Zcharacter table +  '@{BA}'  '@{A9}'  '@{B3}' '@{E1}' '@{E9}' '@{ED}' '@{F3}' '@{FA}' '@{F1}' '@{DC}' '@{FC}' '@{BF}' '@{A1}';  ! á é í ó ú ñ Ü ü ¿ ¡
+Zcharacter table +  '@{B1}' '@{BA}'  '@{A9}'  '@{B3}' '@{E1}' '@{E9}' '@{ED}' '@{F3}' '@{FA}' '@{F1}' '@{DC}' '@{FC}' '@{BF}' '@{A1}';  ! á é í ó ú ñ Ü ü ¿ ¡
 
 #Ifndef LIBRARY_SPANISH;	! if this file is already included,
 				! don't try to include it again.
@@ -122,6 +121,45 @@ Constant QUIT1__WD      = 'q//';
 Constant QUIT2__WD      = 'terminar';
 Constant RESTART__WD    = 'reiniciar';
 Constant RESTORE__WD    = 'recuperar';
+
+Constant THE__TX        = "el";
+Constant COMMA__TX      = ", ";
+Constant AND__TX        = " y ";
+Constant WAS__TX        = " estaba";
+Constant WERE__TX       = " estaban";
+Constant WAS2__TX       = "estaba ";
+Constant WERE2__TX      = "estaban ";
+Constant HAS__TX        = " tiene";
+Constant HAVE__TX       = " tienen";
+Constant HAS2__TX       = "tiene ";
+Constant HAVE2__TX      = "tienen ";
+Constant HAS3__TX       = " ha";
+Constant HAVE3__TX      = " han";
+Constant HAS4__TX       = "ha ";
+Constant HAVE4__TX      = "han ";
+Constant THOSE__TX      = "esos";
+Constant WHICH__TX      = "cuál";
+
+! Constantes adicionales necesarias
+Constant COLON__TX      = ": ";
+! Constant ThatOrThose     = "eso";
+Constant UpperCase       = "MAYÚSCULAS";
+Constant LowerCase       = "minúsculas";
+Constant RELEASE__TX     = "Versión";
+Constant SERNUM__TX      = "Serie";
+Constant INFORMV__TX     = "Inform v";
+Constant LIBRARYV__TX    = "Librería v";
+Constant STDTERP__TX     = "Intérprete estándar";
+Constant TERP__TX        = "Intérprete";
+Constant VER__TX         = "v";
+Constant LIBSER__TX      = "Número de serie de la librería: ";
+Constant LIBERROR__TX    = "Error de la librería ";
+Constant STAND__TX       = "de pie";
+Constant SIT__TX         = "sentado";
+Constant LIE__TX         = "acostado";
+
+! Definición de la variable Tense para manejo de tiempos verbales
+Global Tense = 0;
 
 Array LanguagePronouns table
 

@@ -133,7 +133,7 @@ Constant LIBRARY_MESSAGES = 1;
   
   Disrobe: switch (x1) {
     1: print_ret "No ", (te) "estás poniendo ", (the) x1, ".";
-    2: print_ret (Te) "quitas ", (the) x1, ".";
+    2: print_ret (TeMays) "quitas ", (the) x1, ".";
   }
   
   Drink: switch (x1) {
@@ -151,20 +151,20 @@ Constant LIBRARY_MESSAGES = 1;
   
   Eat: switch (x1) {
     1: print_ret "Eso no parece comestible.";
-    2: print_ret (Te) "comes ", (the) x1, ". No está mal.";
+    2: print_ret (TeMays) "comes ", (the) x1, ". No está mal.";
   }
   
   EmptyT: switch (x1) {
     1: print_ret "No puedes vaciar ", (the) x1, ".";
-    2: print_ret (The) x1, " ya está", (n) x1, " vacío", (s) x1, ".";
-    3: print_ret (The) x1, " no puede", (n) x1, " contener cosas.";
+    2: print_ret (TheMays) x1, " ya está", (n) x1, " vacío", (s) x1, ".";
+    3: print_ret (TheMays) x1, " no puede", (n) x1, " contener cosas.";
     4: print_ret "No puedes vaciar algo sobre sí mismo.";
   }
   
   Empty: switch (x1) {
     1: print_ret "No puedes vaciar ", (the) x1, ".";
-    2: print_ret (The) x1, " ya está", (n) x1, " vacío", (s) x1, ".";
-    3: print_ret (The) x1, " no puede", (n) x1, " contener cosas.";
+    2: print_ret (TheMays) x1, " ya está", (n) x1, " vacío", (s) x1, ".";
+    3: print_ret (TheMays) x1, " no puede", (n) x1, " contener cosas.";
     4: print_ret "No puedes vaciar algo sobre sí mismo.";
   }
   
@@ -178,33 +178,33 @@ Constant LIBRARY_MESSAGES = 1;
        3: print_ret "No puedes meterte en ", (the) x2, ".";
        }
     3: print_ret "Tienes que ", (salte) "primero.";
-    4: print_ret "No puedes entrar en algo que está ", (contigo), ".";
-    5: print_ret "No puedes entrar en algo que está sobre ", (contigo), ".";
-    6: print_ret "No puedes entrar en algo que está dentro de ", (contigo), ".";
+    4: print_ret "No puedes entrar en algo que está contigo.";
+    5: print_ret "No puedes entrar en algo que está sobre tí.";
+    6: print_ret "No puedes entrar en algo que está dentro de tí.";
     7: switch (n) {
-       1: print_ret (Te) "metes en ", (the) x2, ".";
-       2: print_ret (Te) "subes a ", (the) x2, ".";
-       3: print_ret (Te) "metes en ", (the) x2, ".";
+       1: print_ret (TeMays) "metes en ", (the) x2, ".";
+       2: print_ret (TeMays) "subes a ", (the) x2, ".";
+       3: print_ret (TeMays) "metes en ", (the) x2, ".";
        }
   }
   
   Examine: switch (x1) {
     1: print_ret "Está demasiado oscuro. No puedes ver nada.";
     2: print_ret "No observas nada especial en ", (the) x1, ".";
-    3: print_ret (The) x1, " está", (n) x1, " apagado", (s) x1, ".";
+    3: print_ret (TheMays) x1, " está", (n) x1, " apagado", (s) x1, ".";
   }
   
   Exit: switch (x1) {
     1: print_ret "No estás en ningún sitio del que debas salir.";
     2: print_ret "No puedes salir de ", (the) x1, ".";
-    3: print_ret (Te) "bajas de ", (the) x1, ".";
-    4: print_ret (Te) "sales de ", (the) x1, ".";
+    3: print_ret (TeMays) "bajas de ", (the) x1, ".";
+    4: print_ret (TeMays) "sales de ", (the) x1, ".";
   }
   
   Fill: switch (x1) {
     1: print_ret "No puedes llenar eso.";
     2: print_ret "Eso no puede contener líquidos.";
-    3: print_ret (The) x1, " ya está", (n) x1, " lleno", (s) x1, ".";
+    3: print_ret (TheMays) x1, " ya está", (n) x1, " lleno", (s) x1, ".";
     4: print_ret "No puedes llenar algo con sí mismo.";
     5: print_ret "No tienes nada con lo que llenar ", (the) x1, ".";
   }
@@ -218,11 +218,11 @@ Constant LIBRARY_MESSAGES = 1;
     2: "Ese modo de puntuación no está disponible.";
   }
   
-  GetOff: print_ret (Te) "bajas de ", (the) x1, ".";
+  GetOff: print_ret (TeMays) "bajas de ", (the) x1, ".";
   
   Give: switch (x1) {
     1: print_ret "No tienes ", (the) x1, ".";
-    2: print_ret (The) x1, " no está", (n) x1, " interesado", (s) x1, ".";
+    2: print_ret (TheMays) x1, " no está", (n) x1, " interesado", (s) x1, ".";
     3: print_ret "Mantienes ", (the) x1, " para ti.";
   }
   
@@ -288,10 +288,10 @@ Constant LIBRARY_MESSAGES = 1;
   
   Lock: switch (x1) {
     1: print_ret "No parece", (n) x1, " tener ningún tipo de cerrojo.";
-    2: print_ret (The) x1, " ya está", (n) x1, " cerrad", (o) x1, " con llave.";
+    2: print_ret (TheMays) x1, " ya está", (n) x1, " cerrad", (o) x1, " con llave.";
     3: print_ret "Primero tendrías que cerrar ", (the) x1, ".";
     4: print_ret "Eso no encaja con la cerradura.";
-    5: print_ret (Te) "cierras ", (the) x1, " con llave.";
+    5: print_ret (TeMays) "cierras ", (the) x1, " con llave.";
   }
   
   Look: switch (x1) {
@@ -301,7 +301,7 @@ Constant LIBRARY_MESSAGES = 1;
     4: print " (como ", (object) x2, ")";
     5: print "^No ves nada especial en esa dirección.";
     6: print "Está demasiado oscuro. No puedes ver nada.";
-    7: print "^", (The) x2;
+    7: print "^", (TheMays) x2;
     8: print "^En ", (the) x1;
     9: print "^Sobre ", (the) x1;
     10: print "^No puedes ver lo que hay dentro ", (del) x1, " porque está", (n) x1, " cerrad", (o) x1, ".";
@@ -369,7 +369,7 @@ Constant LIBRARY_MESSAGES = 1;
     45: print "^No puedes ver lo que hay dentro ", (del) x2, " porque está", (n) x2, " cerrad", (o) x2, ".^";
     46: print "^No está disponible.^";
     47: print "^Está demasiado oscuro.^";
-    48: print "^", (The) x2, " no está", (n) x2, " disponible", (s) x2, ".^";
+    48: print "^", (TheMays) x2, " no está", (n) x2, " disponible", (s) x2, ".^";
     49: print "^No está disponible.^";
     50: print "^No está disponible.^";
     51: print "^No está disponible.^";
@@ -405,14 +405,14 @@ Constant LIBRARY_MESSAGES = 1;
   
   Open: switch (x1) {
     1: print_ret "No puedes abrir ", (the) x1, ".";
-    2: print_ret (The) x1, " ya está", (n) x1, " abierto", (s) x1, ".";
-    3: print_ret (The) x1, " está", (n) x1, " cerrado", (s) x1, " con llave.";
+    2: print_ret (TheMays) x1, " ya está", (n) x1, " abierto", (s) x1, ".";
+    3: print_ret (TheMays) x1, " está", (n) x1, " cerrado", (s) x1, " con llave.";
     4: print_ret "Abres ", (the) x1, ", descubriendo ";
     5: print_ret "Abres ", (the) x1, ".";
-    6: print_ret (The) x1, " se abre.";
+    6: print_ret (TheMays) x1, " se abre.";
   }
   
-  Order: print_ret (The) x1, " tiene", (n) x1, " mejores cosas que hacer.";
+  Order: print_ret (TheMays) x1, " tiene", (n) x1, " mejores cosas que hacer.";
   
   Places: switch (x1) {
     1: print "Has visitado: ";
@@ -471,7 +471,7 @@ Constant LIBRARY_MESSAGES = 1;
   Remove: switch (x1) {
     1: print_ret "No está ahí ahora.";
     2: print_ret "No está", (n) x1, " dentro ", (del) x2, ".";
-    3: print_ret (The) x1, " está", (n) x1, " cerrad", (o) x1, ".";
+    3: print_ret (TheMays) x1, " está", (n) x1, " cerrad", (o) x1, ".";
     4: print_ret "Sacas ", (the) x1, " ", (del) x2, ".";
   }
   
@@ -523,7 +523,7 @@ Constant LIBRARY_MESSAGES = 1;
     3: print_ret "En ", (the) x1, " ves ";
     4: print_ret "No encuentras nada interesante.";
     5: print_ret "No puedes ver dentro ", (del) x1, " porque está", (n) x1, " cerrad", (o) x1, ".";
-    6: print_ret (The) x1, " está", (n) x1, " vacío", (s) x1, ".";
+    6: print_ret (TheMays) x1, " está", (n) x1, " vacío", (s) x1, ".";
     7: print_ret "En ", (the) x1, " ves ";
   }
   
@@ -533,7 +533,7 @@ Constant LIBRARY_MESSAGES = 1;
   
   Show: switch (x1) {
     1: print_ret "No tienes ", (the) x1, ".";
-    2: print_ret (The) x2, " no muestra", (n) x2, " ningún interés.";
+    2: print_ret (TheMays) x2, " no muestra", (n) x2, " ningún interés.";
   }
   
   Sing: print_ret "Cantas fatal.";
@@ -557,26 +557,26 @@ Constant LIBRARY_MESSAGES = 1;
   
   SwitchOff: switch (x1) {
     1: print_ret "No es algo que puedas apagar.";
-    2: print_ret (The) x1, " ya está", (n) x1, " apagad", (o) x1, ".";
+    2: print_ret (TheMays) x1, " ya está", (n) x1, " apagad", (o) x1, ".";
     3: print_ret "Apagas ", (the) x1, ".";
   }
   
   SwitchOn: switch (x1) {
     1: print_ret "No es algo que puedas encender.";
-    2: print_ret (The) x1, " ya está", (n) x1, " encendid", (o) x1, ".";
+    2: print_ret (TheMays) x1, " ya está", (n) x1, " encendid", (o) x1, ".";
     3: print_ret "Enciendes ", (the) x1, ".";
   }
   
   Take: switch (x1) {
     1: print_ret "Tomado.";
     2: print_ret "Ya tienes ", (the) x1, ".";
-    3: print_ret (The) x1, " parece", (n) x1, " pertenecer ", (al) x2, ".";
-    4: print_ret (The) x1, " está", (n) x1, " fij", (o) x1, " en el sitio.";
+    3: print_ret (TheMays) x1, " parece", (n) x1, " pertenecer ", (al) x2, ".";
+    4: print_ret (TheMays) x1, " está", (n) x1, " fij", (o) x1, " en el sitio.";
     5: print_ret "Ya tienes ", (the) x1, ".";
     6: print_ret "Eso parece ser parte ", (del) x1, ".";
     7: print_ret "No es algo que puedas llevarte.";
-    8: print_ret (The) x1, " no está", (n) x1, " disponible", (s) x1, ".";
-    9: print_ret (The) x1, " no está", (n) x1, " disponible", (s) x1, ".";
+    8: print_ret (TheMays) x1, " no está", (n) x1, " disponible", (s) x1, ".";
+    9: print_ret (TheMays) x1, " no está", (n) x1, " disponible", (s) x1, ".";
     10: print_ret "Tendrías que ", (coge) x1, " primero.";
     11: print_ret "Tendrías que quitarte ", (the) x1, " primero.";
     12: print_ret "Tendrías que salir ", (del) x1, " primero.";
@@ -586,7 +586,7 @@ Constant LIBRARY_MESSAGES = 1;
   Taste: print_ret "No saboreas nada inesperado.";
   
   Tell: switch (x1) {
-    1: print_ret "Hablas ", (contigo), " mismo.";
+    1: print_ret "Hablas contigo mismo.";
     2: print_ret "No provocas ninguna reacción.";
   }
   
@@ -599,7 +599,7 @@ Constant LIBRARY_MESSAGES = 1;
   
   ThrownAt: switch (x1) {
     1: print_ret "No puedes hacer eso.";
-    2: print_ret (The) x1, " no", (es) x1, " un proyectil.";
+    2: print_ret (TheMays) x1, " no", (es) x1, " un proyectil.";
   }
   
   Tie: print_ret "No puedes atar ", (the) x1, " a nada.";
@@ -617,7 +617,7 @@ Constant LIBRARY_MESSAGES = 1;
   
   Unlock: switch (x1) {
     1: print_ret "No parece", (n) x1, " tener cerradura.";
-    2: print_ret (The) x1, " ya tiene", (n) x1, " abierta la cerradura.";
+    2: print_ret (TheMays) x1, " ya tiene", (n) x1, " abierta la cerradura.";
     3: print_ret "Eso no encaja con la cerradura.";
     4: print_ret "Quitas el cerrojo ", (al) x1, ".";
   }
@@ -639,136 +639,19 @@ Constant LIBRARY_MESSAGES = 1;
   
   Wave: switch (x1) {
     1: print_ret "No tienes ", (the) x1, ".";
-    2: print_ret (Te) "sientes ridículo agitando ", (the) x1, ".";
+    2: print_ret (TeMays) "sientes ridículo agitando ", (the) x1, ".";
   }
   
-  WaveHands: print_ret (Te) "sientes ridículo agitando las manos.";
+  WaveHands: print_ret (TeMays) "sientes ridículo agitando las manos.";
   
   Wear: switch (x1) {
     1: print_ret "No puedes ponerte eso.";
     2: print_ret "No tienes ", (the) x1, ".";
     3: print_ret "Ya ", (te) "estás vistiendo ", (the) x1, ".";
-    4: print_ret (Te) "pones ", (the) x1, ".";
+    4: print_ret (TeMays) "pones ", (the) x1, ".";
   }
   
   Yes: print_ret "De acuerdo.";
-];
-
-[ LanguageDirection d;
-    switch (d) {
-      n_to:    print "norte";
-      s_to:    print "sur";
-      e_to:    print "este";
-      w_to:    print "oeste";
-      ne_to:   print "noreste";
-      nw_to:   print "noroeste";
-      se_to:   print "sureste";
-      sw_to:   print "suroeste";
-      u_to:    print "arriba";
-      d_to:    print "abajo";
-      in_to:   print "dentro";
-      out_to:  print "fuera";
-      default: return RunTimeError(9,d);
-    }
-];
-
-[ LanguageNumber n f;
-    if (n == 0)    { print "cero"; rfalse; }
-    if (n < 0)     { print "menos "; n = -n; }
-    if (n >= 1000) { print (LanguageNumber) n/1000, " mil"; n = n%1000; f = 1; }
-    if (n >= 100)  {
-        if (f == 1) print " ";
-        switch (n/100) {
-          1: print "cien";
-          2: print "doscientos";
-          3: print "trescientos";
-          4: print "cuatrocientos";
-          5: print "quinientos";
-          6: print "seiscientos";
-          7: print "setecientos";
-          8: print "ochocientos";
-          9: print "novecientos";
-        }
-        n = n%100;
-        if (n ~= 0) {
-            if (n < 10) print "to "; else print " ";
-        }
-        f = 1;
-    }
-    if (n == 0) rfalse;
-    
-    if (f == 1) print " ";
-    
-    switch (n) {
-      1:    print "uno";
-      2:    print "dos";
-      3:    print "tres";
-      4:    print "cuatro";
-      5:    print "cinco";
-      6:    print "seis";
-      7:    print "siete";
-      8:    print "ocho";
-      9:    print "nueve";
-      10:   print "diez";
-      11:   print "once";
-      12:   print "doce";
-      13:   print "trece";
-      14:   print "catorce";
-      15:   print "quince";
-      16:   print "dieciséis";
-      17:   print "diecisiete";
-      18:   print "dieciocho";
-      19:   print "diecinueve";
-      20:   print "veinte";
-      21:   print "veintiuno";
-      22:   print "veintidós";
-      23:   print "veintitrés";
-      24:   print "veinticuatro";
-      25:   print "veinticinco";
-      26:   print "veintiséis";
-      27:   print "veintisiete";
-      28:   print "veintiocho";
-      29:   print "veintinueve";
-      30 to 99: switch (n/10) {
-        3:  print "treinta";
-        4:  print "cuarenta";
-        5:  print "cincuenta";
-        6:  print "sesenta";
-        7:  print "setenta";
-        8:  print "ochenta";
-        9:  print "noventa";
-        }
-        if (n%10 ~= 0) print " y ", (LanguageNumber) n%10;
-    }
-];
-
-[ LanguageTimeOfDay hours mins i;
-    i = hours%12;
-    if (i == 0) i = 12;
-    if (i < 10) print " ";
-    print i, ":", mins/10, mins%10;
-    if ((hours/12) > 0) print " pm"; else print " am";
-];
-
-[ LanguageVerb i;
-    switch (i) {
-      'i//','inv','inventario':
-               print "hacer inventario";
-      'l//':   print "mirar";
-      'x//':   print "examinar";
-      'z//':   print "esperar";
-! CompassDirection
-      'n//':   print "norte";
-      's//':   print "sur";
-      'e//':   print "este";
-      'o//':   print "oeste";
-      'ne//':   print "noreste";
-      'no//':   print "noroeste";
-      'se//':   print "sureste";
-      'so//':   print "suroeste";
-      default: rfalse;
-    }
-    rtrue;
 ];
 
 #Ifdef DEBUG;
@@ -780,17 +663,6 @@ Constant LIBRARY_MESSAGES = 1;
 ];
 #Endif;
 
-[ LanguageVerbLikesAdverb w;
-    if (w == 'mirar' or 'ir' or 'correr' or 'salir' or 'l//' or 'empujar' or 'caminar')
-        rtrue;
-    rfalse;
-];
-
-[ LanguageVerbMayBeName w;
-    if (w == 'examinar' or 'x//' or 'mirar' or 'l//' or 'consultar')
-        rtrue;
-    rfalse;
-];
 
 [ es obj;
     if (obj has pluralname) print "son"; else print "es";
@@ -848,7 +720,7 @@ Constant LIBRARY_MESSAGES = 1;
     if (actor == player) print "te"; else print "se";
 ];
 
-[ Te;
+[ TeMays;
     if (actor == player) print "Te"; else print "Se";
 ];
 
@@ -860,7 +732,7 @@ Constant LIBRARY_MESSAGES = 1;
     if (actor == player) print "conmigo"; else print "consigo";
 ];
 
-[ The obj;
+[ TheMays obj;
     if (obj has proper) {
         print (name) obj;
         return;
@@ -886,16 +758,6 @@ Constant LIBRARY_MESSAGES = 1;
     print (name) obj;
 ];
 
-[ ThatorThose obj;
-    if (obj has pluralname) {
-        print "esos ";
-        if (obj has female) print "objetos"; else print "objetos";
-    } else {
-        print "ese ";
-        if (obj has female) print "objeto"; else print "objeto";
-    }
-];
-
 [ thatorthose obj;
     if (obj has pluralname) {
         print "esos ";
@@ -906,7 +768,7 @@ Constant LIBRARY_MESSAGES = 1;
     }
 ];
 
-[ ItorThem obj;
+[ ItorThemMays obj;
     if (obj has pluralname) {
         if (obj has female) print "Ellas"; else print "Ellos";
     } else {

@@ -7,21 +7,27 @@
 !
 ! ==============================================================================
 ! Definir la tabla de caracteres para soportar acentos y caracteres especiales
-Zcharacter table + '@{b3}' '@{b1}' '@{E1}' '@{E9}' '@{ED}' '@{F3}' '@{FA}' '@{F1}' '@{DC}' '@{FC}' '@{BF}' '@{A1}';  ! á é í ó ú ñ Ü ü ¿ ¡
+Zcharacter table + '@{B4}' '@{B1}' '@{B3}' ;  ! á é í ó ú ñ Ü ü ¿ ¡
 
 ! Definir el idioma español como idioma principal
-Constant language__ = "spanish";
 Replace DeathMessage;
 Replace PrintRank;
 Replace PrintTaskName;
 Replace PrintVerb;
+Replace Story;
+Replace Headline;
 
 Constant Story "EJEMPLO DE AVENTURA";
-Constant Headline "^Una pequeña demostración de la librería en español^";
+Constant Headline "^Una peque´ña demostración de la librería en español^";
 
 ! Incluir la librería estándar
 Include "Parser";
 Include "VerbLib";
+
+! Incluir la librería en español
+Include "SpanishLib";
+
+! Incluir la gramática estándar
 Include "Grammar";
 
 ! ==============================================================================
