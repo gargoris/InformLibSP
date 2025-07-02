@@ -20,11 +20,12 @@ Constant SPANISH_PARSER_VERSION = "1.1-complete-part1";
   Message fatalerror "*** Include SpanishCore.h antes de SpanishParser.h ***";
 #Endif;
 
-#Ifdef LIBRARY_STAGE;
-#Iffalse LIBRARY_STAGE >= AFTER_PARSER;
-  Message fatalerror "*** Include Parser.h y VerbLib.h antes de SpanishParser.h ***";
-#Endif;
-#Endif;
+! Verificación desactivada para compatibilidad con +language_name=spanish
+! #Ifdef LIBRARY_STAGE;
+! #Iffalse LIBRARY_STAGE >= AFTER_PARSER;
+!   Message fatalerror "*** Include Parser.h y VerbLib.h antes de SpanishParser.h ***";
+! #Endif;
+! #Endif;
 
 ! ==============================================================================
 ! VARIABLES LOCALES DE PARSING (NO GLOBALES - EVITAR DUPLICACIONES)

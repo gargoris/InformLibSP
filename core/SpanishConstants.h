@@ -105,6 +105,13 @@ Constant SPANISH_PREPOSITION_POSITION = 3;
 Constant SPANISH_SECONDARY_OBJECT_POSITION = 4;
 
 ! ==============================================================================
+! CONSTANTES REQUERIDAS POR EL PARSER DE INFORM
+! ==============================================================================
+
+! Contracciones en español (del, al)
+Constant LanguageContractionForms = 2;
+
+! ==============================================================================
 ! DIRECCIONES EN ESPANOL
 ! ==============================================================================
 

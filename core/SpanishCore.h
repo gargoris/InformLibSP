@@ -18,11 +18,12 @@ Constant SPANISH_CORE_VERSION = "1.2-coordinator-fixed";
   Message fatalerror "*** Include SpanishConstants.h antes de SpanishCore.h ***";
 #Endif;
 
-#Ifdef LIBRARY_STAGE;
-#Iffalse LIBRARY_STAGE >= AFTER_PARSER;
-  Message fatalerror "*** Include Parser.h y VerbLib.h antes de SpanishCore.h ***";
-#Endif;
-#Endif;
+! Verificación de dependencias desactivada para compatibilidad con +language_name=spanish
+! #Ifdef LIBRARY_STAGE;
+! #Iffalse LIBRARY_STAGE >= AFTER_PARSER;
+!   Message fatalerror "*** Include Parser.h y VerbLib.h antes de SpanishCore.h ***";
+! #Endif;
+! #Endif;
 
 ! ==============================================================================
 ! RUTINAS DE COORDINACION ENTRE MODULOS

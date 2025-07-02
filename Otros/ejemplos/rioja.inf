@@ -13,11 +13,8 @@ Constant Headline "^Una pequena aventura para disfrutar de un buen vino^";
 Constant SPANISH_META_COMMANDS;    ! Meta-comandos (UNDO, AGAIN, etc.)
 Constant SPANISH_IRREGULAR_VERBS;  ! Verbos irregulares (SER, ESTAR, etc.)
 
-Include "Spanish";
-! Include "VerbLib";
-
-! Incluir todos los modulos necesarios en orden correcto
-! Include "Spanish";
+Include "Parser";
+Include "VerbLib";
 
 ! Definicion de las localizaciones
 Object  Bosque "Bosque"
@@ -25,7 +22,7 @@ Object  Bosque "Bosque"
           "Te encuentras en un tranquilo bosque. Los arboles te rodean, 
            permitiendo que algunos rayos de sol se filtren entre sus ramas.
            Hacia el norte puedes ver una pequena cabana de madera.",
-        n_to Cabana,
+        north_to Cabana,
   has   light;
 
 Object  Cabana "Interior de la cabana"
@@ -33,7 +30,7 @@ Object  Cabana "Interior de la cabana"
           "El interior de la cabana es acogedor y calido. Una pequena ventana
            deja entrar la luz natural. El suelo de madera cruje ligeramente
            bajo tus pies.",
-        s_to Bosque,
+        south_to Bosque,
   has   light;
 
 ! Definicion de la puerta entre el bosque y la cabana
@@ -46,8 +43,8 @@ Object  PuertaCabana "puerta de la cabana" Bosque
             return Bosque;
         ],
         door_dir [;
-            if (self in Bosque) return n_to;
-            return s_to;
+            if (self in Bosque) return north_to;
+            return south_to;
         ],
         found_in Bosque Cabana,
   has   door openable ~open female;
@@ -108,7 +105,7 @@ Object  Vaso "vaso" Mesa
             Drink:
                 if (VinoServido in self) {
                     remove VinoServido;
-                    deadflag = 2;
+                    deadflag = 1;
                     "Bebes el Rioja lentamente, saboreando cada trago. 
                      Es un vino excelente, con notas de frutos rojos y un 
                      final largo y elegante. Has completado la aventura!";
@@ -118,6 +115,9 @@ Object  Vaso "vaso" Mesa
                 }
         ],
   has   container open transparent;
+
+! NOTA: Action Servir no se puede declarar con +language_name=spanish
+! Action Servir;
 
 ! Verbos personalizados
 [ ServirSub;

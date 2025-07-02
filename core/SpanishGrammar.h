@@ -18,11 +18,12 @@ Constant SPANISH_GRAMMAR_VERSION = "1.2-complete-fixed";
   Message fatalerror "*** Include SpanishConstants.h antes de SpanishGrammar.h ***";
 #Endif;
 
-#Ifdef LIBRARY_STAGE;
-#Iffalse LIBRARY_STAGE >= AFTER_PARSER;
-  Message fatalerror "*** Include Parser.h y VerbLib.h antes de SpanishGrammar.h ***";
-#Endif;
-#Endif;
+! Verificación desactivada para compatibilidad con +language_name=spanish
+! #Ifdef LIBRARY_STAGE;
+! #Iffalse LIBRARY_STAGE >= AFTER_PARSER;
+!   Message fatalerror "*** Include Parser.h y VerbLib.h antes de SpanishGrammar.h ***";
+! #Endif;
+! #Endif;
 
 ! ==============================================================================
 ! FUNCIONES BASICAS DE GENERO Y NUMERO

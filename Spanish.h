@@ -39,7 +39,7 @@ Constant SPANISH_LIB_VERSION = "6.12.7-modular-1.2-fixed";
 ! NUCLEO OBLIGATORIO - ORDEN CRITICO CORREGIDO
 ! ==============================================================================
 
-! 0. Configuracion de caracteres espanoles (debe ir PRIMERO de TODO)
+! 0. Configuracion de caracteres espanoles (FIRST)
 Include "core/SpanishCharacters.h";
 
 ! 1. Constantes centralizadas (debe ir SEGUNDO - sin dependencias)
@@ -668,6 +668,14 @@ Constant SPANISH_SYSTEM_INTEGRATED;
 Constant SPANISH_BUILD_INFO = "Modular corrected build with full integration - Fixed includes and dependencies";
 Constant SPANISH_BUILD_DATE = "2024-12-27-fully-corrected";
 Constant SPANISH_ARCHITECTURE = "Centralized constants + Modular components + Smart coordination + Fixed file references";
+
+! ==============================================================================
+! VARIABLES GLOBALES Y ACCIONES FALTANTES
+! ==============================================================================
+
+! Variables globales estándar necesarias
+#Ifndef deadflag; Global deadflag = 0; #Endif;
+#Ifndef location; Global location; #Endif;
 
 ! Contador de funcionalidades
 Constant SPANISH_TOTAL_FUNCTIONS_ESTIMATED = 200;  ! Aproximacion
