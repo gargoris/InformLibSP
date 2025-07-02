@@ -13,11 +13,11 @@ Constant Headline "^Una pequena aventura para disfrutar de un buen vino^";
 Constant SPANISH_META_COMMANDS;    ! Meta-comandos (UNDO, AGAIN, etc.)
 Constant SPANISH_IRREGULAR_VERBS;  ! Verbos irregulares (SER, ESTAR, etc.)
 
-Include "Parser";
-Include "VerbLib";
+Include "Spanish";
+! Include "VerbLib";
 
 ! Incluir todos los modulos necesarios en orden correcto
-Include "SpanishLib";
+! Include "Spanish";
 
 ! Definicion de las localizaciones
 Object  Bosque "Bosque"

@@ -14,11 +14,11 @@ Constant SPANISH_LIB_VERSION = "6.12.7-modular-1.2-fixed";
 ! VERIFICACION DE ENTORNO
 ! ==============================================================================
 
-#Ifdef LIBRARY_STAGE;
-#Iffalse LIBRARY_STAGE >= AFTER_PARSER;
-  Message fatalerror "*** Include Parser.h y VerbLib.h antes de SpanishLib.h ***";
-#Endif;
-#Endif;
+! #Ifdef LIBRARY_STAGE;
+! #Iffalse LIBRARY_STAGE >= AFTER_PARSER;
+!   Message fatalerror "*** Include Parser.h y VerbLib.h antes de Spanish.h ***";
+! #Endif;
+! #Endif;
 
 ! ==============================================================================
 ! CONFIGURACION DE CARACTERISTICAS OPCIONALES
