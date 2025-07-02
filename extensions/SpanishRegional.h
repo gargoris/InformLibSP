@@ -148,7 +148,7 @@ Global spanish_regional_ready = false;
     #Ifnot;
         ! Fallback basico - asumir que es la palabra sin las ultimas 2 letras
         raiz = spanish_temp_buffer;
-        PrintToBuffer(raiz, 100, verbo);
+        PrintToBuffer(raiz, 99, verbo);
         raiz->0 = raiz->0 - 2; ! Quitar -ar, -er, -ir
     #Endif;
     

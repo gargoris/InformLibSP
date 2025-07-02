@@ -33,15 +33,18 @@ Constant SPANISH_VERBS_VERSION = "1.2-complete-fixed";
     if (verbo == 0) return 0;
     
     ! Convertir dictionary word a string para analisis
-    len = PrintToBuffer(spanish_temp_buffer, 100, verbo);
+    len = PrintToBuffer(spanish_temp_buffer, 99, verbo);
+    #Ifdef DEBUG;
+        print "[DEBUG] DetectarTipoVerbo: verbo=", verbo, " len=", len, "^";
+    #Endif;
     
-    if (len <= 0 || len < 3) return 0; ! Validar buffer y longitud minima
+    if (len <= 0 || len < 2) return 0; ! Validar buffer minimo
     
-    ! Verificar terminacion
-    if (spanish_temp_buffer->(len-1) == 'r') { ! Ultima letra es 'r'
-        if (spanish_temp_buffer->(len-2) == 'a') return 1; ! -AR
-        if (spanish_temp_buffer->(len-2) == 'e') return 2; ! -ER  
-        if (spanish_temp_buffer->(len-2) == 'i') return 3; ! -IR
+    ! Verificar terminacion (necesita al menos 2 caracteres para -ar/-er/-ir)
+    if (len >= 2 && spanish_temp_buffer->(len-1) == 'r') { ! Ultima letra es 'r'
+        if (len >= 2 && spanish_temp_buffer->(len-2) == 'a') return 1; ! -AR
+        if (len >= 2 && spanish_temp_buffer->(len-2) == 'e') return 2; ! -ER  
+        if (len >= 2 && spanish_temp_buffer->(len-2) == 'i') return 3; ! -IR
     }
     
     return 0; ! No reconocido como verbo regular
@@ -51,8 +54,8 @@ Constant SPANISH_VERBS_VERSION = "1.2-complete-fixed";
     ! [OK] CORREGIDO: Funcion completa para obtener raiz
     ! Obtiene la raiz de un verbo (sin -ar, -er, -ir)
     
-    len = PrintToBuffer(spanish_temp_buffer, 100, verbo);
-    if (len <= 0 || len < 3) return 0;
+    len = PrintToBuffer(spanish_temp_buffer, 99, verbo);
+    if (len <= 0 || len < 3) return 0; ! Necesita al menos 3 chars para tener raiz
     
     ! Copiar todo excepto las ultimas 2 letras (-ar, -er, -ir)
     for (i = 0: i < len - 2: i++) {
@@ -658,7 +661,7 @@ Constant SPANISH_VERBS_VERSION = "1.2-complete-fixed";
 ! ==============================================================================
 
 ! Estas constantes ya están definidas en SpanishConstants.h
-! Constant SPANISH_VERBS_COMPLETE;
+Constant SPANISH_VERBS_COMPLETE;
 ! Constant SPANISH_VERBS_READY;
 Constant SPANISH_VERBS_FUNCTIONS = 20; ! Numero de funciones publicas
 

@@ -1,0 +1,37 @@
+!% -~S~D
+!
+! TEST SPANISH MINIMAL - Version ultra minimalista
+!
+
+Constant Story "TEST SPANISH MINIMAL";
+Constant Headline "^Test ultra minimalista en espanol^";
+
+! SIN caracteristicas españolas complejas
+!Constant SPANISH_IRREGULAR_VERBS;
+!Constant SPANISH_ADVANCED_PARSER;
+!Constant SPANISH_FULL_MESSAGES;
+!Constant SPANISH_META_COMMANDS;
+
+Include "Parser";
+Include "VerbLib";
+Include "Grammar";
+
+! En lugar de Spanish.h completo, incluir solo lo minimo
+Include "spanish_minimal.h";
+
+! Habitacion ultra basica
+Object  Habitacion "Habitacion de prueba"
+  with  description "Esta es una habitacion de prueba muy simple.",
+        n_to Habitacion2,
+  has   light;
+
+Object  Habitacion2 "Segunda habitacion"
+  with  description "Esta es la segunda habitacion.",
+        s_to Habitacion,
+  has   light;
+
+! Inicializacion ultra basica
+[ Initialise;
+    location = Habitacion;
+    "^TEST SPANISH MINIMAL iniciado. Escribe 'n' para ir al norte.^";
+];

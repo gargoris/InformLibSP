@@ -1,0 +1,28 @@
+!% -~S~D
+!
+! TEST ENGLISH - Juego en ingles puro para comparar
+!
+
+Constant Story "TEST ENGLISH";
+Constant Headline "^Basic English test^";
+
+Include "Parser";
+Include "VerbLib";
+Include "Grammar";
+
+! Basic room
+Object  Room1 "Test Room"
+  with  description "This is a simple test room.",
+        n_to Room2,
+  has   light;
+
+Object  Room2 "Second Room"
+  with  description "This is the second room.",
+        s_to Room1,
+  has   light;
+
+! Basic initialization
+[ Initialise;
+    location = Room1;
+    "^TEST ENGLISH started. Type 'n' to go north.^";
+];

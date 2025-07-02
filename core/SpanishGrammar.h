@@ -233,13 +233,16 @@ Constant SPANISH_GRAMMAR_VERSION = "1.2-complete-fixed";
     }
     
     ! Convertir a string para analisis
-    len = PrintToBuffer(spanish_temp_buffer, 100, adj);
+    len = PrintToBuffer(spanish_temp_buffer, 99, adj);
+    #Ifdef DEBUG;
+        print "[DEBUG] ConcordarAdjetivo: adj=", adj, " len=", len, "^";
+    #Endif;
     if (len <= 0) return; ! Validar buffer
     
     if (tipo == 1) {
         ! Adjetivos como "grande", "feliz", etc. - solo pluralizan
         print (address) adj;
-        if (EsPlural(obj)) {
+        if (EsPlural(obj) && len > 0) {
             last_char = spanish_temp_buffer->(len-1);
             if (last_char == 'z') print "ces"; ! feliz -> felices
             else print "s";
@@ -250,7 +253,8 @@ Constant SPANISH_GRAMMAR_VERSION = "1.2-complete-fixed";
     ! Adjetivos normales - concordancia completa
     print (address) adj;
     
-    last_char = spanish_temp_buffer->(len-1);
+    if (len > 0) last_char = spanish_temp_buffer->(len-1);
+    else last_char = 0;
     
     ! Ajustar terminacion segun genero (solo si termina en -o y es femenino)
     if (last_char == 'o' && ~~EsGeneroMasculino(obj)) {
@@ -529,7 +533,7 @@ Constant SPANISH_GRAMMAR_VERSION = "1.2-complete-fixed";
 ! ==============================================================================
 
 ! Estas constantes ya están definidas en SpanishConstants.h
-! Constant SPANISH_GRAMMAR_COMPLETE;
+Constant SPANISH_GRAMMAR_COMPLETE;
 ! Constant SPANISH_GRAMMAR_READY;
 Constant SPANISH_GRAMMAR_FUNCTIONS = 25; ! Numero de funciones publicas
 

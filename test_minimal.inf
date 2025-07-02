@@ -1,0 +1,31 @@
+!% -~S~D
+!
+! TEST MINIMAL - Juego ultra básico para debug
+!
+
+Constant Story "TEST MINIMAL";
+Constant Headline "^Test ultra básico^";
+
+! SIN características españolas para probar
+!Constant SPANISH_IRREGULAR_VERBS;
+
+Include "Parser";
+Include "VerbLib";
+Include "Grammar";
+
+! Habitacion ultra basica
+Object  Habitacion "Habitacion de prueba"
+  with  description "Esta es una habitacion de prueba muy simple.",
+        n_to Habitacion2,
+  has   light;
+
+Object  Habitacion2 "Segunda habitacion"
+  with  description "Esta es la segunda habitacion.",
+        s_to Habitacion,
+  has   light;
+
+! Inicializacion ultra basica
+[ Initialise;
+    location = Habitacion;
+    "^TEST MINIMAL iniciado. Escribe 'n' para ir al norte.^";
+];

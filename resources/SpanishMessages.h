@@ -753,30 +753,30 @@ Constant SPANISH_MESSAGES_VERSION = "2.1-complete-fixed";
                     print " "; LanguagePrintShortName(x2); print " aqui!";
                 39: print "No entendi esa frase.";
                 40: print "No entendi el numero.";
-                41: print "No necesitas usar la palabra ~"; PrintToBuffer(spanish_temp_buffer, 100, x2); 
+                41: print "No necesitas usar la palabra ~"; PrintToBuffer(spanish_temp_buffer, 99, x2); 
                     print (string) spanish_temp_buffer; print "~ en este juego.";
                 42: print "No entendi la finalizacion de la frase.";
                 43: if (x2 == 0) print "No dijiste suficiente.";
-                    else print "No puedes usar objetos multiples con ~"; PrintToBuffer(spanish_temp_buffer, 100, x2); 
+                    else print "No puedes usar objetos multiples con ~"; PrintToBuffer(spanish_temp_buffer, 99, x2); 
                     print (string) spanish_temp_buffer; print "~.";
                 44: print "Solo puedes hacer eso con algo animado.";
                 45: print "Esa palabra no esta disponible.";
-                46: print "Esta historia no incluye la palabra ~"; PrintToBuffer(spanish_temp_buffer, 100, x2); 
+                46: print "Esta historia no incluye la palabra ~"; PrintToBuffer(spanish_temp_buffer, 99, x2); 
                     print (string) spanish_temp_buffer; print "~.";
                 47: print "Lo siento, puedes usar hasta seis objetos a la vez en una linea.";
                 48: print "Esta historia solo entiende ~si~ y ~no~.";
                 49: print "Esta historia no incluye la puntuacion de "; 
-                    PrintToBuffer(spanish_temp_buffer, 100, x2); print (string) spanish_temp_buffer; print " como palabra.";
-                50: print "Para usar ~"; PrintToBuffer(spanish_temp_buffer, 100, x2); 
+                    PrintToBuffer(spanish_temp_buffer, 99, x2); print (string) spanish_temp_buffer; print " como palabra.";
+                50: print "Para usar ~"; PrintToBuffer(spanish_temp_buffer, 99, x2); 
                     print (string) spanish_temp_buffer; print "~, necesitas ser mas especific"; 
                     if (player has female) print "a"; else print "o"; print ".";
-                51: print "Comenzaste una frase con ~"; PrintToBuffer(spanish_temp_buffer, 100, x2); 
+                51: print "Comenzaste una frase con ~"; PrintToBuffer(spanish_temp_buffer, 99, x2); 
                     print (string) spanish_temp_buffer; print "~, pero eso no es un verbo que reconozca.";
                 52: print "Para comenzar una frase dirigida a alguien, prueba ~persona, verbo~.";
                 53: print "No puedes hablar con "; ArticuloDefinido(x2); print " "; LanguagePrintShortName(x2); print ".";
                 54: print "Para hablar con alguien, prueba ~habla con persona~.";
                 55: print "No estas segur"; if (player has female) print "a"; else print "o"; 
-                    print " de lo que ~"; PrintToBuffer(spanish_temp_buffer, 100, x2); 
+                    print " de lo que ~"; PrintToBuffer(spanish_temp_buffer, 99, x2); 
                     print (string) spanish_temp_buffer; print "~ se refiere.";
                 
                 ! [OK] CASOS ADICIONALES PARA COMPLETAR EL SISTEMA
@@ -798,8 +798,8 @@ Constant SPANISH_MESSAGES_VERSION = "2.1-complete-fixed";
                 62: print "No es necesario en este juego.";
                 63: print "(como "; LanguagePrintShortName(x2); print ")";
                 64: print "No hay nadie aqui a quien puedas "; 
-                    PrintToBuffer(spanish_temp_buffer, 100, x2); print (string) spanish_temp_buffer; print ".";
-                65: print "No puedes "; PrintToBuffer(spanish_temp_buffer, 100, x2); 
+                    PrintToBuffer(spanish_temp_buffer, 99, x2); print (string) spanish_temp_buffer; print ".";
+                65: print "No puedes "; PrintToBuffer(spanish_temp_buffer, 99, x2); 
                     print (string) spanish_temp_buffer; print " objetos multiples.";
             }
 
@@ -973,7 +973,7 @@ Constant SPANISH_MESSAGES_VERSION = "2.1-complete-fixed";
     ! [OK] ANADIDO: Funcion para formar plurales
     local len last_char;
     
-    len = PrintToBuffer(spanish_temp_buffer, 100, word);
+    len = PrintToBuffer(spanish_temp_buffer, 99, word);
     last_char = spanish_temp_buffer->(len-1);
     
     print (string) word;

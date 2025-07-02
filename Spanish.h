@@ -32,7 +32,8 @@ Constant SPANISH_LIB_VERSION = "6.12.7-modular-1.2-fixed";
     #Ifndef SPANISH_FULL_MESSAGES; Constant SPANISH_FULL_MESSAGES; #Endif;
     #Ifndef SPANISH_META_COMMANDS; Constant SPANISH_META_COMMANDS; #Endif;
     #Ifndef SPANISH_IRREGULAR_VERBS; Constant SPANISH_IRREGULAR_VERBS; #Endif;
-    #Ifndef SPANISH_ADVANCED_PARSER; Constant SPANISH_ADVANCED_PARSER; #Endif;
+    ! DESACTIVAR PARSER AVANZADO TEMPORALMENTE POR STACK UNDERFLOW
+    !#Ifndef SPANISH_ADVANCED_PARSER; Constant SPANISH_ADVANCED_PARSER; #Endif;
 #Endif;
 
 ! ==============================================================================
@@ -48,18 +49,19 @@ Include "core/SpanishConstants.h";
 ! 2. Nucleo coordinador basico
 Include "core/SpanishCore.h";
 
+! DESHABILITAR TODOS LOS MODULOS PARA DEBUGGING
 ! 3. Modulos core en orden de dependencias CORREGIDO
-#Ifdef SPANISH_ADVANCED_PARSER;
+!#Ifdef SPANISH_ADVANCED_PARSER;
     ! Parser avanzado en 3 partes (nombres de archivos CORREGIDOS)
-    Include "core/SpanishParser1.h";      ! Parte 1: Manipulacion y fundamentos
-    Include "core/SpanishParser2.h";      ! Parte 2: Procesamiento avanzado
-    Include "core/SpanishParser3.h";      ! Parte 3: Analisis sintactico
-#Ifnot;
+!    Include "core/SpanishParser1.h";      ! Parte 1: Manipulacion y fundamentos
+!    Include "core/SpanishParser2.h";      ! Parte 2: Procesamiento avanzado
+!    Include "core/SpanishParser3.h";      ! Parte 3: Analisis sintactico
+!#Ifnot;
     ! Parser basico incluido en Core
     ! (SpanishCore.h ya incluye parsing basico)
-#Endif;
+!#Endif;
 
-! Incluir modulos core esenciales
+! REACTIVAR MODULOS CORE MINIMOS para arreglar directivas condicionales
 Include "core/SpanishGrammar.h";
 Include "core/SpanishVerbs.h";
 
@@ -169,6 +171,36 @@ Include "core/SpanishVerbs.h";
         12: print "Ya tienes "; print (the) x1; print ".";
         13: print ""; print (The) x1; print " no parece estar disponible.";
     }
+    
+    ! PROMPT - CRITICO: Sin esto no aparece el prompt ">"
+    Prompt: print "^>";
+    
+    ! GO - Ir (CRITICO: se activa con comandos como "n", "sur", etc.)
+    Go: switch (n) {
+        1: print "Tendr@{ED}as que salir de "; print (the) x1; print " primero.";
+        2: print "No puedes ir por ah@{ED}.";
+        3: print "No puedes subir por "; print (the) x1; print ".";
+        4: print "No puedes bajar por "; print (the) x1; print ".";
+        5: print "No puedes, ya que "; print (the) x1; print " no conduce a ninguna parte.";
+        6: print "No puedes ir por ah@{ED} porque "; print (the) x1; print " est@{E1} cerrado.";
+    }
+    
+    ! MISCELLANY - Mensajes del sistema (CRITICO: errores de parsing, etc.)
+    Miscellany: switch (n) {
+        1: print "(considerando solo los primeros diecis@{E9}is objetos)^";
+        2: print "Nada que hacer!";
+        3: print "Ha muerto.";
+        4: print "Has ganado.";
+        5: print "@{BF}Has intentado ";
+        6: print "?^";
+        7: print "No entiendo esa frase.";
+        8: print "No conozco esa palabra.";
+        9: print "Solo he entendido: ";
+        10: print "No he entendido nada.";
+        11: print "@{BF}Perd@{F3}n?";
+        12: print "@{BF}Puedes repetir?";
+        default: print "(mensaje del sistema ", n, ")";
+    }
 ];
 #Endif;
 
@@ -176,17 +208,18 @@ Include "core/SpanishVerbs.h";
 ! EXTENSIONES OPCIONALES
 ! ==============================================================================
 
+! DESHABILITAR EXTENSIONES PARA DEBUGGING
 ! Verbos irregulares (muy recomendado)
-#Ifdef SPANISH_IRREGULAR_VERBS;
-    Include "extensions/SpanishIrregularVerbs.h";
-    #Ifdef DEBUG;
-        print "[INFO: SpanishIrregularVerbs.h cargado - verbos irregulares disponibles]^";
-    #Endif;
-#Ifnot;
-    #Ifdef DEBUG;
-        print "[AVISO: Solo verbos regulares - define SPANISH_IRREGULAR_VERBS para expandir]^";
-    #Endif;
-#Endif;
+!#Ifdef SPANISH_IRREGULAR_VERBS;
+!    Include "extensions/SpanishIrregularVerbs.h";
+!    #Ifdef DEBUG;
+!        print "[INFO: SpanishIrregularVerbs.h cargado - verbos irregulares disponibles]^";
+!    #Endif;
+!#Ifnot;
+!    #Ifdef DEBUG;
+!        print "[AVISO: Solo verbos regulares - define SPANISH_IRREGULAR_VERBS para expandir]^";
+!    #Endif;
+!#Endif;
 
 ! Meta-comandos (UNDO, AGAIN, HELP, etc.)
 #Ifdef SPANISH_META_COMMANDS;
@@ -291,16 +324,19 @@ Include "core/SpanishVerbs.h";
     ! Inicializar nucleo PRIMERO (siempre requerido)
     SpanishCoreInitialise();
     
-    ! Inicializar modulos principales (en orden CORREGIDO)
+    ! Inicializar parser (version simplificada para evitar errores)
+    spanish_parse_stage = 0;
     #Ifdef SPANISH_ADVANCED_PARSER;
-        #Ifdef SPANISH_PARSER_PART1_COMPLETE;
-            SpanishParserInitializePart1();
-        #Endif;
-        #Ifdef SPANISH_PARSER_PART3_COMPLETE;
-            ! La Parte 3 coordina todo el sistema de parser
-            SpanishParserInitialize();
+        #Ifdef DEBUG;
+            print "[INFO: Parser avanzado disponible pero no inicializado por seguridad]^";
         #Endif;
     #Endif;
+    
+    ! Establecer variables de estado explicitamente
+    SPANISH_CORE_LOADED = true;
+    SPANISH_GRAMMAR_LOADED = true;
+    SPANISH_VERBS_LOADED = true;
+    spanish_initialized = true;
     
     ! SpanishGrammar y SpanishVerbs se inicializan automaticamente
     ! cuando se cargan, via sus propias rutinas
@@ -309,6 +345,7 @@ Include "core/SpanishVerbs.h";
     #Ifdef SPANISH_IRREGULAR_VERBS;
         #Ifdef SPANISH_IRREGULAR_VERBS_COMPLETE;
             SpanishIrregularVerbsInitialise();
+            SPANISH_IRREGULAR_VERBS_LOADED = true;
         #Endif;
     #Endif;
     
@@ -369,7 +406,7 @@ Include "core/SpanishVerbs.h";
             print "[[!]  Parser Avanzado: Parte 1 (Manipulacion) no cargada]^";
         #Endif;
     #Ifnot;
-        print "[ℹ️  Parser Basico: Funcionalidad minima de parsing]^";
+        print "[INFO: Parser Basico: Funcionalidad minima de parsing]^";
     #Endif;
     
     #Ifdef SPANISH_FULL_MESSAGES;
@@ -379,7 +416,7 @@ Include "core/SpanishVerbs.h";
             print "[[!]  Mensajes: Solicitados pero no completamente cargados]^";
         #Endif;
     #Ifnot;
-        print "[ℹ️  Mensajes Basicos: Solo mensajes esenciales]^";
+        print "[INFO  Mensajes Basicos: Solo mensajes esenciales]^";
     #Endif;
     
     #Ifdef SPANISH_IRREGULAR_VERBS;
@@ -389,7 +426,7 @@ Include "core/SpanishVerbs.h";
             print "[[!]  Verbos Irregulares: Solicitados pero no cargados]^";
         #Endif;
     #Ifnot;
-        print "[ℹ️  Solo Verbos Regulares: Define SPANISH_IRREGULAR_VERBS para expandir]^";
+        print "[INFO  Solo Verbos Regulares: Define SPANISH_IRREGULAR_VERBS para expandir]^";
     #Endif;
     
     #Ifdef SPANISH_META_COMMANDS;
@@ -399,7 +436,7 @@ Include "core/SpanishVerbs.h";
             print "[[!]  Meta-comandos: Solicitados pero no cargados]^";
         #Endif;
     #Ifnot;
-        print "[ℹ️  Meta-comandos Basicos: Define SPANISH_META_COMMANDS para expandir]^";
+        print "[INFO  Meta-comandos Basicos: Define SPANISH_META_COMMANDS para expandir]^";
     #Endif;
     
     #Ifdef SPANISH_REGIONAL_VARIANTS;
@@ -636,7 +673,15 @@ Include "core/SpanishVerbs.h";
 ! Integracion automatica con LanguageInitialise (si no se desactiva)
 #Ifndef SPANISH_MANUAL_INIT;
 [ LanguageInitialise; 
-    return SpanishLibInitialise(); 
+    ! DESHABILITAR COMPLETAMENTE PARA DEBUGGING
+    ! SpanishLibInitialise(); 
+    
+    #Ifdef DEBUG;
+        print "[DEBUG: LanguageInitialise saltado por seguridad]^";
+    #Endif;
+    
+    ! CRITICO: No hacer return aqui - debe continuar el flujo normal del juego
+    ! return SpanishLibInitialise(); 
 ];
 #Endif;
 
@@ -648,12 +693,17 @@ Include "core/SpanishVerbs.h";
 ! Funcion principal del parser (integracion con Inform) - CORREGIDA
 #Ifndef LanguageToInformese;
 [ LanguageToInformese;
-    #Ifdef SPANISH_PARSER_PART3_COMPLETE;
-        return SpanishParserMain();  ! Funcion que existe en la Parte 3
-    #Ifnot;
-        ! Usar el procesamiento basico del Core
-        return SpanishBasicParsing();
+    ! VERSION ULTRA BASICA - NO HACER NADA, SOLO PASAR AL PARSER ESTANDARD
+    ! Esto evita cualquier posible stack underflow en el parsing español
+    
+    #Ifdef DEBUG;
+        print "[DEBUG] LanguageToInformese: bypassing Spanish parsing^";
     #Endif;
+    
+    return 0; ! Dejar que Inform use su parser estándar
+    
+    ! TODO: Reactivar parsing español cuando se solucionen los stack underflows
+    !return SpanishBasicParsing();
 ];
 #Endif;
 
