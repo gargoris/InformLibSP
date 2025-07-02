@@ -22,6 +22,7 @@ Zcharacter 'o';
 Zcharacter 'u';
 Zcharacter 'n';
 Zcharacter 'u';
+Zcharacter 'o';
 Zcharacter '?';
 Zcharacter '!';
 Zcharacter 'A';

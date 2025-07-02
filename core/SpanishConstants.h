@@ -375,10 +375,7 @@ Array spanish_temp_parse --> 32;
 ! ==============================================================================
 
 ! [OK] CORREGIDO: Arrays con verificacion de compatibilidad
-#Ifdef LIBRARY_STAGE;
-#Iffalse LIBRARY_STAGE >= AFTER_PARSER;
-  ! Los arrays se definiran despues del parser
-#Ifnot;
+! Arrays siempre disponibles para compatibilidad con +language_name=spanish
 
 #Ifndef LanguagePronouns;
 Array LanguagePronouns table
@@ -447,8 +444,6 @@ Array LanguageNumbers table
     'seis' 6 'siete' 7 'ocho' 8 'nueve' 9 'diez' 10
     'once' 11 'doce' 12 'trece' 13 'catorce' 14 'quince' 15
     'dieciseis' 16 'diecisiete' 17 'dieciocho' 18 'diecinueve' 19 'veinte' 20;
-#Endif;
-
 #Endif;
 
 ! Definir array de artículos para géneros y números

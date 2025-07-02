@@ -234,6 +234,7 @@ Constant SPANISH_GRAMMAR_VERSION = "1.2-complete-fixed";
     
     ! Convertir a string para analisis
     len = PrintToBuffer(spanish_temp_buffer, 100, adj);
+    if (len <= 0) return; ! Validar buffer
     
     if (tipo == 1) {
         ! Adjetivos como "grande", "feliz", etc. - solo pluralizan

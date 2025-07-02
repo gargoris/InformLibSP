@@ -69,16 +69,107 @@ Include "core/SpanishVerbs.h";
 
 ! Sistema de mensajes (recomendado para funcionamiento completo)
 #Ifdef SPANISH_FULL_MESSAGES;
-    ! Temporalmente desactivado debido a errores
-    ! Include "resources/SpanishMessages.h";
+    ! Sistema completo de mensajes en español
+    ! Include "resources/SpanishMessages.h";  ! Errores complejos, crear implementación nueva
     #Ifdef DEBUG;
-        print "[AVISO: SpanishMessages.h desactivado temporalmente debido a errores]^";
+        print "[AVISO: SpanishMessages.h desactivado temporalmente - errores de sintaxis]^";
     #Endif;
 #Ifnot;
-    ! Solo mensajes basicos integrados en otros modulos
     #Ifdef DEBUG;
-        print "[AVISO: Usando solo mensajes basicos - define SPANISH_FULL_MESSAGES para completar]^";
+        print "[INFO: Usando LanguageLM básico - define SPANISH_FULL_MESSAGES para completar]^";
     #Endif;
+#Endif;
+
+! Implementación completa de LanguageLM (siempre disponible)
+#Ifndef LanguageLM;
+[ LanguageLM n x1 x2;
+    ! Sistema de mensajes en español para Inform 6
+    ! Sigue el patrón exacto del archivo english.h
+
+    ! ATTACK - Atacar
+    Attack: print "La violencia no es la respuesta.";
+    
+    ! CLOSE - Cerrar
+    Close: switch (n) {
+        1: print "No puedes cerrar "; print (the) x1; print ".";
+        2: print ""; print (The) x1; print " ya est@{E1} cerrado.";
+        3: print "Cierras "; print (the) x1; print ".";
+        4: print "(primero cierras "; print (the) x1; print ")";
+    }
+    
+    ! ENTER - Entrar
+    Enter: switch (n) {
+        1: print "Pero ya est@{E1}s en "; print (the) x1; print ".";
+        2: print "No puedes entrar en "; print (the) x1; print ".";
+        3: print "No puedes entrar en "; print (the) x1; print " cerrado.";
+        4: print "No puedes entrar ah@{ED} desde aqu@{ED}.";
+        5: print "Entras en "; print (the) x1; print ".";
+        6: print "(sales de "; print (the) x1; print ")";
+        7: print "(entras en "; print (the) x1; print ")";
+    }
+    
+    ! EXAMINE - Examinar
+    Examine: switch (n) {
+        1: print "No hay nada especial en "; print (the) x1; print ".";
+        2: print ""; print (The) x1; print " est@{E1} ";
+           if (x1 has on) print "encendido"; else print "apagado";
+           ".";
+        3: print ""; print (The) x1; print " est@{E1} cerrado.";
+    }
+    
+    ! GO - Ir  
+    Go: switch (n) {
+        1: print "Tendr@{ED}as que salir de "; print (the) x1; print " primero.";
+        2: print "No puedes ir por ah@{ED}.";
+        3: print "No puedes subir por "; print (the) x1; print ".";
+        4: print "No puedes bajar por "; print (the) x1; print ".";
+        5: print "No puedes, ya que "; print (the) x1; print " no conduce a ninguna parte.";
+        6: print "No puedes ir por ah@{ED} porque "; print (the) x1; print " est@{E1} cerrado.";
+    }
+    
+    ! LOOK - Mirar
+    Look: switch (n) {
+        1: print " (en "; print (the) x1; print ")";
+        2: print " (como "; print (the) x1; print ")";
+        3: print "Est@{E1} demasiado oscuro, no puedes ver nada.";
+        4: print "ti mismo";
+        5: switch (random(4)) {
+               1: print "Como siempre, te ves muy bien.";
+               2: print "Como siempre, est@{E1}s impresionante.";
+               3: print "Como siempre, est@{E1}s muy atractiv"; 
+                  if (player has female) print "a."; else print "o.";
+               default: print "Como siempre, te ves fant@{E1}stico.";
+           }
+        6: print "En "; print (the) x1; print " ves ";
+        7: print "En "; print (the) x1; print " no hay nada.";
+    }
+    
+    ! OPEN - Abrir
+    Open: switch (n) {
+        1: print "No puedes abrir "; print (the) x1; print ".";
+        2: print ""; print (The) x1; print " ya est@{E1} abierto.";
+        3: print "Abres "; print (the) x1; print ".";
+        4: print ""; print (The) x1; print " parece estar cerrado con llave.";
+        5: print "(primero abres "; print (the) x1; print ")";
+    }
+    
+    ! TAKE - Tomar
+    Take: switch (n) {
+        1: print "Tomado.";
+        2: print "Siempre te tienes a ti mismo.";
+        3: print "No creo que quiera eso.";
+        4: print "Tendr@{ED}as que salir de "; print (the) x2; print " primero.";
+        5: print "Ya tienes "; print (the) x1; print ".";
+        6: print "Eso le pertenece a "; print (the) x1; print ".";
+        7: print "Eso le pertenece a "; print (the) x1; print ".";
+        8: print ""; print (The) x1; print " no parece interesado.";
+        9: print "Llevas demasiadas cosas ya.";
+        10: print "(primero lo coges)";
+        11: print ""; print (The) x1; print " est@{E1} fijo en el sitio.";
+        12: print "Ya tienes "; print (the) x1; print ".";
+        13: print ""; print (The) x1; print " no parece estar disponible.";
+    }
+];
 #Endif;
 
 ! ==============================================================================
@@ -87,10 +178,9 @@ Include "core/SpanishVerbs.h";
 
 ! Verbos irregulares (muy recomendado)
 #Ifdef SPANISH_IRREGULAR_VERBS;
-    ! Temporalmente desactivado debido a errores
-    ! Include "extensions/SpanishIrregularVerbs.h";
+    Include "extensions/SpanishIrregularVerbs.h";
     #Ifdef DEBUG;
-        print "[AVISO: SpanishIrregularVerbs.h desactivado temporalmente debido a errores]^";
+        print "[INFO: SpanishIrregularVerbs.h cargado - verbos irregulares disponibles]^";
     #Endif;
 #Ifnot;
     #Ifdef DEBUG;
@@ -100,10 +190,9 @@ Include "core/SpanishVerbs.h";
 
 ! Meta-comandos (UNDO, AGAIN, HELP, etc.)
 #Ifdef SPANISH_META_COMMANDS;
-    ! Temporalmente desactivado debido a errores
-    ! Include "extensions/SpanishMeta.h";
+    ! Include "extensions/SpanishMeta.h";  ! Conflictos de nombres con SpanishConstants.h
     #Ifdef DEBUG;
-        print "[AVISO: SpanishMeta.h desactivado temporalmente debido a errores]^";
+        print "[AVISO: SpanishMeta.h desactivado - conflictos de nombres]^";
     #Endif;
 #Ifnot;
     #Ifdef DEBUG;

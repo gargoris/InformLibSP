@@ -26,7 +26,7 @@ Constant SPANISH_IRREGULAR_VERBS_VERSION = "2.1-complete-fixed";
 ! TABLA DE VERBOS IRREGULARES PRINCIPALES - [OK] CORREGIDA
 ! ==============================================================================
 
-Array spanish_irregular_verbs table
+Array SpanishIrregularVerbsTable table
     ! Verbo -> Funcion de conjugacion (20 verbos implementados)
     'ser'       SpanishConjugar_Ser
     'estar'     SpanishConjugar_Estar
@@ -56,8 +56,8 @@ Array spanish_irregular_verbs table
 [ SpanishConjugarIrregular verbo persona tiempo   i func;
     ! [OK] CORREGIDO: Logica de busqueda en array table
     for (i = 0: i < 20: i++) {  ! 20 verbos irregulares
-        if (spanish_irregular_verbs-->(i*2) == verbo) {
-            func = spanish_irregular_verbs-->(i*2+1);
+        if (SpanishIrregularVerbsTable-->(i*2) == verbo) {
+            func = SpanishIrregularVerbsTable-->(i*2+1);
             return func(persona, tiempo);
         }
     }
@@ -67,7 +67,7 @@ Array spanish_irregular_verbs table
 [ LanguageIsIrregularVerb verbo   i;
     ! [OK] CORREGIDO: Verificacion en array table
     for (i = 0: i < 20: i++) {  ! 20 verbos irregulares
-        if (spanish_irregular_verbs-->(i*2) == verbo) return true;
+        if (SpanishIrregularVerbsTable-->(i*2) == verbo) return true;
     }
     return false;
 ];

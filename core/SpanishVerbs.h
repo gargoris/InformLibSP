@@ -35,7 +35,7 @@ Constant SPANISH_VERBS_VERSION = "1.2-complete-fixed";
     ! Convertir dictionary word a string para analisis
     len = PrintToBuffer(spanish_temp_buffer, 100, verbo);
     
-    if (len < 3) return 0; ! Muy corto para ser verbo
+    if (len <= 0 || len < 3) return 0; ! Validar buffer y longitud minima
     
     ! Verificar terminacion
     if (spanish_temp_buffer->(len-1) == 'r') { ! Ultima letra es 'r'
@@ -52,11 +52,11 @@ Constant SPANISH_VERBS_VERSION = "1.2-complete-fixed";
     ! Obtiene la raiz de un verbo (sin -ar, -er, -ir)
     
     len = PrintToBuffer(spanish_temp_buffer, 100, verbo);
-    if (len < 3) return 0;
+    if (len <= 0 || len < 3) return 0;
     
     ! Copiar todo excepto las ultimas 2 letras (-ar, -er, -ir)
     for (i = 0: i < len - 2: i++) {
-        buffer->(i+1) = spanish_temp_buffer->(i+1);
+        buffer->(i+1) = spanish_temp_buffer->(i);
     }
     buffer->0 = len - 2;
     

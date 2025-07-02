@@ -29,17 +29,17 @@ Constant SPANISH_MESSAGES_VERSION = "2.1-complete-fixed";
 ! ==============================================================================
 
 [ LanguageLM n x1 x2;
-    ! [OK] CORREGIDO: Lista completa de verbos con todos los mensajes implementados
-    Answer, Ask, AskFor, Attack, Blow, Burn, Buy, Climb, Close, CommandsOff,
-    CommandsOn, CommandsRead, Consult, Cut, Dig, Disrobe, Drink, Drop, Eat,
-    Empty, Enter, Examine, Exit, Fill, FullScore, GetOff, Give, Go, GoIn,
-    Inventory, Jump, JumpOver, Kiss, Listen, Lock, Look, LookUnder, Mild,
-    Miscellany, No, NotifyOff, NotifyOn, Objects, Open, Order, Places, Pray,
-    Pronouns, Pull, Push, PushDir, PutOn, Quit, Read, Restart, Restore, Rub,
-    Save, Score, ScriptOff, ScriptOn, Search, Set, SetTo, Show, Sing, Sleep,
-    Smell, Sorry, Squeeze, Strong, Swim, Swing, SwitchOff, SwitchOn, Take,
-    Taste, Tell, Think, ThrowAt, Tie, Touch, Transfer, Turn, Unlock, VagueGo,
-    Verify, Version, Wait, Wake, WakeOther, Wave, WaveHands, Wear, Yes:
+    ! Sistema completo de mensajes en español (~400 mensajes)
+    ! Verbos soportados: Answer, Ask, AskFor, Attack, Blow, Burn, Buy, Climb, Close, CommandsOff,
+    ! CommandsOn, CommandsRead, Consult, Cut, Dig, Disrobe, Drink, Drop, Eat,
+    ! Empty, Enter, Examine, Exit, Fill, FullScore, GetOff, Give, Go, GoIn,
+    ! Inventory, Jump, JumpOver, Kiss, Listen, Lock, Look, LookUnder, Mild,
+    ! Miscellany, No, NotifyOff, NotifyOn, Objects, Open, Order, Places, Pray,
+    ! Pronouns, Pull, Push, PushDir, PutOn, Quit, Read, Restart, Restore, Rub,
+    ! Save, Score, ScriptOff, ScriptOn, Search, Set, SetTo, Show, Sing, Sleep,
+    ! Smell, Sorry, Squeeze, Strong, Swim, Swing, SwitchOff, SwitchOn, Take,
+    ! Taste, Tell, Think, ThrowAt, Tie, Touch, Transfer, Turn, Unlock, VagueGo,
+    ! Verify, Version, Wait, Wake, WakeOther, Wave, WaveHands, Wear, Yes
 
     switch(n) {
         ! =================================================================
@@ -86,10 +86,13 @@ Constant SPANISH_MESSAGES_VERSION = "2.1-complete-fixed";
         ! =================================================================
         Drop:
             switch (x1) {
-                1: if (x2 has pluralname) print ""; ArticuloDefinido(x2); print " "; LanguagePrintShortName(x2); 
-                   print " ya "; LanguageIsOrAre(x2); print " aqui.";
-                   else print ""; ArticuloDefinido(x2); print " "; LanguagePrintShortName(x2); 
-                   print " ya esta aqui.";
+                1: if (x2 has pluralname) {
+                       print ""; ArticuloDefinido(x2); print " "; LanguagePrintShortName(x2); 
+                       print " ya "; LanguageIsOrAre(x2); print " aqui.";
+                   } else {
+                       print ""; ArticuloDefinido(x2); print " "; LanguagePrintShortName(x2); 
+                       print " ya esta aqui.";
+                   }
                 2: print "No tienes "; ArticuloDefinido(x2); print " "; LanguagePrintShortName(x2); print ".";
                 3: print "(primero "; ArticuloDefinido(x2); print " "; LanguagePrintShortName(x2); print " te lo quitas)^";
                 4: print "Dejado.";
@@ -116,10 +119,12 @@ Constant SPANISH_MESSAGES_VERSION = "2.1-complete-fixed";
                 2: print " (como "; ArticuloDefinido(x2); print " "; LanguagePrintShortName(x2); print ")";
                 3: print "Esta demasiado oscuro, no puedes ver nada.";
                 4: print "tu mismo";
-                5: case 1: print "Como siempre, estas impresionante.";
-                   case 2: print "Como siempre, estas increible.";
-                   case 3: print "Como siempre, estas muy atractiv"; if (player has female) print "a."; else print "o.";
-                   default: print "Como siempre, te ves muy bien.";
+                5: switch (random(4)) {
+                       1: print "Como siempre, estas impresionante.";
+                       2: print "Como siempre, estas increible.";
+                       3: print "Como siempre, estas muy atractiv"; if (player has female) print "a."; else print "o.";
+                       default: print "Como siempre, te ves muy bien.";
+                   }
                 6: print "En "; ArticuloDefinido(x2); print " "; LanguagePrintShortName(x2); print " ves ";
                 7: print "En "; ArticuloDefinido(x2); print " "; LanguagePrintShortName(x2); print " no hay nada.";
                 8: print ""; ArticuloDefinido(x2); print " "; LanguagePrintShortName(x2); print " "; 

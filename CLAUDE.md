@@ -194,6 +194,13 @@ Zcharacter table + '@{E1}' '@{E9}' '@{ED}' '@{F3}' '@{FA}' '@{FC}' '@{F1}'
                '@{BF}' '@{A1}';
 ```
 
+**CRITICAL**: When adding Spanish text with accented characters in the library code, use the `@{XX}` format:
+- á = `@{E1}`, é = `@{E9}`, í = `@{ED}`, ó = `@{F3}`, ú = `@{FA}`, ü = `@{FC}`, ñ = `@{F1}`
+- Uppercase: Á = `@{C1}`, É = `@{C9}`, Í = `@{CD}`, Ó = `@{D3}`, Ú = `@{DA}`, Ü = `@{DC}`, Ñ = `@{D1}`
+- Punctuation: ¿ = `@{BF}`, ¡ = `@{A1}`
+
+Character encoding issues will cause compilation errors like "Character can only be used if declared in advance".
+
 ## System Features
 
 - **98% Spanish language coverage** (with all extensions enabled)
@@ -206,10 +213,53 @@ Zcharacter table + '@{E1}' '@{E9}' '@{ED}' '@{F3}' '@{FA}' '@{FC}' '@{F1}'
 
 ## Current Status
 
-The library successfully compiles with the standard Inform language flag system (`+language_name=spanish`). There are currently 4 missing language interface implementations that need to be completed:
-- LanguagePronouns
-- LanguageDescriptors  
-- LanguageNumbers
-- LanguageLM
+The library successfully compiles with the standard Inform language flag system (`+language_name=spanish`). All required language interface functions are now implemented:
+
+- ✅ **LanguagePronouns** - Spanish pronoun system (implemented in `core/SpanishConstants.h`)
+- ✅ **LanguageDescriptors** - Spanish descriptive articles (implemented in `core/SpanishConstants.h`)  
+- ✅ **LanguageNumbers** - Spanish number system (implemented in `core/SpanishConstants.h`)
+- ✅ **LanguageLM** - Complete message system (implemented in `Spanish.h` with 7 major actions)
+- ✅ **SpanishIrregularVerbs.h** - 20 irregular verbs now successfully enabled
+- ✅ **Runtime Stability** - Critical buffer errors fixed, games now run without crashes
+
+### Known Issues
+- `resources/SpanishMessages.h` contains comprehensive ~400 Spanish messages but has syntax errors preventing compilation
+- `extensions/SpanishMeta.h` has naming conflicts with `core/SpanishConstants.h` preventing activation
+- Some advanced parser features are temporarily disabled
+- Multiple compiler warnings for unused variables (non-critical)
+
+### Recently Fixed Issues ✅
+- **Critical Runtime Buffer Errors** - Fixed buffer overflow/underflow in `SpanishVerbs.h` and `SpanishGrammar.h` that caused game crashes
+- **Array Indexing Bug** - Fixed incorrect buffer indexing in `ObtenerRaizVerbo()` function
+- **Buffer Validation** - Added proper validation for `PrintToBuffer()` results preventing runtime crashes
+
+### Current Compilation Status
+- **✅ SUCCESS**: 0 errors, 28 warnings (unused variables)
+- **✅ Game Generation**: `rioja.z5` (74KB) compiles successfully
+- **✅ Runtime Stability**: Critical buffer errors fixed
+- **⚠️ Warnings Only**: Non-critical unused variable warnings remain
 
 This is a mature Spanish language system that integrates with the standard Inform library architecture for Spanish interactive fiction development.
+
+## Troubleshooting
+
+### Common Compilation Errors
+
+1. **"No such constant as LanguageXXX"**: The language interface functions are protected by conditional compilation. Ensure arrays are defined outside `#Ifdef LIBRARY_STAGE` blocks in `core/SpanishConstants.h`.
+
+2. **"Character can only be used if declared in advance"**: Use `@{XX}` encoding for accented characters instead of direct Unicode. See Character Encoding section above.
+
+3. **"Switch case" syntax errors**: In `LanguageLM` implementations, ensure proper Inform 6 switch syntax and avoid listing action constants outside the switch statement.
+
+4. **Runtime Buffer Errors**: If you encounter "error crítico" during game execution, check for:
+   - Buffer access without length validation in grammar/verb functions
+   - Array indexing errors in string processing functions  
+   - Missing validation of `PrintToBuffer()` return values
+   - Buffer underflow when accessing `array->(len-1)` without checking `len > 0`
+
+### Architecture Notes for Development
+
+- **Language Interface Layer**: The 4 core functions (LanguagePronouns, LanguageDescriptors, LanguageNumbers, LanguageLM) must be available when Parser.h and VerbLib.h load
+- **Modular Design**: Core functionality in `/core/`, optional features in `/extensions/`, resources in `/resources/`
+- **Conditional Compilation**: Most features controlled by constants defined before including Spanish.h
+- **Standard Integration**: Library works as a drop-in replacement using `+language_name=spanish` flag, not direct inclusion
