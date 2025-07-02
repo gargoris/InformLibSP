@@ -62,3 +62,6 @@ ejemplos/infsp6-master/
 *.gif
 *.svg
 *.ico
+*.exe
+
+gargoyle
