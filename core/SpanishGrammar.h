@@ -223,7 +223,7 @@ Constant SPANISH_GRAMMAR_VERSION = "1.2-complete-fixed";
 ! CONCORDANCIA DE ADJETIVOS
 ! ==============================================================================
 
-[ ConcordarAdjetivo adj obj tipo   adj_str len last_char;
+[ ConcordarAdjetivo adj obj tipo   len last_char;
     ! [OK] CORREGIDO: Funcion completa de concordancia de adjetivos
     ! tipo: 0 = normal, 1 = invariable en genero, 2 = invariable total
     

@@ -26,7 +26,7 @@ Constant SPANISH_VERBS_VERSION = "1.2-complete-fixed";
 ! UTILIDADES DE ANALISIS DE VERBOS
 ! ==============================================================================
 
-[ DetectarTipoVerbo verbo   len buffer;
+[ DetectarTipoVerbo verbo   len;
     ! [OK] CORREGIDO: Funcion completa para detectar tipo de verbo
     ! Devuelve: 1 = -AR, 2 = -ER, 3 = -IR, 0 = irregular o no reconocido
     

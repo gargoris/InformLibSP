@@ -167,7 +167,7 @@ Global commands_shown = false;
 ! IMPLEMENTACION DE OOPS/CORRECCION EN ESPANOL - [OK] COMPLETA
 ! ==============================================================================
 
-[ SpanishOops word i j k found;
+[ SpanishOops word i found;
     if (~~oops_enabled) {
         print "El comando CORRECCION esta deshabilitado.";
         rtrue;

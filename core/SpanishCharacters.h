@@ -14,7 +14,9 @@ Constant SPANISH_CHARACTERS_INCLUDED;
 
 ! Declarar caracteres espanoles como parte de Zcharacter
 ! Esto debe ir ANTES de cualquier uso de estos caracteres
+! SOLO para Z-machine (no compatible con Glulx)
 
+#Ifndef TARGET_GLULX;
 Zcharacter 'a';
 Zcharacter 'e';
 Zcharacter 'i';
@@ -32,6 +34,7 @@ Zcharacter 'O';
 Zcharacter 'U';
 Zcharacter 'N';
 Zcharacter 'U';
+#Endif;
 
 ! ==============================================================================
 ! MAPEO DE CARACTERES PARA ENTRADA

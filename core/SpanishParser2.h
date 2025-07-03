@@ -583,20 +583,20 @@
     context = SpanishAnalyzeContext(pos);
     
     ! Importancia alta para verbos
-    if (SpanishIsVerbCandidate(pos)) importance = inportance + 10;
+    if (SpanishIsVerbCandidate(pos)) importance = importance + 10;
     
     ! Importancia alta para objetos
-    if (SpanishIsObjectCandidate(pos)) importance = inportance + 8;
+    if (SpanishIsObjectCandidate(pos)) importance = importance + 8;
     
     ! Importancia media para preposiciones
-    if (SpanishIsPreposition(word)) importance = inportance + 5;
+    if (SpanishIsPreposition(word)) importance = importance + 5;
     
     ! Importancia baja para articulos y muletillas
-    if (SpanishIsArticle(word)) importance = inportance + 2;
-    if (word == 'que' or 'muy' or 'bastante') importance = inportance + 1;
+    if (SpanishIsArticle(word)) importance = importance + 2;
+    if (word == 'que' or 'muy' or 'bastante') importance = importance + 1;
     
     ! Modificadores de contexto
-    if (context & 1) importance = inportance + 2; ! Despues de verbo
+    if (context & 1) importance = importance + 2; ! Despues de verbo
     if (context & 16) importance = inportance + 3; ! Despues de preposicion
     
     return importance;

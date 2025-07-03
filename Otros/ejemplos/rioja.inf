@@ -9,10 +9,10 @@ Constant Headline "^Una pequena aventura para disfrutar de un buen vino^";
 ! Constantes de configuración recomendadas
 ! IMPORTANTE: Deben definirse ANTES de incluir Parser.h
 ! Desactivamos temporalmente los mensajes completos debido a errores
-!Constant SPANISH_FULL_MESSAGES;    ! Sistema completo de mensajes
-!Constant SPANISH_META_COMMANDS;    ! Meta-comandos (UNDO, AGAIN, etc.) - DESACTIVADO POR SEGURIDAD
+Constant SPANISH_FULL_MESSAGES;    ! Sistema completo de mensajes
+Constant SPANISH_META_COMMANDS;    ! Meta-comandos (UNDO, AGAIN, etc.) - DESACTIVADO POR SEGURIDAD
 Constant SPANISH_IRREGULAR_VERBS;  ! Verbos irregulares (SER, ESTAR, etc.)
-!Constant SPANISH_ADVANCED_PARSER;  ! Desactivado por seguridad - puede causar stack underflow
+Constant SPANISH_ADVANCED_PARSER;  ! Desactivado por seguridad - puede causar stack underflow
 
 Include "Parser";
 Include "VerbLib";

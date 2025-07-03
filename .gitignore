@@ -65,3 +65,5 @@ ejemplos/infsp6-master/
 *.exe
 
 gargoyle
+english_library
+*.dll
