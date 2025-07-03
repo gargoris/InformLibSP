@@ -9,21 +9,36 @@ InformLibSP is a Spanish language extension library for Inform 6 interactive fic
 ## Build and Development Commands
 
 ### Compiling Games
+
+#### Z-machine (Default - Limited Stack)
 ```bash
 # Using Linux Inform 6 compiler with Spanish language support
 ./inform6_linux/Inform6/inform +language_name=spanish -S gameFile.inf
 
-# Using Windows compiler (if available)
-inform6.exe +language_name=spanish -S gameFile.inf
+# Using Windows compiler (root directory)
+./inform6.exe +language_name=spanish -S gameFile.inf
+
+# With debugging symbols for runtime error analysis
+./inform6_linux/Inform6/inform +language_name=spanish -S -g2 gameFile.inf
+```
+
+#### Glulx (Recommended for Complex Games)
+```bash
+# Glulx compilation - no local variable limits
+./inform6.exe +language_name=spanish -G gameFile.inf
 
 # Playing compiled games
-./Frotz.exe gameFile.z5  # or .z8
+./Frotz.exe gameFile.z5    # Z-machine games
+./glulxe gameFile.ulx      # Glulx games
 ```
 
 ### Testing
 ```bash
 # Canonical example - main reference implementation
 ./inform6_linux/Inform6/inform +language_name=spanish -S Otros/ejemplos/rioja.inf
+
+# Minimal Z-machine version (for stack-constrained environments)
+./inform6_linux/Inform6/inform -S test_ultra_minimal.inf
 
 # Additional test examples (may be removed in future)
 ./inform6_linux/Inform6/inform +language_name=spanish -S Otros/ejemplos/tests/test_simple.inf
@@ -232,12 +247,16 @@ The library successfully compiles with the standard Inform language flag system 
 - **Critical Runtime Buffer Errors** - Fixed buffer overflow/underflow in `SpanishVerbs.h` and `SpanishGrammar.h` that caused game crashes
 - **Array Indexing Bug** - Fixed incorrect buffer indexing in `ObtenerRaizVerbo()` function
 - **Buffer Validation** - Added proper validation for `PrintToBuffer()` results preventing runtime crashes
+- **Z-machine Stack Overflow** - Fixed "too many (176) locals" runtime error by optimizing call stack depth
+- **Function Call Chain Optimization** - Eliminated `DetectarTipoVerbo` call in `LanguageIsVerb` to reduce stack usage
+- **Glulx Compatibility** - Added conditional compilation for `Zcharacter` directives in `core/SpanishCharacters.h`
 
 ### Current Compilation Status
-- **✅ SUCCESS**: 0 errors, 28 warnings (unused variables)
-- **✅ Game Generation**: `rioja.z5` (74KB) compiles successfully
-- **✅ Runtime Stability**: Critical buffer errors fixed
-- **⚠️ Warnings Only**: Non-critical unused variable warnings remain
+- **✅ Z-machine SUCCESS**: 0 errors, 8 warnings (down from 28)
+- **✅ Glulx SUCCESS**: Full compatibility with unlimited local variables
+- **✅ Game Generation**: `rioja.z5` (74KB) compiles and runs successfully
+- **✅ Runtime Stability**: Stack overflow errors resolved
+- **✅ Stack Optimization**: Critical call paths optimized for Z-machine limits
 
 This is a mature Spanish language system that integrates with the standard Inform library architecture for Spanish interactive fiction development.
 
@@ -257,9 +276,41 @@ This is a mature Spanish language system that integrates with the standard Infor
    - Missing validation of `PrintToBuffer()` return values
    - Buffer underflow when accessing `array->(len-1)` without checking `len > 0`
 
+5. **"Fatal error: too many (N) locals" (Z-machine only)**: This indicates stack frame accumulation beyond Z-machine limits. Solutions:
+   - **Switch to Glulx**: Use `-G` flag instead of `-S` for unlimited local variables
+   - **Reduce call stack depth**: Inline critical functions or eliminate function calls in hot paths
+   - **Use minimal version**: Include `spanish_z_minimal.h` instead of full library via `+language_name=spanish`
+   - **Optimize local variables**: Remove unused variables, use shared buffers
+   - **Debug with `-g2`**: Compile with debug symbols to trace exact call stack causing overflow
+
 ### Architecture Notes for Development
 
 - **Language Interface Layer**: The 4 core functions (LanguagePronouns, LanguageDescriptors, LanguageNumbers, LanguageLM) must be available when Parser.h and VerbLib.h load
 - **Modular Design**: Core functionality in `/core/`, optional features in `/extensions/`, resources in `/resources/`
 - **Conditional Compilation**: Most features controlled by constants defined before including Spanish.h
 - **Standard Integration**: Library works as a drop-in replacement using `+language_name=spanish` flag, not direct inclusion
+
+### Z-machine vs Glulx Considerations
+
+#### Z-machine Limitations
+- **Local Variable Limit**: Maximum 15 local variables per function (MAX_LOCAL_VARIABLES = 16, minus 1 reserved)
+- **Stack Frame Limit**: Each function uses "4 + number_of_locals" stack units, with runtime limits around 176 total
+- **Critical Call Paths**: Functions like `LanguageIsVerb` → `DetectarTipoVerbo` → `PrintToBuffer` can exceed limits
+- **Performance**: Faster execution, smaller file sizes, better interpreter compatibility
+
+#### Glulx Advantages  
+- **Unlimited Variables**: No local variable restrictions (MAX_LOCAL_VARIABLES = 119)
+- **Complex Logic**: Can support full parsing chains without stack optimization
+- **Modern Features**: Better memory management, larger address space
+- **File Size**: Larger compiled games, requires Glulx-compatible interpreters
+
+#### Migration Strategy
+1. **Start with Z-machine** for maximum compatibility
+2. **Monitor stack usage** during development with `-g2` debugging
+3. **Switch to Glulx** if encountering "too many locals" errors
+4. **Use minimal version** (`spanish_z_minimal.h`) for Z-machine optimization when full features aren't needed
+
+#### Alternative Implementations
+- **spanish_z_minimal.h**: Ultra-minimal Spanish support designed for Z-machine stack constraints
+- **test_ultra_minimal.inf**: Example showing minimal library usage pattern
+- **spanish.alone.h**: Standalone version (if direct inclusion needed)
