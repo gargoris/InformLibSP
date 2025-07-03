@@ -4,7 +4,12 @@
       "Bash(grep:*)",
       "Bash(rg:*)",
       "Bash(ls:*)",
-      "Bash(../inform6_linux/Inform6/inform +language_name=spanish -S test_simple_spanish.inf)"
+      "Bash(../inform6_linux/Inform6/inform +language_name=spanish -S test_simple_spanish.inf)",
+      "Bash(../inform6_linux/Inform6/inform +language_name=spanish -S test_complex_spanish.inf)",
+      "Bash(find:*)",
+      "Bash(inform:*)",
+      "Bash(cp:*)",
+      "Bash(../inform6_linux/Inform6/inform +include_path=/tmp,/usr/share/inform-stdlib/ +language_name=spanish_clean -S test_complex_spanish.inf)"
     ],
     "deny": []
   }

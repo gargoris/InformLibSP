@@ -876,7 +876,7 @@ Constant LIBRARYV__TX   = " Librer@{ED}a v";
     Answer,Ask: "No hay respuesta.";
     Attack:     "La violencia no es la respuesta a esto.";
     Blow:       CSubjectCant(actor,true);
-                " soplar @{FA}tilmente ", (thatorthose) x1, ".";
+                " soplar @{FA}tilmente ", (ThatOrThose) x1, ".";
     Burn: switch (n) {
         1:  print "Este acto peligroso ";
             Tense("lograr@{ED}a", "habr@{ED}a logrado");
@@ -1423,8 +1423,31 @@ Constant LIBRARYV__TX   = " Librer@{ED}a v";
         4:  CSubjectVerb(actor,false,false,"me pongo","te pones","se pone","se puso");
             " ", (the) x1, ".";
     }
-    default: print "Mensaje del sistema ", n, " no implementado en espa@{F1}ol.";
+    ! MENSAJES CRÍTICOS PARA FUNCIONALIDAD BÁSICA
+    
+    ! Mensajes de lista y objetos visibles
+    ListMiscellany: switch (n) {
+        1:  print " (iluminand", (o) x1, ")";
+        2:  print " (que ", (IsOrAre) x1, " cerrad", (o) x1, ")";
+        3:  print " (cerrad", (o) x1, " y bloqueaed", (o) x1, ")";
+        4:  print " (que ", (IsOrAre) x1, " vac@{ED}", (o) x1, ")";
+        5:  print " (vac@{ED}", (o) x1, " y abierto)";
+        6:  print " (que ", (IsOrAre) x1, " abierto)";
+        7:  print " (que ", (IsOrAre) x1, " abierto pero vac@{ED}", (o) x1, ")";
+        8:  print " (iluminand", (o) x1, " y siendo llevad", (o) x1;
+        9:  print " (siendo llevad", (o) x1;
+        10: print " (";
+        11: print " (en ", (the) x1;
+        12: print " (en ", (the) x1;
+        13: print " (dentro ", (the) x1;
+        14: print " (dentro ", (the) x1;
+        15: print " (sobre ", (the) x1;
+        16: print " (sobre ", (the) x1;
+        17: print " (trabajando)";
+        18: print " (que ", (IsOrAre) x1, " cerrad", (o) x1, ")";
     }
+    
+    default: print "[Mensaje ", action, ":", n, " no implementado]";
 ];
 
 ! Funciones auxiliares para concordancia de género
@@ -1444,93 +1467,16 @@ Constant LIBRARYV__TX   = " Librer@{ED}a v";
     if (obj has pluralname) print "est@{E1}n"; else print "est@{E1}";
 ];
 
-! Función auxiliar para pronombres de objeto indirecto
-[ thatorthose obj;
-    if (obj == player) {
-        if (player provides narrative_voice) {
-            if (player.narrative_voice == 1) { print "me"; return; }
-            if (player.narrative_voice == 3) { CDefart(player); return; }
-        }
-        print "te";
-        return;
-    }
-    if (obj has pluralname)       { print "esos"; return; }
-    if (obj has female)           { print "esa"; return; }
-    print "eso";
+! Función auxiliar para pronombres de objeto indirecto (alias para ThatOrThose)
+[ thatorthose_aux obj;
+    ThatOrThose(obj);
 ];
 
-! LanguageDirection función para direcciones
-[ LanguageDirection d;
-    switch (d) {
-        n_to:    print "norte";
-        s_to:    print "sur";
-        e_to:    print "este";
-        w_to:    print "oeste";
-        ne_to:   print "noreste";
-        nw_to:   print "noroeste";
-        se_to:   print "sureste";
-        sw_to:   print "suroeste";
-        u_to:    print "arriba";
-        d_to:    print "abajo";
-        in_to:   print "adentro";
-        out_to:  print "afuera";
-        default: return RunTimeError(9,d);
-    }
-];
+! LanguageDirection función duplicada eliminada - usar la del inicio del archivo
 
-! Función para conversión de números
-[ LanguageNumber n f;
-    if (n == 0)    { print "cero"; rfalse; }
-    if (n < 0)     { print "menos "; n = -n; }
-    if (n >= 1000) { print (LanguageNumber) n/1000, " mil";
-                     n = n%1000; f = 1; }
-    if (n >= 100)  { if (f == 1) print " ";
-                     print (LanguageNumber) n/100, " cientos";
-                     n = n%100; f = 1; }
-    if (n == 0) rfalse;
-    if (f == 1) print " ";
-    switch (n) {
-        1:  print "uno";
-        2:  print "dos";
-        3:  print "tres";
-        4:  print "cuatro";
-        5:  print "cinco";
-        6:  print "seis";
-        7:  print "siete";
-        8:  print "ocho";
-        9:  print "nueve";
-        10: print "diez";
-        11: print "once";
-        12: print "doce";
-        13: print "trece";
-        14: print "catorce";
-        15: print "quince";
-        16: print "diecis@{E9}is";
-        17: print "diecisiete";
-        18: print "dieciocho";
-        19: print "diecinueve";
-        20: print "veinte";
-        default:
-            if (n < 30) { print "veinti"; print (LanguageNumber) n-20; }
-            else {
-                switch (n/10) {
-                    3: print "treinta";
-                    4: print "cuarenta";
-                    5: print "cincuenta";
-                    6: print "sesenta";
-                    7: print "setenta";
-                    8: print "ochenta";
-                    9: print "noventa";
-                }
-                if (n%10 ~= 0) { print " y ", (LanguageNumber) n%10; }
-            }
-    }
-];
+! LanguageNumber función duplicada eliminada - usar la del inicio del archivo
 
-! Función para selección de artículos
-[ LanguageContraction text;
-    return 0; ! En español no hay contracciones como a/an
-];
+! LanguageContraction función duplicada eliminada - usar la del inicio del archivo
 
 ! ==============================================================================
 
