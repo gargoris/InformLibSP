@@ -494,6 +494,8 @@ Constant LIBRARYV__TX   = " Librer@{ED}a v";
     print "eso";
 ];
 
+! Función auxiliar para compatibilidad con minúscula
+
 ! Acusativo
 [ ItOrThem obj;
     if (obj == player) {
@@ -866,105 +868,107 @@ Constant LIBRARYV__TX   = " Librer@{ED}a v";
 #Endif; ! TARGET_
 
 ! ==============================================================================
-! FUNCIÓN PRINCIPAL DE MENSAJES DEL SISTEMA - LanguageLM
-! Esta función maneja TODOS los mensajes del juego en español
+! FUNCIONES DE INTERFAZ DE IDIOMA - VERSIÓN SIMPLIFICADA
 ! ==============================================================================
 
+! Función completa de mensajes del sistema
 [ LanguageLM n x1 x2;
-  Answer,Ask:
-            print "No hay respuesta.";
-! Ask:      ver Answer
-  Attack:   print "La violencia no es la respuesta.";
-  Blow:     CSubjectCant(actor,true);
-            " soplar ", (thatorthose) x1, " @{FA}tilmente.";
-  Burn: switch (n) {
+    Answer,Ask: "No hay respuesta.";
+    Attack:     "La violencia no es la respuesta a esto.";
+    Blow:       CSubjectCant(actor,true);
+                " soplar @{FA}tilmente ", (thatorthose) x1, ".";
+    Burn: switch (n) {
         1:  print "Este acto peligroso ";
             Tense("lograr@{ED}a", "habr@{ED}a logrado");
             " poco.";
         2:  DecideAgainst();
     }
-  Buy:      print "No hay nada en venta.";
-  Climb: switch (n) {
-        1:  print "Trepar ", (ThatOrThose) x1, " ";
+    Buy:        print "Nada ";
+            Tense("est@{E1}", "estaba");
+            " en venta.";
+    Climb: switch (n) {
+        1:  print "Trepar por ", (ThatOrThose) x1, " ";
             Tense("lograr@{ED}a", "habr@{ED}a logrado");
             " poco.";
         2:  DecideAgainst();
     }
-  Close: switch (n) {
+    Close: switch (n) {
         1:  CSubjectIs(x1,true);
             print " no es algo que ", (theActor) actor;
-            Tense(" pueda cerrar", " pudiera haber cerrado");
+            Tense(" puede cerrar", " podr@{ED}a haber cerrado");
             ".";
         2:  CSubjectIs(x1,true); " ya est@{E1} cerrad", (o) x1, ".";
         3:  CSubjectVerb(actor,false,false,"cierro","cierras","cierra","cerr@{F3}");
             " ", (the) x1, ".";
         4:  "(primero cerrando ", (the) x1, ")";
     }
-  CommandsOff: switch (n) {
+    CommandsOff: switch (n) {
         1: "[Grabaci@{F3}n de comandos desactivada.]";
         #Ifdef TARGET_GLULX;
-        2: "[La grabaci@{F3}n de comandos ya est@{E1} desactivada.]";
+        2: "[La grabaci@{F3}n de comandos ya estaba desactivada.]";
         #Endif; ! TARGET_
     }
-  CommandsOn: switch (n) {
+    CommandsOn: switch (n) {
         1: "[Grabaci@{F3}n de comandos activada.]";
         #Ifdef TARGET_GLULX;
         2: "[Los comandos se est@{E1}n reproduciendo actualmente.]";
-        3: "[La grabaci@{F3}n de comandos ya est@{E1} activada.]";
-        4: "[Fall@{F3} la grabaci@{F3}n de comandos.]";
+        3: "[La grabaci@{F3}n de comandos ya estaba activada.]";
+        4: "[La grabaci@{F3}n de comandos fall@{F3}.]";
         #Endif; ! TARGET_
     }
-  CommandsRead: switch (n) {
+    CommandsRead: switch (n) {
         1: "[Reproduciendo comandos.]";
         #Ifdef TARGET_GLULX;
         2: "[Los comandos ya se est@{E1}n reproduciendo.]";
-        3: "[Fall@{F3} la reproducci@{F3}n de comandos. La grabaci@{F3}n est@{E1} activada.]";
-        4: "[Fall@{F3} la reproducci@{F3}n de comandos.]";
+        3: "[La reproducci@{F3}n de comandos fall@{F3}. La grabaci@{F3}n est@{E1} activa.]";
+        4: "[La reproducci@{F3}n de comandos fall@{F3}.]";
         5: "[Reproducci@{F3}n de comandos completada.]";
         #Endif; ! TARGET_
     }
-  Consult:  CSubjectVerb(actor,true,false,"descubro","descubres","descubre","descubri@{F3}");
-            print " nada de inter@{E9}s en ";
+    Consult:  CSubjectVerb(actor,true,false,"descubro","descubres","descubre","descubri@{F3}");
+            print " nada interesante en ";
             if (x1 == player) { OnesSelf(x1); ".";}
             else print_ret (the) x1, ".";
-  Cut: switch (n) {
+    Cut: switch (n) {
         1:  print "Cortar ", (ThatOrThose) x1, " ";
             Tense("lograr@{ED}a", "habr@{ED}a logrado");
             " poco.";
         2:  DecideAgainst();
     }
-  Dig:      print "Cavar no ";
+    Dig:      print "Cavar ";
             Tense("lograr@{ED}a", "habr@{ED}a logrado");
             " nada aqu@{ED}.";
-  Disrobe: switch (n) {
+    Disrobe: switch (n) {
         1:  CSubjectIsnt(actor,true); " llevando ", (ThatOrThose) x1, ".";
         2:  CSubjectVerb(actor,false,false,"me quito","te quitas","se quita", "se quit@{F3}");
             " ", (the) x1, ".";
         3:  "(primero quit@{E1}ndose ", (the) x1, ")";
-        4: CSubjectVerb(actor,false,false, "necesito quitar", "necesitas quitar", "necesita quitar", "necesitaba quitar");
+        4: CSubjectVerb(actor,false,false, "necesitar@{E9} quitar", 0, 0, "necesit@{F3} quitar");
            " ", (the) noun, " primero.";
     }
-  Drink:    print "No hay nada adecuado para beber aqu@{ED}.";
-  Drop: switch (n) {
+    Drink:    print "No hay";
+            Tense("", " hab@{ED}a");
+            " nada apropiado para beber aqu@{ED}.";
+    Drop: switch (n) {
         1:  CSubjectIs(x1,true); " ya est@{E1} aqu@{ED}.";
         2:  CSubjectVerb(actor, false, false, "no tengo", "no tienes", "no tiene",
                          "no ten@{ED}a");
             " ", (the) x1, ".";
-        3:  "Soltado.";
-        4: CSubjectVerb(actor, false, false, "necesito sacar", "necesitas sacar", "necesita sacar", "necesitaba sacar");
+        3:  "Soltad", (o) x1, ".";
+        4: CSubjectVerb(actor, false, false, "necesito tomar", "necesitas tomar", "necesita tomar", "necesit@{F3} tomar");
            print " ", (the) x1, " ";
            if (x2 has container)
                print "de";
            else
-               print "de";
-           " ", (the) x2, " antes de soltarlo.";
+               print "de encima de";
+           " ", (the) x2, " antes de soltar ", (ItOrThem) x1, ".";
     }
-  Eat: switch (n) {
+    Eat: switch (n) {
         1:  CSubjectIs(x1,true); " claramente no comestible.";
         2:  CSubjectVerb(actor,false,false,"como","comes","come", "comi@{F3}"); print " ", (the) x1;
                 if (actor == player) ". No est@{E1} mal."; else ".";
     }
-  EmptyT: switch (n) {
+    EmptyT: switch (n) {
         1:  CSubjectCant(x1,true); " contener cosas.";
         2:  CSubjectIs(x1,true); " cerrad", (o) x1, ".";
         3:  CSubjectIs(x1,true); " ya est@{E1} vac@{ED}", (o) x1, ".";
@@ -972,12 +976,12 @@ Constant LIBRARYV__TX   = " Librer@{ED}a v";
             Tense("vaciar@{ED}a", "habr@{ED}a vaciado");
             " nada.";
     }
-  Enter: switch (n) {
+    Enter: switch (n) {
         1:  print "Pero "; CSubjectIs(actor,true,true);
             " ya est@{E1} ", (nop) SupportObj(x1,"sobre ","en "), (the) x1, ".";
         2:  CSubjectIs(x1,true);
             print " no es algo en lo que ", (theActor) actor;
-            Tense(" pueda ", " pudiera ");
+            Tense(" puede ", " podr@{ED}a ");
             switch (x2) {
               'stand':  "pararse.";
               'sit':    "sentarse.";
@@ -987,15 +991,15 @@ Constant LIBRARYV__TX   = " Librer@{ED}a v";
         3:  CSubjectCant(actor,true);
             " entrar en ", (the) x1, " cerrad", (o) x1, ".";
         4:  CSubjectCan(actor,true);
-            " solo entrar en algo que est@{E9} solo.";
-        5:  CSubjectVerb(actor,false,false,"subo","subes","sube","subi@{F3}");
-            SupportObj(x1," a"," en"); " ", (the) x1, ".";
-        6:  "(bajando de ", (the) x1, ")";
+            " s@{F3}lo entrar en algo que est@{E9} libre.";
+        5:  CSubjectVerb(actor,false,false,"entro","entras","entra","entr@{F3}");
+            SupportObj(x1," en"," en"); " ", (the) x1, ".";
+        6:  "(saliendo ", (nop) SupportObj(x1,"de","de"), " ", (the) x1, ")";
         7:  if (x1 has supporter) "(subiendo a ", (the) x1, ")";
             if (x1 has container) "(entrando en ", (the) x1, ")";
                                   "(entrando en ", (the) x1, ")";
     }
-  Examine: switch (n) {
+    Examine: switch (n) {
         1:  "Oscuridad, sustantivo. Una ausencia de luz para ver.";
         2:  CSubjectVerb(actor,true,false,"veo","ves","ve","vi@{F3}");
             " nada especial sobre ", (the) x1, ".";
@@ -1004,10 +1008,10 @@ Constant LIBRARYV__TX   = " Librer@{ED}a v";
             print " ";
             if (x1 has on) "encendid", (o) x1, "."; else "apagad", (o) x1, ".";
     }
-  Exit: switch (n) {
+    Exit: switch (n) {
         1:  print "Pero ";
             CSubjectIsnt(actor,true,true);
-            " dentro de nada en este momento.";
+            " en nada en este momento.";
         2:  CSubjectCant(actor,false);
             " salir de ", (the) x1, " cerrad", (o) x1, ".";
         3:  CSubjectVerb(actor,false,false,"salgo","sales","sale", "sali@{F3}");
@@ -1015,582 +1019,517 @@ Constant LIBRARYV__TX   = " Librer@{ED}a v";
             SupportObj(x1,"de","de"); " ", (the) x1, ".";
         4:  CSubjectIsnt(actor,true);
             print " ";
-            SupportObj(x1,"sobre","en"); " ", (the) x1, ".";
-        5:  "(primero saliendo de ", (the) x1, ")";
-        6:  CSubjectVerb(actor,false,false,"me levanto","te levantas","se levanta","se levant@{F3}"); ".";
+            SupportObj(x1,"en","en"); " ", (the) x1, ".";
+        5:  "(primero saliendo ", (nop) SupportObj(x1,"de","de"),
+              " ", (the) x1, ")";
+        6:  CSubjectVerb(actor,false,false,"me pongo","te pones","se pone","se puso"); " de pie.";
     }
-  Fill: switch (n) {
-        1:  print "No hay nada obvio con qu@{E9} llenar ", (the) x1, ".";
-        2:  print "Llenar ", (the) x1, " con ", (the) x2, " no ";
+    Fill: switch (n) {
+        1:  print "No hay ";
+            Tense("", "hab@{ED}a");
+            " nada obvio con lo que llenar ", (the) x1, ".";
+        2:  print "Llenar ", (the) x1, " desde ", (the) x2, " no ";
             Tense("tendr@{ED}a", "habr@{ED}a tenido");
             " sentido.";
     }
-  FullScore: switch (n) {
-        1:  if (deadflag) print "La puntuaci@{F3}n era "; else print "La puntuaci@{F3}n es ";
+    FullScore: switch (n) {
+        1:  if (deadflag) print "La puntuaci@{F3}n fue "; else print "La puntuaci@{F3}n es ";
                 "compuesta de la siguiente manera:^";
         2:  "encontrar varios objetos";
         3:  "visitar varios lugares";
         4:  print "total (de ", MAX_SCORE; ")";
     }
-  GetOff:   print "Pero ";
-            CSubjectIsnt(actor,true,true); " sobre ", (the) x1, " en este momento.";
-  Give: switch (n) {
-        1:  CSubjectIsnt(actor,true); " sosteniendo ", (the) x1, ".";
-        2:  CSubjectVerb(actor,false,false,"hago malabares","haces malabares","hace malabares","hizo malabares");
-            print " con ", (the) x1, " por un rato, pero ";
+    GetOff:   print "Pero ";
+            CSubjectIsnt(actor,true,true); " en ", (the) x1, " en este momento.";
+    Give: switch (n) {
+        1:  CSubjectIsnt(actor,true); " llevando ", (the) x1, ".";
+        2:  CSubjectVerb(actor,false,false,"hago malabarismos","haces malabarismos","hace malabarismos","hizo malabarismos");
+            print " con ", (the) x1, " un rato, pero ";
             CSubjectVoice(actor,"no logro","no logras","no logra","no logr@{F3}");
             " mucho.";
-        3:  CSubjectDont(x1,true); " parece interesad", (o) x1, ".";
+        3:  CSubjectDont(x1,true); " parecer interesad", (o) x1, ".";
         4:  CSubjectVerb(actor,false,false,"entrego","entregas","entrega","entreg@{F3}");
             " ", (the) x1, ".";
     }
-  Go: switch (n) {
+    Go: switch (n) {
         1:  CSubjectWill(actor,true);
             Tense(" tener", " haber tenido");
-                " que bajar de ", (the) x1, " primero.";
+                " que salir ", (nop) SupportObj(x1,"de","de"), " ", (the) x1, " primero.";
         2:  CSubjectCant(actor,true); " ir por ah@{ED}.";
         3:  CSubjectIs  (actor,true); " incapaz de trepar ", (the) x1, ".";
         4:  CSubjectIs  (actor,true); " incapaz de descender por ", (the) x1, ".";
-        5:  CSubjectCant(actor,true); " ya que ", (the) x1, " est@{E1} en el camino.";
-        6:  CSubjectCant(actor,true); " ya que ", (the) x1, " no lleva a ninguna parte.";
+        5:  CSubjectCant(actor,true); " porque ", (the) x1, " ", (IsOrAre) x1, " en el camino.";
+        6:  CSubjectCant(actor,true); " porque ", (the) x1, " ", (nop) PluralObj(x1,"no lleva","no llevan","no llevaba"), " a ninguna parte.";
         7:  CSubjectVerb(actor,false,false,"me voy","te vas","se va","se fue"); ".";
     }
-  Insert: switch (n) {
-        1:  CSubjectVerb(actor,true,false,"necesito","necesitas","necesita","necesitaba");
-            print " estar sosteniendo ", (the) x1, " antes de poder";
-            " ponerlo dentro de algo m@{E1}s.";
+    Insert: switch (n) {
+        1:  CSubjectVerb(actor,true,false,"necesito","necesitas","necesita","necesit@{F3}");
+            print " estar llevando ", (the) x1, " antes de que ", (theActor) actor;
+            Tense(" pueda", " pudiera");
+            " meter ", (ItOrThem) x1, " en algo m@{E1}s.";
         2:  CSubjectCant(x1,true); " contener cosas.";
         3:  CSubjectIs  (x1,true); " cerrad", (o) x1, ".";
-        4:  CSubjectWill(actor,true);
-            Tense(" necesitar", " haber necesitado");
-            " quitarlo primero.";
-        5:  CSubjectCant(actor,true); " poner algo dentro de s@{ED} mismo.";
-        6:  "(primero quitando ", (the) x1, ")";
-        7:  print "No hay m@{E1}s espacio en ", (the) x1, ".";
+        4:  CSubjectVerb(actor,true,false,"necesito","necesitas","necesita","necesit@{F3}");
+            print " quitar ", (the) x1, " primero.";
+        5:  CSubjectCant(actor,true); " meter ", (ThatOrThose) x1, " dentro de s@{ED} mism", (o) x1, ".";
+        6:  "(primero quit@{E1}ndose ", (the) x1, ")";
+        7:  "No hay m@{E1}s espacio en ", (the) x1, ".";
         8:  "Hecho.";
-        9:  CSubjectVerb(actor,false,false,"pongo","pones","pone","puso"); " ", (the) x1, " en ", (the) x2, ".";
+        9:  CSubjectVerb(actor,false,false,"meto","metes","mete","meti@{F3}");
+            " ", (the) x1, " en ", (the) x2, ".";
     }
-  Inv: switch (n) {
-        1:  CSubjectIs  (actor,false); " no lleva nada.";
-        2:  CSubjectIs  (actor,false); print " llevando";
-        3:  ":";
-        4:  ".";
-    }
-  Jump: CSubjectVerb(actor,false,false,"salto","saltas","salta","salt@{F3}"); " en el lugar, in@{FA}tilmente.";
-  JumpIn: switch (n) {
-        1: print "Saltar en ", (the) x1, " no ";
-           Tense("lograr@{ED}a", "habr@{ED}a logrado");
-           " nada aqu@{ED}.";
-        2: DecideAgainst();
-    }
-  JumpOn: switch (n) {
-        1: print "Saltar sobre ", (the) x1, " no ";
-           Tense("lograr@{ED}a", "habr@{ED}a logrado");
-           " nada aqu@{ED}.";
-        2: DecideAgainst();
-    }
-  JumpOver: switch (n) {
-        1: print "Saltar por encima de ", (the) x1, " no ";
-           Tense("lograr@{ED}a", "habr@{ED}a logrado");
-           " nada aqu@{ED}.";
-        2:  DecideAgainst();
-    }
-  Kiss:     "Mant@{E9}n tu mente en el juego.";
-  Listen:   CSubjectVerb(actor,true,false,"oigo","oyes","oye","oy@{F3}"); " nada inesperado.";
-  ListMiscellany: switch (n) {
-        1:  print " (dando luz)";
-        2:  print " (que est@{E1} cerrad", (o) x1, ")";
-        3:  print " (cerrad", (o) x1, " y dando luz)";
-        4:  print " (que est@{E1} vac@{ED}", (o) x1, ")";
-        5:  print " (vac@{ED}", (o) x1, " y dando luz)";
-        6:  print " (que est@{E1} cerrad", (o) x1, " y vac@{ED}", (o) x1, ")";
-        7:  print " (cerrad", (o) x1, ", vac@{ED}", (o) x1, " y dando luz)";
-        8:  print " (dando luz y siendo llevad", (o) x1;
-        9:  print " (dando luz";
-        10: print " (siendo llevad", (o) x1;
-        11: print " (que est@{E1} ";
-        12: print "abiert", (o) x1;
-        13: print "abiert", (o) x1, " pero vac@{ED}", (o) x1;
-        14: print "cerrad", (o) x1;
-        15: print "cerrad", (o) x1, " y bloqueado";
-        16: print " y vac@{ED}", (o) x1;
-        17: print " (que est@{E1} vac@{ED}", (o) x1, ")";
-        18: print " que contiene ";
-        19: print " (sobre ";
-        20: print ", encima de ";
-        21: print " (en ";
-        22: print ", dentro de ";
-    }
-  LMode1:   print (string) Story, " est@{E1} ahora en su modo de impresi@{F3}n ";
-            if (initial_lookmode == 1) print "normal ";
-            "~breve~, que da descripciones largas de lugares nunca antes 
-             visitados y descripciones cortas en otros casos.";
-  LMode2:   print (string) Story, " est@{E1} ahora en su modo ";
-            if (initial_lookmode ~= 1 or 3) print "normal ";
-            "~detallado~, que siempre da descripciones largas de ubicaciones
-             (incluso si has estado ah@{ED} antes).";
-  LMode3:   print (string) Story, " est@{E1} ahora en su modo ";
-            if (initial_lookmode == 3) print "normal ";
-            "~superbreve~, que siempre da descripciones cortas de ubicaciones
-             (incluso si no has estado ah@{ED} antes).";
-  Lock: switch (n) {
-        1:  CSubjectDont(x1,true);
-            print " parece ser algo que ", (theActor) actor;
-            Tense(" pueda", " pudiera");
-            " bloquear.";
-        2:  CSubjectIs  (x1,true); " bloqueado en este momento.";
-        3:  CSubjectWill(actor,true); " primero tener que cerrar ", (the) x1, ".";
-        4:  CSubjectDont(x1,true); " parece encajar en la cerradura.";
-        5:  CSubjectVerb(actor,false,false,"bloqueo","bloqueas","bloquea","bloque@{F3}"); " ", (the) x1, ".";
-    }
-  Look: switch (n) {
-        1:  print " (sobre ", (the) x1, ")";
-        2:  print " (en ", (the) x1, ")";
-        3:  print " (como ", (object) x1, ")";
-        4:  print "^Sobre ", (the) x1;
-            WriteListFrom(child(x1),
-              ENGLISH_BIT+RECURSE_BIT+PARTINV_BIT+TERSE_BIT+CONCEAL_BIT+ISARE_BIT);
+    Inv: switch (n) {
+        1:  CSubjectIs(actor,false); " cargando";
+            if (x1 ~= 0) { print " "; WriteListFrom(x1, ENGLISH_BIT); }
             ".";
-        5,6:
-            if (x1 ~= location) {
-                if (x1 has supporter) print "^Sobre "; else print "^En ";
-                print (the) x1, " ", (theActor) actor, " ";
-                Tense("puede", "pod@{ED}a");
-            }
-            else { new_line; CSubjectCan(actor,false); }
-            if (n == 5) print " tambi@{E9}n";
-            print " ver ";
-            WriteListFrom(child(x1),
-              ENGLISH_BIT+RECURSE_BIT+PARTINV_BIT+TERSE_BIT+CONCEAL_BIT+WORKFLAG_BIT);
-            if (x1 ~= location) "."; else " aqu@{ED}.";
-        7:  CSubjectVerb(actor,true,false,"veo","ves","ve", "vi@{F3}"); " nada inesperado en esa direcci@{F3}n.";
-    }
-  LookUnder: switch (n) {
-        1:  print "Pero est@{E1} oscuro.";
-        2:  CSubjectVerb(actor,true,false,"encuentro","encuentras","encuentra", "encontr@{F3}"); " nada de inter@{E9}s.";
-    }
-  Mild:     "Efectivamente.";
-  Miscellany: switch (n) {
-        1:  "(considerando solo los primeros diecis@{E9}is objetos)^";
-        2:  "Nada que hacer.";
-        3:  print " "; CSubjectVerb(player, false, false, "he muerto", "has muerto", "ha muerto");
-	    print " ";
-        4:  print " "; CSubjectVerb(player, false, false, "he ganado", "has ganado", "ha ganado");
-            print " ";
-        5:  print "^@{BF}Te gustar@{ED}a REINICIAR, CARGAR una partida guardada";
-            #Ifdef DEATH_MENTION_UNDO;
-	    if (undo_flag ~= 0)
-		print ", DESHACER tu @{FA}ltimo movimiento";
-            #Endif;
-            if (TASKS_PROVIDED == 0) print ", obtener la PUNTUACI@{D3}N COMPLETA de este juego";
-            if (deadflag == 2 && AMUSING_PROVIDED == 0)
-                print ", ver algunas sugerencias de cosas DIVERTIDAS que hacer";
-            SerialComma(3); print " o SALIR?";
-        6:  "[Tu int@{E9}rprete no proporciona ~deshacer~. @{A1}Lo siento!]";
-            #Ifdef TARGET_ZCODE;
-        7:  "~Deshacer~ fall@{F3}. [No todos los int@{E9}rpretes lo proporcionan.]";
-            #Ifnot; ! TARGET_GLULX
-        7:  "[No puedes ~deshacer~ m@{E1}s.]";
-            #Endif; ! TARGET_
-        8:  "Por favor, da una de las respuestas de arriba.";
-        9:  print "^Ahora est@{E1} completamente oscuro aqu@{ED}.";
-        10: "@{BF}Perd@{F3}n?";
-        11: "[No puedes ~deshacer~ lo que no se ha hecho!]";
-        12: "[No se puede ~deshacer~ dos veces seguidas. @{A1}Lo siento!]";
-        13: "[Turno anterior deshecho.]";
-        14: "Lo siento, eso no se puede corregir.";
-        15: "No le des importancia.";
-        16: "~Ups~ solo puede corregir una palabra.";
-        17: print "Est@{E1} completamente oscuro, y ", (theActor) actor;
-            Tense(" no puede", " no pod@{ED}a");
-            " ver nada.";
-        18: print "t@{FA} mismo";
-        19: "Tan guap", (o) player, " como siempre.";
-        20: "Para repetir un comando como ~rana, salta~, solo di ~otra vez~, no ~rana, otra vez~.";
-        21: CSubjectCan(actor,true); " dif@{ED}cilmente repetir eso.";
-        22: CSubjectCant(actor, true); " empezar con una coma.";
-        23: CSubjectVerb(actor, true, false, "parece", "pareces", "parece", "parec@{ED}a");
-            print " querer hablar con alguien, pero no ";
-            Tense("puedo", "pod@{ED}a"); " ver con qui@{E9}n.";
-        24: CSubjectCant(actor, true); " hablar con ", (the) x1, ".";
-        25: "Para hablar con alguien, intenta ~alguien, hola~ o algo as@{ED}.";
-        26: "(primero tomando ", (the) x1, ")";
-        27: "No entend@{ED} esa oraci@{F3}n.";
-        28: print "Solo te entend@{ED} hasta querer ";
-        29: "No entend@{ED} ese n@{FA}mero.";
-        30: CSubjectCant(actor,true); " ver tal cosa.";
-        31: CSubjectVerb(actor, true, false, "parece", "pareces", "parece", "parec@{ED}a");
-            " haber dicho muy poco.";
-        32: CSubjectIsnt(actor); " sosteniendo eso.";
-        33: "No puedes usar objetos m@{FA}ltiples con ese verbo.";
-        34: "Solo puedes usar objetos m@{FA}ltiples una vez en una l@{ED}nea.";
-        35: "No estoy seguro a qu@{E9} se refiere ~", (address) x1, "~.";
-        36: "Exceptuaste algo que no estaba incluido de todos modos.";
-        37: CSubjectCan(actor,true); " solo hacer eso a algo animado.";
-            #Ifdef DIALECT_US;
-        38: "Ese no es un verbo que reconozco.";
-            #Ifnot;
-        38: "Ese no es un verbo que reconozco.";
-            #Endif;
-        39: "Eso no es algo a lo que necesites referirte en el curso de este juego.";
-        40: CSubjectCant(actor,true); " ver ~", (address) x1, "~ (", (the) x2, ") en este momento.";
-        41: "No entend@{ED} c@{F3}mo termin@{F3} eso.";
-        42: if (x1 == 0) print "Ninguno"; else print "Solo ", (number) x1;
-            print " de esos ";
-            if (x1 == 1) print "est@{E1}"; else print "est@{E1}n";
-            " disponible.";
-        43: "Nada que hacer.";
-        44: print "No hay nada que ", (address) x1, ".";
-        45: print "@{BF}A qui@{E9}n te refieres, ";
-        46: print "@{BF}A cu@{E1}l te refieres, ";
-        47: "Lo siento, solo puedes tener un art@{ED}culo aqu@{ED}. @{BF}Cu@{E1}l exactamente?";
-        48: print "@{BF}A qui@{E9}n ";
-            CSubjectVoice(player, "quiero", "quieres", "quiere", "quer@{ED}a");
-            print " que ";
-            if (x1 ~= player && x1 ~= nothing) print (the) x1, " ";
-            PrintCommand(); "?";
-        49: print "@{BF}Qu@{E9} ";
-            CSubjectVoice(player, "quiero", "quieres", "quiere", "quer@{ED}a");
-            print " que ";
-            if (x1 ~= player && x1 ~= nothing) print (the) x1, " ";
-            PrintCommand(); "?";
-        50: print "La puntuaci@{F3}n acaba de ";
-            if (x1 > 0) print "subir"; else { x1 = -x1; print "bajar"; }
-            print " ", (number) x1, " punto";
-            if (x1 > 1) print "s";
-        51: "(Dado que algo dram@{E1}tico ha pasado, tu lista de comandos ha sido cortada.)";
-        52: "^Teclea un n@{FA}mero del 1 al ", x1, ", 0 para mostrar de nuevo o presiona ENTER.";
-        53: "^[Por favor presiona ESPACIO.]";
-        54: "[Comentario registrado.]";
-        55: "[Comentario NO registrado.]";
-        56: ".";
-        57: "?";
-        58: "(primero tomando ", (the) x1, " de ", (the) x2, ")";
-        59: "Tendr@{E1}s que ser m@{E1}s espec@{ED}fico.";
-        60: print (The) x1, " observa que ";
-    }
-  No,Yes:   "Esa era una pregunta ret@{F3}rica.";
-  NotifyOff:
-            "Notificaci@{F3}n de puntuaci@{F3}n desactivada.";
-  NotifyOn: "Notificaci@{F3}n de puntuaci@{F3}n activada.";
-  Objects: switch (n) {
-        1:  print (nop) CSubjectVerb(actor, false, false, "he manejado", "has manejado", "ha manejado");
-        2:  CSubjectVerb(actor, false, false, "no he manejado", "no has manejado", "no ha manejado"); " nada.";
-        3:  print " (llevado)";
-        4:  print " (sostenido)";
-        5:  print " (regalado)";
-        6:  print " (en ", (name) x1, ")";
-        7:  print " (en ", (the) x1, ")";
-        8:  print " (dentro de ", (the) x1, ")";
-        9:  print " (sobre ", (the) x1, ")";
-        10: print " (perdido)";
-    }
-  Open: switch (n) {
-        1:  CSubjectIs  (x1,true);
-            print " no es algo que ", (theActor) actor;
-            Tense(" pueda abrir", " pudiera haber abierto");
+        2:  CSubjectIs(actor,false); " llevando";
+            if (x1 ~= 0) { print " "; WriteListFrom(x1, ENGLISH_BIT); }
             ".";
-        2:  CSubjectVerb(x1,true,false,"parece","pareces","parece","parec@{ED}a"); " estar bloqueado.";
-        3:  CSubjectIs  (x1,true); " ya est@{E1} abiert", (o) x1, ".";
-        4:  CSubjectVerb(actor,false,false,"abro","abres","abre","abri@{F3}"); print " ", (the) x1;
-            Tense(", revelando ", " y revel@{F3} ");
-                if (WriteListFrom(child(x1), ENGLISH_BIT+TERSE_BIT+CONCEAL_BIT) == 0) "nada.";
-                ".";
-        5:  CSubjectVerb(actor,false,false,"abro","abres","abre","abri@{F3}"); " ", (the) x1, ".";
-        6:  "(primero abriendo ", (the) x1, ")";
+        3:  CSubjectIs(actor,false); " vac@{ED}", (o) actor, ".";
     }
-  Order:    CSubjectHas(x1,false); " mejores cosas que hacer.";
-  Places: switch (n) {
-        1:  print (nop) CSubjectVerb(actor, false, false, "he visitado", "has visitado", "ha visitado");
-        2:  ".";
-        3:  CSubjectVerb(actor, false, false, "no he visitado", "no has visitado", "no ha visitado"); " nada.";
-    }
-  Pray:     print "Nada pr@{E1}ctico ";
-            Tense("resulta", "result@{F3}");
-            " de la oraci@{F3}n de ", (Possessive) actor, ".";
-  Prompt:   print "^>";
-  Pronouns: switch (n) {
-        1:  print "En este momento, ";
-        2:  print "significa ";
-        3:  print "no est@{E1} establecido";
-        4:  "no se conocen pronombres en el juego.";
-        5:  ".";
-    }
-  Pull,Push,Turn: switch (n) {
-        1:  if (player provides narrative_voice && player.narrative_voice == 3) {
-                print_ret (The) player, " no es probable que ayude a las cosas castig@{E1}ndose de esa manera.";
-            } else {
-                "Castigarte de esa manera no es probable que ayude a las cosas.";
-            }
-        2:  CSubjectIs  (x1,true); " fijo en su lugar.";
-        3:  CSubjectIs  (actor,true); " incapaz.";
-        4:  print "Nada obvio ";
-            Tense("pasa", "pas@{F3}");
-            ".";
-        5:  print "Eso ";
-            Tense("ser@{ED}a", "habr@{ED}a sido");
-            " menos que cort@{E9}s.";
-        6:  DecideAgainst();
-    }
-! Push: ver Pull
-  PushDir: switch (n) {
-        1:  print "Eso realmente no ";
-            Tense("servir@{ED}a", "habr@{ED}a servido");
-            " ning@{FA}n prop@{F3}sito.";
-        2:  print "Esa ";
-            Tense("no es", "no era");
-            " una direcci@{F3}n.";
-        3:  print "No por ah@{ED} ", (theActor) actor;
-            Tense(" no puede", " no pod@{ED}a");
-            ".";
-    }
-  PutOn: switch (n) {
-        1:  CSubjectVerb(actor,true,false,"necesito","necesitas","necesita","necesitaba");
-            print " estar sosteniendo ", (the) x1, " antes de poder";
-            " ponerlo encima de algo m@{E1}s.";
-        2:  CSubjectCant(actor,true,true); " poner algo encima de s@{ED} mismo.";
-        3:  print "Poner cosas sobre ", (the) x1, " no";
-            Tense(" lograr@{ED}a", " habr@{ED}a logrado");
-            " nada.";
-        4:  CSubjectVerb(actor,true,false,"me falta","te falta","le falta","le faltaba"); " la destreza.";
-        5:  "(primero quitando ", (the) x1, ")";
-        6:  print "No hay m@{E1}s espacio sobre ", (the) x1, ".";
-        7:  "Hecho.";
-        8:  CSubjectVerb(actor,false,false,"pongo","pones","pone","puso"); " ", (the) x1, " sobre ", (the) x2, ".";
-    }
-  Quit: switch (n) {
-        1:  print "Por favor responde s@{ED} o no.";
-        2:  print "@{BF}Est@{E1}s seguro de que quieres salir? ";
-    }
-  Remove: switch (n) {
-        1:  CSubjectIs  (x1,true); " desafortunadamente cerrad", (o) x1, ".";
-        2:  print "Pero ";
-            CSubjectIsnt(x1,true,true); " ah@{ED} ahora.";
-        3:  "Quitado.";
-        4:  print "Pero ";
-            CSubjectIsnt(x1,true,true); " en o sobre algo.";
-    }
-  Restart: switch (n) {
-        1:  print "@{BF}Est@{E1}s seguro de que quieres reiniciar? ";
-        2:  "Fall@{F3}.";
-    }
-  Restore: switch (n) {
-        1:  "Cargar fall@{F3}.";
-        2:  "Vale.";
-    }
-  Rub: switch (n) {
-        1:  CSubjectVerb(actor,true,false,"logro","logras","logra","logr@{F3}");
-            " nada con esto.";
-        2:  DecideAgainst();
-    }
-  RunTimeError: print "** ";
-	switch (n) {
-	1:  print "Preposici@{F3}n no encontrada (esto no deber@{ED}a ocurrir)";
-	2:  print "Valor de propiedad no es rutina o cadena: ~", (property) x2,
-		"~ de ~", (name) x1, "~ (", x1, ")";
-	3:  print "Entrada en lista de propiedades no es rutina o cadena: ~",
-		(property) x2, "~ lista de ~", (name) x1, "~ (", x1, ")";
-	4:  print "Demasiados temporizadores/demonios est@{E1}n activos simult@{E1}neamente.
-		El l@{ED}mite es la constante de librer@{ED}a MAX_TIMERS
-		(actualmente ", MAX_TIMERS, ") y deber@{ED}a incrementarse";
-	5:  print "El objeto ~", (name) x1, "~ no tiene la propiedad ~", (property) x2, "~";
-	7:  print "El objeto ~", (name) x1, "~ solo puede usarse como objeto jugador
-		si tiene la propiedad ~number~";
-	8:  print "Intento de tomar entrada aleatoria de un array de tabla vac@{ED}o";
-	9:  print x1, " no es un n@{FA}mero de propiedad de direcci@{F3}n v@{E1}lido";
-	10: print "El objeto-jugador est@{E1} fuera del @{E1}rbol de objetos";
-	11: print "La habitaci@{F3}n ~", (name) x1, "~ no tiene la propiedad ~", (property) x2, "~";
-	12: print "Se intent@{F3} establecer un pronombre no existente usando SetPronoun";
-	13: print "Un token 'topic' solo puede ser seguido por una preposici@{F3}n";
-	14: print "Se desbord@{F3} el l@{ED}mite del buffer de ", x1,
-		" usando '@@64output_stream 3' ", (string) x2;
-	15: print "LoopWithinObject roto porque el objeto ",
-		(name) x1, " fue movido mientras el bucle pasaba a trav@{E9}s de @{E9}l.";
-	16: print "Intento de usar narrative_voice ilegal de ", x1, ".";
-	default:
-	    print "(sin explicaci@{F3}n)";
-    }
-    print " **";
-  Save: switch (n) {
-        1:  "Guardar fall@{F3}.";
-        2:  "Vale.";
-    }
-  Score: switch (n) {
-        1:  if (deadflag) print "En ese juego puntuaste "; else print "Hasta ahora has puntuado ";
-                print score, " de un posible ", MAX_SCORE, ", en ", turns, " turno";
-                if (turns ~= 1) print "s";
-                return;
-        2:  "No hay puntuaci@{F3}n en esta historia.";
-    }
-  ScriptOff: switch (n) {
-        1:  "La transcripci@{F3}n ya est@{E1} desactivada.";
-        2:  "^Fin de la transcripci@{F3}n.";
-        3:  "Intento de terminar transcripci@{F3}n fall@{F3}.";
-    }
-  ScriptOn: switch (n) {
-        1:  "La transcripci@{F3}n ya est@{E1} activada.";
-        2:  print "Inicio de una transcripci@{F3}n de"; VersionSub();
-        3:  "Intento de comenzar transcripci@{F3}n fall@{F3}.";
-    }
-  Search: switch (n) {
-        1:  print "Pero est@{E1} oscuro.";
-        2:  print "No hay nada sobre ", (the) x1, ".";
-        3:  print "Sobre ", (the) x1;
-                WriteListFrom(child(x1), ENGLISH_BIT+TERSE_BIT+CONCEAL_BIT+ISARE_BIT);
-                ".";
-        4:  CSubjectVerb(actor,true,false,"encuentro","encuentras","encuentra","encontr@{F3}"); " nada de inter@{E9}s.";
-        5:  CSubjectCant(actor,true); " ver dentro, ya que ", (the) x1, " est@{E1} cerrad", (o) x1, ".";
-        6:  "", (The) x1, " est@{E1} vac@{ED}", (o) x1, ".";
-
-        7:  print "En ", (the) x1;
-                WriteListFrom(child(x1), ENGLISH_BIT+TERSE_BIT+CONCEAL_BIT+ISARE_BIT);
-                ".";
-    }
-   ! "No," precedente no puede usarse para Set y SetTo
-  Set:      CSubjectCant(actor,true); " configurar ", (ThatOrThose) x1, ".";
-  SetTo:    CSubjectCant(actor,true); " configurar ", (ThatOrThose) x1, " a nada.";
-  Show: switch (n) {
-        1:  CSubjectIsnt(actor,true); " sosteniendo ", (the) x1, ".";
-        2:  CSubjectIs  (x1,true); " poco impresiond", (o) x1, ".";
-    }
-  Sing:     print "El canto de ", (Possessive) actor, " es abominable.";
-  Sleep:    CSubjectIsnt(actor,true); " sinti@{E9}ndose especialmente somnoliento.";
-  Smell: switch (n) {
-        1:  CSubjectVerb(actor,true,false,"huelo","hueles","huele","oli@{F3}"); " nada inesperado.";
-        2:  DecideAgainst();
-    }
-            #Ifdef DIALECT_US;
-  Sorry:    "Oh, no te disculpes.";
-            #Ifnot;
-  Sorry:    "Oh, no te disculpes.";
-            #Endif;
-  Squeeze: switch (n) {
-        1:  DecideAgainst();
-        2:  CSubjectVerb(actor,true,false,"logro","logras","logra","logr@{F3}"); " nada con esto.";
-    }
-  Strong:   print "Los verdaderos aventureros no usan tal lenguaje.";
-  Swim:     print "No hay suficiente agua para nadar.";
-  Swing:    print "No hay nada sensato para balancear aqu@{ED}.";
-  SwitchOff: switch (n) {
-        1:  CSubjectIs  (x1,true);
-            print " no es algo que ", (theActor) actor, " ";
-            Tense("pueda", "pudiera");
-            " apagar.";
-        2:  CSubjectIs  (x1,true); " ya est@{E1} apagad", (o) x1, ".";
-        3:  CSubjectVerb(actor,false,false,"apago","apagas","apaga","apag@{F3}"); " ", (the) x1, ".";
-    }
-  SwitchOn: switch (n) {
-        1:  CSubjectIs  (x1,true);
-            print " no es algo que ", (theActor) actor, " ";
-            Tense("pueda", "pudiera");
-            " encender.";
-        2:  CSubjectIs  (x1,true); " ya est@{E1} encendid", (o) x1, ".";
-        3:  CSubjectVerb(actor,false,false,"enciendo","enciendes","enciende","encendi@{F3}"); " ", (the) x1, ".";
-    }
-
-  Take: switch (n) {
-        1:  "Tomado.";
-        2:  CSubjectIs  (actor,false); " siempre en posesi@{F3}n de s@{ED} mismo.";
-        3:  print "No supongo que a ", (the) x1, " le ";
-            Tense("importe", "hubiera importado");
-            " eso.";
-        4:  CSubjectWill(actor,true);
-            print " tener que bajar de ", (the) x1, " primero.";
-        5:  CSubjectVerb(actor,true,false,"ya tengo","ya tienes","ya tiene","ya ten@{ED}a"); " ", (ThatOrThose) x1, ".";
-        6:  CSubjectVerb(x2,true,false,"parece","pareces","parece","parec@{ED}a"); " pertenecer a ", (the) x1, ".";
-        7:  CSubjectVerb(x2,true,false,"parece","pareces","parece","parec@{ED}a"); " ser parte de ", (the) x1, ".";
-        8:  CSubjectIs  (x1,true); " no disponible.";
-        9:  CSubjectIs  (x1,true); " no abiert", (o) x1, ".";
-        10: CSubjectIs  (x1,true); " dif@{ED}cilmente port@{E1}til.";
-        11: CSubjectIs  (x1,true); " fijo en su lugar.";
-        12: CSubjectIs  (actor,true); " llevando demasiadas cosas ya.";
-        13: "(poniendo ", (the) x1, " en ", (the) x2, " para hacer espacio)";
-    }
-  Taste: switch (n) {
-        1:  CSubjectVerb(actor,true,false,"saboreo","saboreas","saborea","sabore@{F3}"); " nada inesperado.";
-        2:  DecideAgainst();
-    }
-  Tell: switch (n) {
-        1:  CSubjectVerb(actor,false,false,"hablo","hablas","habla","habl@{F3}");
-            " conmigo mismo por un rato.";
-        2:  print "Esto no provoca reacci@{F3}n.";
-    }
-  Think:    "@{A1}Qu@{E9} buena idea!";
-  ThrowAt: switch (n) {
-        1:  "F@{FA}til.";
-        2:  CSubjectVerb(actor,true,false,"me falta","te falta","le falta","le faltaba");
-            print " el valor cuando ";
-            Tense("llega", "lleg@{F3}");
-            " el momento crucial.";
-    }
-  Tie: switch (n) {
-        1:  CSubjectVerb(actor,true,false,"lograr@{ED}a","lograr@{ED}as","lograr@{ED}a","habr@{ED}a logrado");
-            " nada con esto.";
-        2:  DecideAgainst();
-    }
-  Touch: switch (n) {
-        1:  DecideAgainst();
-        2:  CSubjectVerb(actor,true,false,"siento","sientes","siente","sinti@{F3}"); " nada inesperado.";
-        3:  print "Eso realmente no ";
-            Tense("servir@{ED}a", "habr@{ED}a servido");
-            " ning@{FA}n prop@{F3}sito.";
-    }
-! Turn: ver Pull.
-  Unlock:  switch (n) {
-        1:  CSubjectDont(x1,true);
-            print " parece ser algo que ", (theActor) actor;
-            Tense(" pueda desbloquear", " pudiera haber desbloqueado");
-            ".";
-        2:  CSubjectIs  (x1,true); " desbloqueado en este momento.";
-        3:  CSubjectDont(x1,true); " parece encajar en la cerradura.";
-        4:  CSubjectVerb(actor,false,false,"desbloqueo","desbloqueas","desbloquea","desbloque@{F3}"); " ", (the) x1, ".";
-        5:  "(primero desbloqueando ", (the) x1, ")";
-    }
-  VagueGo:  CSubjectWill(actor);
-            " tener que decir en qu@{E9} direcci@{F3}n de la br@{FA}jula ir.";
-  Verify: switch (n) {
-        1:  "El archivo del juego se ha verificado como intacto.";
-        2:  "El archivo del juego no se verific@{F3} como intacto, y puede estar corrupto.";
-    }
-  Wait:     print "El tiempo pasa.";
-  Wake:     print "La terrible verdad es que esto no es un sue@{F1}o.";
-  WakeOther:print "Eso parece innecesario.";
-  Wave: switch (n) {
-        1:  print "Pero ";
-            CSubjectIsnt(actor,true,true); " sosteniendo ", (ThatOrThose) x1, ".";
-        2:  CSubjectVerb(actor,false,false,"me veo","te ves","se ve","se vi@{F3}");
-            print " rid@{ED}culo agitando ", (the) x1;
-            if (x2)
-                " hacia ", (the) x2, ".";
-            ".";
+    Jump: switch (n) {
+        1:  CSubjectVerb(actor,false,false,"salto","saltas","salta","salt@{F3}");
+            " en el sitio.";
+        2:  CSubjectVerb(actor,false,false,"obtengo","obtienes","obtiene","obtuvo");
+            " poco saltando.";
         3:  DecideAgainst();
     }
-  WaveHands:
-        CSubjectVerb(actor,false,false,"agito","agitas","agita","agit@{F3}");
-        switch (n) {
-        1: ! nada
-        2: print " hacia ", (the) x1;
-        }
-        ", sinti@{E9}ndome tonto.";
-  Wear: switch (n) {
-        1:  CSubjectCant(actor,true); " llevar ", (ThatOrThose) x1, ".";
-        2:  CSubjectIs  (actor,true); " no sosteniendo ", (ThatOrThose) x1, ".";
-        3:  CSubjectIs  (actor,true); " ya llevando ", (ThatOrThose) x1, ".";
-        4:  CSubjectVerb(actor,false,false,"me pongo","te pones","se pone","se puso"); " ", (the) x1, ".";
-        5:  CSubjectVerb(actor, false, false, "necesito sacar", "necesitas sacar", "necesita sacar", "necesitaba sacar");
-            print " ", (the) x1, " ";
-            if (x2 has container)
-                print "de";
-            else
-                print "de";
-            " ", (the) x2, " antes de llevarlo.";
+    JumpIn: switch (n) {
+        1:  print "Saltar en ", (the) x1, " no ";
+            Tense("lograr@{ED}a", "habr@{ED}a logrado");
+            " mucho.";
+        2:  DecideAgainst();
     }
-! Yes:  ver No.
+    JumpOn: switch (n) {
+        1:  print "Saltar sobre ", (the) x1, " no ";
+            Tense("lograr@{ED}a", "habr@{ED}a logrado");
+            " mucho.";
+        2:  DecideAgainst();
+    }
+    JumpOver: switch (n) {
+        1:  CSubjectVerb(actor,false,false,"salto","saltas","salta","salt@{F3}");
+            " sobre ", (the) x1, ".";
+        2:  DecideAgainst();
+    }
+    Kiss:     "Mant@{E9}n tu mente en el juego.";
+    Listen: switch (n) {
+        1:  print "No ";
+            Tense("escucho", "escuch@{E9}");
+            " nada inesperado.";
+        2:  print "No ";
+            Tense("escucho", "escuch@{E9}");
+            " nada particular desde ", (the) x1, ".";
+    }
+    ListMiscellany: switch (n) {
+        1:  print " (iluminand", (o) x1, ")";
+        2:  print " (que ", (IsOrAre) x1, " cerrad", (o) x1, ")";
+        3:  print " (cerrad", (o) x1, " y bloqueaed", (o) x1, ")";
+        4:  print " (que ", (IsOrAre) x1, " vac@{ED}", (o) x1, ")";
+        5:  print " (vac@{ED}", (o) x1, " y abierto)";
+        6:  print " (que ", (IsOrAre) x1, " abierto)";
+        7:  print " (que ", (IsOrAre) x1, " abierto pero vac@{ED}", (o) x1, ")";
+        8:  print " (iluminand", (o) x1, " y siendo llevad", (o) x1;
+        9:  print " (siendo llevad", (o) x1;
+        10: print " (";
+        11: print " (en ", (the) x1;
+        12: print " (en ", (the) x1;
+        13: print " (dentro ", (the) x1;
+        14: print " (dentro ", (the) x1;
+        15: print " (sobre ", (the) x1;
+        16: print " (sobre ", (the) x1;
+        17: print " (trabajando)";
+        18: print " (que ", (IsOrAre) x1, " cerrad", (o) x1, ")";
+    }
+    LMode1:   print " est@{E1} ahora en su modo ~breve~, que da descripciones largas";
+                " de lugares nunca visitados y descripciones cortas de otros.";
+    LMode2:   print " est@{E1} ahora en su modo ~detallado~, que da descripciones largas";
+                " de lugares cada vez que los visitas.";
+    LMode3:   print " est@{E1} ahora en su modo ~superbreve~, que da descripciones cortas";
+                " de lugares cada vez que los visitas.";
+    Lock: switch (n) {
+        1:  CSubjectDont(x1,true);
+            " parecer ser algo que pueda bloquearse.";
+        2:  CSubjectIs(x1,true);
+            " ya bloqueaed", (o) x1, ".";
+        3:  "Primero tendr@{ED}as que cerrar ", (the) x1, ".";
+        4:  CSubjectDont(x1,true);
+            " parecer encajar en la cerradura.";
+        5:  CSubjectVerb(actor,false,false,"bloqueo","bloqueas","bloquea","bloque@{F3}");
+            " ", (the) x1, ".";
+    }
+    Look: switch (n) {
+        1:  print " (en ", (the) x1, ")";
+        2:  print " (en ", (the) x1, ")";
+        3:  print " (como ", (object) x1, ")";
+        4:  print "^En ", (the) x1, " ";
+            CSubjectVerb(actor,true,false,"veo","ves","ve","vi@{F3}");
+            " ";
+            if (n == 5) print "tambi@{E9}n ";
+            WriteListFrom(x2, ENGLISH_BIT);
+            ".";
+        5:  "No hay nada encima.";
+        6:  print "En ", (the) x1, " ";
+            CSubjectVerb(actor,true,false,"veo","ves","ve","vi@{F3}");
+            " ";
+            if (n == 7) print "tambi@{E9}n ";
+            WriteListFrom(x2, ENGLISH_BIT);
+            ".";
+        7:  "No hay nada dentro.";
+    }
+    LookUnder: switch (n) {
+        1:  print "Pero est@{E1} oscuro.";
+        2:  CSubjectVerb(actor,true,false,"encuentro","encuentras","encuentra","encontr@{F3}");
+            " nada de inter@{E9}s.";
+    }
+    Mild:     "Muy apropiado.";
+    Miscellany: switch (n) {
+        1:  "(considerando los primeros diecis@{E9}is objetos solamente)^";
+        2:  "Nada que hacer!";
+        3:  print " ";
+            CSubjectVerb(player,true,false,"he","has","ha","hab@{ED}a");
+            " muerto ";
+        4:  print " ";
+            CSubjectVerb(player,true,false,"he","has","ha","hab@{ED}a");
+            " ganado ";
+        5:  print "^@{BF}Te gustar@{ED}a REINICIAR, CARGAR un juego guardado";
+            if (TASKS_PROVIDED == 0) print ", dar la PUNTUACI@{D3}N completa";
+            if (deadflag == 2 && AMUSING_PROVIDED == 0) print ", ver algunas sugerencias DIVERTIDAS";
+            " o SALIR?";
+        6:  "[Tu int@{E9}rprete no puede ~deshacer~ acciones.]";
+        7:  "~Deshacer~ fall@{F3}. [No todos los int@{E9}rpretes lo proporcionan.]";
+        8:  "Por favor, da uno de los comandos anteriores.";
+        9:  "^Ha oscurecido.";
+        10: "Perd@{F3}n?";
+        11: "[No puedes ~deshacer~ algo que no hiciste!]";
+        12: "[No puedes ~deshacer~ dos veces seguidas. Perd@{F3}n!]";
+        13: "[Acci@{F3}n anterior deshecha.]";
+        14: "Perd@{F3}n, eso no puede corregirse.";
+        15: "Piensa nada de eso.";
+        16: "~Ups~ s@{F3}lo puede corregir una palabra.";
+        17: "Est@{E1} demasiado oscuro para ver.";
+        18: print (The) x1; " no puede ver nada importante en esa direcci@{F3}n.";
+        19: print "Ese no es un verbo que reconozco.";
+        20: "Eso es algo que no necesitas referir en este juego.";
+        21: "No puedes ver ~", (address) x1, "~ (", (the) x1, ") en este momento.";
+        22: "No entendiste esa oraci@{F3}n.";
+        23: CSubjectCan(actor,false); " s@{F3}lo hacer eso con algo animado.";
+        24: "Eso no es algo que puedas ", (address) x1, ".";
+        25: "Eso no es algo que necesites referir en este juego.";
+        26: "No puedes ver ~", (address) x1, "~ (", (the) x1, ") en este momento.";
+        27: "No entendiste esa oraci@{F3}n.";
+        28: print "No puedes ver ~", (address) x1, "~ en este momento.";
+        29: "Eso no es algo que puedas ", (address) x1, ".";
+        30: "Eso no es algo que necesites referir en este juego.";
+        31: "No entendiste esa oraci@{F3}n.";
+        32: "No puedes ver ~", (address) x1, "~ en este momento.";
+        33: "No entendiste esa oraci@{F3}n.";
+        34: "No puedes ver ~", (address) x1, "~ en este momento.";
+        35: "No entendiste esa oraci@{F3}n.";
+        36: "No puedes ver ~", (address) x1, "~ en este momento.";
+        37: "No entendiste esa oraci@{F3}n.";
+        38: "No puedes ver ~", (address) x1, "~ en este momento.";
+        39: "Eso no es algo que puedas ", (address) x1, ".";
+        40: "No puedes ver ~", (address) x1, "~ en este momento.";
+        41: "No entendiste esa oraci@{F3}n.";
+        42: "No puedes ver ~", (address) x1, "~ en este momento.";
+        43: "No entendiste esa oraci@{F3}n.";
+        44: "No hay suficientes de esos disponibles.";
+        45: "Nada que hacer!";
+        46: "Nada que ", (address) x1, "!";
+        47: "Eso no es algo que puedas ", (address) x1, ".";
+        48: "No puedes referirte a ", (the) x1, " de esa manera.";
+        49: "No puedes referirte a ", (the) x1, " de esa manera.";
+        50: "No entendiste esa oraci@{F3}n.";
+        51: "No est@{E1} disponible.";
+        52: print "No ";
+            CSubjectVerb(actor,false,false,"tengo","tienes","tiene","ten@{ED}a");
+            " nada que hacer.";
+        53: CSubjectVerb(actor,false,false,"no puedo","no puedes","no puede","no pudo");
+            " ", (address) x1, " ", (the) x2, " a ", (the) x1, ".";
+        54: CSubjectVerb(actor,false,false,"no puedo","no puedes","no puede","no pudo");
+            " ", (address) x1, " ", (the) x2, " a nadie m@{E1}s.";
+        55: CSubjectVerb(actor,false,false,"no puedo","no puedes","no puede","no pudo");
+            " ", (address) x1, " ", (the) x2, " con ", (the) x1, ".";
+        56: CSubjectVerb(actor,false,false,"no puedo","no puedes","no puede","no pudo");
+            " ", (address) x1, " ", (the) x2, " con nada m@{E1}s.";
+        57: CSubjectVerb(actor,false,false,"no puedo","no puedes","no puede","no pudo");
+            " ", (address) x1, " ", (the) x2, " con ", (the) x1, ".";
+        58: "Debo haber entendido mal la oraci@{F3}n.";
+        59: "No puedes hacer m@{FA}ltiples acciones con m@{FA}ltiples objetos.";
+        60: "No puedes hacer eso a m@{FA}ltiples objetos.";
+        61: "No est@{E1} claro a qu@{E9} te refieres.";
+        62: "No est@{E1} claro a qu@{E9} te refieres.";
+        63: CSubjectIs(actor,false); " llevando demasiadas cosas ya.";
+        64: "Nunca has hecho eso.";
+        65: "No puedes ", (address) x1, " algo que no est@{E1}s sosteniendo.";
+        66: "No puedes ", (address) x1, " eso.";
+        67: "No puedes ", (address) x1, " cosas que no est@{E1}n aqu@{ED}.";
+        68: "No puedes ", (address) x1, " a personas.";
+        69: "No puedes ", (address) x1, " el ", (name) x1, ".";
+        70: "No est@{E1} claro qu@{E9} quieres que ", (the) x1, " haga.";
+        71: "No puedes ", (address) x1, " ", (the) x1, " a ", (OnesSelf) x1, ".";
+        72: "No puedes ", (address) x1, " ", (the) x1, " a nadie m@{E1}s.";
+        73: "No puedes ", (address) x1, " ", (the) x1, " con ", (OnesSelf) x1, ".";
+        74: "No puedes ", (address) x1, " ", (the) x1, " con nada m@{E1}s.";
+        75: "No puedes ", (address) x1, " ", (the) x1, " con ", (the) x1, ".";
+        76: "(Primero tomando ", (the) x1, ")";
+        77: "No funciona.";
+        78: "No puedes ", (address) x1, " lo que no est@{E1} abierto.";
+        79: CSubjectIs(x1,false); " claramente no comestible.";
+        80: "No puedes ", (address) x1, " lo que est@{E1} cerrado.";
+        81: CSubjectIs(x1,false); " no muy apetitoso.";
+        82: "No puedes ", (address) x1, " personas.";
+        83: "No puedes ", (address) x1, " eso.";
+        84: "Eso ya est@{E1} en ", (the) x1, ".";
+        85: "No puedes ", (address) x1, " ", (the) x1, " dentro de ", (OnesSelf) x1, ".";
+        86: "No puedes ", (address) x1, " ", (the) x1, " dentro de ", (the) x1, ".";
+        87: "No puedes ", (address) x1, " personas.";
+        88: "No puedes ", (address) x1, " eso.";
+        89: "Eso ya est@{E1} en ", (the) x1, ".";
+        90: "No puedes ", (address) x1, " ", (the) x1, " sobre ", (OnesSelf) x1, ".";
+        91: "No puedes ", (address) x1, " ", (the) x1, " sobre ", (the) x1, ".";
+        92: "No puedes ", (address) x1, " lo que no est@{E1}s sosteniendo.";
+        93: "No puedes ", (address) x1, " eso.";
+        94: "Eso ya est@{E1} aqu@{ED}.";
+        95: "No puedes ", (address) x1, " ", (the) x1, " sobre ", (OnesSelf) x1, ".";
+        96: "No puedes ", (address) x1, " ", (the) x1, " sobre ", (the) x1, ".";
+        97: "No puedes ", (address) x1, " personas.";
+        98: "No puedes ", (address) x1, " eso.";
+        99: "Eso ya est@{E1} aqu@{ED}.";
+        100: "No puedes ", (address) x1, " ", (the) x1, " de ", (OnesSelf) x1, ".";
+        101: "No puedes ", (address) x1, " ", (the) x1, " de ", (the) x1, ".";
+        102: "No puedes ", (address) x1, " personas.";
+        103: "No puedes ", (address) x1, " eso.";
+        104: "Eso ya est@{E1} aqu@{ED}.";
+        105: "No puedes ", (address) x1, " ", (the) x1, " de ", (OnesSelf) x1, ".";
+        106: "No puedes ", (address) x1, " ", (the) x1, " de ", (the) x1, ".";
+        107: "No puedes ", (address) x1, " personas.";
+        108: "No puedes ", (address) x1, " eso.";
+        109: "Eso ya est@{E1} aqu@{ED}.";
+        110: "No puedes ", (address) x1, " ", (the) x1, " de ", (OnesSelf) x1, ".";
+        111: "No puedes ", (address) x1, " ", (the) x1, " de ", (the) x1, ".";
+        112: "No puedes ", (address) x1, " personas.";
+        113: "No puedes ", (address) x1, " eso.";
+        114: "Eso ya est@{E1} aqu@{ED}.";
+        115: "No puedes ", (address) x1, " ", (the) x1, " de ", (OnesSelf) x1, ".";
+        116: "No puedes ", (address) x1, " ", (the) x1, " de ", (the) x1, ".";
+        117: "No puedes ", (address) x1, " personas.";
+        118: "No puedes ", (address) x1, " eso.";
+        119: "Eso ya est@{E1} aqu@{ED}.";
+        120: "No puedes ", (address) x1, " ", (the) x1, " de ", (OnesSelf) x1, ".";
+        121: "No puedes ", (address) x1, " ", (the) x1, " de ", (the) x1, ".";
+        122: "No puedes ", (address) x1, " personas.";
+        123: "No puedes ", (address) x1, " eso.";
+        124: "Eso ya est@{E1} aqu@{ED}.";
+        125: "No puedes ", (address) x1, " ", (the) x1, " de ", (OnesSelf) x1, ".";
+        126: "No puedes ", (address) x1, " ", (the) x1, " de ", (the) x1, ".";
+        127: "No puedes ", (address) x1, " personas.";
+        128: "No puedes ", (address) x1, " eso.";
+        129: "Eso ya est@{E1} aqu@{ED}.";
+        130: "No puedes ", (address) x1, " ", (the) x1, " de ", (OnesSelf) x1, ".";
+        131: "No puedes ", (address) x1, " ", (the) x1, " de ", (the) x1, ".";
+        132: "No puedes ", (address) x1, " personas.";
+        133: "No puedes ", (address) x1, " eso.";
+        134: "Eso ya est@{E1} aqu@{ED}.";
+        135: "No puedes ", (address) x1, " ", (the) x1, " de ", (OnesSelf) x1, ".";
+        136: "No puedes ", (address) x1, " ", (the) x1, " de ", (the) x1, ".";
+        137: "No puedes ", (address) x1, " personas.";
+        138: "No puedes ", (address) x1, " eso.";
+        139: "Eso ya est@{E1} aqu@{ED}.";
+        140: "No puedes ", (address) x1, " ", (the) x1, " de ", (OnesSelf) x1, ".";
+        141: "No puedes ", (address) x1, " ", (the) x1, " de ", (the) x1, ".";
+        142: "No puedes ", (address) x1, " personas.";
+        143: "No puedes ", (address) x1, " eso.";
+        144: "Eso ya est@{E1} aqu@{ED}.";
+        145: "No puedes ", (address) x1, " ", (the) x1, " de ", (OnesSelf) x1, ".";
+        146: "No puedes ", (address) x1, " ", (the) x1, " de ", (the) x1, ".";
+        147: "No puedes ", (address) x1, " personas.";
+        148: "No puedes ", (address) x1, " eso.";
+        149: "Eso ya est@{E1} aqu@{ED}.";
+        150: "No puedes ", (address) x1, " ", (the) x1, " de ", (OnesSelf) x1, ".";
+        151: "No puedes ", (address) x1, " ", (the) x1, " de ", (the) x1, ".";
+        152: "No puedes ", (address) x1, " personas.";
+        153: "No puedes ", (address) x1, " eso.";
+        154: "Eso ya est@{E1} aqu@{ED}.";
+        155: "No puedes ", (address) x1, " ", (the) x1, " de ", (OnesSelf) x1, ".";
+        156: "No puedes ", (address) x1, " ", (the) x1, " de ", (the) x1, ".";
+    }
+    Take: switch (n) {
+        1:  "Tomad", (o) x1, ".";
+        2:  CSubjectIs(actor,true); " siempre ", (nop) OnesSelf(actor), ".";
+        3:  "No puedes tomar ", (the) x1, ".";
+        4:  CSubjectVerb(actor,true,false,"tendr@{ED}a","tendr@{ED}as","tendr@{ED}a","habr@{ED}a tenido");
+            " que salir ", (nop) SupportObj(x1,"de","de"), " ", (the) x1, " primero.";
+        5:  CSubjectVerb(actor,true,false,"ya tengo","ya tienes","ya tiene","ya ten@{ED}a");
+            " ", (the) x1, ".";
+        6:  CSubjectIs(noun,true); " perteneciente a ", (the) x1, ".";
+        7:  CSubjectIs(noun,true); " parte de ", (the) x1, ".";
+        8:  CSubjectIs(x1,true); " no disponible.";
+        9:  CSubjectIs(x1,true); " no abierto.";
+        10: CSubjectIs(x1,true); " difícilmente portátil.";
+        11: CSubjectIs(x1,true); " fijo en el lugar.";
+        12: CSubjectIs(actor,true); " llevando demasiadas cosas ya.";
+        13: "(poniendo ", (the) x1, " en ", (the) x2, " para hacer espacio)";
+    }
+    Taste:    CSubjectVerb(actor,true,false,"pruebo","pruebas","prueba","prob@{F3}");
+            " nada inesperado.";
+    Tell: switch (n) {
+        1:  CSubjectVerb(actor,false,false,"hablo","hablas","habla","habl@{F3}");
+            " con ", (OnesSelf) actor, " un rato.";
+        2:  print "Esto no ";
+            Tense("provoca", "provoc@{F3}");
+            " reacci@{F3}n.";
+    }
+    Think:    "Qu@{E9} buena idea.";
+    ThrowAt: switch (n) {
+        1:  "F@{FA}til.";
+        2:  CSubjectVerb(actor,false,false,"no tengo","no tienes","no tiene","no ten@{ED}a");
+            " ", (the) x1, " cuando ", (nop) Tense("necesito", "necesit@{F3}");
+            " ", (ItOrThem) x1, ".";
+    }
+    Tie:  CSubjectVerb(actor,true,false,"no lograr@{ED}a","no lograr@{ED}as","no lograr@{ED}a","no habr@{ED}a logrado");
+        " nada haciendo eso.";
+    Touch: switch (n) {
+        1:  DecideAgainst();
+        2:  CSubjectVerb(actor,true,false,"no siento","no sientes","no siente","no sinti@{F3}");
+            " nada inesperado.";
+        3:  CSubjectVerb(actor,true,false,"no puedo","no puedes","no puede","no pudo");
+            " hacer eso.";
+    }
+    Turn: switch (n) {
+        1:  CSubjectIs(x1,true);
+            " fijo en el lugar.";
+        2:  CSubjectVerb(actor,true,false,"no puedo","no puedes","no puede","no pudo");
+            " girar eso.";
+        3:  "Nada obvio pasa.";
+        4:  CSubjectVerb(actor,false,false,"giro","giras","gira","gir@{F3}");
+            " ", (the) x1, ".";
+    }
+    Wait:     "Pasa el tiempo.";
+    WakeOther:"Eso no parece necesario.";
+    Wake:     "El hecho terrible es que no está", (s) actor, " dormido.";
+    WaveHands:"^";
+    Wave: switch (n) {
+        1:  print "Pero no ";
+            CSubjectVerb(actor,false,false,"tengo","tienes","tiene","ten@{ED}a");
+            " ", (the) x1, ".";
+        2:  CSubjectVerb(actor,false,false,"me veo","te ves","se ve","se vi@{F3}");
+            " ridícul", (o) actor, " agitando ", (the) x1, ".";
+    }
+    Wear: switch (n) {
+        1:  CSubjectCant(actor,true); " usar ", (ThatOrThose) x1, "!";
+        2:  CSubjectIs(actor,true); " no sosteniendo ", (ThatOrThose) x1, "!";
+        3:  CSubjectIs(actor,true); " ya usando ", (ThatOrThose) x1, "!";
+        4:  CSubjectVerb(actor,false,false,"me pongo","te pones","se pone","se puso");
+            " ", (the) x1, ".";
+    }
+    default: print "Mensaje del sistema ", n, " no implementado en espa@{F1}ol.";
+    }
 ];
 
 ! Funciones auxiliares para concordancia de género
 [ o obj;
     if (obj has female) print "a"; else print "o";
+];
+
+[ s obj;  ! "s" para plural en verbos
+    if (obj has pluralname) print "n"; else print "";
+];
+
+[ es obj;  ! Conjugación "es/son"
+    if (obj has pluralname) print "son"; else print "es";
+];
+
+[ esta obj;  ! Conjugación "está/están"
+    if (obj has pluralname) print "est@{E1}n"; else print "est@{E1}";
+];
+
+! Función auxiliar para pronombres de objeto indirecto
+[ thatorthose obj;
+    if (obj == player) {
+        if (player provides narrative_voice) {
+            if (player.narrative_voice == 1) { print "me"; return; }
+            if (player.narrative_voice == 3) { CDefart(player); return; }
+        }
+        print "te";
+        return;
+    }
+    if (obj has pluralname)       { print "esos"; return; }
+    if (obj has female)           { print "esa"; return; }
+    print "eso";
+];
+
+! LanguageDirection función para direcciones
+[ LanguageDirection d;
+    switch (d) {
+        n_to:    print "norte";
+        s_to:    print "sur";
+        e_to:    print "este";
+        w_to:    print "oeste";
+        ne_to:   print "noreste";
+        nw_to:   print "noroeste";
+        se_to:   print "sureste";
+        sw_to:   print "suroeste";
+        u_to:    print "arriba";
+        d_to:    print "abajo";
+        in_to:   print "adentro";
+        out_to:  print "afuera";
+        default: return RunTimeError(9,d);
+    }
+];
+
+! Función para conversión de números
+[ LanguageNumber n f;
+    if (n == 0)    { print "cero"; rfalse; }
+    if (n < 0)     { print "menos "; n = -n; }
+    if (n >= 1000) { print (LanguageNumber) n/1000, " mil";
+                     n = n%1000; f = 1; }
+    if (n >= 100)  { if (f == 1) print " ";
+                     print (LanguageNumber) n/100, " cientos";
+                     n = n%100; f = 1; }
+    if (n == 0) rfalse;
+    if (f == 1) print " ";
+    switch (n) {
+        1:  print "uno";
+        2:  print "dos";
+        3:  print "tres";
+        4:  print "cuatro";
+        5:  print "cinco";
+        6:  print "seis";
+        7:  print "siete";
+        8:  print "ocho";
+        9:  print "nueve";
+        10: print "diez";
+        11: print "once";
+        12: print "doce";
+        13: print "trece";
+        14: print "catorce";
+        15: print "quince";
+        16: print "diecis@{E9}is";
+        17: print "diecisiete";
+        18: print "dieciocho";
+        19: print "diecinueve";
+        20: print "veinte";
+        default:
+            if (n < 30) { print "veinti"; print (LanguageNumber) n-20; }
+            else {
+                switch (n/10) {
+                    3: print "treinta";
+                    4: print "cuarenta";
+                    5: print "cincuenta";
+                    6: print "sesenta";
+                    7: print "setenta";
+                    8: print "ochenta";
+                    9: print "noventa";
+                }
+                if (n%10 ~= 0) { print " y ", (LanguageNumber) n%10; }
+            }
+    }
+];
+
+! Función para selección de artículos
+[ LanguageContraction text;
+    return 0; ! En español no hay contracciones como a/an
 ];
 
 ! ==============================================================================
