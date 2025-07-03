@@ -1,0 +1,28 @@
+!% -~S~D
+!
+! TEST ULTRA MINIMAL - Sin librería española
+!
+
+Constant Story "TEST ULTRA MINIMAL";
+Constant Headline "^Test sin libreria espanola^";
+
+Include "Parser";
+Include "VerbLib";
+Include "Grammar";
+
+! Habitacion ultra basica
+Object  Habitacion "Test Room"
+  with  description "A simple test room.",
+        n_to Habitacion2,
+  has   light;
+
+Object  Habitacion2 "Second Room"
+  with  description "The second room.",
+        s_to Habitacion,
+  has   light;
+
+! Inicializacion ultra basica
+[ Initialise;
+    location = Habitacion;
+    "^ULTRA MINIMAL test started. Type 'n' to go north.^";
+];

@@ -1,0 +1,244 @@
+! ==============================================================================
+! TEST COMPLEJO DE LA LIBRERÍA ESPAÑOLA
+! Juego de prueba para frases complejas como:
+! - "ataca al soldado dormido con la espada brillante"
+! - "lanza la piedra debajo de la mesa"
+! - "coge la cantara y bébetela"
+! ==============================================================================
+
+! Configuración de caracteres españoles
+Zcharacter table + '@{E1}' '@{E9}' '@{ED}' '@{F3}' '@{FA}' '@{FC}' '@{F1}' 
+               '@{C1}' '@{C9}' '@{CD}' '@{D3}' '@{DA}' '@{DC}' '@{D1}'
+               '@{BF}' '@{A1}';
+
+Constant Story "Prueba Compleja de Espa@{F1}ol";
+Constant Headline "^Una demostraci@{F3}n de parsing complejo en espa@{F1}ol^";
+
+! Incluir librerías estándar
+Include "parser";
+Include "verblib";
+
+! Usar la nueva librería española
+Replace LanguagePronouns;
+Replace LanguageDescriptors;
+Replace LanguageNumbers;
+Replace LanguageDirection;
+Replace LanguageNumber;
+Replace LanguageTimeOfDay;
+Replace LanguageVerb;
+Replace LanguageVerbIsDebugging;
+Replace LanguageVerbLikesAdverb;
+Replace LanguageVerbMayBeName;
+Replace LanguageContraction;
+Replace LanguageToInformese;
+Replace LanguageLM;
+
+Include "spanish";
+
+! Incluir gramática española
+Include "spanishgrammar";
+
+! ==============================================================================
+! OBJETOS DE PRUEBA PARA FRASES COMPLEJAS
+! ==============================================================================
+
+Object habitacion "Habitaci@{F3}n de Prueba"
+  with description "Una habitaci@{F3}n diseñada para probar el parsing complejo del español. 
+                   Ves varios objetos aqu@{ED} que te permitir@{E1}n experimentar con frases complejas.",
+  has light;
+
+! Soldado para "ataca al soldado dormido con la espada brillante"
+Object -> soldado "soldado dormido"
+  with name 'soldado' 'dormido' 'hombre' 'guerrero',
+       description "Un soldado que duerme profundamente. Parece estar equipado para la batalla.",
+       initial "Un soldado duerme aqu@{ED}, recostado contra la pared.",
+  has male animate;
+
+! Espada brillante para el ataque
+Object -> espada "espada brillante"
+  with name 'espada' 'brillante' 'arma' 'hoja',
+       description "Una espada que brilla con una luz m@{E1}gica. Su filo parece muy afilado.",
+       weight 3,
+  has female;
+
+! Mesa para "lanza la piedra debajo de la mesa"
+Object -> mesa "mesa grande"
+  with name 'mesa' 'grande' 'mueble',
+       description "Una mesa grande de madera que ocupa gran parte de la habitaci@{F3}n.",
+  has female supporter;
+
+! Piedra para lanzar
+Object -> piedra "piedra peque@{F1}a"
+  with name 'piedra' 'pequeña' 'roca' 'guijarro',
+       description "Una piedra peque@{F1}a que puedes lanzar.",
+       weight 1,
+  has female;
+
+! Cantara para "coge la cantara y bébetela"
+Object -> cantara "cantara de agua"
+  with name 'cantara' 'agua' 'c@{E1}ntaro' 'vasija' 'recipiente',
+       description "Una cantara de barro llena de agua fresca.",
+       weight 2,
+  has female container open;
+
+! Agua dentro de la cantara
+Object -> -> agua "agua fresca"
+  with name 'agua' 'fresca' 'l@{ED}quido',
+       description "Agua cristalina y fresca.",
+  has female;
+
+! Objetos adicionales para probar el sistema de género
+Object -> libro "libro antiguo"
+  with name 'libro' 'antiguo' 'tomo' 'volumen',
+       description "Un libro antiguo con páginas amarillentas.",
+  has male;
+
+Object -> daga "daga afilada"
+  with name 'daga' 'afilada' 'cuchillo' 'pu@{F1}al',
+       description "Una daga con filo muy afilado.",
+  has female;
+
+Object -> escudo "escudo met@{E1}lico"
+  with name 'escudo' 'met@{E1}lico' 'metal' 'defensa',
+       description "Un escudo de metal pesado.",
+  has male;
+
+! ==============================================================================
+! ACCIONES PERSONALIZADAS PARA DEMOSTRAR EL SISTEMA
+! ==============================================================================
+
+[ AttackSub;
+    if (noun == soldado && second == espada) {
+        "Te acercas al soldado dormido y lo golpeas suavemente con la espada brillante. 
+         El soldado despierta sobresaltado: '¡¿Qu@{E9} pasa?! ¡Oh, solo es un entrenamiento!'";
+    }
+    if (noun == soldado) {
+        "Golpeas al soldado. Despierta confundido.";
+    }
+    "La violencia no resolverá nada aquí.";
+];
+
+[ ThrowAtSub;
+    if (noun == piedra && second == mesa) {
+        "Lanzas la piedra debajo de la mesa. Rueda hasta detenerse en la sombra.";
+        move piedra to mesa;
+        return;
+    }
+    "Lanzas ", (the) noun, " hacia ", (the) second, ". No pasa nada interesante.";
+];
+
+[ DrinkSub;
+    if (noun == agua) {
+        "Te bebes el agua fresca. ¡Qué refrescante!";
+        remove agua;
+        return;
+    }
+    if (noun == cantara) {
+        if (water in cantara) {
+            "Te bebes el agua de la cantara.";
+            remove agua;
+            return;
+        } else {
+            "La cantara está vacía.";
+        }
+    }
+    "No puedes beber eso.";
+];
+
+! ==============================================================================
+! RUTINAS DE INICIALIZACIÓN Y TESTING
+! ==============================================================================
+
+[ Initialise;
+    location = habitacion;
+    print "^^^=== PRUEBA COMPLEJA DE LA LIBRERÍA ESPAÑOLA ===^^";
+    print "Este juego demuestra el parsing complejo en español.^^";
+    print "Prueba estos comandos:^^";
+    print "• ~ataca al soldado dormido con la espada brillante~^";
+    print "• ~lanza la piedra debajo de la mesa~^";
+    print "• ~coge la cantara y bebe el agua~^";
+    print "• ~examina el libro antiguo~^";
+    print "• ~mira debajo de la mesa~^";
+    print "• ~pon la daga sobre la mesa~^";
+    print "• ~llévate el escudo metálico~^^";
+    print "También puedes usar artículos: ~toma la espada~, ~mira al soldado~, etc.^^";
+];
+
+! Funciones de parsing personalizadas para manejar casos complejos
+[ LanguageIsVerb buffer parse verb_wordnum   word;
+    ! Manejar casos especiales como "bébetela"
+    word = parse-->(verb_wordnum*2-1);
+    
+    ! Detectar "bébetela" = "bebe" + "te" + "la"
+    if (word == 'bebetela' or 'bebete' or 'bebela') {
+        ! Reescribir como "bebe" y añadir objetos implícitos
+        parse-->(verb_wordnum*2-1) = 'bebe';
+        return 'bebe';
+    }
+    
+    ! Manejar otros clíticos comunes
+    if (word == 'tomala' or 'cogela' or 'llevala') {
+        parse-->(verb_wordnum*2-1) = 'toma';
+        return 'toma';
+    }
+    
+    return 0;
+];
+
+! ==============================================================================
+! MENSAJES ADICIONALES ESPECÍFICOS PARA LA DEMO
+! ==============================================================================
+
+[ LookUnderSub;
+    if (noun == mesa) {
+        if (piedra in mesa) {
+            "Debajo de la mesa ves la piedra que lanzaste antes.";
+        } else {
+            "No hay nada interesante debajo de la mesa.";
+        }
+        return;
+    }
+    "No encuentras nada debajo de ", (the) noun, ".";
+];
+
+! Función para manejar comandos de múltiples acciones
+[ ProcessMultipleActions;
+    ! Esto se podría expandir para manejar "coge X y bebe Y"
+    return false;
+];
+
+! ==============================================================================
+! RUTINAS DE TESTING PARA VERIFICAR FUNCIONALIDAD
+! ==============================================================================
+
+#Ifdef DEBUG;
+
+[ TestSpanishGrammar;
+    print "^=== TEST DE GRAMÁTICA ESPAÑOLA ===^";
+    
+    ! Test de artículos
+    print "^Test de artículos:^";
+    print "Masculino singular: ", (a) soldado, "^";
+    print "Femenino singular: ", (a) espada, "^";
+    print "Masculino definido: ", (the) soldado, "^";
+    print "Femenino definido: ", (the) espada, "^";
+    
+    ! Test de pronombres
+    print "^Test de pronombres:^";
+    print "Soldado: ", (ItOrThem) soldado, "^";
+    print "Espada: ", (ItOrThem) espada, "^";
+    
+    ! Test de concordancia
+    print "^Test de concordancia:^";
+    print "El soldado está: "; IsOrAre(soldado); print "^";
+    print "La espada está: "; IsOrAre(espada); print "^";
+    
+    print "^=== FIN DEL TEST ===^";
+];
+
+Verb meta 'test'
+    *                                           -> TestSpanishGrammar;
+
+#Endif;
+
+! ==============================================================================

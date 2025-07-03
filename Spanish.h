@@ -51,15 +51,15 @@ Include "core/SpanishCore.h";
 
 ! DESHABILITAR TODOS LOS MODULOS PARA DEBUGGING
 ! 3. Modulos core en orden de dependencias CORREGIDO
-!#Ifdef SPANISH_ADVANCED_PARSER;
+#Ifdef SPANISH_ADVANCED_PARSER;
     ! Parser avanzado en 3 partes (nombres de archivos CORREGIDOS)
-!    Include "core/SpanishParser1.h";      ! Parte 1: Manipulacion y fundamentos
-!    Include "core/SpanishParser2.h";      ! Parte 2: Procesamiento avanzado
-!    Include "core/SpanishParser3.h";      ! Parte 3: Analisis sintactico
+    Include "core/SpanishParser1.h";      ! Parte 1: Manipulacion y fundamentos
+    Include "core/SpanishParser2.h";      ! Parte 2: Procesamiento avanzado
+    Include "core/SpanishParser3.h";      ! Parte 3: Analisis sintactico
 !#Ifnot;
     ! Parser basico incluido en Core
     ! (SpanishCore.h ya incluye parsing basico)
-!#Endif;
+#Endif;
 
 ! REACTIVAR MODULOS CORE MINIMOS para arreglar directivas condicionales
 Include "core/SpanishGrammar.h";

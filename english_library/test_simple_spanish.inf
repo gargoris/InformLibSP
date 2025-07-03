@@ -1,0 +1,56 @@
+! ==============================================================================
+! TEST SIMPLE DE LA LIBRERÍA ESPAÑOLA
+! Usando el sistema +language_name=spanish correcto
+! ==============================================================================
+
+! Configuración de caracteres españoles
+Zcharacter table + '@{E1}' '@{E9}' '@{ED}' '@{F3}' '@{FA}' '@{FC}' '@{F1}' 
+               '@{C1}' '@{C9}' '@{CD}' '@{D3}' '@{DA}' '@{DC}' '@{D1}'
+               '@{BF}' '@{A1}';
+
+Constant Story "Prueba Simple del Espa@{F1}ol";
+Constant Headline "^Una demostraci@{F3}n básica^";
+
+! Solo incluir las librerías estándar - spanish.h se carga automáticamente
+Include "parser";
+Include "verblib";
+Include "grammar";
+
+! ==============================================================================
+! OBJETOS DE PRUEBA SIMPLES
+! ==============================================================================
+
+Object habitacion "Habitaci@{F3}n de Prueba"
+  with description "Una habitaci@{F3}n simple para probar el español.",
+  has light;
+
+Object -> soldado "soldado"
+  with name 'soldado' 'hombre' 'guerrero',
+       description "Un soldado armado.",
+  has male animate;
+
+Object -> espada "espada"
+  with name 'espada' 'arma',
+       description "Una espada brillante.",
+  has female;
+
+Object -> mesa "mesa"
+  with name 'mesa',
+       description "Una mesa de madera.",
+  has female supporter;
+
+Object -> piedra "piedra"
+  with name 'piedra' 'roca',
+       description "Una piedra pequeña.",
+  has female;
+
+[ Initialise;
+    location = habitacion;
+    print "^^^=== PRUEBA SIMPLE DE ESPAÑOL ===^^";
+    print "Prueba comandos como:^^";
+    print "• ~examina la espada~^";
+    print "• ~toma la piedra~^";
+    print "• ~mira al soldado~^^";
+];
+
+! ==============================================================================
