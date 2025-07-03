@@ -199,7 +199,9 @@ Array LanguageNumbers table
 !   Parte III.   Traducción
 ! ------------------------------------------------------------------------------
 
-[ LanguageToInformese; ];
+[ LanguageToInformese; 
+    ! Función vacía - las contracciones se manejan en LanguageContraction
+];
 
 ! ------------------------------------------------------------------------------
 !   Parte IV.   Impresión
@@ -1059,10 +1061,13 @@ Constant LIBRARYV__TX   = " Librer@{ED}a v";
             " ", (the) x1, " en ", (the) x2, ".";
     }
     Inv: switch (n) {
-        1:  "No llevas nada.";
-        2:  "Llevas";
-        3:  ":";
-        4:  ".";
+        1:  CSubjectIs(actor,false); " cargando";
+            if (x1 ~= 0) { print " "; WriteListFrom(x1, ENGLISH_BIT); }
+            ".";
+        2:  CSubjectIs(actor,false); " llevando";
+            if (x1 ~= 0) { print " "; WriteListFrom(x1, ENGLISH_BIT); }
+            ".";
+        3:  CSubjectIs(actor,false); " vac@{ED}", (o) actor, ".";
     }
     Jump: switch (n) {
         1:  CSubjectVerb(actor,false,false,"salto","saltas","salta","salt@{F3}");
@@ -1135,23 +1140,23 @@ Constant LIBRARYV__TX   = " Librer@{ED}a v";
             " ", (the) x1, ".";
     }
     Look: switch (n) {
-        1:  print " (sobre ", (the) x1, ")";
+        1:  print " (en ", (the) x1, ")";
         2:  print " (en ", (the) x1, ")";
         3:  print " (como ", (object) x1, ")";
-        4:  print "^Sobre ", (the) x1;
-            WriteListFrom(child(x1), ENGLISH_BIT+RECURSE_BIT+PARTINV_BIT+TERSE_BIT+CONCEAL_BIT+ISARE_BIT);
-            ".";
-        5,6:
-            if (x1 ~= location) {
-                if (x1 has supporter) print "^Sobre "; else print "^En ";
-                print (the) x1, " puedes ";
-            }
-            else { new_line; print "Puedes "; }
+        4:  print "^En ", (the) x1, " ";
+            CSubjectVerb(actor,true,false,"veo","ves","ve","vi@{F3}");
+            " ";
             if (n == 5) print "tambi@{E9}n ";
-            print "ver ";
-            WriteListFrom(child(x1), ENGLISH_BIT+RECURSE_BIT+PARTINV_BIT+TERSE_BIT+CONCEAL_BIT+WORKFLAG_BIT);
-            if (x1 ~= location) "."; else " aqu@{ED}.";
-        7:  "No ves nada inesperado en esa direcci@{F3}n.";
+            WriteListFrom(x2, ENGLISH_BIT);
+            ".";
+        5:  "No hay nada encima.";
+        6:  print "En ", (the) x1, " ";
+            CSubjectVerb(actor,true,false,"veo","ves","ve","vi@{F3}");
+            " ";
+            if (n == 7) print "tambi@{E9}n ";
+            WriteListFrom(x2, ENGLISH_BIT);
+            ".";
+        7:  "No hay nada dentro.";
     }
     LookUnder: switch (n) {
         1:  print "Pero est@{E1} oscuro.";
@@ -1360,7 +1365,9 @@ Constant LIBRARYV__TX   = " Librer@{ED}a v";
     Think:    "Qu@{E9} buena idea.";
     ThrowAt: switch (n) {
         1:  "F@{FA}til.";
-        2:  "No puedes hacer eso.";
+        2:  CSubjectVerb(actor,false,false,"no tengo","no tienes","no tiene","no ten@{ED}a");
+            " ", (the) x1, " cuando ", (nop) Tense("necesito", "necesit@{F3}");
+            " ", (ItOrThem) x1, ".";
     }
     Tie:  CSubjectVerb(actor,true,false,"no lograr@{ED}a","no lograr@{ED}as","no lograr@{ED}a","no habr@{ED}a logrado");
         " nada haciendo eso.";
