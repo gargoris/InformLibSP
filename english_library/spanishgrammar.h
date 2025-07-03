@@ -44,7 +44,7 @@ Verb meta 'notificar'
 Verb meta 'pronombres' 'nombres'
     *                                           -> Pronouns;
 
-Verb meta 'salir' 'q//' 'morir' 'terminar'
+Verb meta 'salir' 'q//' 'morir' 'terminar' 'quit'
     *                                           -> Quit;
 
 Verb meta 'grabar' 'grabaci@{F3}n'
@@ -65,11 +65,8 @@ Verb meta 'guardar'
     *                                           -> Save;
 
 Verb meta 'puntuaci@{F3}n' 'puntos'
-    *                                           -> Score;
-
-Verb meta 'puntuaci@{F3}n' 'completa'
-    *                                           -> FullScore
-    * 'puntos'                                  -> FullScore;
+    *                                           -> Score
+    * 'completa'                                -> FullScore;
 
 Verb meta 'transcribir' 'transcripci@{F3}n'
     *                                           -> ScriptOn
@@ -209,7 +206,11 @@ Verb 'atacar' 'golpear' 'pegar' 'romper' 'destruir'
     * 'a' noun 'con' 'el' noun                  -> Attack
     * 'a' noun 'con' 'la' noun                  -> Attack
     * 'al' noun 'con' 'el' noun                 -> Attack
-    * 'al' noun 'con' 'la' noun                 -> Attack;
+    * 'al' noun 'con' 'la' noun                 -> Attack
+    * noun adjective 'con' noun adjective       -> Attack
+    * 'al' noun adjective 'con' noun adjective  -> Attack
+    * 'al' noun adjective 'con' 'la' noun adjective -> Attack
+    * 'al' noun adjective 'con' 'el' noun adjective -> Attack;
 
 ! ==============================================================================
 ! VERBOS DE ACCIÓN FÍSICA
@@ -264,12 +265,20 @@ Verb 'quitar' 'quitarse' 'desvestir'
     * 'la' noun                                 -> Disrobe
     * 'los' noun                                -> Disrobe
     * 'las' noun                                -> Disrobe
-    * 'me' noun                                 -> Disrobe;
+    * 'me' noun                                 -> Disrobe
+    * noun 'de' noun                            -> Remove
+    * noun 'del' noun                           -> Remove
+    * 'el' noun 'de' noun                       -> Remove
+    * 'la' noun 'de' noun                       -> Remove
+    * 'el' noun 'del' noun                      -> Remove
+    * 'la' noun 'del' noun                      -> Remove;
 
 Verb 'beber' 'tomar'
     * noun                                      -> Drink
     * 'el' noun                                 -> Drink
-    * 'la' noun                                 -> Drink;
+    * 'la' noun                                 -> Drink
+    * 'te' noun                                 -> Drink
+    * 'se' noun                                 -> Drink;
 
 ! VERBO CRÍTICO: SOLTAR/DEJAR
 Verb 'soltar' 'dejar' 'tirar' 'arrojar'
@@ -318,7 +327,11 @@ Verb 'examinar' 'x//' 'mirar' 'm//' 'l//' 'ver' 'observar' 'inspeccionar'
     * 'en' noun                                 -> Search
     * 'bajo' noun                               -> LookUnder
     * 'debajo' 'de' noun                        -> LookUnder
-    * 'encima' 'de' noun                        -> Search;
+    * 'encima' 'de' noun                        -> Search
+    * 'detr@{E1}s' 'de' noun                    -> LookUnder
+    * 'delante' 'de' noun                       -> Examine
+    * 'al' 'lado' 'de' noun                     -> Examine
+    * 'a' 'trav@{E9}s' 'de' noun                -> Examine;
 
 ! Simple MIRAR para locaciones
 Verb 'mirar' 'm//' 'l//'
@@ -369,7 +382,14 @@ Verb 'ir' 'caminar' 'andar' 'marchar' 'dirigirse'
     * 'n//'                                     -> Go
     * 's//'                                     -> Go
     * 'e//'                                     -> Go
-    * 'o//'                                     -> Go;
+    * 'o//'                                     -> Go
+    * 'debajo' 'de' noun                        -> Go
+    * 'encima' 'de' noun                        -> Go
+    * 'dentro' 'de' noun                        -> Go
+    * 'detr@{E1}s' 'de' noun                    -> Go
+    * 'delante' 'de' noun                       -> Go
+    * 'al' 'lado' 'de' noun                     -> Go
+    * 'a' 'trav@{E9}s' 'de' noun                -> Go;
 
 ! Direcciones como verbos independientes
 Verb 'norte' 'n//'
@@ -431,9 +451,7 @@ Verb 'bloquear' 'cerrar' 'trabar'
     * noun                                      -> Lock
     * noun 'con' noun                           -> Lock;
 
-Verb 'mirar' 'buscar'
-    * 'bajo' noun                               -> LookUnder
-    * 'debajo' 'de' noun                        -> LookUnder;
+! Los patrones de mirar ahora están consolidados en la definición principal de examinar/mirar
 
 Verb 'abrir' 'destapar'
     * noun                                      -> Open
@@ -471,13 +489,7 @@ Verb 'poner'
     * 'el' noun 'encima' 'de' noun              -> PutOn
     * 'la' noun 'encima' 'de' noun              -> PutOn;
 
-Verb 'quitar' 'sacar'
-    * noun 'de' noun                            -> Remove
-    * noun 'del' noun                           -> Remove
-    * 'el' noun 'de' noun                       -> Remove
-    * 'la' noun 'de' noun                       -> Remove
-    * 'el' noun 'del' noun                      -> Remove
-    * 'la' noun 'del' noun                      -> Remove;
+! Los patrones de sacar ahora están consolidados en el verbo quitar
 
 Verb 'frotar' 'restregar' 'limpiar'
     * noun                                      -> Rub
@@ -567,7 +579,11 @@ Verb 'lanzar' 'tirar' 'arrojar'
     * 'el' noun 'al' noun                       -> ThrowAt
     * 'la' noun 'al' noun                       -> ThrowAt
     * 'la' noun 'debajo' 'de' noun              -> ThrowAt
-    * 'el' noun 'debajo' 'de' noun              -> ThrowAt;
+    * 'el' noun 'debajo' 'de' noun              -> ThrowAt
+    * noun 'debajo' 'de' noun                   -> ThrowAt
+    * 'la' noun 'debajo' 'de' 'la' noun         -> ThrowAt
+    * 'el' noun 'debajo' 'de' 'la' noun         -> ThrowAt
+    * 'la' noun 'debajo' 'de' 'el' noun         -> ThrowAt;
 
 Verb 'atar' 'amarrar'
     * noun                                      -> Tie
@@ -617,42 +633,17 @@ Verb 'no' 'n//'
 ! PATRONES COMPLEJOS ESPECÍFICOS DEL ESPAÑOL
 ! ==============================================================================
 
-! Manejar frases como "ataca al soldado dormido con la espada brillante"
-Verb 'atacar'
-    * noun adjective 'con' noun adjective       -> Attack
-    * 'al' noun adjective 'con' noun adjective  -> Attack
-    * 'al' noun adjective 'con' 'la' noun adjective -> Attack
-    * 'al' noun adjective 'con' 'el' noun adjective -> Attack;
+! Patrones adicionales para atacar (consolidados con definición principal)
 
-! Manejar "lanza la piedra debajo de la mesa"
-Verb 'lanzar'
-    * noun 'debajo' 'de' noun                   -> ThrowAt
-    * 'la' noun 'debajo' 'de' 'la' noun         -> ThrowAt
-    * 'el' noun 'debajo' 'de' 'la' noun         -> ThrowAt
-    * 'la' noun 'debajo' 'de' 'el' noun         -> ThrowAt;
+! Patrones adicionales para lanzar (consolidados con definición principal)
 
 ! Manejar "coge la cantara y bébetela" - esto requiere procesamiento especial
 Verb 'coger'
     * noun 'y' special                          -> Take;  ! special maneja casos complejos
 
-! Preposiciones compuestas comunes en español
-Verb 'mirar'
-    * 'debajo' 'de' noun                        -> LookUnder
-    * 'encima' 'de' noun                        -> Search
-    * 'dentro' 'de' noun                        -> Search
-    * 'detr@{E1}s' 'de' noun                    -> LookUnder
-    * 'delante' 'de' noun                       -> Examine
-    * 'al' 'lado' 'de' noun                     -> Examine
-    * 'a' 'trav@{E9}s' 'de' noun                -> Examine;
+! Patrones adicionales para mirar (consolidados con definición principal)
 
-Verb 'ir'
-    * 'debajo' 'de' noun                        -> Go
-    * 'encima' 'de' noun                        -> Go
-    * 'dentro' 'de' noun                        -> Go
-    * 'detr@{E1}s' 'de' noun                    -> Go
-    * 'delante' 'de' noun                       -> Go
-    * 'al' 'lado' 'de' noun                     -> Go
-    * 'a' 'trav@{E9}s' 'de' noun                -> Go;
+! Patrones adicionales para ir (consolidados con definición principal)
 
 ! Patrones con pronombres clíticos (simplificados)
 Verb 'darse'
@@ -669,11 +660,7 @@ Verb 'irse'
 ! SOPORTE PARA FRASES IMPERATIVAS COMPLEJAS
 ! ==============================================================================
 
-! "bébetela" se puede manejar con rutinas especiales de parsing
-Verb 'beber'
-    * noun                                      -> Drink
-    * 'te' noun                                 -> Drink
-    * 'se' noun                                 -> Drink;
+! Patrones adicionales para beber (consolidados con definición principal)
 
 ! Otros imperativos reflexivos comunes
 Verb 'quitarse'

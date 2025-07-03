@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(grep:*)",
+      "Bash(rg:*)",
+      "Bash(ls:*)",
+      "Bash(../inform6_linux/Inform6/inform +language_name=spanish -S test_simple_spanish.inf)"
+    ],
+    "deny": []
+  }
+}
