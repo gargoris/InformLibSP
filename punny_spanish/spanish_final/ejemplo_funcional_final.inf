@@ -1,0 +1,214 @@
+! Ejemplo Funcional Final - Version que compila sin errores
+! Demostracion basica pero completa de PunyInform en espanol
+!
+! Autor: Claude Code
+! Fecha: 4 de julio de 2025
+! Version: 1.0 Funcional
+
+Constant Story "^Aventura en Espanol Funcional^";
+Constant Headline "^Una demostracion funcional de PunyInform en espanol^";
+
+! Incluir nuestra libreria espanola funcional
+Include "spanish_final/puny_spanish_funcional.h";
+
+! ######################### CONFIGURACION DEL JUEGO
+
+Object CasaFamiliar "la casa familiar"
+    with description "Una acogedora casa familiar con muebles tradicionales. Al este puedes ver el jardin, y al oeste esta la cocina.",
+         e_to Jardin,
+         w_to Cocina,
+    has light female;
+
+Object -> mesaElegante "mesa elegante" 
+    with name 'mesa' 'elegante' 'madera' 'roble',
+         description "Una hermosa mesa de roble pulido con intrincados grabados.",
+    has supporter static female;
+
+Object -> -> libroAntiguo "libro antiguo"
+    with name 'libro' 'antiguo' 'tomo' 'volumen',
+         description "Un grueso libro encuadernado en cuero marron.",
+    has male;
+
+Object -> -> llavesPlateadas "llaves plateadas"
+    with name 'llaves' 'plateadas' 'metal',
+         description "Un juego de llaves plateadas que brillan con la luz.",
+    has female pluralname;
+
+Object -> cajaMisteriosa "caja misteriosa"
+    with name 'caja' 'misteriosa' 'contenedor',
+         description "Una caja de madera tallada con simbolos extranos.",
+         when_open "La caja misteriosa esta abierta, revelando su interior.",
+         when_closed "La caja misteriosa esta hermeticamente cerrada.",
+    has container openable female;
+
+Object -> -> tesoroDorado "tesoro dorado"
+    with name 'tesoro' 'dorado' 'oro' 'riqueza' 'monedas',
+         description "Un magnifico tesoro de monedas de oro y gemas preciosas!",
+    has male;
+
+Object -> armarioRopero "armario ropero"
+    with name 'armario' 'ropero' 'guardarropa',
+         description "Un gran armario de madera oscura donde se guarda la ropa.",
+         when_open "El armario ropero esta abierto, mostrando la ropa colgada.",
+         when_closed "El armario ropero esta cerrado.",
+    has container openable static male;
+
+Object -> -> camisaAzul "camisa azul"
+    with name 'camisa' 'azul' 'prenda' 'ropa',
+         description "Una elegante camisa azul de algodon.",
+    has clothing female;
+
+Object -> -> zapatosNegros "zapatos negros"
+    with name 'zapatos' 'negros' 'calzado',
+         description "Un par de zapatos negros de cuero bien lustrados.",
+    has clothing male pluralname;
+
+Object Jardin "el jardin encantado"
+    with description "Un hermoso jardin lleno de flores coloridas y arboles frutales. Al oeste puedes regresar a la casa.",
+         w_to CasaFamiliar,
+    has light male;
+
+Object -> pajaroCantor "pajaro cantor"
+    with name 'pajaro' 'cantor' 'ave' 'pajarito' 'animal',
+         description "Un hermoso pajaro de plumaje colorido que canta melodias encantadoras.",
+         life [;
+             Talk: 
+                 print (ElLaLosLas) self, " ", (object) self, " inclina la cabeza y emite unos trinos melodiosos.";
+             AskFor:
+                 print (ElLaLosLas) self, " ", (object) self, " te mira con sus ojitos brillantes y senala con el pico hacia ";
+                 if (second == llavesPlateadas) print "la mesa";
+                 else print "algun lugar";
+                 ".";
+             default:
+                 print (ElLaLosLas) self, " ", (object) self, " parece entender tus palabras y bate las alas.";
+         ],
+    has animate male;
+
+Object -> rosasRojas "rosas rojas"
+    with name 'rosas' 'rojas' 'flores',
+         description "Un arbusto de rosas rojas en plena floracion. Su fragancia es embriagadora.",
+    has female pluralname;
+
+Object -> fuenteCristal "fuente de cristal"
+    with name 'fuente' 'cristal' 'agua',
+         description "Una elegante fuente de cristal con agua cristalina que fluye suavemente.",
+    has female;
+
+Object Cocina "la cocina tradicional"
+    with description "Una cocina tradicional con todos los implementos necesarios. Al este puedes regresar a la casa.",
+         e_to CasaFamiliar,
+    has light female;
+
+Object -> estufaFamilia "estufa de la familia"
+    with name 'estufa' 'familia' 'cocina' 'fogon',
+         description "Una gran estufa de hierro forjado que ha servido a la familia durante generaciones.",
+         when_on "La estufa esta encendida, irradiando un calor agradable.",
+         when_off "La estufa esta apagada pero aun tibia.",
+    has switchable static female;
+
+Object -> ollaHierro "olla de hierro"
+    with name 'olla' 'hierro' 'cacerola' 'recipiente',
+         description "Una pesada olla de hierro ennegrecida por anos de uso.",
+    has container female;
+
+Object -> -> sopaCaliente "sopa caliente"
+    with name 'sopa' 'caliente' 'guiso' 'caldo' 'comida',
+         description "Una deliciosa sopa caliente que desprende un aroma tentador.",
+         before [;
+             Eat: 
+                 remove self;
+                 "Te tomas la sopa caliente de un sorbo. Esta deliciosa y te llena de energia. La olla queda vacia.";
+         ],
+    has edible female;
+
+! ######################### FUNCION DE INICIALIZACION
+
+[ Initialise;
+    InicializarEspanol();
+    
+    print "^^ BIENVENIDO A LA AVENTURA EN ESPANOL FUNCIONAL! ^^";
+    print "^Esta version funciona correctamente y demuestra:^";
+    print "^* CONJUGACIONES ESPANOLAS: Verbos en multiples formas^";
+    print "* CONCORDANCIA AUTOMATICA: Genero y numero correctos^";
+    print "* MENSAJES EN ESPANOL: Respuestas naturales^";
+    print "* OBJETOS CON GENERO: Masculino, femenino y plural^";
+    print "^Ejemplos de comandos que puedes probar:^";
+    print "• MIRAR / MIRA / VER / OBSERVAR^";
+    print "• EXAMINAR LA MESA / EXAMINAR EL LIBRO^";
+    print "• COGER LAS LLAVES / TOMAR EL LIBRO / AGARRAR TODO^";
+    print "• DEJAR EL LIBRO / SOLTAR LAS LLAVES^";
+    print "• METER LAS LLAVES EN LA CAJA^";
+    print "• PONER EL LIBRO SOBRE LA MESA^";
+    print "• ABRIR LA CAJA / CERRAR EL ARMARIO^";
+    print "• PONERSE LA CAMISA / QUITARSE LOS ZAPATOS^";
+    print "• HABLAR CON EL PAJARO^";
+    print "• PREGUNTAR AL PAJARO POR LAS LLAVES^";
+    print "• IR AL JARDIN / ESTE / OESTE^";
+    print "• ENTRAR EN EL ARMARIO / SALIR^";
+    print "• ENCENDER LA ESTUFA / APAGAR LA ESTUFA^";
+    print "• COMER LA SOPA / BEBER^";
+    print "• INVENTARIO / PUNTUACION / GUARDAR / CARGAR^";
+    print "^Y muchas mas combinaciones!^^";
+    
+    location = CasaFamiliar;
+    lookmode = 2;
+];
+
+! ######################### IMPLEMENTACION DE ACCIONES ESPECIALES
+
+[ DrinkSub;
+    if (noun == fuenteCristal) {
+        "Bebes un poco de agua cristalina de la fuente. El agua esta fresca y te refresca completamente.";
+    }
+    "No hay nada apropiado para beber.";
+];
+
+[ SmellSub;
+    if (noun == rosasRojas) {
+        "El aroma de las rosas rojas es absolutamente embriagador. Te transporta a un estado de tranquilidad total.";
+    }
+    if (noun == sopaCaliente) {
+        "La sopa huele deliciosamente. Tu estomago comienza a rugir de hambre.";
+    }
+    "No hueles nada especial.";
+];
+
+[ ListenSub;
+    if (noun == pajaroCantor) {
+        "El pajaro cantor entona una melodia hermosa que parece contar la historia de tesoros ocultos.";
+    }
+    if (noun == fuenteCristal) {
+        "El sonido del agua corriendo en la fuente es increiblemente relajante y melodioso.";
+    }
+    "No oyes nada especial.";
+];
+
+[ TouchSub;
+    if (noun == rosasRojas) {
+        "Tocas suavemente los petalos de las rosas. Son increiblemente suaves, como terciopelo.";
+    }
+    if (noun == tesoroDorado) {
+        "El tesoro se siente frio al tacto pero irradia una extrana energia.";
+    }
+    "No sientes nada especial al tocar eso.";
+];
+
+! ######################### FUNCIONES DE DEMOSTRACION
+
+[ MostrarConcordancia p_obj;
+    print "^[DEMOSTRACION DE CONCORDANCIA]^";
+    print "Objeto: ", (object) p_obj, "^";
+    print "Articulo definido: ", (ElLaLosLas) p_obj, "^";
+    print "Articulo indefinido: ", (UnUnaUnosUnas) p_obj, "^";
+    print "Demostrativo: ", (EsteEstaEstosEstas) p_obj, "^";
+    print "Pronombre: ", (LoLaLosLas) p_obj, "^";
+    print "Estado: ", (EstaEstan) p_obj, "^";
+    print "Naturaleza: ", (EsSon) p_obj, "^";
+];
+
+Verb 'demostrar' 'demo'
+    * noun -> Demostrar;
+
+[ DemostrarSub;
+    MostrarConcordancia(noun);
+];

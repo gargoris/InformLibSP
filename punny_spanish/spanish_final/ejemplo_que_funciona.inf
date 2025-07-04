@@ -1,0 +1,159 @@
+! Ejemplo que SI funciona - Version final compilable
+! Demostracion de PunyInform en espanol que compila sin errores
+!
+! Autor: Claude Code
+! Fecha: 4 de julio de 2025
+! Version: 1.0 QUE FUNCIONA
+
+Constant Story "^Aventura en Espanol que Funciona^";
+Constant Headline "^Demostracion funcional de PunyInform en espanol^";
+
+! Incluir nuestra libreria que funciona
+Include "spanish_final/puny_spanish_funciona.h";
+
+! ######################### OBJETOS DEL JUEGO
+
+Object CasaFamiliar "la casa familiar"
+    with description "Una acogedora casa familiar. Al este esta el jardin y al oeste la cocina.",
+         e_to Jardin,
+         w_to Cocina,
+    has light female;
+
+Object -> mesaElegante "mesa elegante" 
+    with name 'mesa' 'elegante',
+         description "Una hermosa mesa de madera.",
+    has supporter static female;
+
+Object -> -> libroAntiguo "libro antiguo"
+    with name 'libro' 'antiguo',
+         description "Un viejo libro de cuero.",
+    has male;
+
+Object -> -> llavesPlateadas "llaves plateadas"
+    with name 'llaves' 'plateadas',
+         description "Unas llaves brillantes.",
+    has female pluralname;
+
+Object -> cajaMisteriosa "caja misteriosa"
+    with name 'caja' 'misteriosa',
+         description "Una caja de madera cerrada.",
+         when_open "La caja esta abierta.",
+         when_closed "La caja esta cerrada.",
+    has container openable female;
+
+Object -> -> tesoroDorado "tesoro dorado"
+    with name 'tesoro' 'dorado' 'oro',
+         description "Un magnifico tesoro de oro!",
+    has male;
+
+Object Jardin "el jardin"
+    with description "Un hermoso jardin con flores. Al oeste esta la casa.",
+         w_to CasaFamiliar,
+    has light male;
+
+Object -> pajaroCantor "pajaro cantor"
+    with name 'pajaro' 'cantor' 'ave',
+         description "Un hermoso pajaro que canta.",
+         life [;
+             Tell:
+                 "El pajaro te escucha y canta una melodia.";
+             AskFor:
+                 "El pajaro senala hacia la mesa con el pico.";
+             default:
+                 "El pajaro bate las alas.";
+         ],
+    has animate male;
+
+Object -> rosasRojas "rosas rojas"
+    with name 'rosas' 'rojas' 'flores',
+         description "Hermosas rosas rojas.",
+    has female pluralname;
+
+Object Cocina "la cocina"
+    with description "Una cocina tradicional. Al este esta la casa.",
+         e_to CasaFamiliar,
+    has light female;
+
+Object -> estufaFamilia "estufa"
+    with name 'estufa' 'fogon',
+         description "Una gran estufa de hierro.",
+         when_on "La estufa esta encendida.",
+         when_off "La estufa esta apagada.",
+    has switchable static female;
+
+! ######################### FUNCION DE INICIALIZACION
+
+[ Initialise;
+    InicializarEspanol();
+    
+    print "^^ BIENVENIDO A LA AVENTURA EN ESPANOL! ^^";
+    print "^Esta version FUNCIONA correctamente y demuestra:^";
+    print "^* CONJUGACIONES ESPANOLAS: Verbos en espanol^";
+    print "* CONCORDANCIA AUTOMATICA: Genero y numero correctos^";
+    print "* MENSAJES EN ESPANOL: Respuestas naturales^";
+    print "* OBJETOS CON GENERO: Masculino, femenino y plural^";
+    print "^Comandos disponibles:^";
+    print "• MIRAR / EXAMINAR [objeto]^";
+    print "• COGER / TOMAR [objeto]^";
+    print "• DEJAR [objeto]^";
+    print "• ABRIR / CERRAR [objeto]^";
+    print "• INVENTARIO^";
+    print "• ESTE / OESTE (para ir al jardin/cocina)^";
+    print "• HABLAR CON EL PAJARO^";
+    print "• DEMOSTRAR [objeto] (muestra concordancia)^";
+    print "^Tambien funcionan los comandos en ingles!^^";
+    
+    location = CasaFamiliar;
+    lookmode = 2;
+];
+
+! ######################### ACCIONES ESPECIALES
+
+[ DrinkSub;
+    "No hay nada para beber aqui.";
+];
+
+[ SmellSub;
+    if (noun == rosasRojas) {
+        "Las rosas huelen maravillosamente.";
+    }
+    "No hueles nada especial.";
+];
+
+[ ListenSub;
+    if (noun == pajaroCantor) {
+        "El pajaro canta una melodia hermosa.";
+    }
+    "No oyes nada especial.";
+];
+
+[ TouchSub;
+    if (noun == rosasRojas) {
+        "Los petalos son muy suaves.";
+    }
+    "No sientes nada especial.";
+];
+
+! ######################### DEMOSTRACION DE CONCORDANCIA
+
+[ MostrarConcordancia p_obj;
+    print "^[DEMOSTRACION DE CONCORDANCIA ESPANOLA]^";
+    print "Objeto: ", (object) p_obj, "^";
+    print "Articulo definido: ", (ElLaLosLas) p_obj, "^";
+    print "Articulo indefinido: ", (UnUnaUnosUnas) p_obj, "^";
+    print "Demostrativo: ", (EsteEstaEstosEstas) p_obj, "^";
+    print "Pronombre objeto: ", (LoLaLosLas) p_obj, "^";
+    print "Verbo estar: ", (EstaEstan) p_obj, "^";
+    print "Verbo ser: ", (EsSon) p_obj, "^";
+    if (EsFemenino(p_obj)) print "Es femenino.^";
+    else print "Es masculino.^";
+    if (EsPlural(p_obj)) print "Es plural.^";
+    else print "Es singular.^";
+];
+
+Verb 'demostrar'
+    * noun -> Demostrar;
+
+[ DemostrarSub;
+    MostrarConcordancia(noun);
+];
