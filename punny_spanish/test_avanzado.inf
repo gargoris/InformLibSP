@@ -1,0 +1,171 @@
+! Test del sistema avanzado de conjugaciones españolas
+! Demuestra verbos irregulares, todas las personas y tiempos
+
+Constant Story "^Sistema Avanzado de Conjugaciones Españolas^";
+Constant Headline "^Verbos irregulares y conjugaciones completas^";
+
+Include "puny_spanish_avanzado.h";
+
+Constant INITIAL_LOCATION_VALUE Sala;
+
+Object Sala "Sala de conjugaciones"
+    with description "Una sala especial donde todos los verbos españoles funcionan perfectamente con sus conjugaciones completas.",
+    has light;
+
+Object -> mesa "mesa elegante"
+    with name 'mesa' 'elegante',
+         description "Una hermosa mesa de caoba con incrustaciones de plata.",
+    has supporter static female;
+
+Object -> -> libro "libro de gramática"
+    with name 'libro' 'gramatica',
+         description "Un libro exhaustivo sobre conjugaciones verbales españolas.",
+    has ;
+
+Object -> -> llaves "llaves plateadas"
+    with name 'llaves' 'plateadas',
+         description "Un manojo de llaves de plata con grabados ornamentales.",
+    has female pluralname;
+
+Object -> caja "caja misteriosa"
+    with name 'caja' 'misteriosa',
+         description "Una caja de madera tallada con símbolos extraños.",
+    has container openable female;
+
+Object -> -> tesoro "tesoro brillante"
+    with name 'tesoro' 'brillante',
+         description "Un tesoro que brilla con luz propia.",
+    has ;
+
+Object -> sombrero "sombrero elegante"
+    with name 'sombrero' 'elegante',
+         description "Un sombrero de copa negra muy elegante.",
+    has clothing;
+
+Object -> camisa "camisa blanca"
+    with name 'camisa' 'blanca',
+         description "Una camisa blanca de algodón muy suave.",
+    has clothing female;
+
+[ Initialise;
+    InicializarEspanolAvanzado();
+    print "^^=== SISTEMA AVANZADO DE CONJUGACIONES ESPAÑOLAS ===^^";
+    print "Este sistema demuestra conjugaciones completas con verbos irregulares.^^";
+    print "EJEMPLOS DE COMANDOS DISPONIBLES:^^";
+    print "=== VERBOS IRREGULARES ===^";
+    print "• tengo el libro / tienes las llaves / tiene el tesoro^";
+    print "• hago algo / haces esto / hace eso^";
+    print "• digo la verdad / dices mentiras / dice secretos^";
+    print "• vengo aquí / vienes acá / viene pronto^";
+    print "• puedo coger / puedes tomar / puede abrir^";
+    print "• sé la respuesta / sabes el camino / sabe el secreto^";
+    print "• quiero el libro / quieres las llaves / quiere el tesoro^";
+    print "• pongo la mesa / pones el libro / pone las llaves^^";
+    print "=== VERBOS REGULARES CON TODAS LAS CONJUGACIONES ===^";
+    print "• cojo/coges/coge el libro (presente)^";
+    print "• cogí/cogiste/cogió el libro (pretérito)^";
+    print "• cogeré/cogerás/cogerá el libro (futuro)^";
+    print "• coge/coja el libro (imperativo)^^";
+    print "=== VERBOS REFLEXIVOS ===^";
+    print "• me pongo / te pones / se pone el sombrero^";
+    print "• me quito / te quitas / se quita la camisa^";
+    print "• ponte el sombrero / quítate la camisa^^";
+    print "=== DIRECCIONES CON CONJUGACIONES ===^";
+    print "• voy al norte / vas al sur / va al este^";
+    print "• subo/subes/sube arriba^";
+    print "• bajo/bajas/baja abajo^";
+    print "• entro/entras/entra en la caja^";
+    print "• salgo/sales/sale de aquí^^";
+    print "=== CONCORDANCIA AUTOMÁTICA ===^";
+    print "• examinar la mesa (femenino singular)^";
+    print "• examinar las llaves (femenino plural)^";
+    print "• examinar el libro (masculino singular)^";
+    print "• examinar los tesoros (masculino plural)^^";
+    print "¡Prueba cualquier conjugación en español!^^";
+    location = Sala;
+    lookmode = 2;
+];
+
+[ LibraryMessages p_msg p_arg_1 p_arg_2;
+    switch(p_msg) {
+        MSG_INVENTORY_DEFAULT:
+            if(child(player) == 0) {
+                "No llevas nada en este momento.";
+            }
+            print "En este momento llevas ";
+            PrintContents("", player);
+            ".";
+        MSG_TAKE_DEFAULT:
+            ! Usar participio pasado con concordancia
+            ParticipioPasado(noun, 'coger');
+            ".";
+        MSG_DROP_DROPPED:
+            ! Usar participio pasado con concordancia
+            ParticipioPasado(noun, 'dejar');
+            ".";
+        MSG_OPEN_DEFAULT:
+            print "Abres ";
+            ElLaLosLas(noun);
+            print " ", (name) noun;
+            if(noun has container && noun hasnt transparent &&
+                    ~~IndirectlyContains(noun, player)) {
+                print ", revelando ";
+                if(PrintContents(0, noun)==false) print "nada especial";
+            }
+            ".";
+        MSG_CLOSE_DEFAULT:
+            print "Cierras ";
+            ElLaLosLas(noun);
+            print " ", (name) noun, ".";
+        MSG_EXAMINE_NOTHING_SPECIAL:
+            print "No ves nada especial en ";
+            ElLaLosLas(noun);
+            print " ", (name) noun, ".";
+        MSG_WEAR_DEFAULT:
+            print "Ahora llevas puest";
+            if(EsFemenino(noun)) print "a ";
+            else print "o ";
+            ElLaLosLas(noun);
+            print " ", (name) noun, ".";
+        MSG_TAKE_ANIMATE:
+            print "No creo que ";
+            ElLaLosLas(noun);
+            print " ", (name) noun;
+            if(EsFemenino(noun)) print " esté dispuesta";
+            else print " esté dispuesto";
+            " a eso.";
+        MSG_INSERT_DEFAULT:
+            print "Metes ";
+            ElLaLosLas(noun);
+            print " ", (name) noun, " en ";
+            ElLaLosLas(second);
+            print " ", (name) second, ".";
+        MSG_PUTON_DEFAULT:
+            print "Pones ";
+            ElLaLosLas(noun);
+            print " ", (name) noun, " sobre ";
+            ElLaLosLas(second);
+            print " ", (name) second, ".";
+    }
+    rfalse;
+];
+
+! Función para demostrar conjugaciones dinámicas
+[ DemostrarConjugaciones;
+    print "^=== DEMOSTRACIÓN DE CONJUGACIONES ===^";
+    print "VERBO IRREGULAR 'TENER':^";
+    print "• Yo tengo^";
+    print "• Tú tienes^";
+    print "• Él/Ella tiene^";
+    print "• Nosotros tenemos^";
+    print "• Vosotros tenéis^";
+    print "• Ellos/Ellas tienen^";
+    print "^VERBO IRREGULAR 'IR':^";
+    print "• Yo voy^";
+    print "• Tú vas^";
+    print "• Él/Ella va^";
+    print "• Nosotros vamos^";
+    print "• Vosotros vais^";
+    print "• Ellos/Ellas van^";
+    print "^¡Todas estas formas funcionan en el juego!^";
+];

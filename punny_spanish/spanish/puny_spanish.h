@@ -25,10 +25,7 @@ Include "globals.h";
 Include "spanish/parser.h";
 Include "spanish/messages.h";
 
-! Incluir el resto de los archivos base de PunyInform
-Include "scope.h";
-
-! Redefinir algunas constantes para el español
+! Redefinir algunas constantes para el español antes de incluir puny.h
 #Undef SOMETHING_STR;
 #Undef SOMEONE_STR;
 #Undef SOMEDIRECTION_STR;
@@ -37,7 +34,8 @@ Constant SOMEONE_STR = ALGUIEN_STR_ES;
 Constant SOMEDIRECTION_STR = DIRECCION_STR_ES;
 
 ! Incluir la implementación principal de PunyInform
-Include "puny.h"; ! Esto incluye parser.h, pero nuestro parser.h español ya fue incluido
+! NOTA: puny.h ya incluye scope.h, no lo incluimos por separado
+Include "puny.h";
 
 ! Incluir la gramática española AL FINAL para que sobrescriba la inglesa
 Include "spanish/grammar.h";

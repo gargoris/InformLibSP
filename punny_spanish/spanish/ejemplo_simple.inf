@@ -1,9 +1,13 @@
 ! Ejemplo simple de un juego usando PunyInform Español
 ! Este es un ejemplo básico que demuestra cómo usar la librería
 
-Constant Story "^Mi Primer Juego en Español^";
-Constant Headline "^Un ejemplo de PunyInform Español^
-                   ^por Tu Nombre Aquí^";
+! Declarar caracteres especiales españoles para Z-machine
+Zcharacter table
+'á' 'é' 'í' 'ó' 'ú' 'ñ' 'ü' 'Á' 'É' 'Í' 'Ó' 'Ú' 'Ñ' 'Ü' '¿' '¡';
+
+Constant Story "^Mi Primer Juego en Espanol^";
+Constant Headline "^Un ejemplo de PunyInform Espanol^
+                   ^por Tu Nombre Aqui^";
 
 ! Incluir la librería española
 Include "spanish/puny_spanish.h";

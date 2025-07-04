@@ -258,7 +258,7 @@ Array NumerosEspanyoles static table
 	! - "del sur" (contracción de "de el sur")
 	! - Construcciones con artículo + sustantivo
 	
-	for(_i = 1; _i <= p_input_words; _i++) {
+	for(_i = 1: _i <= p_input_words: _i++) {
 		_palabra = parse-->(_i*2-1);
 		
 		! Manejar contracciones

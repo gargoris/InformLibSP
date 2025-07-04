@@ -1,0 +1,63 @@
+! Test que deberia compilar sin errores
+
+Constant Story "^Test Simple que Funciona^";
+Constant Headline "^Version sin acentos^";
+
+Include "puny_spanish_simple.h";
+
+Constant INITIAL_LOCATION_VALUE Sala;
+
+Object Sala "Sala de prueba"
+    with description "Una sala simple para probar los verbos.",
+    has light;
+
+Object -> mesa "mesa de madera"
+    with name 'mesa' 'madera',
+         description "Una mesa robusta de roble.",
+    has supporter static female;
+
+Object -> -> libro "libro viejo"
+    with name 'libro' 'viejo',
+         description "Un libro con muchas paginas.",
+    has ;
+
+Object -> caja "caja misteriosa"
+    with name 'caja' 'misteriosa',
+         description "Una caja de madera con tapa.",
+    has container openable female;
+
+[ Initialise;
+    InicializarEspanol();
+    print "^^TEST SIMPLE QUE FUNCIONA^^";
+    print "Comandos disponibles:^";
+    print "- mirar / mira / ver^";
+    print "- examinar mesa / examina libro^"; 
+    print "- coger libro / coge libro / tomar libro^";
+    print "- dejar libro / deja libro^";
+    print "- abrir caja / abre caja^";
+    print "- inventario / inv^";
+    print "- ir norte / norte / n^^";
+    location = Sala;
+    lookmode = 2;
+];
+
+[ LibraryMessages p_msg p_arg_1 p_arg_2;
+    switch(p_msg) {
+        MSG_INVENTORY_DEFAULT:
+            if(child(player) == 0) {
+                "No llevas nada.";
+            }
+            print "Llevas ";
+            PrintContents("", player);
+            ".";
+        MSG_TAKE_DEFAULT:
+            "Cogido.";
+        MSG_DROP_DROPPED:
+            "Dejado."; 
+        MSG_OPEN_DEFAULT:
+            print "Abres ";
+            ElLa(noun);
+            print " ", (name) noun, ".";
+    }
+    rfalse;
+];

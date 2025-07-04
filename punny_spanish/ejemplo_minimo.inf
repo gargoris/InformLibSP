@@ -1,0 +1,61 @@
+! Ejemplo minimo usando PunyInform base
+! Para probar que la biblioteca funciona
+
+Constant Story "^Ejemplo Minimo Espanol^";
+Constant Headline "^Una prueba de PunyInform^";
+
+! Incluir solo la librería base de PunyInform
+Include "puny.h";
+
+! Configuración básica
+Constant MAX_SCORE 10;
+Constant INITIAL_LOCATION_VALUE Sala;
+
+! ---------------------
+! Objetos simples
+! ---------------------
+
+Object Sala "Sala de Prueba"
+	with
+		description "Una simple sala de prueba. Hay una mesa aqui.",
+	has light;
+
+Object -> mesa "mesa" 
+	with
+		name 'mesa',
+		description "Una mesa de madera.",
+	has supporter static;
+
+Object -> -> moneda "moneda"
+	with
+		name 'moneda' 'oro',
+		description "Una moneda de oro brillante.",
+		initial "Una moneda dorada brilla sobre la mesa.",
+		before [;
+			Take: 
+				score = score + 10;
+				if(score >= MAX_SCORE) {
+					deadflag = GS_WIN;
+				}
+		],
+	has ;
+
+! ---------------------
+! Funciones básicas
+! ---------------------
+
+[ Initialise;
+	print "^^Ejemplo minimo en espanol.^^
+	       Coge la moneda para ganar.^^";
+	location = Sala;
+	lookmode = 2;
+];
+
+[ DeathMessage;
+	print "*** ";
+	if(deadflag == GS_WIN) {
+		print "HAS GANADO! ***";
+		return;
+	}
+	print "FIN DEL JUEGO ***";
+];

@@ -1,0 +1,159 @@
+! Ejemplo simple de un juego usando PunyInform Español
+! Version sin acentos para evitar problemas de compilacion
+
+Constant Story "^Mi Primer Juego en Español^";
+Constant Headline "^Un ejemplo de PunyInform Español^
+                   ^por Tu Nombre Aqui^";
+
+! Incluir la librería base de PunyInform directamente
+Include "puny.h";
+
+! Configuración del juego
+Constant MAX_SCORE 50;
+Constant INITIAL_LOCATION_VALUE Salon;
+
+! ---------------------
+! Objetos del juego
+! ---------------------
+
+Object Salon "Salon"
+	with
+		description "Estas en un acogedor salon. Hay una mesa en el centro 
+		             y una puerta al norte que lleva al jardin.",
+		n_to Jardin,
+	has light;
+
+Object -> mesa "mesa" 
+	with
+		name 'mesa',
+		description "Una mesa de madera resistente.",
+	has supporter static;
+
+Object -> -> libro "libro"
+	with
+		name 'libro',
+		description "Un interesante libro sobre ficcion interactiva.
+		             En la portada dice: ~Como escribir aventuras~.",
+		initial "Hay un libro sobre la mesa.",
+	has ;
+
+Object -> llave "llave dorada"
+	with
+		name 'llave' 'dorada' 'oro',
+		description "Una pequeña llave dorada que brilla bajo la luz.",
+		initial "Una llave dorada yace en el suelo.",
+	has ;
+
+Object Jardin "Jardin"
+	with
+		description "Un hermoso jardin lleno de flores. Al este hay 
+		             un pequeño cobertizo. El salon esta al sur.",
+		s_to Salon,
+		e_to Cobertizo,
+	has light;
+
+Object -> flores "flores"
+	with
+		name 'flores' 'flor',
+		description "Hermosas flores de muchos colores diferentes.
+		             Su fragancia llena el aire.",
+		initial "Flores coloridas crecen por todo el jardin.",
+	has scenery pluralname;
+
+Object Cobertizo "Cobertizo"
+	with
+		description "Un pequeño cobertizo de madera. Hay un cofre aqui.
+		             El jardin esta al oeste.",
+		w_to Jardin,
+	has light;
+
+Object -> cofre "cofre del tesoro"
+	with
+		name 'cofre' 'tesoro',
+		description "Un viejo cofre de madera con una cerradura dorada.",
+		initial "Un cofre del tesoro descansa en una esquina.",
+		capacity 10,
+		with_key llave,
+	has container openable lockable locked static;
+
+Object -> -> tesoro "tesoro"
+	with
+		name 'tesoro' 'monedas' 'oro' 'joyas',
+		description "Un tesoro fabuloso! Monedas de oro y joyas preciosas.",
+		initial "Un tesoro resplandece dentro del cofre!",
+		before [;
+			Take: 
+				score = score + 25;
+				if(score >= MAX_SCORE) {
+					deadflag = GS_WIN;
+					"Enhorabuena! Has encontrado el tesoro y ganado el juego!";
+				}
+				"Coges el tesoro. Que emocionante!";
+		],
+	has ;
+
+! ---------------------
+! Verbos españoles básicos
+! ---------------------
+
+Verb 'coger' 'agarrar' 'tomar'
+	* multi -> Take;
+
+Verb 'examinar' 'mirar' 'observar' 'ver' 'x//' 'm//'
+	* noun -> Examine;
+
+Verb 'abrir'
+	* noun -> Open
+	* noun 'con' held -> Unlock;
+
+Verb 'inventario' 'inv' 'i//'
+	* -> Inv;
+
+Verb 'ir'
+	* 'al'/'hacia' 'norte'/'n//' -> Go;
+
+Verb 'ayuda' 'socorro'
+	* -> Ayuda;
+
+! ---------------------
+! Funciones del juego  
+! ---------------------
+
+[ Initialise;
+	print "^^Bienvenido a tu primera aventura en español!^^
+	       Tu objetivo es encontrar el tesoro escondido.
+	       Escribe ~ayuda~ si necesitas asistencia.^^";
+	
+	! Establecer el punto de vista del jugador
+	location = Salon;
+	lookmode = 2; ! Descripción larga inicial
+];
+
+[ AyudaSub;
+	"^COMANDOS BASICOS:^
+	 ^
+	 MIRAR - describir tu entorno^
+	 EXAMINAR <objeto> - mirar algo especifico^
+	 COGER <objeto> - tomar algo^
+	 INVENTARIO - ver que llevas^
+	 NORTE, SUR, ESTE, OESTE - moverte^
+	 ABRIR <objeto> - abrir algo^
+	 ^
+	 OBJETIVO: Encuentra el tesoro escondido!^
+	 ^
+	 Otros comandos: SAVE, RESTORE, RESTART, QUIT^";
+];
+
+! Función final del juego
+[ DeathMessage;
+	print "*** ";
+	if(deadflag == GS_WIN) {
+		print "HAS GANADO! ***";
+		return;
+	}
+	if(deadflag == GS_QUIT) {
+		print "HAS SALIDO DEL JUEGO ***";
+		return;  
+	}
+	print "EL JUEGO HA TERMINADO ***";
+];

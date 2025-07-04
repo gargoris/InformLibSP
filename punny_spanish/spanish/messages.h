@@ -24,7 +24,7 @@ Constant MSG_DRINK_NOTHING_SUITABLE "No hay nada apropiado para beber aquí.";
 Constant MSG_DROP_DROPPED "Soltado.";
 #EndIf;
 #Ifndef MSG_THROW_ANIMATE;
-Constant MSG_THROW_ANIMATE "Inútil.";
+Constant MSG_THROW_ANIMATE "Inutill";
 #Endif;
 #Ifndef MSG_THROW_DEFAULT;
 Constant MSG_THROW_DEFAULT "Te falta valor en el momento crucial.";

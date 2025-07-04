@@ -1,0 +1,137 @@
+! Ejemplo funcional usando PunyInform original con algunos verbos en español
+
+Constant Story "^Ejemplo PunyInform con Verbos Espanoles^";
+Constant Headline "^Un ejemplo funcional^";
+
+! Incluir solo la implementación principal de PunyInform
+Include "globals.h";
+Include "puny.h";
+
+! Agregar verbos españoles básicos DESPUÉS de incluir puny.h
+Verb 'coger' 'agarrar' 'tomar'
+	* multi -> Take;
+
+Verb 'mirar' 'examinar' 'observar' 'ver' 'm//'
+	* noun -> Examine
+	* -> Look;
+
+Verb 'abrir'
+	* noun -> Open;
+
+
+Verb 'ir'
+	* 'norte'/'n//' -> Go;
+
+! Configuración del juego
+Constant INITIAL_LOCATION_VALUE Salon;
+
+! ---------------------
+! Objetos del juego
+! ---------------------
+
+Object Salon "Salon Principal"
+	with
+		description "Estas en un elegante salon. Una mesa ocupa el centro 
+		             de la habitacion.",
+	has light;
+
+Object -> mesa "mesa elegante" 
+	with
+		name 'mesa' 'elegante',
+		description "Una hermosa mesa de caoba pulida.",
+	has supporter static;
+
+Object -> -> llave "llave pequena"
+	with
+		name 'llave' 'pequena',
+		description "Una pequena llave de bronce.",
+		initial "Una pequena llave descansa sobre la mesa.",
+	has ;
+
+Object -> -> caja "caja misteriosa"
+	with
+		name 'caja' 'misteriosa',
+		description "Una intrigante caja de madera con una cerradura.",
+		initial "Una caja misteriosa esta sobre la mesa.",
+		capacity 5,
+		with_key llave,
+		before [;
+			Open:
+				if(self hasnt open && self has locked) {
+					"La caja esta cerrada con llave.";
+				}
+		],
+	has container openable lockable locked;
+
+Object -> -> -> tesoro "tesoro brillante"
+	with
+		name 'tesoro' 'brillante' 'gema' 'joya',
+		description "Un tesoro magnifico que brilla con luz propia.",
+		before [;
+			Take: 
+				score = score + 20;
+				if(score >= MAX_SCORE) {
+					deadflag = GS_WIN;
+					"Coges el tesoro. Has completado tu mision!";
+				}
+				"Coges el tesoro brillante.";
+		],
+	has ;
+
+! ---------------------
+! Funciones del juego
+! ---------------------
+
+[ Initialise;
+	print "^^EJEMPLO DE PUNYINFORM CON VERBOS ESPAÑOLES^^";
+	print "Tu mision: encontrar y coger el tesoro escondido.^^";
+	print "Comandos disponibles:^";
+	print "  MIRAR - ver la habitacion^";
+	print "  EXAMINAR [objeto] - inspeccionar algo^";
+	print "  COGER [objeto] - tomar un objeto^";
+	print "  ABRIR [objeto] - abrir algo^";
+	print "  INVENTARIO - ver que llevas^^";
+	print "¡Buena suerte!^^";
+	
+	location = Salon;
+	lookmode = 2;
+	! MAX_SCORE = 20; ! Puntuación máxima del juego
+];
+
+! Personalizar algunos mensajes para español
+[ LibraryMessages p_msg p_arg_1 p_arg_2;
+	switch(p_msg) {
+		MSG_INVENTORY_DEFAULT:
+			if(child(player) == 0) {
+				"No llevas nada.";
+			}
+			print "Llevas ";
+			PrintContents("", player);
+			".";
+		MSG_TAKE_DEFAULT:
+			"Cogido.";
+		MSG_DROP_DROPPED:
+			"Dejado.";
+		MSG_OPEN_DEFAULT:
+			print "Abres ", (the) noun;
+			if(noun has container && child(noun) ~= 0) {
+				print ", revelando ";
+				PrintContents("", noun);
+			}
+			".";
+	}
+	rfalse; ! Usar mensajes por defecto para el resto
+];
+
+[ DeathMessage;
+	print "*** ";
+	if(deadflag == GS_WIN) {
+		print "¡MISION CUMPLIDA! ***";
+		return;
+	}
+	if(deadflag == GS_QUIT) {
+		print "HAS SALIDO DEL JUEGO ***";
+		return;  
+	}
+	print "FIN DEL JUEGO ***";
+];

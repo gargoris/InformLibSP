@@ -1,0 +1,121 @@
+! Test del sistema optimizado de conjugaciones españolas
+! Version sin acentos para evitar errores de codificacion
+
+Constant Story "^Sistema Optimizado de Conjugaciones Espanolas^";
+Constant Headline "^Verbos irregulares sin conflictos^";
+
+Include "puny_spanish_optimizado.h";
+
+Constant INITIAL_LOCATION_VALUE Sala;
+
+Object Sala "Sala de conjugaciones optimizada"
+    with description "Una sala donde las conjugaciones espanolas funcionan sin conflictos.",
+    has light;
+
+Object -> mesa "mesa elegante"
+    with name 'mesa' 'elegante',
+         description "Una hermosa mesa de caoba.",
+    has supporter static female;
+
+Object -> -> libro "libro de gramatica"
+    with name 'libro' 'gramatica',
+         description "Un libro sobre conjugaciones verbales espanolas.",
+    has ;
+
+Object -> -> llaves "llaves plateadas"
+    with name 'llaves' 'plateadas',
+         description "Un manojo de llaves de plata.",
+    has female pluralname;
+
+Object -> caja "caja misteriosa"
+    with name 'caja' 'misteriosa',
+         description "Una caja de madera tallada.",
+    has container openable female;
+
+Object -> sombrero "sombrero elegante"
+    with name 'sombrero' 'elegante',
+         description "Un sombrero de copa negra muy elegante.",
+    has clothing;
+
+[ Initialise;
+    InicializarEspanolOptimizado();
+    print "^^=== SISTEMA OPTIMIZADO DE CONJUGACIONES ESPANOLAS ===^^";
+    print "Version sin conflictos con verbos irregulares completos.^^";
+    print "EJEMPLOS DE COMANDOS DISPONIBLES:^^";
+    print "=== VERBOS IRREGULARES ===^";
+    print "• tengo el libro / tienes las llaves / tiene la caja^";
+    print "• hago algo / haces esto / hace eso^";
+    print "• digo la verdad / dices secretos / dice palabras^";
+    print "• vengo aqui / vienes aca / viene pronto^";
+    print "• puedo coger / puedes tomar / puede abrir^";
+    print "• quiero el libro / quieres las llaves / quiere la caja^";
+    print "• voy al norte / vas al sur / va al este^^";
+    print "=== VERBOS REGULARES OPTIMIZADOS ===^";
+    print "• cojo el libro / cojas las llaves / coja la caja^";
+    print "• tomas el libro / tomen las llaves / tomemos todo^";
+    print "• miras la mesa / miren el libro / miremos alrededor^";
+    print "• abro la caja / abres el libro / abre la puerta^";
+    print "• busco las llaves / buscas el tesoro / busca la verdad^^";
+    print "=== VERBOS REFLEXIVOS ===^";
+    print "• ponte el sombrero / quitarse la ropa^";
+    print "• quitaos los zapatos / ponganse la camisa^^";
+    print "=== DIRECCIONES ===^";
+    print "• norte / sur / este / oeste^";
+    print "• subo arriba / bajo abajo^";
+    print "• entro en la caja / salgo de aqui^^";
+    print "=== METACOMANDOS ===^";
+    print "• inventario / guardar / cargar / salir^^";
+    print "¡Prueba cualquier conjugacion disponible!^^";
+    location = Sala;
+    lookmode = 2;
+];
+
+[ LibraryMessages p_msg p_arg_1 p_arg_2;
+    switch(p_msg) {
+        MSG_INVENTORY_DEFAULT:
+            if(child(player) == 0) {
+                "No llevas nada en este momento.";
+            }
+            print "En este momento llevas ";
+            PrintContents("", player);
+            ".";
+        MSG_TAKE_DEFAULT:
+            ParticipioPasado(noun, 'coger');
+            ".";
+        MSG_DROP_DROPPED:
+            ParticipioPasado(noun, 'dejar');
+            ".";
+        MSG_OPEN_DEFAULT:
+            print "Abres ";
+            ElLaLosLas(noun);
+            print " ", (name) noun;
+            if(noun has container && noun hasnt transparent &&
+                    ~~IndirectlyContains(noun, player)) {
+                print ", revelando ";
+                if(PrintContents(0, noun)==false) print "nada especial";
+            }
+            ".";
+        MSG_CLOSE_DEFAULT:
+            print "Cierras ";
+            ElLaLosLas(noun);
+            print " ", (name) noun, ".";
+        MSG_EXAMINE_NOTHING_SPECIAL:
+            print "No ves nada especial en ";
+            ElLaLosLas(noun);
+            print " ", (name) noun, ".";
+        MSG_WEAR_DEFAULT:
+            print "Ahora llevas puest";
+            if(EsFemenino(noun)) print "a ";
+            else print "o ";
+            ElLaLosLas(noun);
+            print " ", (name) noun, ".";
+        MSG_TAKE_ANIMATE:
+            print "No creo que ";
+            ElLaLosLas(noun);
+            print " ", (name) noun;
+            if(EsFemenino(noun)) print " este dispuesta";
+            else print " este dispuesto";
+            " a eso.";
+    }
+    rfalse;
+];
