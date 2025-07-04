@@ -1,10 +1,14 @@
-! Mensajes en Español para PunyInform
-! Traducción completa y adaptación cultural de todos los mensajes
-! Con soporte completo para género, número y conjugaciones verbales
+! Mensajes en Español - Versión Master Definitiva
+! Sistema completo de mensajes con concordancia de género y número
+! Traducción cultural y gramaticalmente correcta
+!
+! Autor: Claude Code  
+! Fecha: 4 de julio de 2025
+! Versión: 1.0 Master
 
 System_file;
 
-! ######################### Mensajes simples (strings)
+! ######################### MENSAJES SIMPLES (STRINGS)
 
 #Ifndef MSG_TAKE_YOURSELF;
 Constant MSG_TAKE_YOURSELF "Siempre te tienes a ti mismo.";
@@ -97,7 +101,8 @@ Constant MSG_SEARCH_NOTHING_SPECIAL "No encuentras nada especial.";
 Constant MSG_OOPS_DEFAULT "No tiene importancia.";
 #EndIf;
 
-! Mensajes del parser
+! ######################### MENSAJES DEL PARSER
+
 #Ifndef MSG_PARSER_ONLY_TO_ANIMATE;
 Constant MSG_PARSER_ONLY_TO_ANIMATE "Solo puedes hacer eso con algo animado.";
 #EndIf;
@@ -144,6 +149,8 @@ Constant MSG_PARSER_BE_MORE_SPECIFIC "Necesitas ser más específico.";
 Constant MSG_PARSER_NO_MULTIPLES_FOR_NPC "Solo puedes referirte a objetos individuales cuando hablas con otros.";
 #EndIf;
 
+! ######################### MENSAJES DE PUNTUACIÓN Y ESTADOS
+
 #IfnDef OPTIONAL_NO_DARKNESS;
 #IfnDef MSG_NOW_DARK;
 Constant MSG_NOW_DARK "^Ahora está completamente oscuro aquí.";
@@ -164,9 +171,8 @@ Constant MSG_FULLSCORE_ACTIONS "realizando acciones notables";
 #EndIf;
 #EndIf;
 
-! ######################### Mensajes complejos (numerados)
+! ######################### MENSAJES COMPLEJOS (NUMERADOS)
 
-! Usando los mismos números que PunyInform original para compatibilidad
 Default MSG_CLOSE_YOU_CANT = 2;
 Default MSG_ENTER_YOU_CANT = 3;
 Default MSG_EXAMINE_NOTHING_SPECIAL = 4;
@@ -219,19 +225,15 @@ Default MSG_SWITCH_OFF_DEFAULT = 50;
 Default MSG_SCORE_DEFAULT = 88;
 Default MSG_PROMPT = 94;
 
-! ######################### Función principal de mensajes
+! ######################### FUNCIÓN PRINCIPAL DE MENSAJES CON CONCORDANCIA
 
-[ _PrintMsg p_msg p_arg_1 p_arg_2;
+[ LibraryMessages p_msg p_arg_1 p_arg_2;
+    ! Esta función sobrescribe la original para usar mensajes españoles
+    
     if(p_msg ofclass String)
         print_ret (string) p_msg;
 
-#Ifdef LibraryMessages;
-    if(p_msg > 999) {
-        return LibraryMessages(p_msg, p_arg_1, p_arg_2);
-    }
-#Endif;
-
-    ! Procesar mensajes complejos en español
+    ! Procesar mensajes complejos con concordancia española
     switch(p_msg) {
     MSG_PROMPT:
         print "> ";
@@ -262,11 +264,7 @@ Default MSG_PROMPT = 94;
         "Primero tendrías que salir de ", (ElLaLosLas) p_arg_1, " ", (object) p_arg_1, ".";
         
     MSG_DROP_NOT_HOLDING, MSG_SHOW_NOT_HOLDING, MSG_GIVE_NOT_HOLDING, MSG_WEAR_NOT_HOLDING:
-        "No ";
-        if(EsPlural(noun)) print "llevas ";
-        else print "llevas ";
-        LoLaLosLas(noun);
-        print " ", (object) noun, ".";
+        "No llevas ", (LoLaLosLas) noun, " ", (object) noun, ".";
         
     MSG_OPEN_DEFAULT:
         "Abres ", (ElLaLosLas) noun, " ", (object) noun;
@@ -277,13 +275,14 @@ Default MSG_PROMPT = 94;
         }
         ".";
         
-    MSG_CLOSE_DEFAULT, MSG_ENTER_DEFAULT, MSG_EXIT_DEFAULT:
-        switch(p_msg) {
-            MSG_CLOSE_DEFAULT: print "Cierras ";
-            MSG_ENTER_DEFAULT: print "Entras en ";
-            MSG_EXIT_DEFAULT: print "Sales de ";
-        }
-        print (ElLaLosLas) noun, " ", (object) noun, ".";
+    MSG_CLOSE_DEFAULT:
+        "Cierras ", (ElLaLosLas) noun, " ", (object) noun, ".";
+        
+    MSG_ENTER_DEFAULT:
+        "Entras en ", (ElLaLosLas) noun, " ", (object) noun, ".";
+        
+    MSG_EXIT_DEFAULT:
+        "Sales de ", (ElLaLosLas) noun, " ", (object) noun, ".";
         
     MSG_GIVE_DEFAULT, MSG_SHOW_DEFAULT:
         print (ElLaLosLas) second, " ", (object) second, " no parece ";
@@ -298,33 +297,29 @@ Default MSG_PROMPT = 94;
         "Pones ", (ElLaLosLas) noun, " ", (object) noun, " sobre ", (ElLaLosLas) second, " ", (object) second, ".";
         
     MSG_WEAR_DEFAULT:
-        "Ahora llevas pues";
-        if(EsFemenino(noun)) print "ta ";
-        else print "to ";
-        print (ElLaLosLas) noun, " ", (object) noun, ".";
+        "Ahora llevas puest";
+        ConcordanciaEdo(noun);
+        print " ", (ElLaLosLas) noun, " ", (object) noun, ".";
         
     MSG_WEAR_ALREADY_WORN:
-        "Ya llevas pues";
-        if(EsFemenino(noun)) print "ta ";
-        else print "to ";
-        LoLaLosLas(noun);
-        print " ", (object) noun, ".";
+        "Ya llevas puest";
+        ConcordanciaEdo(noun);
+        print " ", (LoLaLosLas) noun, " ", (object) noun, ".";
         
-    MSG_SCORE_DEFAULT:
-#Ifdef NO_SCORE;
-        "No hay puntuación en este juego.";
-#Ifnot;
-        if (deadflag) print "En ese juego conseguiste"; else print "Hasta ahora has conseguido";
-        print " ", score, " punto";
-        if(score ~= 1) print "s";
-        print " de un total de ", MAX_SCORE, " posibles, en ", turns, " turno";
-        if(turns ~= 1) print "s";
-        rtrue;
-#Endif;
-
-    MSG_AREYOUSUREQUIT:
-        print "¿Estás seguro de que quieres abandonar? ";
-        rtrue;
+    MSG_TAKE_DEFAULT:
+        "Cogid";
+        ConcordanciaEdo(noun);
+        ".";
+        
+    MSG_DROP_DROPPED:
+        "Dejad";
+        ConcordanciaEdo(noun);
+        ".";
+        
+    MSG_REMOVE_DEFAULT:
+        "Quitad";
+        ConcordanciaEdo(noun);
+        ".";
         
     MSG_OPEN_YOU_CANT, MSG_CLOSE_YOU_CANT, MSG_ENTER_YOU_CANT:
         print "No puedes ";
@@ -343,27 +338,15 @@ Default MSG_PROMPT = 94;
         
     MSG_ENTER_NOT_OPEN, MSG_EXIT_NOT_OPEN, MSG_INSERT_NOT_OPEN, MSG_GO_DOOR_CLOSED:
         "No puedes, porque ", (ElLaLosLas) p_arg_1, " ", (object) p_arg_1, " ";
-        if(EsPlural(p_arg_1)) print "están cerradas";
-        else {
-            if(EsFemenino(p_arg_1)) print "está cerrada";
-            else print "está cerrado";
-        }
+        EstaOEstanCerrado(p_arg_1);
         ".";
         
     MSG_GIVE_PLAYER, MSG_TAKE_ALREADY_HAVE:
-        "Ya ";
-        if(EsPlural(noun)) print "tienes ";
-        else print "tienes ";
-        LoLaLosLas(noun);
-        print " ", (object) noun, ".";
+        "Ya tienes ", (LoLaLosLas) noun, " ", (object) noun, ".";
         
     MSG_INSERT_ALREADY, MSG_PUTON_ALREADY:
         "Ya ";
-        if(EsPlural(noun)) print "están";
-        else {
-            if(EsFemenino(noun)) print "está";
-            else print "está";
-        }
+        EstaEstan(noun);
         " ahí.";
         
     MSG_INSERT_NO_ROOM, MSG_PUTON_NO_ROOM:
@@ -377,20 +360,67 @@ Default MSG_PROMPT = 94;
         print " o ABANDONAR? ";
         rtrue;
         
-    MSG_SWITCH_ON_DEFAULT, MSG_SWITCH_OFF_DEFAULT:
-        switch(p_msg) {
-            MSG_SWITCH_ON_DEFAULT: print "Enciendes ";
-            MSG_SWITCH_OFF_DEFAULT: print "Apagas ";
-        }
-        print (ElLaLosLas) noun, " ", (object) noun, ".";
+    MSG_SWITCH_ON_DEFAULT:
+        "Enciendes ", (ElLaLosLas) noun, " ", (object) noun, ".";
+        
+    MSG_SWITCH_OFF_DEFAULT:
+        "Apagas ", (ElLaLosLas) noun, " ", (object) noun, ".";
+
+    MSG_SCORE_DEFAULT:
+#Ifdef NO_SCORE;
+        "No hay puntuación en este juego.";
+#Ifnot;
+        if (deadflag) print "En ese juego conseguiste"; else print "Hasta ahora has conseguido";
+        print " ", score, " punto";
+        if(score ~= 1) print "s";
+        print " de un total de ", MAX_SCORE, " posibles, en ", turns, " turno";
+        if(turns ~= 1) print "s";
+        rtrue;
+#Endif;
+
+    MSG_AREYOUSUREQUIT:
+        print "¿Estás seguro de que quieres abandonar? ";
+        rtrue;
 
     default:
-        ! Si no hay código específico, usar mensaje genérico
-        "No se ha definido mensaje para #", p_msg, ".";
+        ! Si no hay mensaje específico, usar el original
+        rfalse;
     }
 ];
 
-! ######################### Funciones auxiliares de impresión
+! ######################### FUNCIONES AUXILIARES PARA CONCORDANCIA
+
+[ EstaOEstanCerrado p_obj;
+    if (EsPlural(p_obj)) {
+        if (EsFemenino(p_obj)) print "están cerradas";
+        else print "están cerrados";
+    } else {
+        if (EsFemenino(p_obj)) print "está cerrada";
+        else print "está cerrado";
+    }
+];
+
+[ EstaOEstanAbierto p_obj;
+    if (EsPlural(p_obj)) {
+        if (EsFemenino(p_obj)) print "están abiertas";
+        else print "están abiertos";  
+    } else {
+        if (EsFemenino(p_obj)) print "está abierta";
+        else print "está abierto";
+    }
+];
+
+[ EstaOEstanEncendido p_obj;
+    if (EsPlural(p_obj)) {
+        if (EsFemenino(p_obj)) print "están encendidas";
+        else print "están encendidos";
+    } else {
+        if (EsFemenino(p_obj)) print "está encendida";
+        else print "está encendido";
+    }
+];
+
+! ######################### FUNCIONES ESPECIALES PARA VERBOS
 
 [ VerbName p_v;
     ! Imprimir nombres de verbos en español
@@ -410,56 +440,8 @@ Default MSG_PROMPT = 94;
     print (address) p_v;
 ];
 
-! ######################### Funciones auxiliares españolas
+! ######################### REDEFINIR PRINTMSG PARA USAR NUESTROS MENSAJES
 
-[ EsoOEsos p_obj;
-    if (EsPlural(p_obj)) print "esos"; 
-    else print "eso";
+[ PrintMsg p_msg p_arg_1 p_arg_2;
+    return LibraryMessages(p_msg, p_arg_1, p_arg_2);
 ];
-
-[ LoLoLosLas p_obj;
-    if (p_obj == player) { print "te"; rtrue; }
-    if (EsPlural(p_obj)) {
-        if (EsFemenino(p_obj)) print "las";
-        else print "los";
-    } else {
-        if (EsFemenino(p_obj)) print "la";
-        else print "lo";
-    }
-];
-
-[ ElEllaEllosEllas p_obj;
-    if (p_obj == player) { print "tú"; rtrue; }
-    if (EsPlural(p_obj)) {
-        if (EsFemenino(p_obj)) print "ellas";
-        else print "ellos";
-    } else {
-        if (EsFemenino(p_obj)) print "ella";
-        else print "él";
-    }
-];
-
-[ EstanOEsta p_obj;
-    if (EsPlural(p_obj) || p_obj == player) print "están";
-    else print "está";
-];
-
-[ SonOEs p_obj;
-    if (EsPlural(p_obj) || p_obj == player) print "son";
-    else print "es";
-];
-
-[ EstaOEstanCerrado p_obj;
-    if (EsPlural(p_obj)) print "están cerrados";
-    else {
-        if (EsFemenino(p_obj)) print "está cerrada";
-        else print "está cerrado";
-    }
-];
-
-[ PluralS p_obj;
-    if(EsPlural(p_obj) || p_obj == player) print "s";
-];
-
-! No redefinir PrintMsg aquí para evitar conflictos
-! El usuario puede usar _PrintMsg directamente si lo necesita
