@@ -1,0 +1,173 @@
+! Ejemplo simple de un juego usando PunyInform Español
+! Este es un ejemplo básico que demuestra cómo usar la librería
+
+Constant Story "^Mi Primer Juego en Español^";
+Constant Headline "^Un ejemplo de PunyInform Español^
+                   ^por Tu Nombre Aquí^";
+
+! Incluir la librería española
+Include "spanish/puny_spanish.h";
+
+! Configuración del juego
+Constant MAX_SCORE 50;
+Constant INITIAL_LOCATION_VALUE Salon;
+
+! ---------------------
+! Objetos del juego
+! ---------------------
+
+Object Salon "Salón"
+	with
+		description "Estás en un acogedor salón. Hay una mesa en el centro 
+		             y una puerta al norte que lleva al jardín.",
+		n_to Jardin,
+	has light;
+
+Object -> mesa "mesa" 
+	with
+		name 'mesa',
+		description "Una mesa de madera resistente.",
+	has supporter static;
+
+Object -> -> libro "libro"
+	with
+		name 'libro',
+		description "Un interesante libro sobre ficción interactiva.
+		             En la portada dice: ~Cómo escribir aventuras~.",
+		initial "Hay un libro sobre la mesa.",
+	has female; ! El libro es femenino en este contexto como 'obra'
+
+Object -> llave "llave dorada"
+	with
+		name 'llave' 'dorada' 'oro',
+		description "Una pequeña llave dorada que brilla bajo la luz.",
+		initial "Una llave dorada yace en el suelo.",
+	has female;
+
+Object Jardin "Jardín"
+	with
+		description "Un hermoso jardín lleno de flores. Al este hay 
+		             un pequeño cobertizo. El salón está al sur.",
+		s_to Salon,
+		e_to Cobertizo,
+	has light;
+
+Object -> flores "flores"
+	with
+		name 'flores' 'flor',
+		description "Hermosas flores de muchos colores diferentes.
+		             Su fragancia llena el aire.",
+		initial "Flores coloridas crecen por todo el jardín.",
+	has scenery pluralname female;
+
+Object Cobertizo "Cobertizo"
+	with
+		description "Un pequeño cobertizo de madera. Hay un cofre aquí.
+		             El jardín está al oeste.",
+		w_to Jardin,
+	has light;
+
+Object -> cofre "cofre del tesoro"
+	with
+		name 'cofre' 'tesoro',
+		description "Un viejo cofre de madera con una cerradura dorada.",
+		initial "Un cofre del tesoro descansa en una esquina.",
+		capacity 10,
+		with_key llave,
+	has container openable lockable locked static;
+
+Object -> -> tesoro "tesoro"
+	with
+		name 'tesoro' 'monedas' 'oro' 'joyas',
+		description "¡Un tesoro fabuloso! Monedas de oro y joyas preciosas.",
+		initial "¡Un tesoro resplandece dentro del cofre!",
+		before [;
+			Take: 
+				score = score + 25;
+				if(score >= MAX_SCORE) {
+					deadflag = GS_WIN;
+					"¡Enhorabuena! ¡Has encontrado el tesoro y ganado el juego!";
+				}
+				"Coges el tesoro. ¡Qué emocionante!";
+		],
+	has female; ! "Una fortuna" - femenino
+
+! ---------------------
+! Funciones del juego  
+! ---------------------
+
+[ Initialise;
+	! Inicializar la biblioteca española
+	InicializarEspanyol();
+	
+	print "^^¡Bienvenido a tu primera aventura en español!^^
+	       Tu objetivo es encontrar el tesoro escondido.
+	       Escribe ~ayuda~ si necesitas asistencia.^^";
+	
+	! Establecer el punto de vista del jugador
+	location = Salon;
+	lookmode = 2; ! Descripción larga inicial
+];
+
+! Comando de ayuda personalizado
+Verb 'ayuda' 'socorro'
+	* -> Ayuda;
+
+[ AyudaSub;
+	"^COMANDOS BÁSICOS:^
+	 ^
+	 MIRAR - describir tu entorno^
+	 EXAMINAR <objeto> - mirar algo específico^
+	 COGER <objeto> - tomar algo^
+	 INVENTARIO - ver qué llevas^
+	 NORTE, SUR, ESTE, OESTE - moverte^
+	 ABRIR <objeto> - abrir algo^
+	 USAR <objeto> CON <objeto> - usar objetos juntos^
+	 ^
+	 OBJETIVO: ¡Encuentra el tesoro escondido!^
+	 ^
+	 Otros comandos: GUARDAR, CARGAR, REINICIAR, SALIR^";
+];
+
+! Personalizar algunos mensajes
+[ LibraryMessages p_msg p_arg_1 p_arg_2;
+	switch(p_msg) {
+		MSG_INVENTORY_DEFAULT:
+			if(child(player) == 0) {
+				print "No llevas nada en este momento.";
+				rtrue;
+			}
+			print "Llevas ";
+			PrintContents("", player);
+			print ".";
+			rtrue;
+		MSG_LOOK_BEFORE_ROOMNAME:
+			! Agregar una línea en blanco antes del nombre de la sala
+			new_line;
+			rtrue;
+	}
+	rfalse; ! Usar mensajes por defecto para todo lo demás
+];
+
+! Rutina de rango personalizada para mensajes de puntuación
+[ PrintRank;
+	print ", lo que te da el rango de ";
+	if(score >= MAX_SCORE) "¡Maestro Aventurero!";
+	if(score >= 25) "Aventurero Experto.";
+	if(score >= 10) "Aventurero Novato.";
+	"Principiante Absoluto.";
+];
+
+! Función final del juego
+[ DeathMessage;
+	print "*** ";
+	if(deadflag == GS_WIN) {
+		print "¡HAS GANADO! ***";
+		return;
+	}
+	if(deadflag == GS_QUIT) {
+		print "HAS SALIDO DEL JUEGO ***";
+		return;  
+	}
+	print "EL JUEGO HA TERMINADO ***";
+];
