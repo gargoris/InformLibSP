@@ -23,9 +23,9 @@ Zcharacter table '@{E1}' '@{E9}' '@{ED}' '@{F3}' '@{FA}' '@{FC}' '@{F1}'
                  '@{BF}' '@{A1}' '@{C3}' '@{B1}' '@{C2}' '@{BA}' '@{A9}'
                  '@{B3}';
 
-Include "spanish_final/messages_spanish_master.h";
-Include "spanish_final/grammar_spanish_master.h"; 
-Include "spanish_final/parser_spanish_master.h";
+Include "messages_spanish_master.h";
+Include "grammar_spanish_master.h"; 
+Include "parser_spanish_master.h";
 
 Include "scope.h";
 
