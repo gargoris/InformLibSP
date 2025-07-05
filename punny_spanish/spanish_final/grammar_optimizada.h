@@ -7,8 +7,8 @@
 System_file;
 
 ! Incluir sistemas de soporte
-Include "verbos_infinitivos.h";
-Include "verbos_irregulares.h";
+Include "spanish_final/verbos_infinitivos.h";
+Include "spanish_final/verbos_irregulares.h";
 
 ! ######################### CONFIGURACIÓN DEL SISTEMA
 

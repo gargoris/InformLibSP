@@ -263,7 +263,7 @@ Array VerbosIrregularesMaster table
 
 ! Busca si un verbo es irregular
 [ EsVerboIrregular verbo i;
-    for (i = 0; i < VerbosIrregularesMaster-->0; i = i + 2) {
+    for (i = 0: i < VerbosIrregularesMaster-->0: i = i + 2) {
         if (ComparaStrings(verbo, VerbosIrregularesMaster-->(i + 1))) {
             return VerbosIrregularesMaster-->(i + 2);
         }
@@ -273,7 +273,7 @@ Array VerbosIrregularesMaster table
 
 ! Busca una conjugación específica dentro de un verbo irregular
 [ BuscarConjugacionIrregular tabla_conjugaciones palabra i;
-    for (i = 0; i < tabla_conjugaciones-->0; i++) {
+    for (i = 0: i < tabla_conjugaciones-->0: i++) {
         if (ComparaStrings(palabra, tabla_conjugaciones-->(i + 1))) {
             return tabla_conjugaciones;
         }
@@ -318,7 +318,7 @@ Array VerbosIrregularesMaster table
 [ ParsearVerboIrregular palabra i tabla_conjugaciones infinitivo;
     
     ! Buscar en cada verbo irregular
-    for (i = 0; i < VerbosIrregularesMaster-->0; i = i + 2) {
+    for (i = 0: i < VerbosIrregularesMaster-->0: i = i + 2) {
         infinitivo = VerbosIrregularesMaster-->(i + 1);
         tabla_conjugaciones = VerbosIrregularesMaster-->(i + 2);
         
@@ -337,7 +337,7 @@ Array VerbosIrregularesMaster table
 [ ComparaStrings str1 str2 i;
     if (str1->0 ~= str2->0) return false;
     
-    for (i = 1; i <= str1->0; i++) {
+    for (i = 1: i <= str1->0: i++) {
         if (str1->i ~= str2->i) return false;
     }
     return true;
@@ -370,9 +370,9 @@ Array VerbosIrregularesMaster table
 
 ! Busca un patrón en una palabra
 [ ContienePatron palabra patron i j encontrado;
-    for (i = 1; i <= palabra->0 - patron->0 + 1; i++) {
+    for (i = 1: i <= palabra->0 - patron->0 + 1: i++) {
         encontrado = true;
-        for (j = 1; j <= patron->0; j++) {
+        for (j = 1: j <= patron->0: j++) {
             if (palabra->(i + j - 1) ~= patron->j) {
                 encontrado = false;
                 break;

@@ -1,7 +1,7 @@
 ! ######################### EJEMPLO COMPLETO CON SISTEMA INTEGRADO
 ! Demostración de todas las capacidades del sistema español optimizado
 ! Usar este archivo como plantilla para tus propios proyectos
-
+Zcharacter table '@{B3}' '@{B1}' '@{C3}' '@{BA}' '@{A9}';
 Constant Story "^Mi Primera Aventura en Español^";
 Constant Headline "^Un ejemplo usando el sistema integrado optimizado^
                    ^Versión con 66% menos código y 100% funcionalidad^";

@@ -33,8 +33,6 @@ Include "spanish_final/messages_spanish_master.h";
 #EndIf;
 
 ! ######################### SISTEMA DE GRAMÁTICA OPTIMIZADA
-Include "spanish_final/verbos_infinitivos.h";
-Include "spanish_final/verbos_irregulares.h";
 Include "spanish_final/grammar_optimizada.h";
 
 ! ######################### PARSER ESPAÑOL AVANZADO

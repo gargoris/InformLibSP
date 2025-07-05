@@ -439,6 +439,14 @@ Default MAX_SCORE           0;
 Default AMUSING_PROVIDED    1;
 Default MAX_CARRIED        32;
 
+#Ifndef OPTIONAL_NO_DARKNESS;
+Object thedark "Darkness"
+	with
+		initial 0,
+		description "It is pitch dark here!",
+ 		short_name 0;
+#Endif;
+
 #IfDef INITIAL_LOCATION_VALUE;
 Global location = INITIAL_LOCATION_VALUE;		! Must be the first global to show location name
 #IfNot;
@@ -618,7 +626,7 @@ Array  the_timers --> MAX_TIMERS;
 Global active_timers;               ! Number of timers/daemons active
 Global current_timer;               ! Index of the timer which is currently being executed
 
-Global PrintMsg = _PrintMsg;        ! Using a global for this saves one byte per call
+! Global PrintMsg = _PrintMsg;        ! Using a global for this saves one byte per call
 
 Default MAX_FLOATING_OBJECTS  32;            ! Max number of objects that have found_in property
 Array floating_objects --> MAX_FLOATING_OBJECTS + 1;

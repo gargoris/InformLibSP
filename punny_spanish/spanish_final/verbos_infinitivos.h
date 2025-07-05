@@ -334,14 +334,14 @@ Array VerbosIrregulares table
 ! Busca la acción correspondiente a un verbo infinitivo
 [ BuscarAccionVerbo verbo i;
     ! Buscar en verbos regulares -AR
-    for (i = 0; i < VerbosAR-->0; i = i + 2) {
+    for (i = 0: i < VerbosAR-->0: i = i + 2) {
         if (verbo == VerbosAR-->(i + 1)) {
             return VerbosAR-->(i + 2);
         }
     }
     
     ! Buscar en verbos irregulares
-    for (i = 0; i < VerbosIrregulares-->0; i = i + 2) {
+    for (i = 0: i < VerbosIrregulares-->0: i = i + 2) {
         if (verbo == VerbosIrregulares-->(i + 1)) {
             return VerbosIrregulares-->(i + 2);
         }
@@ -396,7 +396,7 @@ Array VerbosIrregulares table
 [ CopiarString origen inicio longitud buffer i;
     if (longitud == 0) longitud = origen->0;
     
-    for (i = 0; i < longitud; i++) {
+    for (i = 0: i < longitud: i++) {
         buffer->(i + 1) = origen->(inicio + i + 1);
     }
     buffer->0 = longitud;
@@ -406,8 +406,7 @@ Array VerbosIrregulares table
 ! ######################### PARSER EXTENSION
 
 ! Función principal para manejar verbos conjugados
-[ ParsearVerboConjugado palabra;
-    local raiz accion;
+[ ParsearVerboConjugado palabra  raiz accion;
     
     ! Primero buscar si es un verbo conocido tal como está
     accion = BuscarAccionVerbo(palabra);
