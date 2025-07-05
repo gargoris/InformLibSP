@@ -19,7 +19,7 @@ Include "globals.h";
 
 ! ######################### INCLUIR NUESTRO SISTEMA ESPAÑOL SIMPLIFICADO
 
-Include "spanish_final/messages_spanish_sin_acentos.h";
+Include "messages_spanish_sin_acentos.h";
 
 Include "scope.h";
 

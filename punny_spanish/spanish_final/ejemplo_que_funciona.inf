@@ -9,7 +9,7 @@ Constant Story "^Aventura en Espanol que Funciona^";
 Constant Headline "^Demostracion funcional de PunyInform en espanol^";
 
 ! Incluir nuestra libreria que funciona
-Include "spanish_final/puny_spanish_funciona.h";
+Include "puny_spanish_funciona.h";
 
 ! ######################### OBJETOS DEL JUEGO
 

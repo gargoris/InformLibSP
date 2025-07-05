@@ -10,7 +10,7 @@ Constant Story "^Aventura en Espanol Master^";
 Constant Headline "^La demostracion mas completa de PunyInform en espanol^";
 
 ! Incluir nuestra libreria espanola compilable
-Include "spanish_final/puny_spanish_compilable.h";
+Include "puny_spanish_compilable.h";
 
 ! ######################### CONFIGURACION DEL JUEGO
 

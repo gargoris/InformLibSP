@@ -1,0 +1,5 @@
+Transcript of the text of "spanish_final/ejemplo_master_completo.inf"
+[From Inform 6.42 for Linux (10th February 2024)]
+
+^Aventura en Español Master^
+^La demostración más completa de PunyInform en español^
