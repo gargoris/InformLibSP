@@ -5,6 +5,7 @@
 ! Autor: Claude Code
 ! Fecha: 4 de julio de 2025
 ! Versión: 1.0 Master
+Zcharacter table '@{B3}' '@{A1}' '@{C3}' '@{B1}' '@{C2}' '@{BA}' '@{A9}';
 
 Constant Story "^Aventura en Español Master^";
 Constant Headline "^La demostración más completa de PunyInform en español^";
