@@ -36,9 +36,10 @@ Zcharacter table
 ;
 
 ! ######################### SISTEMA DE MENSAJES ESPAÑOL
-#IfnDef DISABLE_SPANISH_MESSAGES;
-Include "spanish_final/messages_spanish_master.h";
-#EndIf;
+! NOTA: Temporalmente comentado para evitar conflicto con _PrintMsg
+! #IfnDef DISABLE_SPANISH_MESSAGES;
+! Include "spanish_final/messages_spanish_master.h";
+! #EndIf;
 
 ! ######################### PUNYINFORM CORE (SIN GRAMMAR.H PARA EVITAR CONFLICTOS)
 ! NOTA: Usamos puny_sin_grammar.h que es una versión modificada de puny.h
@@ -223,12 +224,14 @@ Include "spanish_final/parser_spanish_master.h";
 ! Incluir solo las partes de puny.h que no conflictan con nuestro sistema
 
 ! Necesitamos incluir messages.h antes que nuestros mensajes
-#IfDef DISABLE_SPANISH_MESSAGES;
-Include "messages.h";
-#EndIf;
+! NOTA: Comentado para evitar duplicación - puny_sin_grammar.h ya incluye messages.h
+! #IfDef DISABLE_SPANISH_MESSAGES;
+! Include "messages.h";
+! #EndIf;
 
 ! Incluir la implementación de PunyInform sin grammar.h
-Include "puny_sin_grammar.h";
+! NOTA: Comentado para evitar duplicación - ya incluido arriba en línea 47
+! Include "puny_sin_grammar.h";
 
 ! ######################### FUNCIONES POST-INICIALIZACIÓN
 
