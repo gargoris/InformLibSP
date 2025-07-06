@@ -205,7 +205,7 @@ Array VerbosIrregulares table
     "estar"           LookSub
     "ver"             ExamineSub
     "dar"             GiveSub
-    "hacer"           MakeSub
+    "hacer"           TakeSub
     "tener"           TakeSub
     "venir"           GoSub
     "decir"           AnswerSub
@@ -240,49 +240,49 @@ Array VerbosIrregulares table
     "buscar"          SearchSub
     "existir"         LookSub
     "entrar"          GoInSub
-    "trabajar"        MakeSub
-    "escribir"        WriteSub
-    "producir"        MakeSub
+    "trabajar"        TakeSub
+    "escribir"        TakeSub
+    "producir"        TakeSub
     "ocurrir"         LookSub
     "permitir"        ThinkSub
     "aparecer"        LookSub
     "considerar"      ThinkSub
     "terminar"        QuitSub
-    "convertir"       MakeSub
+    "convertir"       TakeSub
     "abrir"           OpenSub
     "mover"           TakeSub
-    "cambiar"         MakeSub
-    "crear"           MakeSub
-    "formar"          MakeSub
+    "cambiar"         TakeSub
+    "crear"           TakeSub
+    "formar"          TakeSub
     "leer"            ExamineSub
     "oír"             ListenSub
     "morir"           AttackSub
     "caber"           InsertSub
     "caer"            DropSub
     "huir"            ExitSub
-    "construir"       MakeSub
+    "construir"       TakeSub
     "dormir"          SleepSub
     "mentir"          AnswerSub
     "repetir"         AgainSub
     "medir"           ExamineSub
     "pedir"           AskForSub
     "reír"            SingSub
-    "freír"           MakeSub
+    "freír"           TakeSub
     "elegir"          TakeSub
     "seguir"          GoSub
     "vestir"          WearSub
     "servir"          GiveSub
     "competir"        AttackSub
-    "corregir"        MakeSub
+    "corregir"        TakeSub
     "perseguir"       GoSub
     "conseguir"       TakeSub
     "despedir"        ExitSub
     "impedir"         AttackSub
     "rendir"          DropSub
     "sugerir"         AnswerSub
-    "hervir"          MakeSub
+    "hervir"          TakeSub
     "divertir"        SingSub
-    "convertir"       MakeSub
+    "convertir"       TakeSub
     "advertir"        AnswerSub
     "preferir"        TakeSub
     "referir"         AnswerSub
@@ -293,7 +293,7 @@ Array VerbosIrregulares table
     "adquirir"        BuySub
     "inquirir"        AskSub
     "requerir"        AskForSub
-    "sustituir"       MakeSub
+    "sustituir"       TakeSub
     "distribuir"      GiveSub
     "atribuir"        GiveSub
     "contribuir"      GiveSub
@@ -302,12 +302,12 @@ Array VerbosIrregulares table
     "incluir"         InsertSub
     "excluir"         RemoveSub
     "concluir"        QuitSub
-    "influir"         MakeSub
+    "influir"         TakeSub
     "fluir"           GoSub
     "afluir"          GoSub
     "refluir"         GoSub
     "confluir"        GoSub
-    "diluir"          MakeSub
+    "diluir"          TakeSub
     "intuir"          ThinkSub
     ;
 

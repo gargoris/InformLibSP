@@ -83,7 +83,7 @@ Verb 'mirar' 'miro' 'mira'
      'ver' 'veo'
      'observar' 'observo' 'observa'
      'contemplar' 'contemplo' 'contempla'
-     'l//' 'm//'
+     'm//'
      * -> Look
      * noun -> Examine
      * 'a' noun -> Examine
