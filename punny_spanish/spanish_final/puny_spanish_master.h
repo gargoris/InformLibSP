@@ -1,10 +1,10 @@
-! PunyInform EspaÃ±ol - VersiÃ³n Master Definitiva
-! La librerÃ­a mÃ¡s completa y avanzada para ficciÃ³n interactiva en espaÃ±ol
+! PunyInform Español - Versión Master Definitiva
+! La librería más completa y avanzada para ficción interactiva en español
 ! Integra conjugaciones, concordancia, mensajes y funciones auxiliares
 !
 ! Autor: Claude Code
 ! Fecha: 4 de julio de 2025
-! VersiÃ³n: 1.0 Master
+! Versión: 1.0 Master
 
 System_file;
 
@@ -17,7 +17,7 @@ System_file;
 
 Include "globals.h";
 
-! ######################### INCLUIR NUESTRO SISTEMA ESPAÃ‘OL COMPLETO
+! ######################### INCLUIR NUESTRO SISTEMA ESPAÑOL COMPLETO
 Zcharacter table '@{E1}' '@{E9}' '@{ED}' '@{F3}' '@{FA}' '@{FC}' '@{F1}' 
                  '@{C1}' '@{C9}' '@{CD}' '@{D3}' '@{DA}' '@{DC}' '@{D1}'
                  '@{BF}' '@{A1}' '@{C3}' '@{B1}' '@{C2}' '@{BA}' '@{A9}'
@@ -29,7 +29,7 @@ Include "parser_spanish_master.h";
 
 Include "scope.h";
 
-! ######################### FUNCIONES AUXILIARES ESPAÃ‘OLAS AVANZADAS
+! ######################### FUNCIONES AUXILIARES ESPAÑOLAS AVANZADAS
 
 [ EsPlural p_obj;
     if (p_obj has pluralname) rtrue;
@@ -57,7 +57,7 @@ Include "scope.h";
     rfalse;
 ];
 
-! ######################### ARTÃCULOS DEFINIDOS
+! ######################### ARTÍCULOS DEFINIDOS
 
 [ ElLaLosLas p_obj;
     if (EsPlural(p_obj)) {
@@ -69,7 +69,7 @@ Include "scope.h";
     }
 ];
 
-! ######################### ARTÃCULOS INDEFINIDOS
+! ######################### ARTÍCULOS INDEFINIDOS
 
 [ UnUnaUnosUnas p_obj;
     if (EsPlural(p_obj)) {
@@ -133,21 +133,21 @@ Include "scope.h";
 ];
 
 [ ElEllaEllosEllas p_obj;
-    if (p_obj == player) { print "tÃº"; rtrue; }
+    if (p_obj == player) { print "tú"; rtrue; }
     if (EsPlural(p_obj)) {
         if (EsFemenino(p_obj)) print "ellas";
         else print "ellos";
     } else {
         if (EsFemenino(p_obj)) print "ella";
-        else print "Ã©l";
+        else print "él";
     }
 ];
 
 ! ######################### CONJUGACIONES VERBALES
 
 [ EstaEstan p_obj;
-    if (EsPlural(p_obj) || p_obj == player) print "estÃ¡n";
-    else print "estÃ¡";
+    if (EsPlural(p_obj) || p_obj == player) print "están";
+    else print "está";
 ];
 
 [ EsSon p_obj;
@@ -203,18 +203,18 @@ Include "scope.h";
     }
 ];
 
-! ######################### SISTEMA DE CONJUGACIÃ“N AUTOMÃTICA
+! ######################### SISTEMA DE CONJUGACIÓN AUTOMÁTICA
 
 Array TerminacionesAR static -->
-    "o" "as" "a" "amos" "Ã¡is" "an";           ! presente
+    "o" "as" "a" "amos" "áis" "an";           ! presente
 Array TerminacionesER static -->
-    "o" "es" "e" "emos" "Ã©is" "en";           ! presente  
+    "o" "es" "e" "emos" "éis" "en";           ! presente  
 Array TerminacionesIR static -->
-    "o" "es" "e" "imos" "Ã­s" "en";            ! presente
+    "o" "es" "e" "imos" "ís" "en";            ! presente
 
 [ ConjugarVerboRegular p_raiz p_tipo p_persona;
     ! p_tipo: 1=AR, 2=ER, 3=IR
-    ! p_persona: 0=yo, 1=tÃº, 2=Ã©l/ella, 3=nosotros, 4=vosotros, 5=ellos/ellas
+    ! p_persona: 0=yo, 1=tú, 2=él/ella, 3=nosotros, 4=vosotros, 5=ellos/ellas
     print (string) p_raiz;
     switch(p_tipo) {
         1: print (string) TerminacionesAR-->p_persona;
@@ -223,7 +223,7 @@ Array TerminacionesIR static -->
     }
 ];
 
-! ######################### FUNCIONES DE IMPRESIÃ“N MEJORADAS
+! ######################### FUNCIONES DE IMPRESIÓN MEJORADAS
 
 [ ImprimirNombre p_obj;
     if (p_obj.&short_name && PrintOrRun(p_obj, short_name, 1)) rtrue;
@@ -292,40 +292,40 @@ Array TerminacionesIR static -->
     rfalse;
 ];
 
-! ######################### RUTINA DE INICIALIZACIÃ“N
+! ######################### RUTINA DE INICIALIZACIÓN
 
 [ InicializarEspanol;
-    ! Configurar entorno espaÃ±ol
-    print ""; ! Por ahora funciÃ³n vacÃ­a
+    ! Configurar entorno español
+    print ""; ! Por ahora función vacía
 ];
 
-! ######################### INCLUIR NÃšCLEO PUNYINFORM
+! ######################### INCLUIR NÚCLEO PUNYINFORM
 
 Include "puny.h";
 
 ! ######################### NOTAS DE USO
 !
-! Para usar esta librerÃ­a en tu juego:
+! Para usar esta librería en tu juego:
 !
 ! 1. Include "spanish_final/puny_spanish_master.h";
 !
-! 2. En tu funciÃ³n Initialise:
+! 2. En tu función Initialise:
 !    [ Initialise;
 !        InicializarEspanol();
 !        location = MiUbicacion;
 !        lookmode = 2;
 !    ];
 !
-! 3. Define objetos con gÃ©nero:
+! 3. Define objetos con género:
 !    Object mesa "mesa elegante" has female supporter;
 !    Object libro "libro antiguo" has ; ! masculino por defecto
 !    Object llaves "llaves" has female pluralname;
 !
-! 4. Los mensajes automÃ¡ticamente usarÃ¡n concordancia:
+! 4. Los mensajes automáticamente usarán concordancia:
 !    > examinar la mesa
 !    "No hay nada especial en la mesa elegante."
 !    
 !    > coger las llaves  
 !    "Cogidas."
 !
-! Â¡Y listo! Tu juego entenderÃ¡ espaÃ±ol completo con conjugaciones y concordancia.
+! ¡Y listo! Tu juego entenderá español completo con conjugaciones y concordancia.

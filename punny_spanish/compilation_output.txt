@@ -1,0 +1,224 @@
+Inform 6.42 for Linux (10th February 2024)
+"spanish_final/messages_spanish_master.h", line 259: Warning:  This statement can never be reached
+>         if(EsFemenino(noun)) print
+"spanish_final/messages_spanish_master.h", line 271: Warning:  This statement can never be reached
+>                 ~~IndirectlyContains(noun, player)) {
+"spanish_final/messages_spanish_master.h", line 301: Warning:  This statement can never be reached
+>         ConcordanciaEdo(noun);
+"spanish_final/messages_spanish_master.h", line 306: Warning:  This statement can never be reached
+>         ConcordanciaEdo(noun);
+"spanish_final/messages_spanish_master.h", line 311: Warning:  This statement can never be reached
+>         ConcordanciaEdo(noun);
+"spanish_final/messages_spanish_master.h", line 316: Warning:  This statement can never be reached
+>         ConcordanciaEdo(noun);
+"spanish_final/messages_spanish_master.h", line 321: Warning:  This statement can never be reached
+>         ConcordanciaEdo(noun);
+"spanish_final/messages_spanish_master.h", line 335: Warning:  This statement can never be reached
+>         if(EsFemenino(noun)) print
+"spanish_final/messages_spanish_master.h", line 341: Warning:  This statement can never be reached
+>         EstaOEstanCerrado(p_arg_1);
+"spanish_final/messages_spanish_master.h", line 349: Warning:  This statement can never be reached
+>         EstaEstan(noun);
+"spanish_final/verbos_infinitivos.h", line 507: Warning:  Local variable "infinitivo" declared but not used
+"spanish_final/verbos_infinitivos.h", line 507: Warning:  Local variable "accion" declared but not used
+"spanish_final/verbos_irregulares.h", line 16: Error:  Character can only be used if declared in advance as part of 'Zcharacter table': (ISO Latin1) $c3, i.e., '√'
+>     "era" "eras" "era" "√©ramos" "erais"
+"spanish_final/verbos_irregulares.h", line 16: Error:  Character can only be used if declared in advance as part of 'Zcharacter table': (ISO Latin1) $c3, i.e., '√'
+>     "ser√©" "ser√°s"
+"spanish_final/verbos_irregulares.h", line 16: Error:  Character can only be used if declared in advance as part of 'Zcharacter table': (ISO Latin1) $c3, i.e., '√'
+>     "ser√©" "ser√°s" "ser√°"
+"spanish_final/verbos_irregulares.h", line 16: Error:  Character can only be used if declared in advance as part of 'Zcharacter table': (ISO Latin1) $c3, i.e., '√'
+>     "ser√©" "ser√°s" "ser√°" "seremos"
+"spanish_final/verbos_irregulares.h", line 16: Error:  Character can only be used if declared in advance as part of 'Zcharacter table': (ISO Latin1) $c3, i.e., '√'
+>     "ser√©" "ser√°s" "ser√°" "seremos" "ser√©is" "ser√°n"
+"spanish_final/verbos_irregulares.h", line 16: Error:  Character can only be used if declared in advance as part of 'Zcharacter table': (ISO Latin1) $c3, i.e., '√'
+>     "s√©"
+"spanish_final/verbos_irregulares.h", line 16: Error:  Character can only be used if declared in advance as part of 'Zcharacter table': (ISO Latin1) $c3, i.e., '√'
+>     "s√©" "sea"
+"spanish_final/verbos_irregulares.h", line 24: Error:  Character can only be used if declared in advance as part of 'Zcharacter table': (ISO Latin1) $c3, i.e., '√'
+>     "estar" "estoy" "est√°s" "est√°"
+"spanish_final/verbos_irregulares.h", line 24: Error:  Character can only be used if declared in advance as part of 'Zcharacter table': (ISO Latin1) $c3, i.e., '√'
+>     "estar" "estoy" "est√°s" "est√°" "estamos"
+"spanish_final/verbos_irregulares.h", line 24: Error:  Character can only be used if declared in advance as part of 'Zcharacter table': (ISO Latin1) $c3, i.e., '√'
+>     "estar" "estoy" "est√°s" "est√°" "estamos" "est√°is" "est√°n"
+"spanish_final/verbos_irregulares.h", line 24: Error:  Character can only be used if declared in advance as part of 'Zcharacter table': (ISO Latin1) $c3, i.e., '√'
+>     "estaba"
+"spanish_final/verbos_irregulares.h", line 24: Error:  Character can only be used if declared in advance as part of 'Zcharacter table': (ISO Latin1) $c3, i.e., '√'
+>     "estaba" "estabas" "estaba" "est√°bamos" "estabais"
+"spanish_final/verbos_irregulares.h", line 24: Error:  Character can only be used if declared in advance as part of 'Zcharacter table': (ISO Latin1) $c3, i.e., '√'
+>     "estar√©" "estar√°s"
+"spanish_final/verbos_irregulares.h", line 24: Error:  Character can only be used if declared in advance as part of 'Zcharacter table': (ISO Latin1) $c3, i.e., '√'
+>     "estar√©" "estar√°s" "estar√°"
+"spanish_final/verbos_irregulares.h", line 24: Error:  Character can only be used if declared in advance as part of 'Zcharacter table': (ISO Latin1) $c3, i.e., '√'
+>     "estar√©" "estar√°s" "estar√°" "estaremos"
+"spanish_final/verbos_irregulares.h", line 24: Error:  Character can only be used if declared in advance as part of 'Zcharacter table': (ISO Latin1) $c3, i.e., '√'
+>     "estar√©" "estar√°s" "estar√°" "estaremos" "estar√©is" "estar√°n  ...etc
+"spanish_final/verbos_irregulares.h", line 24: Error:  Character can only be used if declared in advance as part of 'Zcharacter table': (ISO Latin1) $c3, i.e., '√'
+>     "est√°"
+"spanish_final/verbos_irregulares.h", line 24: Error:  Character can only be used if declared in advance as part of 'Zcharacter table': (ISO Latin1) $c3, i.e., '√'
+>     "est√°" "est√©"
+"spanish_final/verbos_irregulares.h", line 24: Error:  Character can only be used if declared in advance as part of 'Zcharacter table': (ISO Latin1) $c3, i.e., '√'
+>     "est√°" "est√©" "estad"
+"spanish_final/verbos_irregulares.h", line 24: Error:  Character can only be used if declared in advance as part of 'Zcharacter table': (ISO Latin1) $c3, i.e., '√'
+>     "est√°" "est√©" "estad" "est√©n" "estando"
+"spanish_final/verbos_irregulares.h", line 32: Error:  Character can only be used if declared in advance as part of 'Zcharacter table': (ISO Latin1) $c3, i.e., '√'
+>     "tener" "tengo" "tienes" "tiene" "tenemos" "ten√©is" "tienen"
+"spanish_final/verbos_irregulares.h", line 32: Error:  Character can only be used if declared in advance as part of 'Zcharacter table': (ISO Latin1) $c3, i.e., '√'
+>     "ten√-a" "ten√-as"
+"spanish_final/verbos_irregulares.h", line 32: Error:  Character can only be used if declared in advance as part of 'Zcharacter table': (ISO Latin1) $c3, i.e., '√'
+>     "ten√-a" "ten√-as" "ten√-a"
+"spanish_final/verbos_irregulares.h", line 32: Error:  Character can only be used if declared in advance as part of 'Zcharacter table': (ISO Latin1) $c3, i.e., '√'
+>     "ten√-a" "ten√-as" "ten√-a" "ten√-amos"
+"spanish_final/verbos_irregulares.h", line 32: Error:  Character can only be used if declared in advance as part of 'Zcharacter table': (ISO Latin1) $c3, i.e., '√'
+>     "ten√-a" "ten√-as" "ten√-a" "ten√-amos" "ten√-ais"
+"spanish_final/verbos_irregulares.h", line 32: Error:  Character can only be used if declared in advance as part of 'Zcharacter table': (ISO Latin1) $c3, i.e., '√'
+>     "ten√-a" "ten√-as" "ten√-a" "ten√-amos" "ten√-ais" "ten√-an"
+"spanish_final/verbos_irregulares.h", line 32: Error:  Character can only be used if declared in advance as part of 'Zcharacter table': (ISO Latin1) $c3, i.e., '√'
+>     "tendr√©"
+"spanish_final/verbos_irregulares.h", line 32: Error:  Character can only be used if declared in advance as part of 'Zcharacter table': (ISO Latin1) $c3, i.e., '√'
+>     "tendr√©" "tendr√°s"
+"spanish_final/verbos_irregulares.h", line 32: Error:  Character can only be used if declared in advance as part of 'Zcharacter table': (ISO Latin1) $c3, i.e., '√'
+>     "tendr√©" "tendr√°s" "tendr√°"
+"spanish_final/verbos_irregulares.h", line 32: Error:  Character can only be used if declared in advance as part of 'Zcharacter table': (ISO Latin1) $c3, i.e., '√'
+>     "tendr√©" "tendr√°s" "tendr√°" "tendremos"
+"spanish_final/verbos_irregulares.h", line 32: Error:  Character can only be used if declared in advance as part of 'Zcharacter table': (ISO Latin1) $c3, i.e., '√'
+>     "tendr√©" "tendr√°s" "tendr√°" "tendremos" "tendr√©is" "tendr√°n  ...etc
+"spanish_final/verbos_irregulares.h", line 32: Error:  Character can only be used if declared in advance as part of 'Zcharacter table': (ISO Latin1) $c3, i.e., '√'
+>     "ten"
+"spanish_final/verbos_irregulares.h", line 40: Error:  Character can only be used if declared in advance as part of 'Zcharacter table': (ISO Latin1) $c3, i.e., '√'
+>     "hacer" "hago" "haces" "hace" "hacemos" "hac√©is" "hacen"
+"spanish_final/verbos_irregulares.h", line 40: Error:  Character can only be used if declared in advance as part of 'Zcharacter table': (ISO Latin1) $c3, i.e., '√'
+>     "hac√-a" "hac√-as"
+"spanish_final/verbos_irregulares.h", line 40: Error:  Character can only be used if declared in advance as part of 'Zcharacter table': (ISO Latin1) $c3, i.e., '√'
+>     "hac√-a" "hac√-as" "hac√-a"
+"spanish_final/verbos_irregulares.h", line 40: Error:  Character can only be used if declared in advance as part of 'Zcharacter table': (ISO Latin1) $c3, i.e., '√'
+>     "hac√-a" "hac√-as" "hac√-a" "hac√-amos"
+"spanish_final/verbos_irregulares.h", line 40: Error:  Character can only be used if declared in advance as part of 'Zcharacter table': (ISO Latin1) $c3, i.e., '√'
+>     "hac√-a" "hac√-as" "hac√-a" "hac√-amos" "hac√-ais"
+"spanish_final/verbos_irregulares.h", line 40: Error:  Character can only be used if declared in advance as part of 'Zcharacter table': (ISO Latin1) $c3, i.e., '√'
+>     "hac√-a" "hac√-as" "hac√-a" "hac√-amos" "hac√-ais" "hac√-an"
+"spanish_final/verbos_irregulares.h", line 40: Error:  Character can only be used if declared in advance as part of 'Zcharacter table': (ISO Latin1) $c3, i.e., '√'
+>     "har√©"
+"spanish_final/verbos_irregulares.h", line 40: Error:  Character can only be used if declared in advance as part of 'Zcharacter table': (ISO Latin1) $c3, i.e., '√'
+>     "har√©" "har√°s"
+"spanish_final/verbos_irregulares.h", line 40: Error:  Character can only be used if declared in advance as part of 'Zcharacter table': (ISO Latin1) $c3, i.e., '√'
+>     "har√©" "har√°s" "har√°"
+"spanish_final/verbos_irregulares.h", line 40: Error:  Character can only be used if declared in advance as part of 'Zcharacter table': (ISO Latin1) $c3, i.e., '√'
+>     "har√©" "har√°s" "har√°" "haremos"
+"spanish_final/verbos_irregulares.h", line 40: Error:  Character can only be used if declared in advance as part of 'Zcharacter table': (ISO Latin1) $c3, i.e., '√'
+>     "har√©" "har√°s" "har√°" "haremos" "har√©is" "har√°n"
+"spanish_final/verbos_irregulares.h", line 40: Error:  Character can only be used if declared in advance as part of 'Zcharacter table': (ISO Latin1) $c3, i.e., '√'
+>     "haz"
+"spanish_final/verbos_irregulares.h", line 48: Error:  Character can only be used if declared in advance as part of 'Zcharacter table': (ISO Latin1) $c3, i.e., '√'
+>     "decir" "digo" "dices" "dice" "decimos" "dec√-s" "dicen"
+"spanish_final/verbos_irregulares.h", line 48: Error:  Character can only be used if declared in advance as part of 'Zcharacter table': (ISO Latin1) $c3, i.e., '√'
+>     "dec√-a" "dec√-as"
+"spanish_final/verbos_irregulares.h", line 48: Error:  Character can only be used if declared in advance as part of 'Zcharacter table': (ISO Latin1) $c3, i.e., '√'
+>     "dec√-a" "dec√-as" "dec√-a"
+"spanish_final/verbos_irregulares.h", line 48: Error:  Character can only be used if declared in advance as part of 'Zcharacter table': (ISO Latin1) $c3, i.e., '√'
+>     "dec√-a" "dec√-as" "dec√-a" "dec√-amos"
+"spanish_final/verbos_irregulares.h", line 48: Error:  Character can only be used if declared in advance as part of 'Zcharacter table': (ISO Latin1) $c3, i.e., '√'
+>     "dec√-a" "dec√-as" "dec√-a" "dec√-amos" "dec√-ais"
+"spanish_final/verbos_irregulares.h", line 48: Error:  Character can only be used if declared in advance as part of 'Zcharacter table': (ISO Latin1) $c3, i.e., '√'
+>     "dec√-a" "dec√-as" "dec√-a" "dec√-amos" "dec√-ais" "dec√-an"
+"spanish_final/verbos_irregulares.h", line 48: Error:  Character can only be used if declared in advance as part of 'Zcharacter table': (ISO Latin1) $c3, i.e., '√'
+>     "dir√©"
+"spanish_final/verbos_irregulares.h", line 48: Error:  Character can only be used if declared in advance as part of 'Zcharacter table': (ISO Latin1) $c3, i.e., '√'
+>     "dir√©" "dir√°s"
+"spanish_final/verbos_irregulares.h", line 48: Error:  Character can only be used if declared in advance as part of 'Zcharacter table': (ISO Latin1) $c3, i.e., '√'
+>     "dir√©" "dir√°s" "dir√°"
+"spanish_final/verbos_irregulares.h", line 48: Error:  Character can only be used if declared in advance as part of 'Zcharacter table': (ISO Latin1) $c3, i.e., '√'
+>     "dir√©" "dir√°s" "dir√°" "diremos"
+"spanish_final/verbos_irregulares.h", line 48: Error:  Character can only be used if declared in advance as part of 'Zcharacter table': (ISO Latin1) $c3, i.e., '√'
+>     "dir√©" "dir√°s" "dir√°" "diremos" "dir√©is" "dir√°n"
+"spanish_final/verbos_irregulares.h", line 48: Error:  Character can only be used if declared in advance as part of 'Zcharacter table': (ISO Latin1) $c3, i.e., '√'
+>     "di"
+"spanish_final/verbos_irregulares.h", line 56: Error:  Character can only be used if declared in advance as part of 'Zcharacter table': (ISO Latin1) $c3, i.e., '√'
+>     "ve√-a" "ve√-as"
+"spanish_final/verbos_irregulares.h", line 56: Error:  Character can only be used if declared in advance as part of 'Zcharacter table': (ISO Latin1) $c3, i.e., '√'
+>     "ve√-a" "ve√-as" "ve√-a"
+"spanish_final/verbos_irregulares.h", line 56: Error:  Character can only be used if declared in advance as part of 'Zcharacter table': (ISO Latin1) $c3, i.e., '√'
+>     "ve√-a" "ve√-as" "ve√-a" "ve√-amos"
+"spanish_final/verbos_irregulares.h", line 56: Error:  Character can only be used if declared in advance as part of 'Zcharacter table': (ISO Latin1) $c3, i.e., '√'
+>     "ve√-a" "ve√-as" "ve√-a" "ve√-amos" "ve√-ais"
+"spanish_final/verbos_irregulares.h", line 56: Error:  Character can only be used if declared in advance as part of 'Zcharacter table': (ISO Latin1) $c3, i.e., '√'
+>     "ve√-a" "ve√-as" "ve√-a" "ve√-amos" "ve√-ais" "ve√-an"
+"spanish_final/verbos_irregulares.h", line 56: Error:  Character can only be used if declared in advance as part of 'Zcharacter table': (ISO Latin1) $c3, i.e., '√'
+>     "ver√©"
+"spanish_final/verbos_irregulares.h", line 56: Error:  Character can only be used if declared in advance as part of 'Zcharacter table': (ISO Latin1) $c3, i.e., '√'
+>     "ver√©" "ver√°s"
+"spanish_final/verbos_irregulares.h", line 56: Error:  Character can only be used if declared in advance as part of 'Zcharacter table': (ISO Latin1) $c3, i.e., '√'
+>     "ver√©" "ver√°s" "ver√°"
+"spanish_final/verbos_irregulares.h", line 56: Error:  Character can only be used if declared in advance as part of 'Zcharacter table': (ISO Latin1) $c3, i.e., '√'
+>     "ver√©" "ver√°s" "ver√°" "veremos"
+"spanish_final/verbos_irregulares.h", line 56: Error:  Character can only be used if declared in advance as part of 'Zcharacter table': (ISO Latin1) $c3, i.e., '√'
+>     "ver√©" "ver√°s" "ver√°" "veremos" "ver√©is" "ver√°n"
+"spanish_final/verbos_irregulares.h", line 56: Error:  Character can only be used if declared in advance as part of 'Zcharacter table': (ISO Latin1) $c3, i.e., '√'
+>     "ve"
+"spanish_final/verbos_irregulares.h", line 64: Error:  Character can only be used if declared in advance as part of 'Zcharacter table': (ISO Latin1) $c3, i.e., '√'
+>     "daba" "dabas" "daba" "d√°bamos" "dabais"
+"spanish_final/verbos_irregulares.h", line 64: Error:  Character can only be used if declared in advance as part of 'Zcharacter table': (ISO Latin1) $c3, i.e., '√'
+>     "dar√©" "dar√°s"
+"spanish_final/verbos_irregulares.h", line 64: Error:  Character can only be used if declared in advance as part of 'Zcharacter table': (ISO Latin1) $c3, i.e., '√'
+>     "dar√©" "dar√°s" "dar√°"
+"spanish_final/verbos_irregulares.h", line 64: Error:  Character can only be used if declared in advance as part of 'Zcharacter table': (ISO Latin1) $c3, i.e., '√'
+>     "dar√©" "dar√°s" "dar√°" "daremos"
+"spanish_final/verbos_irregulares.h", line 64: Error:  Character can only be used if declared in advance as part of 'Zcharacter table': (ISO Latin1) $c3, i.e., '√'
+>     "dar√©" "dar√°s" "dar√°" "daremos" "dar√©is" "dar√°n"
+"spanish_final/verbos_irregulares.h", line 64: Error:  Character can only be used if declared in advance as part of 'Zcharacter table': (ISO Latin1) $c3, i.e., '√'
+>     "da"
+"spanish_final/verbos_irregulares.h", line 64: Error:  Character can only be used if declared in advance as part of 'Zcharacter table': (ISO Latin1) $c3, i.e., '√'
+>     "da" "d√©" "dad"
+"spanish_final/verbos_irregulares.h", line 72: Error:  Character can only be used if declared in advance as part of 'Zcharacter table': (ISO Latin1) $c3, i.e., '√'
+>     "poder" "puedo" "puedes" "puede" "podemos" "pod√©is" "pueden"
+"spanish_final/verbos_irregulares.h", line 72: Error:  Character can only be used if declared in advance as part of 'Zcharacter table': (ISO Latin1) $c3, i.e., '√'
+>     "pod√-a" "pod√-as"
+"spanish_final/verbos_irregulares.h", line 72: Error:  Character can only be used if declared in advance as part of 'Zcharacter table': (ISO Latin1) $c3, i.e., '√'
+>     "pod√-a" "pod√-as" "pod√-a"
+"spanish_final/verbos_irregulares.h", line 72: Error:  Character can only be used if declared in advance as part of 'Zcharacter table': (ISO Latin1) $c3, i.e., '√'
+>     "pod√-a" "pod√-as" "pod√-a" "pod√-amos"
+"spanish_final/verbos_irregulares.h", line 72: Error:  Character can only be used if declared in advance as part of 'Zcharacter table': (ISO Latin1) $c3, i.e., '√'
+>     "pod√-a" "pod√-as" "pod√-a" "pod√-amos" "pod√-ais"
+"spanish_final/verbos_irregulares.h", line 72: Error:  Character can only be used if declared in advance as part of 'Zcharacter table': (ISO Latin1) $c3, i.e., '√'
+>     "pod√-a" "pod√-as" "pod√-a" "pod√-amos" "pod√-ais" "pod√-an"
+"spanish_final/verbos_irregulares.h", line 72: Error:  Character can only be used if declared in advance as part of 'Zcharacter table': (ISO Latin1) $c3, i.e., '√'
+>     "podr√©"
+"spanish_final/verbos_irregulares.h", line 72: Error:  Character can only be used if declared in advance as part of 'Zcharacter table': (ISO Latin1) $c3, i.e., '√'
+>     "podr√©" "podr√°s"
+"spanish_final/verbos_irregulares.h", line 72: Error:  Character can only be used if declared in advance as part of 'Zcharacter table': (ISO Latin1) $c3, i.e., '√'
+>     "podr√©" "podr√°s" "podr√°"
+"spanish_final/verbos_irregulares.h", line 72: Error:  Character can only be used if declared in advance as part of 'Zcharacter table': (ISO Latin1) $c3, i.e., '√'
+>     "podr√©" "podr√°s" "podr√°" "podremos"
+"spanish_final/verbos_irregulares.h", line 72: Error:  Character can only be used if declared in advance as part of 'Zcharacter table': (ISO Latin1) $c3, i.e., '√'
+>     "podr√©" "podr√°s" "podr√°" "podremos" "podr√©is" "podr√°n"
+"spanish_final/verbos_irregulares.h", line 72: Error:  Character can only be used if declared in advance as part of 'Zcharacter table': (ISO Latin1) $c3, i.e., '√'
+>     "puede"
+"spanish_final/verbos_irregulares.h", line 80: Error:  Character can only be used if declared in advance as part of 'Zcharacter table': (ISO Latin1) $c3, i.e., '√'
+>     "saber" "s√©" "sabes"
+"spanish_final/verbos_irregulares.h", line 80: Error:  Character can only be used if declared in advance as part of 'Zcharacter table': (ISO Latin1) $c3, i.e., '√'
+>     "saber" "s√©" "sabes" "sabe" "sabemos" "sab√©is" "saben"
+"spanish_final/verbos_irregulares.h", line 80: Error:  Character can only be used if declared in advance as part of 'Zcharacter table': (ISO Latin1) $c3, i.e., '√'
+>     "sab√-a" "sab√-as"
+"spanish_final/verbos_irregulares.h", line 80: Error:  Character can only be used if declared in advance as part of 'Zcharacter table': (ISO Latin1) $c3, i.e., '√'
+>     "sab√-a" "sab√-as" "sab√-a"
+"spanish_final/verbos_irregulares.h", line 80: Error:  Character can only be used if declared in advance as part of 'Zcharacter table': (ISO Latin1) $c3, i.e., '√'
+>     "sab√-a" "sab√-as" "sab√-a" "sab√-amos"
+"spanish_final/verbos_irregulares.h", line 80: Error:  Character can only be used if declared in advance as part of 'Zcharacter table': (ISO Latin1) $c3, i.e., '√'
+>     "sab√-a" "sab√-as" "sab√-a" "sab√-amos" "sab√-ais"
+"spanish_final/verbos_irregulares.h", line 80: Error:  Character can only be used if declared in advance as part of 'Zcharacter table': (ISO Latin1) $c3, i.e., '√'
+>     "sab√-a" "sab√-as" "sab√-a" "sab√-amos" "sab√-ais" "sab√-an"
+"spanish_final/verbos_irregulares.h", line 80: Error:  Character can only be used if declared in advance as part of 'Zcharacter table': (ISO Latin1) $c3, i.e., '√'
+>     "sabr√©"
+"spanish_final/verbos_irregulares.h", line 80: Error:  Character can only be used if declared in advance as part of 'Zcharacter table': (ISO Latin1) $c3, i.e., '√'
+>     "sabr√©" "sabr√°s"
+"spanish_final/verbos_irregulares.h", line 80: Error:  Character can only be used if declared in advance as part of 'Zcharacter table': (ISO Latin1) $c3, i.e., '√'
+>     "sabr√©" "sabr√°s" "sabr√°"
+"spanish_final/verbos_irregulares.h", line 80: Error:  Character can only be used if declared in advance as part of 'Zcharacter table': (ISO Latin1) $c3, i.e., '√'
+>     "sabr√©" "sabr√°s" "sabr√°" "sabremos"
+"spanish_final/verbos_irregulares.h", line 80: Error:  Character can only be used if declared in advance as part of 'Zcharacter table': (ISO Latin1) $c3, i.e., '√'
+>     "sabr√©" "sabr√°s" "sabr√°" "sabremos" "sabr√©is" "sabr√°n"
+"spanish_final/verbos_irregulares.h", line 80: Error:  Character can only be used if declared in advance as part of 'Zcharacter table': (ISO Latin1) $c3, i.e., '√'
+>     "sabe"
+"spanish_final/verbos_irregulares.h", line 88: Error:  Character can only be used if declared in advance as part of 'Zcharacter table': (ISO Latin1) $c3, i.e., '√'
+>     "querer" "quiero" "quieres" "quiere" "queremos" "quer√©is" "quie  ...etc
+"spanish_final/verbos_irregulares.h", line 88: Fatal error: Too many errors: giving up

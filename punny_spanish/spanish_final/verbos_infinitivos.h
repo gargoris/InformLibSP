@@ -1,16 +1,16 @@
-! Sistema de Conjugaci√≥n Autom√°tica para Verbos Espa√±oles
-! Soluci√≥n elegante para evitar duplicados y manejar conjugaciones
+! Sistema de ConjugaciÛn Autom·tica para Verbos EspaÒoles
+! SoluciÛn elegante para evitar duplicados y manejar conjugaciones
 ! Autor: Claude Code
 ! Fecha: 5 de julio de 2025
 
 System_file;
 
-! ######################### DEFINICI√ìN DE VERBOS INFINITIVOS
+! ######################### DEFINICI”N DE VERBOS INFINITIVOS
 ! Lista principal de verbos en infinitivo con sus acciones correspondientes
 
 ! Tabla de verbos regulares -AR
 Array VerbosAR table
-    ! Infinitivo      Acci√≥n
+    ! Infinitivo      AcciÛn
     "coger"           Take
     "tomar"           Take
     "agarrar"         Take
@@ -199,7 +199,7 @@ Array VerbosAR table
 
 ! Tabla de verbos irregulares comunes
 Array VerbosIrregulares table
-    ! Infinitivo      Acci√≥n
+    ! Infinitivo      AcciÛn
     "ir"              Go
     "ser"             Look
     "estar"           Look
@@ -255,7 +255,7 @@ Array VerbosIrregulares table
     "crear"           Make
     "formar"          Make
     "leer"            Examine
-    "o√≠r"             Listen
+    "oÌr"             Listen
     "morir"           Attack
     "caber"           Insert
     "caer"            Drop
@@ -266,8 +266,8 @@ Array VerbosIrregulares table
     "repetir"         Again
     "medir"           Examine
     "pedir"           AskFor
-    "re√≠r"            Sing
-    "fre√≠r"           Make
+    "reÌr"            Sing
+    "freÌr"           Make
     "elegir"          Take
     "seguir"          Go
     "vestir"          Wear
@@ -311,7 +311,7 @@ Array VerbosIrregulares table
     "intuir"          Think
     ;
 
-! ######################### FUNCIONES DE CONJUGACI√ìN
+! ######################### FUNCIONES DE CONJUGACI”N
 
 ! Detecta si un verbo es regular terminado en -AR
 [ EsVerboAR verbo;
@@ -331,7 +331,7 @@ Array VerbosIrregulares table
     return false;
 ];
 
-! Busca la acci√≥n correspondiente a un verbo infinitivo
+! Busca la acciÛn correspondiente a un verbo infinitivo
 [ BuscarAccionVerbo verbo i;
     ! Buscar en verbos regulares -AR
     for (i = 0: i < VerbosAR-->0: i = i + 2) {
@@ -350,49 +350,49 @@ Array VerbosIrregulares table
     return 0; ! No encontrado
 ];
 
-! Genera conjugaci√≥n presente de verbos regulares -AR
+! Genera conjugaciÛn presente de verbos regulares -AR
 [ ConjugarAR raiz persona;
     switch (persona) {
         1: return raiz + "o";      ! yo
-        2: return raiz + "as";     ! t√∫
-        3: return raiz + "a";      ! √©l/ella
+        2: return raiz + "as";     ! t˙
+        3: return raiz + "a";      ! Èl/ella
         4: return raiz + "amos";   ! nosotros
-        5: return raiz + "√°is";    ! vosotros
+        5: return raiz + "·is";    ! vosotros
         6: return raiz + "an";     ! ellos/ellas
     }
 ];
 
-! Genera conjugaci√≥n presente de verbos regulares -ER
+! Genera conjugaciÛn presente de verbos regulares -ER
 [ ConjugarER raiz persona;
     switch (persona) {
         1: return raiz + "o";      ! yo
-        2: return raiz + "es";     ! t√∫
-        3: return raiz + "e";      ! √©l/ella
+        2: return raiz + "es";     ! t˙
+        3: return raiz + "e";      ! Èl/ella
         4: return raiz + "emos";   ! nosotros
-        5: return raiz + "√©is";    ! vosotros
+        5: return raiz + "Èis";    ! vosotros
         6: return raiz + "en";     ! ellos/ellas
     }
 ];
 
-! Genera conjugaci√≥n presente de verbos regulares -IR
+! Genera conjugaciÛn presente de verbos regulares -IR
 [ ConjugarIR raiz persona;
     switch (persona) {
         1: return raiz + "o";      ! yo
-        2: return raiz + "es";     ! t√∫
-        3: return raiz + "e";      ! √©l/ella
+        2: return raiz + "es";     ! t˙
+        3: return raiz + "e";      ! Èl/ella
         4: return raiz + "imos";   ! nosotros
-        5: return raiz + "√≠s";     ! vosotros
+        5: return raiz + "Ìs";     ! vosotros
         6: return raiz + "en";     ! ellos/ellas
     }
 ];
 
-! Extrae la ra√≠z de un verbo infinitivo
+! Extrae la raÌz de un verbo infinitivo
 [ ExtraerRaiz verbo;
-    ! Crear nuevo string sin las dos √∫ltimas letras
+    ! Crear nuevo string sin las dos ˙ltimas letras
     return CopiarString(verbo, 0, (verbo->0) - 2);
 ];
 
-! Funci√≥n auxiliar para copiar strings
+! FunciÛn auxiliar para copiar strings
 [ CopiarString origen inicio longitud buffer i;
     if (longitud == 0) longitud = origen->0;
     
@@ -405,14 +405,14 @@ Array VerbosIrregulares table
 
 ! ######################### PARSER EXTENSION
 
-! Funci√≥n principal para manejar verbos conjugados
+! FunciÛn principal para manejar verbos conjugados
 [ ParsearVerboConjugado palabra  raiz accion;
     
-    ! Primero buscar si es un verbo conocido tal como est√°
+    ! Primero buscar si es un verbo conocido tal como est·
     accion = BuscarAccionVerbo(palabra);
     if (accion) return accion;
     
-    ! Si no, intentar an√°lisis morfol√≥gico
+    ! Si no, intentar an·lisis morfolÛgico
     if (EsConjugacionAR(palabra)) {
         raiz = ExtraerRaizConjugada(palabra, 'ar');
         accion = BuscarAccionVerbo(raiz + "ar");
@@ -434,12 +434,12 @@ Array VerbosIrregulares table
     return 0; ! No reconocido
 ];
 
-! Detecta si una palabra es una conjugaci√≥n de verbo -AR
-[ EsConjugacionAR palabra;
-    local ultima = palabra->((palabra->0));
-    local penultima = palabra->((palabra->0) - 1);
+! Detecta si una palabra es una conjugaciÛn de verbo -AR
+[ EsConjugacionAR palabra ultima penultima;
+    ultima = palabra->((palabra->0));
+    penultima = palabra->((palabra->0) - 1);
     
-    ! Terminaciones t√≠picas de verbos -AR conjugados
+    ! Terminaciones tÌpicas de verbos -AR conjugados
     if (ultima == 'o' or 'a' or 'e' or 's' or 'n') return true;
     if (penultima == 'a' && ultima == 's') return true;
     if (penultima == 'a' && ultima == 'n') return true;
@@ -448,12 +448,12 @@ Array VerbosIrregulares table
     return false;
 ];
 
-! Detecta si una palabra es una conjugaci√≥n de verbo -ER
-[ EsConjugacionER palabra;
-    local ultima = palabra->((palabra->0));
-    local penultima = palabra->((palabra->0) - 1);
+! Detecta si una palabra es una conjugaciÛn de verbo -ER
+[ EsConjugacionER palabra ultima penultima;
+    ultima = palabra->((palabra->0));
+    penultima = palabra->((palabra->0) - 1);
     
-    ! Terminaciones t√≠picas de verbos -ER conjugados
+    ! Terminaciones tÌpicas de verbos -ER conjugados
     if (ultima == 'o' or 'e' or 's' or 'n') return true;
     if (penultima == 'e' && ultima == 's') return true;
     if (penultima == 'e' && ultima == 'n') return true;
@@ -461,12 +461,12 @@ Array VerbosIrregulares table
     return false;
 ];
 
-! Detecta si una palabra es una conjugaci√≥n de verbo -IR
-[ EsConjugacionIR palabra;
-    local ultima = palabra->((palabra->0));
-    local penultima = palabra->((palabra->0) - 1);
+! Detecta si una palabra es una conjugaciÛn de verbo -IR
+[ EsConjugacionIR palabra ultima penultima;
+    ultima = palabra->((palabra->0));
+    penultima = palabra->((palabra->0) - 1);
     
-    ! Terminaciones t√≠picas de verbos -IR conjugados
+    ! Terminaciones tÌpicas de verbos -IR conjugados
     if (ultima == 'o' or 'e' or 's' or 'n') return true;
     if (penultima == 'i' && ultima == 's') return true;
     if (penultima == 'e' && ultima == 'n') return true;
@@ -474,11 +474,11 @@ Array VerbosIrregulares table
     return false;
 ];
 
-! Extrae la ra√≠z de una palabra conjugada
-[ ExtraerRaizConjugada palabra tipo;
-    local longitud = palabra->0;
+! Extrae la raÌz de una palabra conjugada
+[ ExtraerRaizConjugada palabra tipo longitud;
+    longitud = palabra->0;
     
-    ! An√°lisis heur√≠stico para extraer ra√≠z
+    ! An·lisis heurÌstico para extraer raÌz
     switch (tipo) {
         'ar': return CopiarString(palabra, 0, longitud - 1);
         'er': return CopiarString(palabra, 0, longitud - 1);
@@ -486,35 +486,36 @@ Array VerbosIrregulares table
     }
 ];
 
-! ######################### VERIFICACI√ìN Y TESTING
+! ######################### VERIFICACI”N Y TESTING
 
-! Funci√≥n para probar el sistema de conjugaci√≥n
+! FunciÛn para probar el sistema de conjugaciÛn
 [ ProbarConjugacion;
-    print "^=== SISTEMA DE CONJUGACI√ìN AUTOM√ÅTICA ===^";
+    print "^=== SISTEMA DE CONJUGACI”N AUTOM¡TICA ===^";
     print "Verbos regulares -AR: ", VerbosAR-->0 / 2, " verbos^";
     print "Verbos irregulares: ", VerbosIrregulares-->0 / 2, " verbos^";
     print "Total: ", (VerbosAR-->0 / 2) + (VerbosIrregulares-->0 / 2), " verbos^";
-    print "^El sistema puede generar autom√°ticamente todas las conjugaciones.^";
-    print "Esto evita duplicados y mantiene el c√≥digo limpio.^";
+    print "^El sistema puede generar autom·ticamente todas las conjugaciones.^";
+    print "Esto evita duplicados y mantiene el cÛdigo limpio.^";
 ];
 
-! ######################### MACROS √öTILES
+! ######################### MACROS ⁄TILES
 
-! Macro para definir verbos din√°micamente
-#Define DefineVerbo(infinitivo, accion) DefineVerboFunc(infinitivo, accion)
+! Macro para definir verbos din·micamente
+! Macro para definir verbos din·micamente - comentado hasta implementaciÛn completa
+! #Define DefineVerbo(infinitivo, accion) DefineVerboFunc(infinitivo, accion)
 
 [ DefineVerboFunc infinitivo accion;
     ! Agregar el verbo a la tabla apropiada
-    ! Esta funci√≥n ser√≠a llamada en tiempo de compilaci√≥n
-    ! para construir las tablas din√°micamente
+    ! Esta funciÛn serÌa llamada en tiempo de compilaciÛn
+    ! para construir las tablas din·micamente
 ];
 
 ! ######################### NOTA FINAL
 
 ! Este sistema permite:
 ! 1. Definir verbos solo una vez en infinitivo
-! 2. Generar autom√°ticamente todas las conjugaciones
+! 2. Generar autom·ticamente todas las conjugaciones
 ! 3. Evitar duplicados y errores
-! 4. Mantener c√≥digo limpio y escalable
-! 5. Agregar nuevos verbos f√°cilmente
+! 4. Mantener cÛdigo limpio y escalable
+! 5. Agregar nuevos verbos f·cilmente
 ! 6. Manejar variantes regionales de forma organizada

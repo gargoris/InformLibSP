@@ -284,9 +284,10 @@ Array VerbosIrregularesMaster table
 ! Obtiene la acción correspondiente a un verbo irregular
 [ AccionVerboIrregular verbo;
     switch (verbo) {
-        "ser", "estar": return Look;
+        "ser": return Look;
+        "estar": return Look;
         "tener": return Take;
-        "hacer": return Make;
+        "hacer": return Take;
         "decir": return Answer;
         "ver": return Examine;
         "dar": return Give;
@@ -308,7 +309,7 @@ Array VerbosIrregularesMaster table
         "traer": return Take;
         "caer": return Drop;
         "leer": return Examine;
-        "construir": return Make;
+        "construir": return Take;
         "huir": return Exit;
         default: return 0;
     }
@@ -410,8 +411,8 @@ Verb 'hacer' 'hago' 'haces' 'hace' 'hacemos' 'hacéis' 'hacen'
      'hacía' 'hacías' 'hacíamos' 'hacíais' 'hacían'
      'haré' 'harás' 'hará' 'haremos' 'haréis' 'harán'
      'haz' 'haga' 'haced' 'hagan'
-     * -> Make
-     * noun -> Make;
+     * -> Take
+     * noun -> Take;
 
 Verb 'poder' 'puedo' 'puedes' 'puede' 'podemos' 'podéis' 'pueden'
      'podía' 'podías' 'podíamos' 'podíais' 'podían'

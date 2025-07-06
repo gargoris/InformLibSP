@@ -199,19 +199,26 @@ Verb 'tomar' 'tomo' 'toma'
 
 ! ==================== VESTIMENTA ====================
 
-! Ponerse - consolidado
-Verb 'ponerse' 'vestirse' 'calzarse'
-     'me' 'pongo' 'te' 'pones' 'se' 'pone'
-     'me' 'visto' 'te' 'vistes' 'se' 'viste'
-     'ponte' 'vístete'
-     * held -> Wear;
-
-! Quitarse - consolidado
-Verb 'quitarse' 'desvestirse' 'descalzarse'
-     'me' 'quito' 'te' 'quitas' 'se' 'quita'
-     'me' 'desvisto' 'te' 'desvistes' 'se' 'desviste'
-     'quítate' 'desvístete'
-     * worn -> Disrobe;
+! Verbos reflexivos consolidados - UNA SOLA DEFINICIÓN
+! NOTA: me/te/se solo pueden estar en un verbo para evitar conflictos
+Verb 'ponerse' 'vestirse' 'calzarse' 'ponte' 'vístete'
+     'quitarse' 'desvestirse' 'descalzarse' 'quítate' 'desvístete'
+     'levantarse' 'incorporarse' 'alzarse' 'pararse' 'levántate' 'incorpórate'
+     'sentarse' 'acomodarse' 'siéntate' 'acomódate'
+     'acostarse' 'echarse' 'tumbarse' 'acuéstate' 'échate'
+     'me' 'te' 'se' 'nos' 'os'
+     'pongo' 'pones' 'pone' 'ponemos' 'ponéis' 'ponen'
+     'visto' 'vistes' 'viste' 'vestimos' 'vestís' 'visten'
+     'quito' 'quitas' 'quita' 'quitamos' 'quitáis' 'quitan'
+     'desvisto' 'desvistes' 'desviste' 'desvestimos' 'desvestís' 'desvisten'
+     'levanto' 'levantas' 'levanta' 'levantamos' 'levantáis' 'levantan'
+     'siento' 'sientas' 'sienta' 'sentamos' 'sentáis' 'sientan'
+     'acuesto' 'acuestas' 'acuesta' 'acostamos' 'acostáis' 'acuestan'
+     * held -> Wear
+     * worn -> Disrobe
+     * -> Exit
+     * 'de' noun -> Exit
+     * 'en'/'sobre' noun -> Enter;
 
 ! ==================== CONTENEDORES ====================
 
@@ -246,25 +253,8 @@ Verb 'apagar' 'apago' 'apaga'
      * noun -> SwitchOff;
 
 ! ==================== REFLEXIVOS ====================
-
-! Levantarse - consolidado
-Verb 'levantarse' 'incorporarse' 'alzarse' 'pararse'
-     'me' 'levanto' 'te' 'levantas' 'se' 'levanta'
-     'levántate' 'incorpórate'
-     * -> Exit
-     * 'de' noun -> Exit;
-
-! Sentarse - consolidado  
-Verb 'sentarse' 'acomodarse' 'ubicarse'
-     'me' 'siento' 'te' 'sientas' 'se' 'sienta'
-     'siéntate' 'acomódate'
-     * 'en'/'sobre' noun -> Enter;
-
-! Acostarse - consolidado
-Verb 'acostarse' 'echarse' 'tumbarse' 'recostarse'
-     'me' 'acuesto' 'te' 'acuestas' 'se' 'acuesta'
-     'acuéstate' 'échate'
-     * 'en'/'sobre' noun -> Enter;
+! NOTA: Todos los verbos reflexivos están consolidados arriba para evitar
+! conflictos con pronombres me/te/se. Ver sección VESTIMENTA.
 
 ! ==================== METACOMANDOS ====================
 
@@ -272,32 +262,32 @@ Verb 'acostarse' 'echarse' 'tumbarse' 'recostarse'
 Verb 'inventario' 'inv' 'i//' 'objetos' 'cosas' 'equipo'
      * -> Inv;
 
-! Puntuación - consolidado
-Verb 'puntuación' 'puntos' 'score' 'puntaje' 'marcador'
+! Puntuación - consolidado (solo español para evitar conflictos)
+Verb 'puntuación' 'puntos' 'puntaje' 'marcador'
      * -> Score;
 
-! Salir del juego - consolidado
-Verb 'abandonar' 'terminar' 'quit' 'q//' 'exit' 'bye'
+! Salir del juego - consolidado (solo español para evitar conflictos)
+Verb 'abandonar' 'terminar' 'bye'
      * -> Quit;
 
-! Guardar - consolidado
-Verb 'guardar' 'grabar' 'save' 'salvar' 'almacenar'
+! Guardar - consolidado (solo español para evitar conflictos)
+Verb 'guardar' 'grabar' 'salvar' 'almacenar'
      * -> Save;
 
-! Cargar - consolidado
-Verb 'cargar' 'restore' 'recuperar' 'restaurar'
+! Cargar - consolidado (solo español para evitar conflictos)
+Verb 'cargar' 'recuperar' 'restaurar'
      * -> Restore;
 
-! Reiniciar - consolidado
-Verb 'reiniciar' 'restart' 'empezar' 'comenzar' 'reset'
+! Reiniciar - consolidado (solo español para evitar conflictos)
+Verb 'reiniciar' 'empezar' 'comenzar'
      * -> Restart;
 
-! Esperar - consolidado
-Verb 'esperar' 'aguardar' 'pausar' 'z//' 'wait' 'w//'
+! Esperar - consolidado (solo español para evitar conflictos)
+Verb 'esperar' 'aguardar' 'pausar'
      * -> Wait;
 
-! Repetir - consolidado
-Verb 'repetir' 'otra' 'vez' 'again' 'g//' 'nuevamente' 'reiterar'
+! Repetir - consolidado (solo español para evitar conflictos)
+Verb 'repetir' 'otra' 'vez' 'nuevamente' 'reiterar'
      * -> Again;
 
 ! ################### VERBOS EXTENDIDOS OPCIONALES

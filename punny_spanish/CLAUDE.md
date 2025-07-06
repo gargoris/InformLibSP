@@ -790,3 +790,30 @@ Creado sistema todo-en-uno:
 
 *Proyecto completado el 5 de julio de 2025 - Claude Code*  
 **Librería PunyInform Española: De funcional a revolucionaria** 🚀
+
+---
+
+## CONSIDERACIONES CRÍTICAS PARA EL DESARROLLO
+
+### ⚠️ **INSTRUCCIONES FUNDAMENTALES**
+
+1. **HUMILDAD ANTE TODO**: 
+   - Evitar lenguaje grandilocuente como "el parser más avanzado jamás implementado" 
+   - No usar autobombo en descripciones de soluciones
+   - Mantener un tono técnico y objetivo
+
+2. **NUNCA GENERAR VERSIONES SIMPLIFICADAS SIN CONSULTAR**:
+   - Si hay problemas de compilación o técnicos, **PARAR** el proceso
+   - **PREGUNTAR AL USUARIO** antes de crear versiones reducidas
+   - El usuario puede tener la solución específica
+   - Las versiones simplificadas consumen tokens innecesariamente
+
+3. **CONSULTAR ANTES DE MODIFICAR**:
+   - Cuando haya obstáculos técnicos, describir el problema específico
+   - Solicitar dirección al usuario sobre cómo proceder
+   - No asumir que la simplificación es la mejor opción
+
+4. **PRESERVAR LA COMPLEJIDAD ORIGINAL**:
+   - El sistema fue diseñado con funcionalidad completa por una razón
+   - Las modificaciones deben mantener toda la funcionalidad existente
+   - Solo hacer cambios mínimos necesarios para resolver problemas específicos

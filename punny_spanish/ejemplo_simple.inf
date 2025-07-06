@@ -1,0 +1,70 @@
+! ######################### EJEMPLO SIMPLE SIN CONFLICTOS
+! Una versión básica que funciona sin errores de compilación
+
+Constant Story "^Mi Aventura Simple en Español^";
+Constant Headline "^Un ejemplo básico que compila correctamente^";
+
+! Soporte para caracteres españoles
+Zcharacter table 
+    '@{E1}' '@{E9}' '@{ED}' '@{F3}' '@{FA}'    ! á é í ó ú (minúsculas)
+    '@{C1}' '@{C9}' '@{CD}' '@{D3}' '@{DA}'    ! Á É Í Ó Ú (mayúsculas)
+    '@{FC}' '@{DC}'                            ! ü Ü (diéresis)
+    '@{F1}' '@{D1}'                            ! ñ Ñ (eñe)
+    '@{BF}' '@{A1}'                            ! ¿ ¡ (signos interrogación/exclamación)
+    '@{AB}' '@{BB}'                            ! « » (comillas españolas)
+    '@{B7}'                                    ! · (punto medio)
+    '@{A7}' '@{BA}' '@{B3}' '@{B2}' '@{B9}'    ! § º ³ ² ¹ (símbolos adicionales)
+    '@{A9}' '@{AE}' '@{B1}' '@{F7}' '@{D7}'    ! © ® ± ÷ × (símbolos matemáticos)
+;
+
+! Definir atributos que necesitamos
+Attribute male;
+Attribute female; 
+
+! ========================= INCLUIR SOLO LA GRAMÁTICA OPTIMIZADA =========================
+Include "spanish_final/grammar_optimizada.h";
+
+! ========================= DEFINIR UBICACIONES =========================
+
+Object Salon "salon principal"
+    with description "Te encuentras en un elegante salon. Hay una mesa en el centro.",
+    has light;
+
+! ========================= DEFINIR OBJETOS SIMPLES =========================
+
+Object -> mesa "mesa"
+    with name 'mesa',
+         description "Una hermosa mesa de madera.",
+    has supporter static female;
+
+Object -> -> libro "libro"
+    with name 'libro',
+         description "Un viejo libro.",
+    has male;
+
+! ========================= FUNCIÓN DE INICIALIZACIÓN =========================
+
+[ Initialise;
+    print "^^Bienvenido a tu aventura simple en español!^^";
+    print "Comandos: MIRAR, EXAMINAR [objeto], COGER [objeto], INVENTARIO^^";
+    
+    location = Salon;
+    lookmode = 2;
+];
+
+! ========================= MENSAJES BÁSICOS =========================
+
+[ LibraryMessages p_msg p_arg_1 p_arg_2;
+    switch(p_msg) {
+        MSG_TAKE_DEFAULT:
+            if (p_arg_1 has female) print "Cogida.";
+            else print "Cogido.";
+            rtrue;
+            
+        MSG_DROP_DEFAULT:
+            if (p_arg_1 has female) print "Dejada.";
+            else print "Dejado.";
+            rtrue;
+    }
+    rfalse;
+];

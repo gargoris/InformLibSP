@@ -1,20 +1,20 @@
-! Gram√°tica Espa√±ola Master - Sistema Completo de Verbos
-! La gram√°tica m√°s avanzada jam√°s implementada para IF espa√±ol
-! Incluye conjugaciones completas, variantes regionales y formas de cortes√≠a
+! Gram·tica EspaÒola Master - Sistema Completo de Verbos
+! La gram·tica m·s avanzada jam·s implementada para IF espaÒol
+! Incluye conjugaciones completas, variantes regionales y formas de cortesÌa
 !
 ! Autor: Claude Code
 ! Fecha: 4 de julio de 2025  
-! Versi√≥n: 1.0 Master
+! VersiÛn: 1.0 Master
 
 System_file;
 
-! ######################### VERBOS B√ÅSICOS DE MOVIMIENTO
+! ######################### VERBOS B¡SICOS DE MOVIMIENTO
 
 Verb 'ir' 'voy' 've' 'ves' 'va' 'vamos' 'vais' 'van' 'ire' 'iras' 'ira' 'iremos' 'ireis' 'iran'
     'vete' 'vaya' 'idos' 'vayan' 'yendo' 'ido'
     'anda' 'andas' 'anda' 'andamos' 'andais' 'andan'
-    'camina' 'caminas' 'camina' 'caminamos' 'camin√°is' 'caminan'
-    'dirigirse' 'dir√≠gete' 'avanza' 'avanzas' 'avanza'
+    'camina' 'caminas' 'camina' 'caminamos' 'camin·is' 'caminan'
+    'dirigirse' 'dirÌgete' 'avanza' 'avanzas' 'avanza'
     * noun                                      -> Go
     * 'a' noun                                  -> Go  
     * 'hacia' noun                              -> Go
@@ -38,125 +38,125 @@ Verb 'sureste' 'se' 'sudeste'
     *                                           -> Go;
 Verb 'suroeste' 'so' 'sw' 'sudoeste'
     *                                           -> Go;
-Verb 'arriba' 'subir' 'sube' 'subes' 'subimos' 'sub√≠s' 'suben' 'u//'
-    'trepar' 'trepas' 'trepa' 'trepamos' 'trep√°is' 'trepan'
+Verb 'arriba' 'subir' 'sube' 'subes' 'subimos' 'subÌs' 'suben' 'u//'
+    'trepar' 'trepas' 'trepa' 'trepamos' 'trep·is' 'trepan'
     *                                           -> Go;
-Verb 'abajo' 'bajar' 'baja' 'bajas' 'bajamos' 'baj√°is' 'bajan' 'd//'
-    'descender' 'desciendes' 'desciende' 'descendemos' 'descend√©is' 'descienden'
+Verb 'abajo' 'bajar' 'baja' 'bajas' 'bajamos' 'baj·is' 'bajan' 'd//'
+    'descender' 'desciendes' 'desciende' 'descendemos' 'descendÈis' 'descienden'
     *                                           -> Go;
 
 ! Entrar y salir con todas las conjugaciones
-Verb 'entrar' 'entro' 'entras' 'entra' 'entramos' 'entr√°is' 'entran'
+Verb 'entrar' 'entro' 'entras' 'entra' 'entramos' 'entr·is' 'entran'
     'dentro' 'adentro' 'penetrar' 'penetro' 'penetras' 'penetra'
-    'ingresar' 'ingreso' 'ingresas' 'ingresa' 'ingresamos' 'ingres√°is' 'ingresan'
-    'meterse' 'm√©tete' 'se' 'mete' 'nos' 'metemos' 'os' 'met√©is' 'se' 'meten'
+    'ingresar' 'ingreso' 'ingresas' 'ingresa' 'ingresamos' 'ingres·is' 'ingresan'
+    'meterse' 'mÈtete' 'se' 'mete' 'nos' 'metemos' 'os' 'metÈis' 'se' 'meten'
     *                                           -> GoIn
     * 'en'/'a' noun                             -> Enter;
 
-Verb 'salir' 'salgo' 'sales' 'sale' 'salimos' 'sal√≠s' 'salen'
+Verb 'salir' 'salgo' 'sales' 'sale' 'salimos' 'salÌs' 'salen'
     'fuera' 'afuera' 'abandonar' 'abandono' 'abandonas' 'abandona'
-    'marcharse' 'm√°rchate' 'irse' 'vete' 'largarse' 'l√°rgate'
+    'marcharse' 'm·rchate' 'irse' 'vete' 'largarse' 'l·rgate'
     *                                           -> Exit
     * 'de'/'del' noun                           -> Exit;
 
-! ######################### VERBOS DE MANIPULACI√ìN DE OBJETOS
+! ######################### VERBOS DE MANIPULACI”N DE OBJETOS
 
-! Coger/Tomar - el verbo m√°s completo con variantes regionales
-Verb 'coger' 'cojo' 'coges' 'coge' 'cogemos' 'cog√©is' 'cogen'
-    'cog√≠' 'cogiste' 'cogi√≥' 'cogimos' 'cogisteis' 'cogieron'
-    'coger√©' 'coger√°s' 'coger√°' 'cogeremos' 'coger√©is' 'coger√°n'
+! Coger/Tomar - el verbo m·s completo con variantes regionales
+Verb 'coger' 'cojo' 'coges' 'coge' 'cogemos' 'cogÈis' 'cogen'
+    'cogÌ' 'cogiste' 'cogiÛ' 'cogimos' 'cogisteis' 'cogieron'
+    'cogerÈ' 'coger·s' 'coger·' 'cogeremos' 'cogerÈis' 'coger·n'
     'coge' 'coja' 'coged' 'cojan' 'cogiendo' 'cogido'
-    ! Variante M√©xico/Am√©rica Latina
-    'tomar' 'tomo' 'tomas' 'toma' 'tomamos' 'tom√°is' 'toman'
-    'tom√©' 'tomaste' 'tom√≥' 'tomamos' 'tomasteis' 'tomaron'
-    'tomar√©' 'tomar√°s' 'tomar√°' 'tomaremos' 'tomar√©is' 'tomar√°n'
+    ! Variante MÈxico/AmÈrica Latina
+    'tomar' 'tomo' 'tomas' 'toma' 'tomamos' 'tom·is' 'toman'
+    'tomÈ' 'tomaste' 'tomÛ' 'tomamos' 'tomasteis' 'tomaron'
+    'tomarÈ' 'tomar·s' 'tomar·' 'tomaremos' 'tomarÈis' 'tomar·n'
     'toma' 'tome' 'tomad' 'tomen' 'tomando' 'tomado'
     ! Variante Argentina/Uruguay
-    'agarrar' 'agarro' 'agarras' 'agarra' 'agarramos' 'agarr√°is' 'agarran'
-    'agarr√©' 'agarraste' 'agarr√≥' 'agarramos' 'agarrasteis' 'agarraron'
-    'agarrar√©' 'agarrar√°s' 'agarrar√°' 'agarraremos' 'agarrar√©is' 'agarrar√°n'
+    'agarrar' 'agarro' 'agarras' 'agarra' 'agarramos' 'agarr·is' 'agarran'
+    'agarrÈ' 'agarraste' 'agarrÛ' 'agarramos' 'agarrasteis' 'agarraron'
+    'agarrarÈ' 'agarrar·s' 'agarrar·' 'agarraremos' 'agarrarÈis' 'agarrar·n'
     'agarra' 'agarre' 'agarrad' 'agarren' 'agarrando' 'agarrado'
-    ! Variante coloquial Espa√±a
-    'pillar' 'pillo' 'pillas' 'pilla' 'pillamos' 'pill√°is' 'pillan'
-    'pill√©' 'pillaste' 'pill√≥' 'pillamos' 'pillasteis' 'pillaron'
-    'pillar√©' 'pillar√°s' 'pillar√°' 'pillaremos' 'pillar√©is' 'pillar√°n'
+    ! Variante coloquial EspaÒa
+    'pillar' 'pillo' 'pillas' 'pilla' 'pillamos' 'pill·is' 'pillan'
+    'pillÈ' 'pillaste' 'pillÛ' 'pillamos' 'pillasteis' 'pillaron'
+    'pillarÈ' 'pillar·s' 'pillar·' 'pillaremos' 'pillarÈis' 'pillar·n'
     'pilla' 'pille' 'pillad' 'pillen' 'pillando' 'pillado'
     ! Variantes formales
-    'obtener' 'obtengo' 'obtienes' 'obtiene' 'obtenemos' 'obten√©is' 'obtienen'
-    'conseguir' 'consigo' 'consigues' 'consigue' 'conseguimos' 'consegu√≠s' 'consiguen'
-    'recoger' 'recojo' 'recoges' 'recoge' 'recogemos' 'recog√©is' 'recogen'
+    'obtener' 'obtengo' 'obtienes' 'obtiene' 'obtenemos' 'obtenÈis' 'obtienen'
+    'conseguir' 'consigo' 'consigues' 'consigue' 'conseguimos' 'conseguÌs' 'consiguen'
+    'recoger' 'recojo' 'recoges' 'recoge' 'recogemos' 'recogÈis' 'recogen'
     * multi                                     -> Take
     * 'todo'/'todas'/'todos'                    -> Take
     * multi 'de'/'del'/'de'/'la' noun           -> Remove;
 
 ! Dejar/Soltar con todas las conjugaciones
-Verb 'dejar' 'dejo' 'dejas' 'deja' 'dejamos' 'dej√°is' 'dejan'
-    'dej√©' 'dejaste' 'dej√≥' 'dejamos' 'dejasteis' 'dejaron'
-    'dejar√©' 'dejar√°s' 'dejar√°' 'dejaremos' 'dejar√©is' 'dejar√°n'
+Verb 'dejar' 'dejo' 'dejas' 'deja' 'dejamos' 'dej·is' 'dejan'
+    'dejÈ' 'dejaste' 'dejÛ' 'dejamos' 'dejasteis' 'dejaron'
+    'dejarÈ' 'dejar·s' 'dejar·' 'dejaremos' 'dejarÈis' 'dejar·n'
     'deja' 'deje' 'dejad' 'dejen' 'dejando' 'dejado'
-    'soltar' 'suelto' 'sueltas' 'suelta' 'soltamos' 'solt√°is' 'sueltan'
-    'solt√©' 'soltaste' 'solt√≥' 'soltamos' 'soltasteis' 'soltaron'
-    'soltar√©' 'soltar√°s' 'soltar√°' 'soltaremos' 'soltar√©is' 'soltar√°n'
+    'soltar' 'suelto' 'sueltas' 'suelta' 'soltamos' 'solt·is' 'sueltan'
+    'soltÈ' 'soltaste' 'soltÛ' 'soltamos' 'soltasteis' 'soltaron'
+    'soltarÈ' 'soltar·s' 'soltar·' 'soltaremos' 'soltarÈis' 'soltar·n'
     'suelta' 'suelte' 'soltad' 'suelten' 'soltando' 'soltado'
-    'tirar' 'tiro' 'tiras' 'tira' 'tiramos' 'tir√°is' 'tiran'
-    'tir√©' 'tiraste' 'tir√≥' 'tiramos' 'tirasteis' 'tiraron'
-    'tirar√©' 'tirar√°s' 'tirar√°' 'tiraremos' 'tirar√©is' 'tirar√°n'
+    'tirar' 'tiro' 'tiras' 'tira' 'tiramos' 'tir·is' 'tiran'
+    'tirÈ' 'tiraste' 'tirÛ' 'tiramos' 'tirasteis' 'tiraron'
+    'tirarÈ' 'tirar·s' 'tirar·' 'tiraremos' 'tirarÈis' 'tirar·n'
     'tira' 'tire' 'tirad' 'tiren' 'tirando' 'tirado'
-    'abandonar' 'abandono' 'abandonas' 'abandona' 'abandonamos' 'abandon√°is' 'abandonan'
+    'abandonar' 'abandono' 'abandonas' 'abandona' 'abandonamos' 'abandon·is' 'abandonan'
     * multiheld                                 -> Drop
     * multiexcept 'en'/'dentro'/'de' noun       -> Insert
     * held 'a'/'contra'/'sobre' noun            -> ThrowAt;
 
 ! Meter/Poner dentro con conjugaciones completas
-Verb 'meter' 'meto' 'metes' 'mete' 'metemos' 'met√©is' 'meten'
-    'met√≠' 'metiste' 'meti√≥' 'metimos' 'metisteis' 'metieron'
-    'meter√©' 'meter√°s' 'meter√°' 'meteremos' 'meter√©is' 'meter√°n'
+Verb 'meter' 'meto' 'metes' 'mete' 'metemos' 'metÈis' 'meten'
+    'metÌ' 'metiste' 'metiÛ' 'metimos' 'metisteis' 'metieron'
+    'meterÈ' 'meter·s' 'meter·' 'meteremos' 'meterÈis' 'meter·n'
     'mete' 'meta' 'meted' 'metan' 'metiendo' 'metido'
-    'introducir' 'introduzco' 'introduces' 'introduce' 'introducimos' 'introduc√≠s' 'introducen'
+    'introducir' 'introduzco' 'introduces' 'introduce' 'introducimos' 'introducÌs' 'introducen'
     'introduje' 'introdujiste' 'introdujo' 'introdujimos' 'introdujisteis' 'introdujeron'
-    'introducir√©' 'introducir√°s' 'introducir√°' 'introduciremos' 'introducir√©is' 'introducir√°n'
+    'introducirÈ' 'introducir·s' 'introducir·' 'introduciremos' 'introducirÈis' 'introducir·n'
     'introduce' 'introduzca' 'introducid' 'introduzcan' 'introduciendo' 'introducido'
-    'insertar' 'inserto' 'insertas' 'inserta' 'insertamos' 'insert√°is' 'insertan'
-    'insert√©' 'insertaste' 'insert√≥' 'insertamos' 'insertasteis' 'insertaron'
-    'insertar√©' 'insertar√°s' 'insertar√°' 'insertaremos' 'insertar√©is' 'insertar√°n'
+    'insertar' 'inserto' 'insertas' 'inserta' 'insertamos' 'insert·is' 'insertan'
+    'insertÈ' 'insertaste' 'insertÛ' 'insertamos' 'insertasteis' 'insertaron'
+    'insertarÈ' 'insertar·s' 'insertar·' 'insertaremos' 'insertarÈis' 'insertar·n'
     'inserta' 'inserte' 'insertad' 'inserten' 'insertando' 'insertado'
     * multiexcept 'en'/'dentro'/'de' noun       -> Insert;
 
 ! Poner/Colocar con conjugaciones completas
-Verb 'poner' 'pongo' 'pones' 'pone' 'ponemos' 'pon√©is' 'ponen'
+Verb 'poner' 'pongo' 'pones' 'pone' 'ponemos' 'ponÈis' 'ponen'
     'puse' 'pusiste' 'puso' 'pusimos' 'pusisteis' 'pusieron'
-    'pondr√©' 'pondr√°s' 'pondr√°' 'pondremos' 'pondr√©is' 'pondr√°n'
+    'pondrÈ' 'pondr·s' 'pondr·' 'pondremos' 'pondrÈis' 'pondr·n'
     'pon' 'ponga' 'poned' 'pongan' 'poniendo' 'puesto'
-    'colocar' 'coloco' 'colocas' 'coloca' 'colocamos' 'coloc√°is' 'colocan'
-    'coloqu√©' 'colocaste' 'coloc√≥' 'colocamos' 'colocasteis' 'colocaron'
-    'colocar√©' 'colocar√°s' 'colocar√°' 'colocaremos' 'colocar√©is' 'colocar√°n'
+    'colocar' 'coloco' 'colocas' 'coloca' 'colocamos' 'coloc·is' 'colocan'
+    'coloquÈ' 'colocaste' 'colocÛ' 'colocamos' 'colocasteis' 'colocaron'
+    'colocarÈ' 'colocar·s' 'colocar·' 'colocaremos' 'colocarÈis' 'colocar·n'
     'coloca' 'coloque' 'colocad' 'coloquen' 'colocando' 'colocado'
-    'situar' 'sit√∫o' 'sit√∫as' 'sit√∫a' 'situamos' 'situ√°is' 'sit√∫an'
-    'situ√©' 'situaste' 'situ√≥' 'situamos' 'situasteis' 'situaron'
-    'situar√©' 'situar√°s' 'situar√°' 'situaremos' 'situar√©is' 'situar√°n'
-    'sit√∫a' 'sit√∫e' 'situad' 'sit√∫en' 'situando' 'situado'
-    'ubicar' 'ubico' 'ubicas' 'ubica' 'ubicamos' 'ubic√°is' 'ubican'
+    'situar' 'sit˙o' 'sit˙as' 'sit˙a' 'situamos' 'situ·is' 'sit˙an'
+    'situÈ' 'situaste' 'situÛ' 'situamos' 'situasteis' 'situaron'
+    'situarÈ' 'situar·s' 'situar·' 'situaremos' 'situarÈis' 'situar·n'
+    'sit˙a' 'sit˙e' 'situad' 'sit˙en' 'situando' 'situado'
+    'ubicar' 'ubico' 'ubicas' 'ubica' 'ubicamos' 'ubic·is' 'ubican'
     * multiexcept 'en'/'dentro'/'de' noun       -> Insert
     * multiexcept 'sobre'/'encima'/'de' noun    -> PutOn
     * held                                      -> Wear;
 
-! ######################### VERBOS DE EXAMINACI√ìN
+! ######################### VERBOS DE EXAMINACI”N
 
 ! Mirar con todas las conjugaciones y variantes
-Verb 'mirar' 'miro' 'miras' 'mira' 'miramos' 'mir√°is' 'miran'
-    'mir√©' 'miraste' 'mir√≥' 'miramos' 'mirasteis' 'miraron'
-    'mirar√©' 'mirar√°s' 'mirar√°' 'miraremos' 'mirar√©is' 'mirar√°n'
+Verb 'mirar' 'miro' 'miras' 'mira' 'miramos' 'mir·is' 'miran'
+    'mirÈ' 'miraste' 'mirÛ' 'miramos' 'mirasteis' 'miraron'
+    'mirarÈ' 'mirar·s' 'mirar·' 'miraremos' 'mirarÈis' 'mirar·n'
     'mira' 'mire' 'mirad' 'miren' 'mirando' 'mirado'
     'ver' 'veo' 'ves' 've' 'vemos' 'veis' 'ven'
     'vi' 'viste' 'vio' 'vimos' 'visteis' 'vieron'
-    'ver√©' 'ver√°s' 'ver√°' 'veremos' 'ver√©is' 'ver√°n'
+    'verÈ' 'ver·s' 'ver·' 'veremos' 'verÈis' 'ver·n'
     've' 'vea' 'ved' 'vean' 'viendo' 'visto'
-    'observar' 'observo' 'observas' 'observa' 'observamos' 'observ√°is' 'observan'
-    'observ√©' 'observaste' 'observ√≥' 'observamos' 'observasteis' 'observaron'
-    'observar√©' 'observar√°s' 'observar√°' 'observaremos' 'observar√©is' 'observar√°n'
+    'observar' 'observo' 'observas' 'observa' 'observamos' 'observ·is' 'observan'
+    'observÈ' 'observaste' 'observÛ' 'observamos' 'observasteis' 'observaron'
+    'observarÈ' 'observar·s' 'observar·' 'observaremos' 'observarÈis' 'observar·n'
     'observa' 'observe' 'observad' 'observen' 'observando' 'observado'
-    'contemplar' 'contemplo' 'contemplas' 'contempla' 'contemplamos' 'contempl√°is' 'contemplan'
-    'ojear' 'ojeo' 'ojeas' 'ojea' 'ojeamos' 'oje√°is' 'ojean'
+    'contemplar' 'contemplo' 'contemplas' 'contempla' 'contemplamos' 'contempl·is' 'contemplan'
+    'ojear' 'ojeo' 'ojeas' 'ojea' 'ojeamos' 'oje·is' 'ojean'
     'l//' 'm//' 'ojo' 'ojos'
     * noun                                      -> Examine
     * 'a'/'hacia' noun                          -> Examine  
@@ -165,63 +165,63 @@ Verb 'mirar' 'miro' 'miras' 'mira' 'miramos' 'mir√°is' 'miran'
     * 'alrededor'                               -> Look;
 
 ! Examinar con conjugaciones completas
-Verb 'examinar' 'examino' 'examinas' 'examina' 'examinamos' 'examin√°is' 'examinan'
-    'examin√©' 'examinaste' 'examin√≥' 'examinamos' 'examinasteis' 'examinaron'
-    'examinar√©' 'examinar√°s' 'examinar√°' 'examinaremos' 'examinar√©is' 'examinar√°n'
+Verb 'examinar' 'examino' 'examinas' 'examina' 'examinamos' 'examin·is' 'examinan'
+    'examinÈ' 'examinaste' 'examinÛ' 'examinamos' 'examinasteis' 'examinaron'
+    'examinarÈ' 'examinar·s' 'examinar·' 'examinaremos' 'examinarÈis' 'examinar·n'
     'examina' 'examine' 'examinad' 'examinen' 'examinando' 'examinado'
-    'inspeccionar' 'inspecciono' 'inspeccionas' 'inspecciona' 'inspeccionamos' 'inspeccion√°is' 'inspeccionan'
-    'inspeccion√©' 'inspeccionaste' 'inspeccion√≥' 'inspeccionamos' 'inspeccionasteis' 'inspeccionaron'
-    'inspeccionar√©' 'inspeccionar√°s' 'inspeccionar√°' 'inspeccionaremos' 'inspeccionar√©is' 'inspeccionar√°n'
+    'inspeccionar' 'inspecciono' 'inspeccionas' 'inspecciona' 'inspeccionamos' 'inspeccion·is' 'inspeccionan'
+    'inspeccionÈ' 'inspeccionaste' 'inspeccionÛ' 'inspeccionamos' 'inspeccionasteis' 'inspeccionaron'
+    'inspeccionarÈ' 'inspeccionar·s' 'inspeccionar·' 'inspeccionaremos' 'inspeccionarÈis' 'inspeccionar·n'
     'inspecciona' 'inspeccione' 'inspeccionad' 'inspeccionen' 'inspeccionando' 'inspeccionado'
-    'revisar' 'reviso' 'revisas' 'revisa' 'revisamos' 'revis√°is' 'revisan'
-    'estudiar' 'estudio' 'estudias' 'estudia' 'estudiamos' 'estudi√°is' 'estudian'
+    'revisar' 'reviso' 'revisas' 'revisa' 'revisamos' 'revis·is' 'revisan'
+    'estudiar' 'estudio' 'estudias' 'estudia' 'estudiamos' 'estudi·is' 'estudian'
     'x//' 'ex' 'xa' 'xam'
     * noun                                      -> Examine;
 
 ! Buscar con conjugaciones completas
-Verb 'buscar' 'busco' 'buscas' 'busca' 'buscamos' 'busc√°is' 'buscan'
-    'busqu√©' 'buscaste' 'busc√≥' 'buscamos' 'buscasteis' 'buscaron'
-    'buscar√©' 'buscar√°s' 'buscar√°' 'buscaremos' 'buscar√©is' 'buscar√°n'
+Verb 'buscar' 'busco' 'buscas' 'busca' 'buscamos' 'busc·is' 'buscan'
+    'busquÈ' 'buscaste' 'buscÛ' 'buscamos' 'buscasteis' 'buscaron'
+    'buscarÈ' 'buscar·s' 'buscar·' 'buscaremos' 'buscarÈis' 'buscar·n'
     'busca' 'busque' 'buscad' 'busquen' 'buscando' 'buscado'
-    'registrar' 'registro' 'registras' 'registra' 'registramos' 'registr√°is' 'registran'
-    'registr√©' 'registraste' 'registr√≥' 'registramos' 'registrasteis' 'registraron'
-    'registrar√©' 'registrar√°s' 'registrar√°' 'registraremos' 'registrar√©is' 'registrar√°n'
+    'registrar' 'registro' 'registras' 'registra' 'registramos' 'registr·is' 'registran'
+    'registrÈ' 'registraste' 'registrÛ' 'registramos' 'registrasteis' 'registraron'
+    'registrarÈ' 'registrar·s' 'registrar·' 'registraremos' 'registrarÈis' 'registrar·n'
     'registra' 'registre' 'registrad' 'registren' 'registrando' 'registrado'
-    'explorar' 'exploro' 'exploras' 'explora' 'exploramos' 'explor√°is' 'exploran'
-    'rastrear' 'rastreo' 'rastreas' 'rastrea' 'rastreamos' 'rastre√°is' 'rastean'
-    'hurgar' 'hurgo' 'hurgas' 'hurga' 'hurgamos' 'hurg√°is' 'hurgan'
+    'explorar' 'exploro' 'exploras' 'explora' 'exploramos' 'explor·is' 'exploran'
+    'rastrear' 'rastreo' 'rastreas' 'rastrea' 'rastreamos' 'rastre·is' 'rastean'
+    'hurgar' 'hurgo' 'hurgas' 'hurga' 'hurgamos' 'hurg·is' 'hurgan'
     * noun                                      -> Search
     * 'en'/'dentro'/'de' noun                   -> Search;
 
-! ######################### VERBOS DE COMUNICACI√ìN
+! ######################### VERBOS DE COMUNICACI”N
 
 ! Hablar con conjugaciones y variantes
-Verb 'hablar' 'hablo' 'hablas' 'habla' 'hablamos' 'habl√°is' 'hablan'
-    'habl√©' 'hablaste' 'habl√≥' 'hablamos' 'hablasteis' 'hablaron'
-    'hablar√©' 'hablar√°s' 'hablar√°' 'hablaremos' 'hablar√©is' 'hablar√°n'
+Verb 'hablar' 'hablo' 'hablas' 'habla' 'hablamos' 'habl·is' 'hablan'
+    'hablÈ' 'hablaste' 'hablÛ' 'hablamos' 'hablasteis' 'hablaron'
+    'hablarÈ' 'hablar·s' 'hablar·' 'hablaremos' 'hablarÈis' 'hablar·n'
     'habla' 'hable' 'hablad' 'hablen' 'hablando' 'hablado'
-    'decir' 'digo' 'dices' 'dice' 'decimos' 'dec√≠s' 'dicen'
+    'decir' 'digo' 'dices' 'dice' 'decimos' 'decÌs' 'dicen'
     'dije' 'dijiste' 'dijo' 'dijimos' 'dijisteis' 'dijeron'
-    'dir√©' 'dir√°s' 'dir√°' 'diremos' 'dir√©is' 'dir√°n'
+    'dirÈ' 'dir·s' 'dir·' 'diremos' 'dirÈis' 'dir·n'
     'di' 'diga' 'decid' 'digan' 'diciendo' 'dicho'
-    'comentar' 'comento' 'comentas' 'comenta' 'comentamos' 'coment√°is' 'comentan'
-    'coment√©' 'comentaste' 'coment√≥' 'comentamos' 'comentasteis' 'comentaron'
-    'comentar√©' 'comentar√°s' 'comentar√°' 'comentaremos' 'comentar√©is' 'comentar√°n'
+    'comentar' 'comento' 'comentas' 'comenta' 'comentamos' 'coment·is' 'comentan'
+    'comentÈ' 'comentaste' 'comentÛ' 'comentamos' 'comentasteis' 'comentaron'
+    'comentarÈ' 'comentar·s' 'comentar·' 'comentaremos' 'comentarÈis' 'comentar·n'
     'comenta' 'comente' 'comentad' 'comenten' 'comentando' 'comentado'
-    'conversar' 'converso' 'conversas' 'conversa' 'conversamos' 'convers√°is' 'conversan'
-    'charlar' 'charlo' 'charlas' 'charla' 'charlamos' 'charl√°is' 'charlan'
-    'platicar' 'platico' 'platicas' 'platica' 'platicamos' 'platic√°is' 'platican'
+    'conversar' 'converso' 'conversas' 'conversa' 'conversamos' 'convers·is' 'conversan'
+    'charlar' 'charlo' 'charlas' 'charla' 'charlamos' 'charl·is' 'charlan'
+    'platicar' 'platico' 'platicas' 'platica' 'platicamos' 'platic·is' 'platican'
     * topic 'a'/'con' creature                  -> Answer
     * topic 'sobre'/'de' noun 'a'/'con' creature -> Tell;
 
 ! Preguntar con conjugaciones completas
-Verb 'preguntar' 'pregunto' 'preguntas' 'pregunta' 'preguntamos' 'pregunt√°is' 'preguntan'
-    'pregunt√©' 'preguntaste' 'pregunt√≥' 'preguntamos' 'preguntasteis' 'preguntaron'
-    'preguntar√©' 'preguntar√°s' 'preguntar√°' 'preguntaremos' 'preguntar√©is' 'preguntar√°n'
+Verb 'preguntar' 'pregunto' 'preguntas' 'pregunta' 'preguntamos' 'pregunt·is' 'preguntan'
+    'preguntÈ' 'preguntaste' 'preguntÛ' 'preguntamos' 'preguntasteis' 'preguntaron'
+    'preguntarÈ' 'preguntar·s' 'preguntar·' 'preguntaremos' 'preguntarÈis' 'preguntar·n'
     'pregunta' 'pregunte' 'preguntad' 'pregunten' 'preguntando' 'preguntado'
-    'consultar' 'consulto' 'consultas' 'consulta' 'consultamos' 'consult√°is' 'consultan'
-    'inquirir' 'inquiero' 'inquieres' 'inquiere' 'inquirimos' 'inquir√≠s' 'inquieren'
-    'interrogar' 'interrogo' 'interrogas' 'interroga' 'interrogamos' 'interrog√°is' 'interrogan'
+    'consultar' 'consulto' 'consultas' 'consulta' 'consultamos' 'consult·is' 'consultan'
+    'inquirir' 'inquiero' 'inquieres' 'inquiere' 'inquirimos' 'inquirÌs' 'inquieren'
+    'interrogar' 'interrogo' 'interrogas' 'interroga' 'interrogamos' 'interrog·is' 'interrogan'
     * creature 'sobre'/'por'/'acerca' 'de' topic -> Ask
     * creature 'por' noun                       -> AskFor
     * creature 'que' topic                      -> AskTo
@@ -229,40 +229,40 @@ Verb 'preguntar' 'pregunto' 'preguntas' 'pregunta' 'preguntamos' 'pregunt√°is' '
     * 'a' creature 'por' noun                   -> AskFor;
 
 ! Responder con conjugaciones completas
-Verb 'responder' 'respondo' 'respondes' 'responde' 'respondemos' 'respond√©is' 'responden'
-    'respond√≠' 'respondiste' 'respondi√≥' 'respondimos' 'respondisteis' 'respondieron'
-    'responder√©' 'responder√°s' 'responder√°' 'responderemos' 'responder√©is' 'responder√°n'
+Verb 'responder' 'respondo' 'respondes' 'responde' 'respondemos' 'respondÈis' 'responden'
+    'respondÌ' 'respondiste' 'respondiÛ' 'respondimos' 'respondisteis' 'respondieron'
+    'responderÈ' 'responder·s' 'responder·' 'responderemos' 'responderÈis' 'responder·n'
     'responde' 'responda' 'responded' 'respondan' 'respondiendo' 'respondido'
-    'contestar' 'contesto' 'contestas' 'contesta' 'contestamos' 'contest√°is' 'contestan'
-    'contest√©' 'contestaste' 'contest√≥' 'contestasteis' 'contestaron'
-    'contestar√©' 'contestar√°s' 'contestar√°' 'contestaremos' 'contestar√©is' 'contestar√°n'
+    'contestar' 'contesto' 'contestas' 'contesta' 'contestamos' 'contest·is' 'contestan'
+    'contestÈ' 'contestaste' 'contestÛ' 'contestasteis' 'contestaron'
+    'contestarÈ' 'contestar·s' 'contestar·' 'contestaremos' 'contestarÈis' 'contestar·n'
     'contesta' 'conteste' 'contestad' 'contesten' 'contestando' 'contestado'
-    'replicar' 'replico' 'replicas' 'replica' 'replicamos' 'replic√°is' 'replican'
+    'replicar' 'replico' 'replicas' 'replica' 'replicamos' 'replic·is' 'replican'
     * topic 'a' creature                        -> Answer;
 
-! ######################### VERBOS DE ACCI√ìN F√çSICA
+! ######################### VERBOS DE ACCI”N FÕSICA
 
 ! Atacar con todas las conjugaciones
-Verb 'atacar' 'ataco' 'atacas' 'ataca' 'atacamos' 'atac√°is' 'atacan'
-    'ataqu√©' 'atacaste' 'atac√≥' 'atacasteis' 'atacaron'
-    'atacar√©' 'atacar√°s' 'atacar√°' 'atacaremos' 'atacar√©is' 'atacar√°n'
+Verb 'atacar' 'ataco' 'atacas' 'ataca' 'atacamos' 'atac·is' 'atacan'
+    'ataquÈ' 'atacaste' 'atacÛ' 'atacasteis' 'atacaron'
+    'atacarÈ' 'atacar·s' 'atacar·' 'atacaremos' 'atacarÈis' 'atacar·n'
     'ataque' 'atacad' 'ataquen' 'atacando' 'atacado'
-    'golpear' 'golpeo' 'golpeas' 'golpea' 'golpeamos' 'golpe√°is' 'golpean'
-    'golpe√©' 'golpeaste' 'golpe√≥' 'golpeamos' 'golpeasteis' 'golpearon'
-    'golpear√©' 'golpear√°s' 'golpear√°' 'golpearemos' 'golpear√©is' 'golpear√°n'
+    'golpear' 'golpeo' 'golpeas' 'golpea' 'golpeamos' 'golpe·is' 'golpean'
+    'golpeÈ' 'golpeaste' 'golpeÛ' 'golpeamos' 'golpeasteis' 'golpearon'
+    'golpearÈ' 'golpear·s' 'golpear·' 'golpearemos' 'golpearÈis' 'golpear·n'
     'golpea' 'golpee' 'golpead' 'golpeen' 'golpeando' 'golpeado'
-    'pegar' 'pego' 'pegas' 'pega' 'pegamos' 'peg√°is' 'pegan'
-    'pegu√©' 'pegaste' 'peg√≥' 'pegamos' 'pegasteis' 'pegaron'
-    'pegar√©' 'pegar√°s' 'pegar√°' 'pegaremos' 'pegar√©is' 'pegar√°n'
+    'pegar' 'pego' 'pegas' 'pega' 'pegamos' 'peg·is' 'pegan'
+    'peguÈ' 'pegaste' 'pegÛ' 'pegamos' 'pegasteis' 'pegaron'
+    'pegarÈ' 'pegar·s' 'pegar·' 'pegaremos' 'pegarÈis' 'pegar·n'
     'pega' 'pegue' 'pegad' 'peguen' 'pegando' 'pegado'
-    'romper' 'rompo' 'rompes' 'rompe' 'rompemos' 'romp√©is' 'rompen'
-    'romp√≠' 'rompiste' 'rompi√≥' 'rompimos' 'rompisteis' 'rompieron'
-    'romper√©' 'romper√°s' 'romper√°' 'romperemos' 'romper√©is' 'romper√°n'
+    'romper' 'rompo' 'rompes' 'rompe' 'rompemos' 'rompÈis' 'rompen'
+    'rompÌ' 'rompiste' 'rompiÛ' 'rompimos' 'rompisteis' 'rompieron'
+    'romperÈ' 'romper·s' 'romper·' 'romperemos' 'romperÈis' 'romper·n'
     'rompe' 'rompa' 'romped' 'rompan' 'rompiendo' 'roto'
-    'destrozar' 'destrozo' 'destrozas' 'destroza' 'destrozamos' 'destroz√°is' 'destrozan'
-    'destruir' 'destruyo' 'destruyes' 'destruye' 'destruimos' 'destru√≠s' 'destruyen'
-    'agredir' 'agredo' 'agredes' 'agrede' 'agredimos' 'agred√≠s' 'agreden'
-    'acometer' 'acometo' 'acometes' 'acomete' 'acometemos' 'acomet√©is' 'acometen'
+    'destrozar' 'destrozo' 'destrozas' 'destroza' 'destrozamos' 'destroz·is' 'destrozan'
+    'destruir' 'destruyo' 'destruyes' 'destruye' 'destruimos' 'destruÌs' 'destruyen'
+    'agredir' 'agredo' 'agredes' 'agrede' 'agredimos' 'agredÌs' 'agreden'
+    'acometer' 'acometo' 'acometes' 'acomete' 'acometemos' 'acometÈis' 'acometen'
     * noun                                      -> Attack
     * noun 'con' held                           -> Attack;
 
@@ -273,103 +273,103 @@ Verb 'inventario' 'inv' 'i//' 'bolsillos' 'pertenencias' 'objetos' 'cosas'
     'mochila' 'equipo' 'equipaje' 'gear'
     *                                           -> Inv;
 
-! Puntuaci√≥n
-Verb 'puntuaci√≥n' 'puntos' 'score' 'marcador' 'puntaje'
+! PuntuaciÛn
+Verb 'puntuaciÛn' 'puntos' 'score' 'marcador' 'puntaje'
     *                                           -> Score;
 
 ! Salir del juego con muchas variantes
 Verb 'salir' 'abandonar' 'terminar' 'acabar' 'finalizar' 'quit' 'q//'
-    'exit' 'bye' 'adios' 'adi√≥s' 'chao' 'chau' 'hasta' 'luego'
-    'salgo' 'sales' 'sale' 'salimos' 'sal√≠s' 'salen'
-    'abandono' 'abandonas' 'abandona' 'abandonamos' 'abandon√°is' 'abandonan'
-    'termino' 'terminas' 'termina' 'terminamos' 'termin√°is' 'terminan'
+    'exit' 'bye' 'adios' 'adiÛs' 'chao' 'chau' 'hasta' 'luego'
+    'salgo' 'sales' 'sale' 'salimos' 'salÌs' 'salen'
+    'abandono' 'abandonas' 'abandona' 'abandonamos' 'abandon·is' 'abandonan'
+    'termino' 'terminas' 'termina' 'terminamos' 'termin·is' 'terminan'
     *                                           -> Quit;
 
 ! Guardar con variantes
 Verb 'guardar' 'grabar' 'salvar' 'save' 'almacenar' 'conservar'
-    'guardo' 'guardas' 'guarda' 'guardamos' 'guard√°is' 'guardan'
-    'grabo' 'grabas' 'graba' 'grabamos' 'grab√°is' 'graban'
-    'salvo' 'salvas' 'salva' 'salvamos' 'salv√°is' 'salvan'
+    'guardo' 'guardas' 'guarda' 'guardamos' 'guard·is' 'guardan'
+    'grabo' 'grabas' 'graba' 'grabamos' 'grab·is' 'graban'
+    'salvo' 'salvas' 'salva' 'salvamos' 'salv·is' 'salvan'
     *                                           -> Save;
 
 ! Cargar con variantes  
 Verb 'cargar' 'restore' 'recuperar' 'restaurar' 'recargar'
-    'cargo' 'cargas' 'carga' 'cargamos' 'carg√°is' 'cargan'
-    'recupero' 'recuperas' 'recupera' 'recuperamos' 'recuper√°is' 'recuperan'
-    'restauro' 'restauras' 'restaura' 'restauramos' 'restaur√°is' 'restauran'
+    'cargo' 'cargas' 'carga' 'cargamos' 'carg·is' 'cargan'
+    'recupero' 'recuperas' 'recupera' 'recuperamos' 'recuper·is' 'recuperan'
+    'restauro' 'restauras' 'restaura' 'restauramos' 'restaur·is' 'restauran'
     *                                           -> Restore;
 
 ! Reiniciar
 Verb 'reiniciar' 'restart' 'empezar' 'comenzar' 'volver' 'reset'
-    'reinicio' 'reinicias' 'reinicia' 'reiniciamos' 'reinici√°is' 'reinician'
-    'empiezo' 'empiezas' 'empieza' 'empezamos' 'empez√°is' 'empiezan'
-    'comienzo' 'comienzas' 'comienza' 'comenzamos' 'comenz√°is' 'comienzan'
+    'reinicio' 'reinicias' 'reinicia' 'reiniciamos' 'reinici·is' 'reinician'
+    'empiezo' 'empiezas' 'empieza' 'empezamos' 'empez·is' 'empiezan'
+    'comienzo' 'comienzas' 'comienza' 'comenzamos' 'comenz·is' 'comienzan'
     *                                           -> Restart;
 
 ! Esperar con conjugaciones
-Verb 'esperar' 'espero' 'esperas' 'espera' 'esperamos' 'esper√°is' 'esperan'
-    'esper√©' 'esperaste' 'esper√≥' 'esperamos' 'esperasteis' 'esperaron'
-    'esperar√©' 'esperar√°s' 'esperar√°' 'esperaremos' 'esperar√©is' 'esperar√°n'
+Verb 'esperar' 'espero' 'esperas' 'espera' 'esperamos' 'esper·is' 'esperan'
+    'esperÈ' 'esperaste' 'esperÛ' 'esperamos' 'esperasteis' 'esperaron'
+    'esperarÈ' 'esperar·s' 'esperar·' 'esperaremos' 'esperarÈis' 'esperar·n'
     'espera' 'espere' 'esperad' 'esperen' 'esperando' 'esperado'
-    'aguardar' 'aguardo' 'aguardas' 'aguarda' 'aguardamos' 'aguard√°is' 'aguardan'
-    'pausar' 'pauso' 'pausas' 'pausa' 'pausamos' 'paus√°is' 'pausan'
+    'aguardar' 'aguardo' 'aguardas' 'aguarda' 'aguardamos' 'aguard·is' 'aguardan'
+    'pausar' 'pauso' 'pausas' 'pausa' 'pausamos' 'paus·is' 'pausan'
     'z//' 'wait' 'w//' 'pausa'
     *                                           -> Wait;
 
 ! Repetir con conjugaciones
-Verb 'repetir' 'repito' 'repites' 'repite' 'repetimos' 'repet√≠s' 'repiten'
-    'repet√≠' 'repetiste' 'repiti√≥' 'repetimos' 'repetisteis' 'repitieron'
-    'repetir√©' 'repetir√°s' 'repetir√°' 'repetiremos' 'repetir√©is' 'repetir√°n'
+Verb 'repetir' 'repito' 'repites' 'repite' 'repetimos' 'repetÌs' 'repiten'
+    'repetÌ' 'repetiste' 'repitiÛ' 'repetimos' 'repetisteis' 'repitieron'
+    'repetirÈ' 'repetir·s' 'repetir·' 'repetiremos' 'repetirÈis' 'repetir·n'
     'repite' 'repita' 'repetid' 'repitan' 'repitiendo' 'repetido'
     'otra' 'vez' 'again' 'g//' 'nuevamente' 'otra' 'de' 'nuevo'
-    'reiterar' 'reitero' 'reiteras' 'reitera' 'reiteramos' 'reiter√°is' 'reiteran'
+    'reiterar' 'reitero' 'reiteras' 'reitera' 'reiteramos' 'reiter·is' 'reiteran'
     *                                           -> Again;
 
 ! ######################### VERBOS SENSORIALES COMPLETOS
 
 ! Tocar con conjugaciones completas
-Verb 'tocar' 'toco' 'tocas' 'toca' 'tocamos' 'toc√°is' 'tocan'
-    'toqu√©' 'tocaste' 'toc√≥' 'tocamos' 'tocasteis' 'tocaron'
-    'tocar√©' 'tocar√°s' 'tocar√°' 'tocaremos' 'tocar√©is' 'tocar√°n'
+Verb 'tocar' 'toco' 'tocas' 'toca' 'tocamos' 'toc·is' 'tocan'
+    'toquÈ' 'tocaste' 'tocÛ' 'tocamos' 'tocasteis' 'tocaron'
+    'tocarÈ' 'tocar·s' 'tocar·' 'tocaremos' 'tocarÈis' 'tocar·n'
     'toca' 'toque' 'tocad' 'toquen' 'tocando' 'tocado'
-    'palpar' 'palpo' 'palpas' 'palpa' 'palpamos' 'palp√°is' 'palpan'
-    'palp√©' 'palpaste' 'palp√≥' 'palpamos' 'palpasteis' 'palparon'
-    'palpar√©' 'palpar√°s' 'palpar√°' 'palparemos' 'palpar√©is' 'palpar√°n'
+    'palpar' 'palpo' 'palpas' 'palpa' 'palpamos' 'palp·is' 'palpan'
+    'palpÈ' 'palpaste' 'palpÛ' 'palpamos' 'palpasteis' 'palparon'
+    'palparÈ' 'palpar·s' 'palpar·' 'palparemos' 'palparÈis' 'palpar·n'
     'palpa' 'palpe' 'palpad' 'palpen' 'palpando' 'palpado'
-    'sentir' 'siento' 'sientes' 'siente' 'sentimos' 'sent√≠s' 'sienten'
-    'sent√≠' 'sentiste' 'sinti√≥' 'sentimos' 'sentisteis' 'sintieron'
-    'sentir√©' 'sentir√°s' 'sentir√°' 'sentiremos' 'sentir√©is' 'sentir√°n'
+    'sentir' 'siento' 'sientes' 'siente' 'sentimos' 'sentÌs' 'sienten'
+    'sentÌ' 'sentiste' 'sintiÛ' 'sentimos' 'sentisteis' 'sintieron'
+    'sentirÈ' 'sentir·s' 'sentir·' 'sentiremos' 'sentirÈis' 'sentir·n'
     'siente' 'sienta' 'sentid' 'sientan' 'sintiendo' 'sentido'
-    'manosear' 'manoseo' 'manoseas' 'manosea' 'manoseamos' 'manose√°is' 'manosean'
-    'tantear' 'tanteo' 'tanteas' 'tantea' 'tanteamos' 'tante√°is' 'tantean'
+    'manosear' 'manoseo' 'manoseas' 'manosea' 'manoseamos' 'manose·is' 'manosean'
+    'tantear' 'tanteo' 'tanteas' 'tantea' 'tanteamos' 'tante·is' 'tantean'
     * noun                                      -> Touch;
 
 ! Oler con conjugaciones completas
-Verb 'oler' 'huelo' 'hueles' 'huele' 'olemos' 'ol√©is' 'huelen'
-    'ol√≠' 'oliste' 'oli√≥' 'olimos' 'olisteis' 'olieron'
-    'oler√©' 'oler√°s' 'oler√°' 'oleremos' 'oler√©is' 'oler√°n'
+Verb 'oler' 'huelo' 'hueles' 'huele' 'olemos' 'olÈis' 'huelen'
+    'olÌ' 'oliste' 'oliÛ' 'olimos' 'olisteis' 'olieron'
+    'olerÈ' 'oler·s' 'oler·' 'oleremos' 'olerÈis' 'oler·n'
     'huela' 'oled' 'huelan' 'oliendo' 'olido'
-    'olfatear' 'olfateo' 'olfateas' 'olfatea' 'olfateamos' 'olfate√°is' 'olfatean'
-    'olfate√©' 'olfateaste' 'olfate√≥' 'olfateamos' 'olfateasteis' 'olfatearon'
-    'olfatear√©' 'olfatear√°s' 'olfatear√°' 'olfatearemos' 'olfatear√©is' 'olfatear√°n'
+    'olfatear' 'olfateo' 'olfateas' 'olfatea' 'olfateamos' 'olfate·is' 'olfatean'
+    'olfateÈ' 'olfateaste' 'olfateÛ' 'olfateamos' 'olfateasteis' 'olfatearon'
+    'olfatearÈ' 'olfatear·s' 'olfatear·' 'olfatearemos' 'olfatearÈis' 'olfatear·n'
     'olfatee' 'olfatead' 'olfateen' 'olfateando' 'olfateado'
-    'esnifar' 'esnifo' 'esnifas' 'esnifa' 'esnifamos' 'esnif√°is' 'esnifan'
-    'aspirar' 'aspiro' 'aspiras' 'aspira' 'aspiramos' 'aspir√°is' 'aspiran'
-    'inhalar' 'inhalo' 'inhalas' 'inhala' 'inhalamos' 'inhal√°is' 'inhalan'
+    'esnifar' 'esnifo' 'esnifas' 'esnifa' 'esnifamos' 'esnif·is' 'esnifan'
+    'aspirar' 'aspiro' 'aspiras' 'aspira' 'aspiramos' 'aspir·is' 'aspiran'
+    'inhalar' 'inhalo' 'inhalas' 'inhala' 'inhalamos' 'inhal·is' 'inhalan'
     *                                           -> Smell
     * noun                                      -> Smell;
 
 ! Escuchar con conjugaciones completas
-Verb 'escuchar' 'escucho' 'escuchas' 'escucha' 'escuchamos' 'escuch√°is' 'escuchan'
-    'escuch√©' 'escuchaste' 'escuch√≥' 'escuchamos' 'escuchasteis' 'escucharon'
-    'escuchar√©' 'escuchar√°s' 'escuchar√°' 'escucharemos' 'escuchar√©is' 'escuchar√°n'
+Verb 'escuchar' 'escucho' 'escuchas' 'escucha' 'escuchamos' 'escuch·is' 'escuchan'
+    'escuchÈ' 'escuchaste' 'escuchÛ' 'escuchamos' 'escuchasteis' 'escucharon'
+    'escucharÈ' 'escuchar·s' 'escuchar·' 'escucharemos' 'escucharÈis' 'escuchar·n'
     'escucha' 'escuche' 'escuchad' 'escuchen' 'escuchando' 'escuchado'
-    'o√≠r' 'oigo' 'oyes' 'oye' 'o√≠mos' 'o√≠s' 'oyen'
-    'o√≠' 'o√≠ste' 'oy√≥' 'o√≠mos' 'o√≠steis' 'oyeron'
-    'oir√©' 'oir√°s' 'oir√°' 'oiremos' 'oir√©is' 'oir√°n'
-    'oye' 'oiga' 'o√≠d' 'oigan' 'oyendo' 'o√≠do'
-    'atender' 'atiendo' 'atiendes' 'atiende' 'atendemos' 'atend√©is' 'atienden'
-    'prestar' 'atenci√≥n' 'presto' 'prestas' 'presta' 'prestamos' 'prest√°is' 'prestan'
+    'oÌr' 'oigo' 'oyes' 'oye' 'oÌmos' 'oÌs' 'oyen'
+    'oÌ' 'oÌste' 'oyÛ' 'oÌmos' 'oÌsteis' 'oyeron'
+    'oirÈ' 'oir·s' 'oir·' 'oiremos' 'oirÈis' 'oir·n'
+    'oye' 'oiga' 'oÌd' 'oigan' 'oyendo' 'oÌdo'
+    'atender' 'atiendo' 'atiendes' 'atiende' 'atendemos' 'atendÈis' 'atienden'
+    'prestar' 'atenciÛn' 'presto' 'prestas' 'presta' 'prestamos' 'prest·is' 'prestan'
     *                                           -> Listen
     * 'a' noun                                  -> Listen
     * noun                                      -> Listen;
@@ -377,170 +377,170 @@ Verb 'escuchar' 'escucho' 'escuchas' 'escucha' 'escuchamos' 'escuch√°is' 'escuch
 ! ######################### VERBOS DE CONSUMO
 
 ! Comer con conjugaciones completas
-Verb 'comer' 'como' 'comes' 'come' 'comemos' 'com√©is' 'comen'
-    'com√≠' 'comiste' 'comi√≥' 'comimos' 'comisteis' 'comieron'
-    'comer√©' 'comer√°s' 'comer√°' 'comeremos' 'comer√©is' 'comer√°n'
+Verb 'comer' 'como' 'comes' 'come' 'comemos' 'comÈis' 'comen'
+    'comÌ' 'comiste' 'comiÛ' 'comimos' 'comisteis' 'comieron'
+    'comerÈ' 'comer·s' 'comer·' 'comeremos' 'comerÈis' 'comer·n'
     'come' 'coma' 'comed' 'coman' 'comiendo' 'comido'
-    'devorar' 'devoro' 'devoras' 'devora' 'devoramos' 'devor√°is' 'devoran'
-    'devor√©' 'devoraste' 'devor√≥' 'devoramos' 'devorasteis' 'devoraron'
-    'devorar√©' 'devorar√°s' 'devorar√°' 'devoraremos' 'devorar√©is' 'devorar√°n'
+    'devorar' 'devoro' 'devoras' 'devora' 'devoramos' 'devor·is' 'devoran'
+    'devorÈ' 'devoraste' 'devorÛ' 'devoramos' 'devorasteis' 'devoraron'
+    'devorarÈ' 'devorar·s' 'devorar·' 'devoraremos' 'devorarÈis' 'devorar·n'
     'devora' 'devore' 'devorad' 'devoren' 'devorando' 'devorado'
-    'tragar' 'trago' 'tragas' 'traga' 'tragamos' 'trag√°is' 'tragan'
-    'tragu√©' 'tragaste' 'trag√≥' 'tragamos' 'tragasteis' 'tragaron'
-    'tragar√©' 'tragar√°s' 'tragar√°' 'tragaremos' 'tragar√©is' 'tragar√°n'
+    'tragar' 'trago' 'tragas' 'traga' 'tragamos' 'trag·is' 'tragan'
+    'traguÈ' 'tragaste' 'tragÛ' 'tragamos' 'tragasteis' 'tragaron'
+    'tragarÈ' 'tragar·s' 'tragar·' 'tragaremos' 'tragarÈis' 'tragar·n'
     'traga' 'trague' 'tragad' 'traguen' 'tragando' 'tragado'
-    'engullir' 'engullo' 'engulles' 'engulle' 'engullimos' 'engull√≠s' 'engullen'
-    'masticar' 'mastico' 'masticas' 'mastica' 'masticamos' 'mastic√°is' 'mastican'
-    'morder' 'muerdo' 'muerdes' 'muerde' 'mordemos' 'mord√©is' 'muerden'
+    'engullir' 'engullo' 'engulles' 'engulle' 'engullimos' 'engullÌs' 'engullen'
+    'masticar' 'mastico' 'masticas' 'mastica' 'masticamos' 'mastic·is' 'mastican'
+    'morder' 'muerdo' 'muerdes' 'muerde' 'mordemos' 'mordÈis' 'muerden'
     * held                                      -> Eat;
 
 ! Beber con conjugaciones completas
-Verb 'beber' 'bebo' 'bebes' 'bebe' 'bebemos' 'beb√©is' 'beben'
-    'beb√≠' 'bebiste' 'bebi√≥' 'bebimos' 'bebisteis' 'bebieron'
-    'beber√©' 'beber√°s' 'beber√°' 'beberemos' 'beber√©is' 'beber√°n'
+Verb 'beber' 'bebo' 'bebes' 'bebe' 'bebemos' 'bebÈis' 'beben'
+    'bebÌ' 'bebiste' 'bebiÛ' 'bebimos' 'bebisteis' 'bebieron'
+    'beberÈ' 'beber·s' 'beber·' 'beberemos' 'beberÈis' 'beber·n'
     'bebe' 'beba' 'bebed' 'beban' 'bebiendo' 'bebido'
-    'tomar' 'tomo' 'tomas' 'toma' 'tomamos' 'tom√°is' 'toman'
-    'tom√©' 'tomaste' 'tom√≥' 'tomamos' 'tomasteis' 'tomaron'
-    'tomar√©' 'tomar√°s' 'tomar√°' 'tomaremos' 'tomar√©is' 'tomar√°n'
+    'tomar' 'tomo' 'tomas' 'toma' 'tomamos' 'tom·is' 'toman'
+    'tomÈ' 'tomaste' 'tomÛ' 'tomamos' 'tomasteis' 'tomaron'
+    'tomarÈ' 'tomar·s' 'tomar·' 'tomaremos' 'tomarÈis' 'tomar·n'
     'toma' 'tome' 'tomad' 'tomen' 'tomando' 'tomado'
-    'sorber' 'sorbo' 'sorbes' 'sorbe' 'sorbemos' 'sorb√©is' 'sorben'
-    'sorb√≠' 'sorbiste' 'sorbi√≥' 'sorbimos' 'sorbisteis' 'sorbieron'
-    'sorber√©' 'sorber√°s' 'sorber√°' 'sorberemos' 'sorber√©is' 'sorber√°n'
+    'sorber' 'sorbo' 'sorbes' 'sorbe' 'sorbemos' 'sorbÈis' 'sorben'
+    'sorbÌ' 'sorbiste' 'sorbiÛ' 'sorbimos' 'sorbisteis' 'sorbieron'
+    'sorberÈ' 'sorber·s' 'sorber·' 'sorberemos' 'sorberÈis' 'sorber·n'
     'sorbe' 'sorba' 'sorbed' 'sorban' 'sorbiendo' 'sorbido'
-    'libar' 'libo' 'libas' 'liba' 'libamos' 'lib√°is' 'liban'
-    'ingerir' 'ingiero' 'ingieres' 'ingiere' 'ingerimos' 'inger√≠s' 'ingieren'
+    'libar' 'libo' 'libas' 'liba' 'libamos' 'lib·is' 'liban'
+    'ingerir' 'ingiero' 'ingieres' 'ingiere' 'ingerimos' 'ingerÌs' 'ingieren'
     * noun                                      -> Drink;
 
 ! ######################### VERBOS DE VESTIMENTA REFLEXIVOS
 
 ! Ponerse (vestirse) con conjugaciones reflexivas
-Verb 'ponerse' 'me' 'pongo' 'te' 'pones' 'se' 'pone' 'nos' 'ponemos' 'os' 'pon√©is' 'se' 'ponen'
+Verb 'ponerse' 'me' 'pongo' 'te' 'pones' 'se' 'pone' 'nos' 'ponemos' 'os' 'ponÈis' 'se' 'ponen'
     'me' 'puse' 'te' 'pusiste' 'se' 'puso' 'nos' 'pusimos' 'os' 'pusisteis' 'se' 'pusieron'
-    'me' 'pondr√©' 'te' 'pondr√°s' 'se' 'pondr√°' 'nos' 'pondremos' 'os' 'pondr√©is' 'se' 'pondr√°n'
-    'ponte' 'p√≥ngase' 'poneos' 'p√≥nganse' 'poni√©ndose' 'puesto'
-    'vestirse' 'me' 'visto' 'te' 'vistes' 'se' 'viste' 'nos' 'vestimos' 'os' 'vest√≠s' 'se' 'visten'
-    'me' 'vest√≠' 'te' 'vestiste' 'se' 'visti√≥' 'nos' 'vestimos' 'os' 'vestisteis' 'se' 'vistieron'
-    'me' 'vestir√©' 'te' 'vestir√°s' 'se' 'vestir√°' 'nos' 'vestiremos' 'os' 'vestir√©is' 'se' 'vestir√°n'
-    'v√≠stete' 'v√≠stase' 'vest√≠os' 'v√≠stanse' 'visti√©ndose' 'vestido'
-    'vestir' 'visto' 'vistes' 'viste' 'vestimos' 'vest√≠s' 'visten'
+    'me' 'pondrÈ' 'te' 'pondr·s' 'se' 'pondr·' 'nos' 'pondremos' 'os' 'pondrÈis' 'se' 'pondr·n'
+    'ponte' 'pÛngase' 'poneos' 'pÛnganse' 'poniÈndose' 'puesto'
+    'vestirse' 'me' 'visto' 'te' 'vistes' 'se' 'viste' 'nos' 'vestimos' 'os' 'vestÌs' 'se' 'visten'
+    'me' 'vestÌ' 'te' 'vestiste' 'se' 'vistiÛ' 'nos' 'vestimos' 'os' 'vestisteis' 'se' 'vistieron'
+    'me' 'vestirÈ' 'te' 'vestir·s' 'se' 'vestir·' 'nos' 'vestiremos' 'os' 'vestirÈis' 'se' 'vestir·n'
+    'vÌstete' 'vÌstase' 'vestÌos' 'vÌstanse' 'vistiÈndose' 'vestido'
+    'vestir' 'visto' 'vistes' 'viste' 'vestimos' 'vestÌs' 'visten'
     'colocarse' 'calzarse' 'equiparse'
     * held                                      -> Wear;
 
 ! Quitarse (desvestirse) con conjugaciones reflexivas
-Verb 'quitarse' 'me' 'quito' 'te' 'quitas' 'se' 'quita' 'nos' 'quitamos' 'os' 'quit√°is' 'se' 'quitan'
-    'me' 'quit√©' 'te' 'quitaste' 'se' 'quit√≥' 'nos' 'quitamos' 'os' 'quitasteis' 'se' 'quitaron'
-    'me' 'quitar√©' 'te' 'quitar√°s' 'se' 'quitar√°' 'nos' 'quitaremos' 'os' 'quitar√©is' 'se' 'quitar√°n'
-    'qu√≠tate' 'qu√≠tese' 'quitaos' 'qu√≠tense' 'quit√°ndose' 'quitado'
-    'desvestirse' 'me' 'desvisto' 'te' 'desvistes' 'se' 'desviste' 'nos' 'desvestimos' 'os' 'desvest√≠s' 'se' 'desvisten'
-    'me' 'desvest√≠' 'te' 'desvestiste' 'se' 'desvisti√≥' 'nos' 'desvestimos' 'os' 'desvestisteis' 'se' 'desvistieron'
-    'desv√≠stete' 'desv√≠stase' 'desvest√≠os' 'desv√≠stanse' 'desvisti√©ndose' 'desvestido'
-    'quitar' 'quito' 'quitas' 'quita' 'quitamos' 'quit√°is' 'quitan'
+Verb 'quitarse' 'me' 'quito' 'te' 'quitas' 'se' 'quita' 'nos' 'quitamos' 'os' 'quit·is' 'se' 'quitan'
+    'me' 'quitÈ' 'te' 'quitaste' 'se' 'quitÛ' 'nos' 'quitamos' 'os' 'quitasteis' 'se' 'quitaron'
+    'me' 'quitarÈ' 'te' 'quitar·s' 'se' 'quitar·' 'nos' 'quitaremos' 'os' 'quitarÈis' 'se' 'quitar·n'
+    'quÌtate' 'quÌtese' 'quitaos' 'quÌtense' 'quit·ndose' 'quitado'
+    'desvestirse' 'me' 'desvisto' 'te' 'desvistes' 'se' 'desviste' 'nos' 'desvestimos' 'os' 'desvestÌs' 'se' 'desvisten'
+    'me' 'desvestÌ' 'te' 'desvestiste' 'se' 'desvistiÛ' 'nos' 'desvestimos' 'os' 'desvestisteis' 'se' 'desvistieron'
+    'desvÌstete' 'desvÌstase' 'desvestÌos' 'desvÌstanse' 'desvistiÈndose' 'desvestido'
+    'quitar' 'quito' 'quitas' 'quita' 'quitamos' 'quit·is' 'quitan'
     'descalzarse' 'desnudarse' 'despojarse'
     * worn                                      -> Disrobe
     * multi                                     -> Take
     * multiinside 'de' noun                     -> Remove;
 
-! ######################### VERBOS DE MANIPULACI√ìN DE CONTENEDORES
+! ######################### VERBOS DE MANIPULACI”N DE CONTENEDORES
 
 ! Abrir con conjugaciones completas
-Verb 'abrir' 'abro' 'abres' 'abre' 'abrimos' 'abr√≠s' 'abren'
-    'abr√≠' 'abriste' 'abri√≥' 'abrimos' 'abristeis' 'abrieron'
-    'abrir√©' 'abrir√°s' 'abrir√°' 'abriremos' 'abrir√©is' 'abrir√°n'
+Verb 'abrir' 'abro' 'abres' 'abre' 'abrimos' 'abrÌs' 'abren'
+    'abrÌ' 'abriste' 'abriÛ' 'abrimos' 'abristeis' 'abrieron'
+    'abrirÈ' 'abrir·s' 'abrir·' 'abriremos' 'abrirÈis' 'abrir·n'
     'abre' 'abra' 'abrid' 'abran' 'abriendo' 'abierto'
-    'destapar' 'destapo' 'destapas' 'destapa' 'destapamos' 'destap√°is' 'destapan'
-    'destap√©' 'destapaste' 'destap√≥' 'destapamos' 'destapasteis' 'destaparon'
-    'destapar√©' 'destapar√°s' 'destapar√°' 'destaparemos' 'destapar√©is' 'destapar√°n'
+    'destapar' 'destapo' 'destapas' 'destapa' 'destapamos' 'destap·is' 'destapan'
+    'destapÈ' 'destapaste' 'destapÛ' 'destapamos' 'destapasteis' 'destaparon'
+    'destaparÈ' 'destapar·s' 'destapar·' 'destaparemos' 'destaparÈis' 'destapar·n'
     'destapa' 'destape' 'destapad' 'destapen' 'destapando' 'destapado'
-    'descubrir' 'descubro' 'descubres' 'descubre' 'descubrimos' 'descubr√≠s' 'descubren'
-    'descubr√≠' 'descubriste' 'descubri√≥' 'descubrimos' 'descubristeis' 'descubrieron'
-    'descubrir√©' 'descubrir√°s' 'descubrir√°' 'descubriremos' 'descubrir√©is' 'descubrir√°n'
+    'descubrir' 'descubro' 'descubres' 'descubre' 'descubrimos' 'descubrÌs' 'descubren'
+    'descubrÌ' 'descubriste' 'descubriÛ' 'descubrimos' 'descubristeis' 'descubrieron'
+    'descubrirÈ' 'descubrir·s' 'descubrir·' 'descubriremos' 'descubrirÈis' 'descubrir·n'
     'descubre' 'descubra' 'descubrid' 'descubran' 'descubriendo' 'descubierto'
-    'desenroscar' 'desenrosco' 'desenroscas' 'desenrosca' 'desenroscamos' 'desenrosc√°is' 'desenroscan'
+    'desenroscar' 'desenrosco' 'desenroscas' 'desenrosca' 'desenroscamos' 'desenrosc·is' 'desenroscan'
     * noun                                      -> Open
     * noun 'con' held                           -> Unlock;
 
 ! Cerrar con conjugaciones completas  
-Verb 'cerrar' 'cierro' 'cierras' 'cierra' 'cerramos' 'cerr√°is' 'cierran'
-    'cerr√©' 'cerraste' 'cerr√≥' 'cerramos' 'cerrasteis' 'cerraron'
-    'cerrar√©' 'cerrar√°s' 'cerrar√°' 'cerraremos' 'cerrar√©is' 'cerrar√°n'
+Verb 'cerrar' 'cierro' 'cierras' 'cierra' 'cerramos' 'cerr·is' 'cierran'
+    'cerrÈ' 'cerraste' 'cerrÛ' 'cerramos' 'cerrasteis' 'cerraron'
+    'cerrarÈ' 'cerrar·s' 'cerrar·' 'cerraremos' 'cerrarÈis' 'cerrar·n'
     'cierra' 'cierre' 'cerrad' 'cierren' 'cerrando' 'cerrado'
-    'tapar' 'tapo' 'tapas' 'tapa' 'tapamos' 'tap√°is' 'tapan'
-    'tap√©' 'tapaste' 'tap√≥' 'tapamos' 'tapasteis' 'taparon'
-    'tapar√©' 'tapar√°s' 'tapar√°' 'taparemos' 'tapar√©is' 'tapar√°n'
+    'tapar' 'tapo' 'tapas' 'tapa' 'tapamos' 'tap·is' 'tapan'
+    'tapÈ' 'tapaste' 'tapÛ' 'tapamos' 'tapasteis' 'taparon'
+    'taparÈ' 'tapar·s' 'tapar·' 'taparemos' 'taparÈis' 'tapar·n'
     'tapa' 'tape' 'tapad' 'tapen' 'tapando' 'tapado'
-    'cubrir' 'cubro' 'cubres' 'cubre' 'cubrimos' 'cubr√≠s' 'cubren'
-    'cubr√≠' 'cubriste' 'cubri√≥' 'cubrimos' 'cubristeis' 'cubrieron'
-    'cubrir√©' 'cubrir√°s' 'cubrir√°' 'cubriremos' 'cubrir√©is' 'cubrir√°n'
+    'cubrir' 'cubro' 'cubres' 'cubre' 'cubrimos' 'cubrÌs' 'cubren'
+    'cubrÌ' 'cubriste' 'cubriÛ' 'cubrimos' 'cubristeis' 'cubrieron'
+    'cubrirÈ' 'cubrir·s' 'cubrir·' 'cubriremos' 'cubrirÈis' 'cubrir·n'
     'cubre' 'cubra' 'cubrid' 'cubran' 'cubriendo' 'cubierto'
-    'sellar' 'sello' 'sellas' 'sella' 'sellamos' 'sell√°is' 'sellan'
-    'bloquear' 'bloqueo' 'bloqueas' 'bloquea' 'bloqueamos' 'bloque√°is' 'bloquean'
+    'sellar' 'sello' 'sellas' 'sella' 'sellamos' 'sell·is' 'sellan'
+    'bloquear' 'bloqueo' 'bloqueas' 'bloquea' 'bloqueamos' 'bloque·is' 'bloquean'
     * noun                                      -> Close
     * noun 'con' 'llave'                        -> Lock;
 
 ! ######################### VERBOS DE ESTADOS Y CONDICIONES
 
 ! Encender con conjugaciones completas
-Verb 'encender' 'enciendo' 'enciendes' 'enciende' 'encendemos' 'encend√©is' 'encienden'
-    'encend√≠' 'encendiste' 'encendi√≥' 'encendimos' 'encendisteis' 'encendieron'
-    'encender√©' 'encender√°s' 'encender√°' 'encenderemos' 'encender√©is' 'encender√°n'
+Verb 'encender' 'enciendo' 'enciendes' 'enciende' 'encendemos' 'encendÈis' 'encienden'
+    'encendÌ' 'encendiste' 'encendiÛ' 'encendimos' 'encendisteis' 'encendieron'
+    'encenderÈ' 'encender·s' 'encender·' 'encenderemos' 'encenderÈis' 'encender·n'
     'enciende' 'encienda' 'encended' 'enciendan' 'encendiendo' 'encendido'
-    'activar' 'activo' 'activas' 'activa' 'activamos' 'activ√°is' 'activan'
-    'activ√©' 'activaste' 'activ√≥' 'activamos' 'activasteis' 'activaron'
-    'activar√©' 'activar√°s' 'activar√°' 'activaremos' 'activar√©is' 'activar√°n'
+    'activar' 'activo' 'activas' 'activa' 'activamos' 'activ·is' 'activan'
+    'activÈ' 'activaste' 'activÛ' 'activamos' 'activasteis' 'activaron'
+    'activarÈ' 'activar·s' 'activar·' 'activaremos' 'activarÈis' 'activar·n'
     'activa' 'active' 'activad' 'activen' 'activando' 'activado'
-    'conectar' 'conecto' 'conectas' 'conecta' 'conectamos' 'conect√°is' 'conectan'
-    'conect√©' 'conectaste' 'conect√≥' 'conectamos' 'conectasteis' 'conectaron'
-    'conectar√©' 'conectar√°s' 'conectar√°' 'conectaremos' 'conectar√©is' 'conectar√°n'
+    'conectar' 'conecto' 'conectas' 'conecta' 'conectamos' 'conect·is' 'conectan'
+    'conectÈ' 'conectaste' 'conectÛ' 'conectamos' 'conectasteis' 'conectaron'
+    'conectarÈ' 'conectar·s' 'conectar·' 'conectaremos' 'conectarÈis' 'conectar·n'
     'conecta' 'conecte' 'conectad' 'conecten' 'conectando' 'conectado'
-    'prender' 'prendo' 'prendes' 'prende' 'prendemos' 'prend√©is' 'prenden'
-    'iniciar' 'inicio' 'inicias' 'inicia' 'iniciamos' 'inici√°is' 'inician'
-    'arrancar' 'arranco' 'arrancas' 'arranca' 'arrancamos' 'arranc√°is' 'arrancan'
+    'prender' 'prendo' 'prendes' 'prende' 'prendemos' 'prendÈis' 'prenden'
+    'iniciar' 'inicio' 'inicias' 'inicia' 'iniciamos' 'inici·is' 'inician'
+    'arrancar' 'arranco' 'arrancas' 'arranca' 'arrancamos' 'arranc·is' 'arrancan'
     * noun                                      -> SwitchOn;
 
 ! Apagar con conjugaciones completas
-Verb 'apagar' 'apago' 'apagas' 'apaga' 'apagamos' 'apag√°is' 'apagan'
-    'apagu√©' 'apagaste' 'apag√≥' 'apagamos' 'apagasteis' 'apagaron'
-    'apagar√©' 'apagar√°s' 'apagar√°' 'apagaremos' 'apagar√©is' 'apagar√°n'
+Verb 'apagar' 'apago' 'apagas' 'apaga' 'apagamos' 'apag·is' 'apagan'
+    'apaguÈ' 'apagaste' 'apagÛ' 'apagamos' 'apagasteis' 'apagaron'
+    'apagarÈ' 'apagar·s' 'apagar·' 'apagaremos' 'apagarÈis' 'apagar·n'
     'apaga' 'apague' 'apagad' 'apaguen' 'apagando' 'apagado'
-    'desactivar' 'desactivo' 'desactivas' 'desactiva' 'desactivamos' 'desactiv√°is' 'desactivan'
-    'desactiv√©' 'desactivaste' 'desactiv√≥' 'desactivamos' 'desactivasteis' 'desactivaron'
-    'desactivar√©' 'desactivar√°s' 'desactivar√°' 'desactivaremos' 'desactivar√©is' 'desactivar√°n'
+    'desactivar' 'desactivo' 'desactivas' 'desactiva' 'desactivamos' 'desactiv·is' 'desactivan'
+    'desactivÈ' 'desactivaste' 'desactivÛ' 'desactivamos' 'desactivasteis' 'desactivaron'
+    'desactivarÈ' 'desactivar·s' 'desactivar·' 'desactivaremos' 'desactivarÈis' 'desactivar·n'
     'desactiva' 'desactive' 'desactivad' 'desactiven' 'desactivando' 'desactivado'
-    'desconectar' 'desconecto' 'desconectas' 'desconecta' 'desconectamos' 'desconect√°is' 'desconectan'
-    'desconect√©' 'desconectaste' 'desconect√≥' 'desconectamos' 'desconectasteis' 'desconectaron'
-    'desconectar√©' 'desconectar√°s' 'desconectar√°' 'desconectaremos' 'desconectar√©is' 'desconectar√°n'
+    'desconectar' 'desconecto' 'desconectas' 'desconecta' 'desconectamos' 'desconect·is' 'desconectan'
+    'desconectÈ' 'desconectaste' 'desconectÛ' 'desconectamos' 'desconectasteis' 'desconectaron'
+    'desconectarÈ' 'desconectar·s' 'desconectar·' 'desconectaremos' 'desconectarÈis' 'desconectar·n'
     'desconecta' 'desconecte' 'desconectad' 'desconecten' 'desconectando' 'desconectado'
-    'extinguir' 'extingo' 'extingues' 'extingue' 'extinguimos' 'extingu√≠s' 'extinguen'
-    'parar' 'paro' 'paras' 'para' 'paramos' 'par√°is' 'paran'
-    'detener' 'detengo' 'detienes' 'detiene' 'detenemos' 'deten√©is' 'detienen'
+    'extinguir' 'extingo' 'extingues' 'extingue' 'extinguimos' 'extinguÌs' 'extinguen'
+    'parar' 'paro' 'paras' 'para' 'paramos' 'par·is' 'paran'
+    'detener' 'detengo' 'detienes' 'detiene' 'detenemos' 'detenÈis' 'detienen'
     * noun                                      -> SwitchOff;
 
 ! ######################### VERBOS REFLEXIVOS Y PRONOMINALES AVANZADOS
 
 ! Levantarse con conjugaciones reflexivas completas
-Verb 'levantarse' 'me' 'levanto' 'te' 'levantas' 'se' 'levanta' 'nos' 'levantamos' 'os' 'levant√°is' 'se' 'levantan'
-    'me' 'levant√©' 'te' 'levantaste' 'se' 'levant√≥' 'nos' 'levantamos' 'os' 'levantasteis' 'se' 'levantaron'
-    'me' 'levantar√©' 'te' 'levantar√°s' 'se' 'levantar√°' 'nos' 'levantaremos' 'os' 'levantar√©is' 'se' 'levantar√°n'
-    'lev√°ntate' 'lev√°ntese' 'levantaos' 'lev√°ntense' 'levant√°ndose' 'levantado'
-    'levantar' 'levanto' 'levantas' 'levanta' 'levantamos' 'levant√°is' 'levantan'
+Verb 'levantarse' 'me' 'levanto' 'te' 'levantas' 'se' 'levanta' 'nos' 'levantamos' 'os' 'levant·is' 'se' 'levantan'
+    'me' 'levantÈ' 'te' 'levantaste' 'se' 'levantÛ' 'nos' 'levantamos' 'os' 'levantasteis' 'se' 'levantaron'
+    'me' 'levantarÈ' 'te' 'levantar·s' 'se' 'levantar·' 'nos' 'levantaremos' 'os' 'levantarÈis' 'se' 'levantar·n'
+    'lev·ntate' 'lev·ntese' 'levantaos' 'lev·ntense' 'levant·ndose' 'levantado'
+    'levantar' 'levanto' 'levantas' 'levanta' 'levantamos' 'levant·is' 'levantan'
     'incorporarse' 'alzarse' 'ergui rse' 'pararse'
     *                                           -> Exit
     * 'de' noun                                 -> Exit;
 
-Verb 'sentarse' 'me' 'siento' 'te' 'sientas' 'se' 'sienta' 'nos' 'sentamos' 'os' 'sent√°is' 'se' 'sientan'
-    'me' 'sent√©' 'te' 'sentaste' 'se' 'sent√≥' 'nos' 'sentamos' 'os' 'sentasteis' 'se' 'sentaron'
-    'me' 'sentar√©' 'te' 'sentar√°s' 'se' 'sentar√°' 'nos' 'sentaremos' 'os' 'sentar√©is' 'se' 'sentar√°n'
-    'si√©ntate' 'si√©ntese' 'sentaos' 'si√©ntense' 'sent√°ndose' 'sentado'
-    'sentar' 'siento' 'sientas' 'sienta' 'sentamos' 'sent√°is' 'sientan'
+Verb 'sentarse' 'me' 'siento' 'te' 'sientas' 'se' 'sienta' 'nos' 'sentamos' 'os' 'sent·is' 'se' 'sientan'
+    'me' 'sentÈ' 'te' 'sentaste' 'se' 'sentÛ' 'nos' 'sentamos' 'os' 'sentasteis' 'se' 'sentaron'
+    'me' 'sentarÈ' 'te' 'sentar·s' 'se' 'sentar·' 'nos' 'sentaremos' 'os' 'sentarÈis' 'se' 'sentar·n'
+    'siÈntate' 'siÈntese' 'sentaos' 'siÈntense' 'sent·ndose' 'sentado'
+    'sentar' 'siento' 'sientas' 'sienta' 'sentamos' 'sent·is' 'sientan'
     'acomodarse' 'ubicarse' 'posicionarse'
     * 'en' noun                                 -> Enter
     * 'sobre' noun                              -> Enter;
 
-Verb 'acostarse' 'me' 'acuesto' 'te' 'acuestas' 'se' 'acuesta' 'nos' 'acostamos' 'os' 'acost√°is' 'se' 'acuestan'
-    'me' 'acost√©' 'te' 'acostaste' 'se' 'acost√≥' 'nos' 'acostamos' 'os' 'acostasteis' 'se' 'acostaron'
-    'me' 'acostar√©' 'te' 'acostar√°s' 'se' 'acostar√°' 'nos' 'acostaremos' 'os' 'acostar√©is' 'se' 'acostar√°n'
-    'acu√©state' 'acu√©stese' 'acostaos' 'acu√©stense' 'acost√°ndose' 'acostado'
-    'acostar' 'acuesto' 'acuestas' 'acuesta' 'acostamos' 'acost√°is' 'acuestan'
+Verb 'acostarse' 'me' 'acuesto' 'te' 'acuestas' 'se' 'acuesta' 'nos' 'acostamos' 'os' 'acost·is' 'se' 'acuestan'
+    'me' 'acostÈ' 'te' 'acostaste' 'se' 'acostÛ' 'nos' 'acostamos' 'os' 'acostasteis' 'se' 'acostaron'
+    'me' 'acostarÈ' 'te' 'acostar·s' 'se' 'acostar·' 'nos' 'acostaremos' 'os' 'acostarÈis' 'se' 'acostar·n'
+    'acuÈstate' 'acuÈstese' 'acostaos' 'acuÈstense' 'acost·ndose' 'acostado'
+    'acostar' 'acuesto' 'acuestas' 'acuesta' 'acostamos' 'acost·is' 'acuestan'
     'echarse' 'tumbarse' 'tenderse' 'recostarse'
     * 'en' noun                                 -> Enter
     * 'sobre' noun                              -> Enter;
@@ -550,108 +550,108 @@ Verb 'acostarse' 'me' 'acuesto' 'te' 'acuestas' 'se' 'acuesta' 'nos' 'acostamos'
 #IfDef OPTIONAL_EXTENDED_VERBSET;
 
 ! Besar con conjugaciones completas
-Verb 'besar' 'beso' 'besas' 'besa' 'besamos' 'bes√°is' 'besan'
-    'bes√©' 'besaste' 'bes√≥' 'besamos' 'besasteis' 'besaron'
-    'besar√©' 'besar√°s' 'besar√°' 'besaremos' 'besar√©is' 'besar√°n'
+Verb 'besar' 'beso' 'besas' 'besa' 'besamos' 'bes·is' 'besan'
+    'besÈ' 'besaste' 'besÛ' 'besamos' 'besasteis' 'besaron'
+    'besarÈ' 'besar·s' 'besar·' 'besaremos' 'besarÈis' 'besar·n'
     'besa' 'bese' 'besad' 'besen' 'besando' 'besado'
     'dar' 'un' 'beso' 'doy' 'das' 'da' 'damos' 'dais' 'dan'
-    'acariciar' 'acaricio' 'acaricias' 'acaricia' 'acariciamos' 'acarici√°is' 'acarician'
-    'mimar' 'mimo' 'mimas' 'mima' 'mimamos' 'mim√°is' 'miman'
+    'acariciar' 'acaricio' 'acaricias' 'acaricia' 'acariciamos' 'acarici·is' 'acarician'
+    'mimar' 'mimo' 'mimas' 'mima' 'mimamos' 'mim·is' 'miman'
     * creature                                  -> Kiss;
 
 ! Comprar con conjugaciones completas
-Verb 'comprar' 'compro' 'compras' 'compra' 'compramos' 'compr√°is' 'compran'
-    'compr√©' 'compraste' 'compr√≥' 'compramos' 'comprasteis' 'compraron'
-    'comprar√©' 'comprar√°s' 'comprar√°' 'compraremos' 'comprar√©is' 'comprar√°n'
+Verb 'comprar' 'compro' 'compras' 'compra' 'compramos' 'compr·is' 'compran'
+    'comprÈ' 'compraste' 'comprÛ' 'compramos' 'comprasteis' 'compraron'
+    'comprarÈ' 'comprar·s' 'comprar·' 'compraremos' 'comprarÈis' 'comprar·n'
     'compra' 'compre' 'comprad' 'compren' 'comprando' 'comprado'
-    'adquirir' 'adquiero' 'adquieres' 'adquiere' 'adquirimos' 'adquir√≠s' 'adquieren'
-    'adquir√≠' 'adquiriste' 'adquiri√≥' 'adquirimos' 'adquiristeis' 'adquirieron'
-    'adquirir√©' 'adquirir√°s' 'adquirir√°' 'adquiriremos' 'adquirir√©is' 'adquirir√°n'
+    'adquirir' 'adquiero' 'adquieres' 'adquiere' 'adquirimos' 'adquirÌs' 'adquieren'
+    'adquirÌ' 'adquiriste' 'adquiriÛ' 'adquirimos' 'adquiristeis' 'adquirieron'
+    'adquirirÈ' 'adquirir·s' 'adquirir·' 'adquiriremos' 'adquirirÈis' 'adquirir·n'
     'adquiere' 'adquiera' 'adquirid' 'adquieran' 'adquiriendo' 'adquirido'
-    'obtener' 'obtengo' 'obtienes' 'obtiene' 'obtenemos' 'obten√©is' 'obtienen'
-    'conseguir' 'consigo' 'consigues' 'consigue' 'conseguimos' 'consegu√≠s' 'consiguen'
+    'obtener' 'obtengo' 'obtienes' 'obtiene' 'obtenemos' 'obtenÈis' 'obtienen'
+    'conseguir' 'consigo' 'consigues' 'consigue' 'conseguimos' 'conseguÌs' 'consiguen'
     'mercadear' 'negociar' 'comerciar'
     * noun                                      -> Buy;
 
 ! Rezar con conjugaciones completas
-Verb 'rezar' 'rezo' 'rezas' 'reza' 'rezamos' 'rez√°is' 'rezan'
-    'rec√©' 'rezaste' 'rez√≥' 'rezamos' 'rezasteis' 'rezaron'
-    'rezar√©' 'rezar√°s' 'rezar√°' 'rezaremos' 'rezar√©is' 'rezar√°n'
+Verb 'rezar' 'rezo' 'rezas' 'reza' 'rezamos' 'rez·is' 'rezan'
+    'recÈ' 'rezaste' 'rezÛ' 'rezamos' 'rezasteis' 'rezaron'
+    'rezarÈ' 'rezar·s' 'rezar·' 'rezaremos' 'rezarÈis' 'rezar·n'
     'reza' 'rece' 'rezad' 'recen' 'rezando' 'rezado'
-    'orar' 'oro' 'oras' 'ora' 'oramos' 'or√°is' 'oran'
-    'or√©' 'oraste' 'or√≥' 'oramos' 'orasteis' 'oraron'
-    'orar√©' 'orar√°s' 'orar√°' 'oraremos' 'orar√©is' 'orar√°n'
+    'orar' 'oro' 'oras' 'ora' 'oramos' 'or·is' 'oran'
+    'orÈ' 'oraste' 'orÛ' 'oramos' 'orasteis' 'oraron'
+    'orarÈ' 'orar·s' 'orar·' 'oraremos' 'orarÈis' 'orar·n'
     'ora' 'ore' 'orad' 'oren' 'orando' 'orado'
-    'invocar' 'invoco' 'invocas' 'invoca' 'invocamos' 'invoc√°is' 'invocan'
-    'suplicar' 'suplico' 'suplicas' 'suplica' 'suplicamos' 'suplic√°is' 'suplican'
-    'bendecir' 'bendigo' 'bendices' 'bendice' 'bendecimos' 'bendec√≠s' 'bendicen'
-    'meditar' 'medito' 'meditas' 'medita' 'meditamos' 'medit√°is' 'meditan'
+    'invocar' 'invoco' 'invocas' 'invoca' 'invocamos' 'invoc·is' 'invocan'
+    'suplicar' 'suplico' 'suplicas' 'suplica' 'suplicamos' 'suplic·is' 'suplican'
+    'bendecir' 'bendigo' 'bendices' 'bendice' 'bendecimos' 'bendecÌs' 'bendicen'
+    'meditar' 'medito' 'meditas' 'medita' 'meditamos' 'medit·is' 'meditan'
     *                                           -> Pray;
 
 ! Cantar con conjugaciones completas
-Verb 'cantar' 'canto' 'cantas' 'canta' 'cantamos' 'cant√°is' 'cantan'
-    'cant√©' 'cantaste' 'cant√≥' 'cantamos' 'cantasteis' 'cantaron'
-    'cantar√©' 'cantar√°s' 'cantar√°' 'cantaremos' 'cantar√©is' 'cantar√°n'
+Verb 'cantar' 'canto' 'cantas' 'canta' 'cantamos' 'cant·is' 'cantan'
+    'cantÈ' 'cantaste' 'cantÛ' 'cantamos' 'cantasteis' 'cantaron'
+    'cantarÈ' 'cantar·s' 'cantar·' 'cantaremos' 'cantarÈis' 'cantar·n'
     'canta' 'cante' 'cantad' 'canten' 'cantando' 'cantado'
-    'entonar' 'entono' 'entonas' 'entona' 'entonamos' 'enton√°is' 'entonan'
-    'enton√©' 'entonaste' 'enton√≥' 'entonamos' 'entonasteis' 'entonaron'
-    'entonar√©' 'entonar√°s' 'entonar√°' 'entonaremos' 'entonar√©is' 'entonar√°n'
+    'entonar' 'entono' 'entonas' 'entona' 'entonamos' 'enton·is' 'entonan'
+    'entonÈ' 'entonaste' 'entonÛ' 'entonamos' 'entonasteis' 'entonaron'
+    'entonarÈ' 'entonar·s' 'entonar·' 'entonaremos' 'entonarÈis' 'entonar·n'
     'entona' 'entone' 'entonad' 'entonen' 'entonando' 'entonado'
-    'tararear' 'tarareo' 'tarareas' 'tararea' 'tarareamos' 'tarare√°is' 'tararean'
-    'silbar' 'silbo' 'silbas' 'silba' 'silbamos' 'silb√°is' 'silban'
-    'vocalizar' 'vocalizo' 'vocalizas' 'vocaliza' 'vocalizamos' 'vocaliz√°is' 'vocalizan'
-    'interpretar' 'interpreto' 'interpretas' 'interpreta' 'interpretamos' 'interpret√°is' 'interpretan'
+    'tararear' 'tarareo' 'tarareas' 'tararea' 'tarareamos' 'tarare·is' 'tararean'
+    'silbar' 'silbo' 'silbas' 'silba' 'silbamos' 'silb·is' 'silban'
+    'vocalizar' 'vocalizo' 'vocalizas' 'vocaliza' 'vocalizamos' 'vocaliz·is' 'vocalizan'
+    'interpretar' 'interpreto' 'interpretas' 'interpreta' 'interpretamos' 'interpret·is' 'interpretan'
     *                                           -> Sing;
 
 ! Dormir con conjugaciones completas
-Verb 'dormir' 'duermo' 'duermes' 'duerme' 'dormimos' 'dorm√≠s' 'duermen'
-    'dorm√≠' 'dormiste' 'durmi√≥' 'dormimos' 'dormisteis' 'durmieron'
-    'dormir√©' 'dormir√°s' 'dormir√°' 'dormiremos' 'dormir√©is' 'dormir√°n'
+Verb 'dormir' 'duermo' 'duermes' 'duerme' 'dormimos' 'dormÌs' 'duermen'
+    'dormÌ' 'dormiste' 'durmiÛ' 'dormimos' 'dormisteis' 'durmieron'
+    'dormirÈ' 'dormir·s' 'dormir·' 'dormiremos' 'dormirÈis' 'dormir·n'
     'duerme' 'duerma' 'dormid' 'duerman' 'durmiendo' 'dormido'
-    'descansar' 'descanso' 'descansas' 'descansa' 'descansamos' 'descans√°is' 'descansan'
-    'descans√©' 'descansaste' 'descans√≥' 'descansamos' 'descansasteis' 'descansaron'
-    'descansar√©' 'descansar√°s' 'descansar√°' 'descansaremos' 'descansar√©is' 'descansar√°n'
+    'descansar' 'descanso' 'descansas' 'descansa' 'descansamos' 'descans·is' 'descansan'
+    'descansÈ' 'descansaste' 'descansÛ' 'descansamos' 'descansasteis' 'descansaron'
+    'descansarÈ' 'descansar·s' 'descansar·' 'descansaremos' 'descansarÈis' 'descansar·n'
     'descansa' 'descanse' 'descansad' 'descansen' 'descansando' 'descansado'
-    'reposar' 'reposo' 'reposas' 'reposa' 'reposamos' 'repos√°is' 'reposan'
-    'siesta' 'sue√±o' 'dormitar' 'sestear'
+    'reposar' 'reposo' 'reposas' 'reposa' 'reposamos' 'repos·is' 'reposan'
+    'siesta' 'sueÒo' 'dormitar' 'sestear'
     'relajarse' 'relajarme' 'relajarte' 'relajarse'
-    'cabecear' 'cabeceo' 'cabeceas' 'cabecea' 'cabeceamos' 'cabece√°is' 'cabecean'
+    'cabecear' 'cabeceo' 'cabeceas' 'cabecea' 'cabeceamos' 'cabece·is' 'cabecean'
     *                                           -> Sleep;
 
 ! Pensar con conjugaciones completas
-Verb 'pensar' 'pienso' 'piensas' 'piensa' 'pensamos' 'pens√°is' 'piensan'
-    'pens√©' 'pensaste' 'pens√≥' 'pensamos' 'pensasteis' 'pensaron'
-    'pensar√©' 'pensar√°s' 'pensar√°' 'pensaremos' 'pensar√©is' 'pensar√°n'
+Verb 'pensar' 'pienso' 'piensas' 'piensa' 'pensamos' 'pens·is' 'piensan'
+    'pensÈ' 'pensaste' 'pensÛ' 'pensamos' 'pensasteis' 'pensaron'
+    'pensarÈ' 'pensar·s' 'pensar·' 'pensaremos' 'pensarÈis' 'pensar·n'
     'piensa' 'piense' 'pensad' 'piensen' 'pensando' 'pensado'
-    'reflexionar' 'reflexiono' 'reflexionas' 'reflexiona' 'reflexionamos' 'reflexion√°is' 'reflexionan'
-    'reflexion√©' 'reflexionaste' 'reflexion√≥' 'reflexionamos' 'reflexionasteis' 'reflexionaron'
-    'reflexionar√©' 'reflexionar√°s' 'reflexionar√°' 'reflexionaremos' 'reflexionar√©is' 'reflexionar√°n'
+    'reflexionar' 'reflexiono' 'reflexionas' 'reflexiona' 'reflexionamos' 'reflexion·is' 'reflexionan'
+    'reflexionÈ' 'reflexionaste' 'reflexionÛ' 'reflexionamos' 'reflexionasteis' 'reflexionaron'
+    'reflexionarÈ' 'reflexionar·s' 'reflexionar·' 'reflexionaremos' 'reflexionarÈis' 'reflexionar·n'
     'reflexiona' 'reflexione' 'reflexionad' 'reflexionen' 'reflexionando' 'reflexionado'
-    'meditar' 'medito' 'meditas' 'medita' 'meditamos' 'medit√°is' 'meditan'
-    'razonar' 'razono' 'razonas' 'razona' 'razonamos' 'razon√°is' 'razonan'
-    'considerar' 'considero' 'consideras' 'considera' 'consideramos' 'consider√°is' 'consideran'
-    'cavilar' 'cavilo' 'cavilas' 'cavila' 'cavilamos' 'cavil√°is' 'cavilan'
-    'especular' 'especulo' 'especulas' 'especula' 'especulamos' 'especul√°is' 'especulan'
-    'ponderar' 'pondero' 'ponderas' 'pondera' 'ponderamos' 'ponder√°is' 'ponderan'
+    'meditar' 'medito' 'meditas' 'medita' 'meditamos' 'medit·is' 'meditan'
+    'razonar' 'razono' 'razonas' 'razona' 'razonamos' 'razon·is' 'razonan'
+    'considerar' 'considero' 'consideras' 'considera' 'consideramos' 'consider·is' 'consideran'
+    'cavilar' 'cavilo' 'cavilas' 'cavila' 'cavilamos' 'cavil·is' 'cavilan'
+    'especular' 'especulo' 'especulas' 'especula' 'especulamos' 'especul·is' 'especulan'
+    'ponderar' 'pondero' 'ponderas' 'pondera' 'ponderamos' 'ponder·is' 'ponderan'
     *                                           -> Think;
 
 ! Nadar con conjugaciones completas
-Verb 'nadar' 'nado' 'nadas' 'nada' 'nadamos' 'nad√°is' 'nadan'
-    'nad√©' 'nadaste' 'nad√≥' 'nadamos' 'nadasteis' 'nadaron'
-    'nadar√©' 'nadar√°s' 'nadar√°' 'nadaremos' 'nadar√©is' 'nadar√°n'
+Verb 'nadar' 'nado' 'nadas' 'nada' 'nadamos' 'nad·is' 'nadan'
+    'nadÈ' 'nadaste' 'nadÛ' 'nadamos' 'nadasteis' 'nadaron'
+    'nadarÈ' 'nadar·s' 'nadar·' 'nadaremos' 'nadarÈis' 'nadar·n'
     'nada' 'nade' 'nadad' 'naden' 'nadando' 'nadado'
-    'bracear' 'braceo' 'braceas' 'bracea' 'braceamos' 'brace√°is' 'bracean'
-    'bucear' 'buceo' 'buceas' 'bucea' 'buceamos' 'buce√°is' 'bucean'
+    'bracear' 'braceo' 'braceas' 'bracea' 'braceamos' 'brace·is' 'bracean'
+    'bucear' 'buceo' 'buceas' 'bucea' 'buceamos' 'buce·is' 'bucean'
     'zambullirse' 'sumergirse' 'chapotear'
-    'flotar' 'floto' 'flotas' 'flota' 'flotamos' 'flot√°is' 'flotan'
+    'flotar' 'floto' 'flotas' 'flota' 'flotamos' 'flot·is' 'flotan'
     *                                           -> Swim;
 
 #EndIf;
 
 ! ######################### NOTA FINAL
 
-! Esta gram√°tica incluye m√°s de 2000 formas verbales √∫nicas
-! Cubre todos los tiempos verbales principales del espa√±ol
-! Incluye variantes regionales de Espa√±a, M√©xico, Argentina y otros pa√≠ses
-! Soporta formas reflexivas, pronominales y de cortes√≠a
-! Es la implementaci√≥n m√°s completa jam√°s realizada para IF espa√±ol
+! Esta gram·tica incluye m·s de 2000 formas verbales ˙nicas
+! Cubre todos los tiempos verbales principales del espaÒol
+! Incluye variantes regionales de EspaÒa, MÈxico, Argentina y otros paÌses
+! Soporta formas reflexivas, pronominales y de cortesÌa
+! Es la implementaciÛn m·s completa jam·s realizada para IF espaÒol

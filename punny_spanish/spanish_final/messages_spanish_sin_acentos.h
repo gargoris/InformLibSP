@@ -1,4 +1,4 @@
-! Mensajes en EspaÃ±ol - Version sin acentos para compilacion
+! Mensajes en Español - Version sin acentos para compilacion
 ! Sistema completo de mensajes con concordancia de genero y numero
 ! Traduccion cultural y gramaticalmente correcta
 !

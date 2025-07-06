@@ -1,4 +1,4 @@
-! PunyInform EspaÃ±ol - Version Compilable Definitiva
+! PunyInform Español - Version Compilable Definitiva
 ! La libreria mas completa y avanzada para ficcion interactiva en espanol
 ! Version sin acentos que compila correctamente
 !
@@ -17,13 +17,13 @@ System_file;
 
 Include "globals.h";
 
-! ######################### INCLUIR NUESTRO SISTEMA ESPAÃ‘OL SIMPLIFICADO
+! ######################### INCLUIR NUESTRO SISTEMA ESPAÑOL SIMPLIFICADO
 
 Include "messages_spanish_sin_acentos.h";
 
 Include "scope.h";
 
-! ######################### FUNCIONES AUXILIARES ESPAÃ‘OLAS AVANZADAS
+! ######################### FUNCIONES AUXILIARES ESPAÑOLAS AVANZADAS
 
 [ EsPlural p_obj;
     if (p_obj has pluralname) rtrue;
@@ -293,12 +293,12 @@ Array TerminacionesIR static -->
     print ""; ! Por ahora funcion vacia
 ];
 
-! ######################### GRAMATICA BASICA ESPAÃ‘OLA
+! ######################### GRAMATICA BASICA ESPAÑOLA
 
 ! Verbos de movimiento
 Verb 'ir' 'voy' 've' 'ves' 'va' 'vamos' 'vais' 'van'
     'anda' 'andas' 'anda' 'andamos' 'andais' 'andan'
-    'camina' 'caminas' 'camina' 'caminamos' 'caminÃ¡is' 'caminan'
+    'camina' 'caminas' 'camina' 'caminamos' 'camináis' 'caminan'
     * noun -> Go
     * 'a' noun -> Go  
     * 'hacia' noun -> Go
@@ -470,4 +470,4 @@ Include "puny.h";
 !    > coger las llaves  
 !    "Cogidas."
 !
-! Y listo! Tu juego entendera espaÃ±ol completo con conjugaciones y concordancia.
+! Y listo! Tu juego entendera español completo con conjugaciones y concordancia.

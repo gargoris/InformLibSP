@@ -22,24 +22,41 @@ Include "globals.h";
 ! ######################### CONFIGURACIÓN DE CARACTERES ESPAÑOLES
 ! Soporte para acentos y caracteres especiales
 
-Zcharacter table '@{E1}' '@{E9}' '@{ED}' '@{F3}' '@{FA}' '@{FC}' '@{F1}' 
-                 '@{C1}' '@{C9}' '@{CD}' '@{D3}' '@{DA}' '@{DC}' '@{D1}'
-                 '@{BF}' '@{A1}' '@{C3}' '@{B1}' '@{C2}' '@{BA}' '@{A9}'
-                 '@{B3}';
+Zcharacter table 
+    '@{E1}' '@{E9}' '@{ED}' '@{F3}' '@{FA}'    ! á é í ó ú (minúsculas)
+    '@{C1}' '@{C9}' '@{CD}' '@{D3}' '@{DA}'    ! Á É Í Ó Ú (mayúsculas)
+    '@{FC}' '@{DC}'                            ! ü Ü (diéresis)
+    '@{F1}' '@{D1}'                            ! ñ Ñ (eñe)
+    '@{BF}' '@{A1}'                            ! ¿ ¡ (signos interrogación/exclamación)
+    '@{AB}' '@{BB}'                            ! « » (comillas españolas)
+    '@{B7}'                                    ! · (punto medio)
+    '@{A7}' '@{BA}' '@{B3}' '@{B2}' '@{B9}'    ! § º ³ ² ¹ (símbolos adicionales)
+    '@{A9}' '@{AE}' '@{B1}' '@{F7}' '@{D7}'    ! © ® ± ÷ × (símbolos matemáticos)
+    '@{C3}' '@{C2}' '@{E2}' '@{A2}' '@{BD}'    ! Códigos adicionales para acentos complejos
+;
 
 ! ######################### SISTEMA DE MENSAJES ESPAÑOL
 #IfnDef DISABLE_SPANISH_MESSAGES;
 Include "spanish_final/messages_spanish_master.h";
 #EndIf;
 
-! ######################### SISTEMA DE GRAMÁTICA OPTIMIZADA
+! ######################### PUNYINFORM CORE (SIN GRAMMAR.H PARA EVITAR CONFLICTOS)
+! NOTA: Usamos puny_sin_grammar.h que es una versión modificada de puny.h
+! que excluye grammar.h para evitar conflictos con grammar_optimizada.h
+Include "puny_sin_grammar.h";
+
+! ######################### GRAMMAR.H ORIGINAL (PARA DEFINICIONES DE ACCIONES)
+! NOTA: Se incluye ANTES de la gramática española para definir las acciones,
+! pero los verbos españoles sobrescribirán los ingleses
+Include "grammar.h";
+
+! ######################### SISTEMA DE GRAMÁTICA OPTIMIZADA (SOBRESCRIBE VERBOS)
 Include "spanish_final/grammar_optimizada.h";
 
 ! ######################### PARSER ESPAÑOL AVANZADO
 Include "spanish_final/parser_spanish_master.h";
 
-! ######################### SCOPE (SIN MODIFICAR)
-Include "scope.h";
+! NOTA: scope.h ya está incluido en puny_sin_grammar.h - no incluir de nuevo
 
 ! ######################### FUNCIONES DE CONCORDANCIA ESPAÑOLA
 
@@ -202,8 +219,16 @@ Include "scope.h";
     #EndIf;
 ];
 
-! ######################### NÚCLEO PUNYINFORM (SIN MODIFICAR)
-Include "puny.h";
+! ######################### NÚCLEO PUNYINFORM (MODIFICADO PARA EVITAR CONFLICTOS)
+! Incluir solo las partes de puny.h que no conflictan con nuestro sistema
+
+! Necesitamos incluir messages.h antes que nuestros mensajes
+#IfDef DISABLE_SPANISH_MESSAGES;
+Include "messages.h";
+#EndIf;
+
+! Incluir la implementación de PunyInform sin grammar.h
+Include "puny_sin_grammar.h";
 
 ! ######################### FUNCIONES POST-INICIALIZACIÓN
 

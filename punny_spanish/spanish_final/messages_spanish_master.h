@@ -1,10 +1,10 @@
-! Mensajes en Español - Versión Master Definitiva
-! Sistema completo de mensajes con concordancia de género y número
-! Traducción cultural y gramaticalmente correcta
+! Mensajes en Espa�ol - Versi�n Master Definitiva
+! Sistema completo de mensajes con concordancia de g�nero y n�mero
+! Traducci�n cultural y gramaticalmente correcta
 !
 ! Autor: Claude Code  
 ! Fecha: 4 de julio de 2025
-! Versión: 1.0 Master
+! Versi�n: 1.0 Master
 
 System_file;
 
@@ -20,13 +20,13 @@ Constant MSG_TAKE_NO_CAPACITY "Ya llevas demasiadas cosas.";
 Constant MSG_TAKE_DEFAULT "Cogido.";
 #EndIf;
 #Ifndef MSG_DRINK_NOTHING_SUITABLE;
-Constant MSG_DRINK_NOTHING_SUITABLE "No hay nada apropiado para beber aquí.";
+Constant MSG_DRINK_NOTHING_SUITABLE "No hay nada apropiado para beber aqu�.";
 #EndIf;
 #Ifndef MSG_DROP_DROPPED;
 Constant MSG_DROP_DROPPED "Dejado.";
 #EndIf;
 #Ifndef MSG_THROW_ANIMATE;
-Constant MSG_THROW_ANIMATE "Inútil.";
+Constant MSG_THROW_ANIMATE "In�til.";
 #Endif;
 #Ifndef MSG_THROW_DEFAULT;
 Constant MSG_THROW_DEFAULT "Te falta valor en el momento crucial.";
@@ -41,43 +41,43 @@ Constant MSG_LISTEN_DEFAULT "No oyes nada inesperado.";
 Constant MSG_TELL_PLAYER "Hablas contigo mismo durante un rato.";
 #Endif;
 #Ifndef MSG_TELL_DEFAULT;
-Constant MSG_TELL_DEFAULT "Esto no provoca reacción alguna.";
+Constant MSG_TELL_DEFAULT "Esto no provoca reacci�n alguna.";
 #Endif;
 #Ifndef MSG_ENTER_ALREADY;
-Constant MSG_ENTER_ALREADY "¡Pero ya estás ahí!";
+Constant MSG_ENTER_ALREADY "�Pero ya est�s ah�!";
 #Endif;
 #Ifndef MSG_EXIT_ALREADY;
-Constant MSG_EXIT_ALREADY "¡Pero no estás dentro de nada en este momento!";
+Constant MSG_EXIT_ALREADY "�Pero no est�s dentro de nada en este momento!";
 #Endif;
 #Ifndef MSG_EXIT_NOT_ON;
-Constant MSG_EXIT_NOT_ON "No estás sobre eso.";
+Constant MSG_EXIT_NOT_ON "No est�s sobre eso.";
 #Endif;
 #Ifndef MSG_EXIT_NOT_IN;
-Constant MSG_EXIT_NOT_IN "No estás dentro de eso.";
+Constant MSG_EXIT_NOT_IN "No est�s dentro de eso.";
 #Endif;
 #Ifndef MSG_INVENTORY_EMPTY;
 Constant MSG_INVENTORY_EMPTY "No llevas nada.";
 #Endif;
 #Ifndef MSG_GO_CANT_GO;
-Constant MSG_GO_CANT_GO "No puedes ir por ahí.";
+Constant MSG_GO_CANT_GO "No puedes ir por ah�.";
 #Endif;
 #Ifndef MSG_SAVE_DEFAULT;
 Constant MSG_SAVE_DEFAULT "Hecho.";
 #Endif;
 #Ifndef MSG_INSERT_ITSELF;
-Constant MSG_INSERT_ITSELF "No puedes meter algo dentro de sí mismo.";
+Constant MSG_INSERT_ITSELF "No puedes meter algo dentro de s� mismo.";
 #Endif;
 #Ifndef MSG_PUTON_ITSELF;
-Constant MSG_PUTON_ITSELF "No puedes poner algo sobre sí mismo.";
+Constant MSG_PUTON_ITSELF "No puedes poner algo sobre s� mismo.";
 #Endif;
 #Ifndef MSG_ATTACK_DEFAULT;
-Constant MSG_ATTACK_DEFAULT "La violencia no es la solución.";
+Constant MSG_ATTACK_DEFAULT "La violencia no es la soluci�n.";
 #Endif;
 #Ifndef MSG_FILL_NO_WATER;
-Constant MSG_FILL_NO_WATER "Pero no hay agua aquí para llevar.";
+Constant MSG_FILL_NO_WATER "Pero no hay agua aqu� para llevar.";
 #EndIf;
 #Ifndef MSG_DIG_NO_USE;
-Constant MSG_DIG_NO_USE "Cavar no serviría de nada aquí.";
+Constant MSG_DIG_NO_USE "Cavar no servir�a de nada aqu�.";
 #EndIf;
 #Ifndef MSG_WAIT_DEFAULT;
 Constant MSG_WAIT_DEFAULT "No pasa nada.";
@@ -86,10 +86,10 @@ Constant MSG_WAIT_DEFAULT "No pasa nada.";
 Constant MSG_TOUCH_DEFAULT "No sientes nada inesperado.";
 #EndIf;
 #Ifndef MSG_PUSHDIR_DEFAULT;
-Constant MSG_PUSHDIR_DEFAULT "¿Es eso lo mejor que se te ocurre?";
+Constant MSG_PUSHDIR_DEFAULT "�Es eso lo mejor que se te ocurre?";
 #EndIf;
 #Ifndef MSG_JUMP;
-Constant MSG_JUMP "Saltas en el sitio, inútilmente.";
+Constant MSG_JUMP "Saltas en el sitio, in�tilmente.";
 #EndIf;
 #Ifndef MSG_REMOVE_DEFAULT;
 Constant MSG_REMOVE_DEFAULT "Quitado.";
@@ -107,16 +107,16 @@ Constant MSG_OOPS_DEFAULT "No tiene importancia.";
 Constant MSG_PARSER_ONLY_TO_ANIMATE "Solo puedes hacer eso con algo animado.";
 #EndIf;
 #Ifndef MSG_PARSER_NOT_MULTIPLE_VERB;
-Constant MSG_PARSER_NOT_MULTIPLE_VERB "No puedes usar objetos múltiples con ese verbo.";
+Constant MSG_PARSER_NOT_MULTIPLE_VERB "No puedes usar objetos m�ltiples con ese verbo.";
 #EndIf;
 #Ifndef MSG_PARSER_NOT_MULTIPLE_DIRS;
-Constant MSG_PARSER_NOT_MULTIPLE_DIRS "No puedes usar direcciones múltiples.";
+Constant MSG_PARSER_NOT_MULTIPLE_DIRS "No puedes usar direcciones m�ltiples.";
 #EndIf;
 #Ifndef MSG_PARSER_BAD_NUMBER;
-Constant MSG_PARSER_BAD_NUMBER "No entendí ese número.";
+Constant MSG_PARSER_BAD_NUMBER "No entend� ese n�mero.";
 #EndIf;
 #Ifndef MSG_PARSER_NO_INPUT;
-Constant MSG_PARSER_NO_INPUT "¿Cómo dices?";
+Constant MSG_PARSER_NO_INPUT "�C�mo dices?";
 #EndIf;
 #Ifndef MSG_PARSER_UNKNOWN_SENTENCE;
 Constant MSG_PARSER_UNKNOWN_SENTENCE "No entiendo esa frase.";
@@ -125,10 +125,10 @@ Constant MSG_PARSER_UNKNOWN_SENTENCE "No entiendo esa frase.";
 Constant MSG_PARSER_UNKNOWN_VERB "Ese no es un verbo que reconozca.";
 #EndIf;
 #Ifndef MSG_PARSER_CANT_DISAMBIGUATE;
-Constant MSG_PARSER_CANT_DISAMBIGUATE "Sigo sin entender a qué te refieres.";
+Constant MSG_PARSER_CANT_DISAMBIGUATE "Sigo sin entender a qu� te refieres.";
 #EndIf;
 #Ifndef MSG_PARSER_UNKNOWN_PERSON;
-Constant MSG_PARSER_UNKNOWN_PERSON "No veo a quién te refieres.";
+Constant MSG_PARSER_UNKNOWN_PERSON "No veo a qui�n te refieres.";
 #EndIf;
 #Ifndef MSG_PARSER_NOSUCHTHING;
 Constant MSG_PARSER_NOSUCHTHING "No puedes ver tal cosa.";
@@ -137,23 +137,23 @@ Constant MSG_PARSER_NOSUCHTHING "No puedes ver tal cosa.";
 Constant MSG_PARSER_CANT_OOPS "Lo siento, eso no se puede corregir.";
 #EndIf;
 #Ifndef MSG_PARSER_COMPLEX_AGAIN;
-Constant MSG_PARSER_COMPLEX_AGAIN "El comando 'otra vez' debe ir en una línea nueva.^";
+Constant MSG_PARSER_COMPLEX_AGAIN "El comando 'otra vez' debe ir en una l�nea nueva.^";
 #EndIf;
 #Ifndef MSG_PARSER_NOTHING_TO_AGAIN;
-Constant MSG_PARSER_NOTHING_TO_AGAIN "Difícilmente puedes repetir eso.";
+Constant MSG_PARSER_NOTHING_TO_AGAIN "Dif�cilmente puedes repetir eso.";
 #EndIf;
 #Ifndef MSG_PARSER_BE_MORE_SPECIFIC;
-Constant MSG_PARSER_BE_MORE_SPECIFIC "Necesitas ser más específico.";
+Constant MSG_PARSER_BE_MORE_SPECIFIC "Necesitas ser m�s espec�fico.";
 #EndIf;
 #Ifndef MSG_PARSER_NO_MULTIPLES_FOR_NPC;
 Constant MSG_PARSER_NO_MULTIPLES_FOR_NPC "Solo puedes referirte a objetos individuales cuando hablas con otros.";
 #EndIf;
 
-! ######################### MENSAJES DE PUNTUACIÓN Y ESTADOS
+! ######################### MENSAJES DE PUNTUACI�N Y ESTADOS
 
 #IfnDef OPTIONAL_NO_DARKNESS;
 #IfnDef MSG_NOW_DARK;
-Constant MSG_NOW_DARK "^Ahora está completamente oscuro aquí.";
+Constant MSG_NOW_DARK "^Ahora est� completamente oscuro aqu�.";
 #EndIf;
 #EndIf;
 
@@ -225,15 +225,15 @@ Default MSG_SWITCH_OFF_DEFAULT = 50;
 Default MSG_SCORE_DEFAULT = 88;
 Default MSG_PROMPT = 94;
 
-! ######################### FUNCIÓN PRINCIPAL DE MENSAJES CON CONCORDANCIA
+! ######################### FUNCI�N PRINCIPAL DE MENSAJES CON CONCORDANCIA
 
 [ LibraryMessages p_msg p_arg_1 p_arg_2;
-    ! Esta función sobrescribe la original para usar mensajes españoles
+    ! Esta funci�n sobrescribe la original para usar mensajes espa�oles
     
     if(p_msg ofclass String)
         print_ret (string) p_msg;
 
-    ! Procesar mensajes complejos con concordancia española
+    ! Procesar mensajes complejos con concordancia espa�ola
     switch(p_msg) {
     MSG_PROMPT:
         print "> ";
@@ -256,12 +256,12 @@ Default MSG_PROMPT = 94;
         
     MSG_TAKE_ANIMATE:
         "No creo que ", (ElLaLosLas) noun, " ", (object) noun;
-        if(EsFemenino(noun)) print " esté dispuesta";
-        else print " esté dispuesto";
+        if(EsFemenino(noun)) print " est� dispuesta";
+        else print " est� dispuesto";
         " a eso.";
         
     MSG_TAKE_PLAYER_PARENT, MSG_GO_FIRST_LEAVE, MSG_EXIT_FIRST_LEAVE:
-        "Primero tendrías que salir de ", (ElLaLosLas) p_arg_1, " ", (object) p_arg_1, ".";
+        "Primero tendr�as que salir de ", (ElLaLosLas) p_arg_1, " ", (object) p_arg_1, ".";
         
     MSG_DROP_NOT_HOLDING, MSG_SHOW_NOT_HOLDING, MSG_GIVE_NOT_HOLDING, MSG_WEAR_NOT_HOLDING:
         "No llevas ", (LoLaLosLas) noun, " ", (object) noun, ".";
@@ -347,16 +347,16 @@ Default MSG_PROMPT = 94;
     MSG_INSERT_ALREADY, MSG_PUTON_ALREADY:
         "Ya ";
         EstaEstan(noun);
-        " ahí.";
+        " ah�.";
         
     MSG_INSERT_NO_ROOM, MSG_PUTON_NO_ROOM:
-        "No hay más espacio.";
+        "No hay m�s espacio.";
         
     MSG_ASK_DEFAULT, MSG_ANSWER_DEFAULT:
         "No hay respuesta.";
         
     MSG_RESTART_RESTORE_OR_QUIT:
-        print "^¿Quieres REINICIAR, CARGAR una partida guardada";
+        print "^�Quieres REINICIAR, CARGAR una partida guardada";
         print " o ABANDONAR? ";
         rtrue;
         
@@ -368,7 +368,7 @@ Default MSG_PROMPT = 94;
 
     MSG_SCORE_DEFAULT:
 #Ifdef NO_SCORE;
-        "No hay puntuación en este juego.";
+        "No hay puntuaci�n en este juego.";
 #Ifnot;
         if (deadflag) print "En ese juego conseguiste"; else print "Hasta ahora has conseguido";
         print " ", score, " punto";
@@ -379,11 +379,11 @@ Default MSG_PROMPT = 94;
 #Endif;
 
     MSG_AREYOUSUREQUIT:
-        print "¿Estás seguro de que quieres abandonar? ";
+        print "�Est�s seguro de que quieres abandonar? ";
         rtrue;
 
     default:
-        ! Si no hay mensaje específico, usar el original
+        ! Si no hay mensaje espec�fico, usar el original
         rfalse;
     }
 ];
@@ -392,38 +392,38 @@ Default MSG_PROMPT = 94;
 
 [ EstaOEstanCerrado p_obj;
     if (EsPlural(p_obj)) {
-        if (EsFemenino(p_obj)) print "están cerradas";
-        else print "están cerrados";
+        if (EsFemenino(p_obj)) print "est�n cerradas";
+        else print "est�n cerrados";
     } else {
-        if (EsFemenino(p_obj)) print "está cerrada";
-        else print "está cerrado";
+        if (EsFemenino(p_obj)) print "est� cerrada";
+        else print "est� cerrado";
     }
 ];
 
 [ EstaOEstanAbierto p_obj;
     if (EsPlural(p_obj)) {
-        if (EsFemenino(p_obj)) print "están abiertas";
-        else print "están abiertos";  
+        if (EsFemenino(p_obj)) print "est�n abiertas";
+        else print "est�n abiertos";  
     } else {
-        if (EsFemenino(p_obj)) print "está abierta";
-        else print "está abierto";
+        if (EsFemenino(p_obj)) print "est� abierta";
+        else print "est� abierto";
     }
 ];
 
 [ EstaOEstanEncendido p_obj;
     if (EsPlural(p_obj)) {
-        if (EsFemenino(p_obj)) print "están encendidas";
-        else print "están encendidos";
+        if (EsFemenino(p_obj)) print "est�n encendidas";
+        else print "est�n encendidos";
     } else {
-        if (EsFemenino(p_obj)) print "está encendida";
-        else print "está encendido";
+        if (EsFemenino(p_obj)) print "est� encendida";
+        else print "est� encendido";
     }
 ];
 
 ! ######################### FUNCIONES ESPECIALES PARA VERBOS
 
-[ VerbName p_v;
-    ! Imprimir nombres de verbos en español
+[ VerbNameEspanol p_v;
+    ! Imprimir nombres de verbos en espa�ol
     switch(p_v) {
         'g//', 'repetir': print "repetir"; return;
         'i//', 'inventario', 'inv': print "inventario"; return;

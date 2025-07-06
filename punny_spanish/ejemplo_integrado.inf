@@ -1,20 +1,23 @@
 ! ######################### EJEMPLO COMPLETO CON SISTEMA INTEGRADO
 ! Demostración de todas las capacidades del sistema español optimizado
 ! Usar este archivo como plantilla para tus propios proyectos
-Zcharacter table '@{B3}' '@{B1}' '@{C3}' '@{BA}' '@{A9}';
-Constant Story "^Mi Primera Aventura en Español^";
-Constant Headline "^Un ejemplo usando el sistema integrado optimizado^
-                   ^Versión con 66% menos código y 100% funcionalidad^";
 
 ! ========================= CONFIGURACIÓN OPCIONAL =========================
 ! Descomenta las líneas que quieras habilitar:
 
 Constant OPTIONAL_EXTENDED_VERBSET;    ! Habilita verbos adicionales (besar, comprar, etc)
 ! Constant DEBUG_SPANISH_PARSER;       ! Muestra información de debug
-! Constant DISABLE_SPANISH_MESSAGES;   ! Usa mensajes originales en inglés
+Constant DISABLE_SPANISH_MESSAGES;     ! Usa mensajes originales en inglés
 
 ! ========================= INCLUIR SISTEMA ESPAÑOL INTEGRADO =========================
 Include "puny_spanish_integrado.h";
+
+! ========================= CONSTANTES DE JUEGO =========================
+! NOTA: Las constantes con caracteres especiales van DESPUÉS del include
+
+Constant Story "^Mi Primera Aventura en Español^";
+Constant Headline "^Un ejemplo usando el sistema integrado optimizado^
+                   ^Versión con 66% menos código y 100% funcionalidad^";
 
 ! ========================= DEFINIR UBICACIONES =========================
 
@@ -102,7 +105,7 @@ Object Jardin -> pajaro "pájaro cantarín"
                  print "El pájaro te escucha atentamente y responde con 
                        un canto hermoso.";
                  rtrue;
-             Answer:
+             Answer, Talk:
                  print "El pájaro parece entender y canta una melodía 
                        que suena casi como palabras.";
                  rtrue;
