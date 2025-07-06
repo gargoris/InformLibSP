@@ -30,7 +30,7 @@ Verb 'sur' 's//' * -> Go;
 Verb 'este' 'e//' * -> Go;
 Verb 'oeste' 'o//' * -> Go;
 Verb 'noreste' 'ne' * -> Go;
-Verb 'noroeste' 'no' * -> Go;
+Verb 'noroeste' 'nw' * -> Go;
 Verb 'sureste' 'se' * -> Go;
 Verb 'suroeste' 'so' * -> Go;
 Verb 'arriba' 'subir' 'u//' * -> Go;
@@ -68,7 +68,7 @@ Verb 'dejar' 'dejo' 'deja'
 
 ! Meter/Poner - consolidado
 Verb 'meter' 'meto' 'mete'
-     'poner' 'pongo' 'pone'
+     'poner' 
      'colocar' 'coloco' 'coloca'
      'introducir' 'introduzco' 'introduce'
      'insertar' 'inserto' 'inserta'
@@ -80,7 +80,7 @@ Verb 'meter' 'meto' 'mete'
 
 ! Mirar/Ver - consolidado
 Verb 'mirar' 'miro' 'mira'
-     'ver' 'veo' 've'
+     'ver' 'veo'
      'observar' 'observo' 'observa'
      'contemplar' 'contemplo' 'contempla'
      'l//' 'm//'
@@ -94,7 +94,7 @@ Verb 'examinar' 'examino' 'examina'
      'inspeccionar' 'inspecciono' 'inspecciona'
      'revisar' 'reviso' 'revisa'
      'estudiar' 'estudio' 'estudia'
-     'x//' 'ex'
+     'ex'
      * noun -> Examine;
 
 ! Buscar - consolidado
@@ -199,23 +199,25 @@ Verb 'tomar' 'tomo' 'toma'
 
 ! ==================== VESTIMENTA ====================
 
-! Verbos reflexivos consolidados - UNA SOLA DEFINICIÓN
-! NOTA: me/te/se solo pueden estar en un verbo para evitar conflictos
+! Ponerse/Vestirse
 Verb 'ponerse' 'vestirse' 'calzarse' 'ponte' 'vístete'
-     'quitarse' 'desvestirse' 'descalzarse' 'quítate' 'desvístete'
-     'levantarse' 'incorporarse' 'alzarse' 'pararse' 'levántate' 'incorpórate'
-     'sentarse' 'acomodarse' 'siéntate' 'acomódate'
-     'acostarse' 'echarse' 'tumbarse' 'acuéstate' 'échate'
-     'me' 'te' 'se' 'nos' 'os'
      'pongo' 'pones' 'pone' 'ponemos' 'ponéis' 'ponen'
      'visto' 'vistes' 'viste' 'vestimos' 'vestís' 'visten'
+     * held -> Wear
+     * noun -> Wear;
+
+! Quitarse/Desvestirse  
+Verb 'quitarse' 'desvestirse' 'descalzarse' 'quítate' 'desvístete'
      'quito' 'quitas' 'quita' 'quitamos' 'quitáis' 'quitan'
      'desvisto' 'desvistes' 'desviste' 'desvestimos' 'desvestís' 'desvisten'
-     'levanto' 'levantas' 'levanta' 'levantamos' 'levantáis' 'levantan'
-     'siento' 'sientas' 'sienta' 'sentamos' 'sentáis' 'sientan'
-     'acuesto' 'acuestas' 'acuesta' 'acostamos' 'acostáis' 'acuestan'
-     * held -> Wear
      * worn -> Disrobe
+     * noun -> Disrobe;
+
+! Reflexivos de posición
+Verb 'levantarse' 'incorporarse' 'alzarse' 'pararse' 'levántate' 'incorpórate'
+     'sentarse' 'acomodarse' 'siéntate' 'acomódate'
+     'acostarse' 'echarse' 'tumbarse' 'acuéstate' 'échate'
+     'levanto' 'levantas' 'levanta' 'levantamos' 'levantáis' 'levantan'
      * -> Exit
      * 'de' noun -> Exit
      * 'en'/'sobre' noun -> Enter;
@@ -259,7 +261,7 @@ Verb 'apagar' 'apago' 'apaga'
 ! ==================== METACOMANDOS ====================
 
 ! Inventario - consolidado
-Verb 'inventario' 'inv' 'i//' 'objetos' 'cosas' 'equipo'
+Verb 'inventario' 'inv' 'objetos' 'cosas' 'equipo'
      * -> Inv;
 
 ! Puntuación - consolidado (solo español para evitar conflictos)
@@ -391,12 +393,10 @@ Verb 'nadar' 'bracear' 'bucear' 'flotar'
 ! ######################### MACROS PARA DESARROLLADORES
 
 ! Macro para agregar verbos fácilmente
-#Define AgregarVerbo(infinitivo, conjugaciones, accion) \
-    Verb infinitivo conjugaciones * noun -> accion;
+! #Define AgregarVerbo(infinitivo, conjugaciones, accion) Verb infinitivo conjugaciones * noun -> accion;
 
 ! Macro para verbos reflexivos rápidos
-#Define VerboReflexivoRapido(infinitivo, accion) \
-    Verb infinitivo 'me' 'te' 'se' * noun -> accion;
+! #Define VerboReflexivoRapido(infinitivo, accion) Verb infinitivo 'me' 'te' 'se' * noun -> accion;
 
 ! ######################### NOTAS DE USO
 

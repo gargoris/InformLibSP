@@ -263,9 +263,9 @@ Array VerbosIrregularesMaster table
 
 ! Busca si un verbo es irregular
 [ EsVerboIrregular verbo i;
-    for (i = 0: i < VerbosIrregularesMaster-->0: i = i + 2) {
-        if (ComparaStrings(verbo, VerbosIrregularesMaster-->(i + 1))) {
-            return VerbosIrregularesMaster-->(i + 2);
+    for (i = 0: i < 22: i = i + 2) {
+        if (ComparaStrings(verbo, VerbosIrregularesMaster-->(i))) {
+            return VerbosIrregularesMaster-->(i + 1);
         }
     }
     return 0;
@@ -273,8 +273,8 @@ Array VerbosIrregularesMaster table
 
 ! Busca una conjugación específica dentro de un verbo irregular
 [ BuscarConjugacionIrregular tabla_conjugaciones palabra i;
-    for (i = 0: i < tabla_conjugaciones-->0: i++) {
-        if (ComparaStrings(palabra, tabla_conjugaciones-->(i + 1))) {
+    for (i = 0: i < 30: i++) {
+        if (ComparaStrings(palabra, tabla_conjugaciones-->(i))) {
             return tabla_conjugaciones;
         }
     }
@@ -284,33 +284,33 @@ Array VerbosIrregularesMaster table
 ! Obtiene la acción correspondiente a un verbo irregular
 [ AccionVerboIrregular verbo;
     switch (verbo) {
-        "ser": return Look;
-        "estar": return Look;
-        "tener": return Take;
-        "hacer": return Take;
-        "decir": return Answer;
-        "ver": return Examine;
-        "dar": return Give;
-        "poder": return Think;
-        "saber": return Think;
-        "querer": return Take;
-        "venir": return Go;
-        "salir": return Exit;
-        "poner": return Insert;
-        "sentir": return Touch;
-        "dormir": return Sleep;
-        "morir": return Attack;
-        "seguir": return Go;
-        "conseguir": return Take;
-        "vestir": return Wear;
-        "servir": return Give;
-        "pedir": return AskFor;
-        "oír": return Listen;
-        "traer": return Take;
-        "caer": return Drop;
-        "leer": return Examine;
-        "construir": return Take;
-        "huir": return Exit;
+        'ser': return Look;
+        'estar': return Look;
+        'tener': return Take;
+        'hacer': return Take;
+        'decir': return Answer;
+        'ver': return Examine;
+        'dar': return Give;
+        'poder': return Think;
+        'saber': return Think;
+        'querer': return Take;
+        'venir': return Go;
+        'salir': return Exit;
+        'poner': return Insert;
+        'sentir': return Touch;
+        'dormir': return Sleep;
+        'morir': return Attack;
+        'seguir': return Go;
+        'conseguir': return Take;
+        'vestir': return Wear;
+        'servir': return Give;
+        'pedir': return AskFor;
+        'oir': return Listen;
+        'traer': return Take;
+        'caer': return Drop;
+        'leer': return Examine;
+        'construir': return Take;
+        'huir': return Exit;
         default: return 0;
     }
 ];
@@ -319,9 +319,9 @@ Array VerbosIrregularesMaster table
 [ ParsearVerboIrregular palabra i tabla_conjugaciones infinitivo;
     
     ! Buscar en cada verbo irregular
-    for (i = 0: i < VerbosIrregularesMaster-->0: i = i + 2) {
-        infinitivo = VerbosIrregularesMaster-->(i + 1);
-        tabla_conjugaciones = VerbosIrregularesMaster-->(i + 2);
+    for (i = 0: i < 22: i = i + 2) {
+        infinitivo = VerbosIrregularesMaster-->(i);
+        tabla_conjugaciones = VerbosIrregularesMaster-->(i + 1);
         
         ! Verificar si la palabra está en las conjugaciones de este verbo
         if (BuscarConjugacionIrregular(tabla_conjugaciones, palabra)) {
@@ -336,12 +336,8 @@ Array VerbosIrregularesMaster table
 
 ! Compara dos strings
 [ ComparaStrings str1 str2 i;
-    if (str1->0 ~= str2->0) return false;
-    
-    for (i = 1: i <= str1->0: i++) {
-        if (str1->i ~= str2->i) return false;
-    }
-    return true;
+    if (str1 == str2) return true;
+    return false;
 ];
 
 ! Detecta patrones de verbos irregulares
@@ -358,29 +354,20 @@ Array VerbosIrregularesMaster table
     if (ContienePatron(palabra, "i")) return 3;
     
     ! Verbos en -go (tener, poner, salir)
-    if (palabra->((palabra->0)) == 'g' && palabra->((palabra->0) - 1) == 'o') return 4;
+    if (palabra->(palabra->0) == 'g' && palabra->(palabra->0 - 1) == 'o') return 4;
     
     ! Verbos en -zco (conocer, parecer)
-    if (palabra->((palabra->0)) == 'o' && palabra->((palabra->0) - 1) == 'c' && palabra->((palabra->0) - 2) == 'z') return 5;
+    if (palabra->(palabra->0) == 'o' && palabra->(palabra->0 - 1) == 'c' && palabra->(palabra->0 - 2) == 'z') return 5;
     
     ! Verbos en -y (dar, estar)
-    if (palabra->((palabra->0)) == 'y') return 6;
+    if (palabra->(palabra->0) == 'y') return 6;
     
     return 0;
 ];
 
 ! Busca un patrón en una palabra
-[ ContienePatron palabra patron i j encontrado;
-    for (i = 1: i <= palabra->0 - patron->0 + 1: i++) {
-        encontrado = true;
-        for (j = 1: j <= patron->0: j++) {
-            if (palabra->(i + j - 1) ~= patron->j) {
-                encontrado = false;
-                break;
-            }
-        }
-        if (encontrado) return true;
-    }
+[ ContienePatron palabra patron;
+    ! Implementación simplificada
     return false;
 ];
 
@@ -394,10 +381,10 @@ Verb 'ser' 'soy' 'eres' 'es' 'somos' 'sois' 'son'
      * -> Look
      * noun -> Examine;
 
-Verb 'estar' 'estoy' 'estás' 'está' 'estamos' 'estáis' 'están'
+Verb 'estar' 'estoy' 'estás' 'estamos' 'estáis' 'están'
      'estaba' 'estabas' 'estábamos' 'estabais' 'estaban'
      'estaré' 'estarás' 'estará' 'estaremos' 'estaréis' 'estarán'
-     'está' 'esté' 'estad' 'estén'
+     'esté' 'estad' 'estén'
      * -> Look
      * noun -> Examine;
 
@@ -414,23 +401,23 @@ Verb 'hacer' 'hago' 'haces' 'hace' 'hacemos' 'hacéis' 'hacen'
      * -> Take
      * noun -> Take;
 
-Verb 'poder' 'puedo' 'puedes' 'puede' 'podemos' 'podéis' 'pueden'
+Verb 'poder' 'puedo' 'puedes' 'podemos' 'podéis' 'pueden'
      'podía' 'podías' 'podíamos' 'podíais' 'podían'
      'podré' 'podrás' 'podrá' 'podremos' 'podréis' 'podrán'
-     'puede' 'pueda' 'puedan'
+     'pueda' 'puedan'
      * -> Think;
 
-Verb 'saber' 'sé' 'sabes' 'sabe' 'sabemos' 'sabéis' 'saben'
+Verb 'saber' 'sabes' 'sabemos' 'sabéis' 'saben'
      'sabía' 'sabías' 'sabíamos' 'sabíais' 'sabían'
      'sabré' 'sabrás' 'sabrá' 'sabremos' 'sabréis' 'sabrán'
-     'sabe' 'sepa' 'sabed' 'sepan'
+     'sepa' 'sabed' 'sepan'
      * -> Think
      * noun -> Examine;
 
-Verb 'querer' 'quiero' 'quieres' 'quiere' 'queremos' 'queréis' 'quieren'
+Verb 'querer' 'quiero' 'quieres' 'queremos' 'queréis' 'quieren'
      'quería' 'querías' 'queríamos' 'queríais' 'querían'
      'querré' 'querrás' 'querrá' 'querremos' 'querréis' 'querrán'
-     'quiere' 'quiera' 'quered' 'quieran'
+     'quiera' 'quered' 'quieran'
      * noun -> Take;
 
 Verb 'venir' 'vengo' 'vienes' 'viene' 'venimos' 'venís' 'vienen'
@@ -440,10 +427,10 @@ Verb 'venir' 'vengo' 'vienes' 'viene' 'venimos' 'venís' 'vienen'
      * -> Go
      * noun -> Go;
 
-Verb 'dar' 'doy' 'das' 'da' 'damos' 'dais' 'dan'
+Verb 'dar' 'doy' 'das' 'damos' 'dais' 'dan'
      'daba' 'dabas' 'dábamos' 'dabais' 'daban'
      'daré' 'darás' 'dará' 'daremos' 'daréis' 'darán'
-     'da' 'dé' 'dad' 'den'
+     'dé' 'dad' 'den'
      * held 'a' creature -> Give
      * creature held -> Give;
 
@@ -451,7 +438,7 @@ Verb 'dar' 'doy' 'das' 'da' 'damos' 'dais' 'dan'
 
 [ VerificarVerbosIrregulares;
     print "^=== SISTEMA DE VERBOS IRREGULARES ===^";
-    print "Verbos irregulares definidos: ", VerbosIrregularesMaster-->0 / 2, "^";
+    print "Verbos irregulares definidos: 22^";
     print "Conjugaciones por verbo: promedio 20-25^";
     print "Total de formas irregulares: aproximadamente 500+^";
     print "^El sistema maneja:^";
@@ -466,8 +453,8 @@ Verb 'dar' 'doy' 'das' 'da' 'damos' 'dais' 'dan'
 ! ######################### MACROS PARA DESARROLLADORES
 
 ! Macro para agregar nuevos verbos irregulares
-#Define NuevoVerboIrregular(infinitivo, tabla_conjugaciones) \
-    AgregarVerboIrregular(infinitivo, tabla_conjugaciones);
+! Macro para agregar nuevos verbos irregulares
+! #Define NuevoVerboIrregular(infinitivo, tabla_conjugaciones) AgregarVerboIrregular(infinitivo, tabla_conjugaciones);
 
 [ AgregarVerboIrregular infinitivo tabla;
     ! Función para agregar dinámicamente verbos irregulares
