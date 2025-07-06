@@ -1,0 +1,89 @@
+==================================================================
+PUNYINFORM ESPANOL COMPLETO - GUIA DE COMPILACION RAPIDA
+==================================================================
+
+1. COPIAR LOS ARCHIVOS CORE AL DIRECTORIO DE TRABAJO
+   
+   Opcion A - Copiar todo el directorio:
+   cp -r punyinform_espanol_completo/core/* tu_directorio_de_trabajo/
+   
+   Opcion B - Copiar solo el sistema integrado:
+   cp punyinform_espanol_completo/core/sistema_integrado/* tu_directorio_de_trabajo/
+   cp punyinform_espanol_completo/core/*.h tu_directorio_de_trabajo/
+
+2. CREAR TU JUEGO
+   
+   En tu archivo .inf:
+   Include "puny_spanish_integrado.h";
+   
+   [ Initialise;
+       location = TuSala;
+   ];
+
+3. COMPILAR
+   
+   inform -v5 tu_juego.inf
+
+==================================================================
+EJEMPLO COMPLETO FUNCIONAL:
+==================================================================
+
+--- archivo: mi_juego.inf ---
+
+Constant Story "^Mi Juego^";
+Include "puny_spanish_integrado.h";
+
+Object Sala "sala"
+    with description "Una sala simple.",
+    has light;
+
+Object -> mesa "mesa"
+    with name 'mesa',
+         description "Una mesa de madera.",
+    has supporter static female;
+
+[ Initialise;
+    location = Sala;
+    lookmode = 2;
+];
+
+--- fin archivo ---
+
+Compilacion:
+inform -v5 mi_juego.inf
+
+Jugar:
+frotz mi_juego.z5
+
+==================================================================
+SOLUCION DE PROBLEMAS:
+==================================================================
+
+Error "Can't find file":
+- Asegurate de que los archivos .h esten en el mismo directorio
+- Copia todos los archivos de core/ a tu directorio de trabajo
+
+Error de caracteres especiales:
+- Usa solo ASCII basico en los Constant Story y Headline
+- Los acentos funcionan dentro del juego, no en las constantes
+
+Error "No such constant":
+- Asegurate de incluir todos los archivos base (.h) de core/
+
+==================================================================
+ESTRUCTURA RECOMENDADA PARA DESARROLLO:
+==================================================================
+
+mi_proyecto/
+├── mi_juego.inf
+├── puny_spanish_integrado.h
+├── puny_sin_grammar.h  
+├── globals.h
+├── grammar.h
+├── messages.h
+├── parser.h
+└── scope.h
+
+¡Con esta estructura todo funcionara perfectamente!
+
+==================================================================

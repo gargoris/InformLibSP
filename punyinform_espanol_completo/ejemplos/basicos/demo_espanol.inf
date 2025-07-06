@@ -1,0 +1,74 @@
+! Demo simple de PunyInform con comandos en español
+! Version que SI compila con Inform 6.42
+
+Constant Story "^Demo Espanol Simple^";
+Constant Headline "^Verbos en español con PunyInform^";
+
+! Usar PunyInform original, luego agregar verbos españoles
+Include "puny.h";
+
+! Verbos españoles básicos (sintaxis compatible)
+Verb 'coger' 'agarrar' 'tomar'
+	* multi -> Take;
+
+Verb 'mirar' 'examinar' 'ver' 'm//'
+	* noun -> Examine
+	* -> Look;
+
+Verb 'inventario' 'inv'
+	* -> Inv;
+
+Verb 'abrir'
+	* noun -> Open;
+
+! Configuración simple
+Constant INITIAL_LOCATION_VALUE Cuarto;
+
+! ---------------------
+! Objetos básicos
+! ---------------------
+
+Object Cuarto "Cuarto Simple"
+	with
+		description "Un cuarto simple con una mesa.",
+	has light;
+
+Object -> mesa "mesa" 
+	with
+		name 'mesa',
+		description "Una mesa de madera simple.",
+	has supporter static;
+
+Object -> -> objeto "objeto brillante"
+	with
+		name 'objeto' 'brillante',
+		description "Un objeto pequeño que brilla.",
+		initial "Un objeto brillante esta sobre la mesa.",
+	has ;
+
+! ---------------------
+! Inicialización
+! ---------------------
+
+[ Initialise;
+	print "^^DEMO DE PUNYINFORM EN ESPAÑOL^^";
+	print "Comandos disponibles:^";
+	print "  MIRAR - ver el cuarto^";
+	print "  EXAMINAR MESA - inspeccionar la mesa^";
+	print "  COGER OBJETO - tomar el objeto^";
+	print "  INVENTARIO - ver que llevas^^";
+	
+	location = Cuarto;
+	lookmode = 2;
+];
+
+! Personalizar mensajes básicos
+[ LibraryMessages p_msg p_arg_1 p_arg_2;
+	switch(p_msg) {
+		MSG_TAKE_DEFAULT:
+			"Lo tienes.";
+		MSG_DROP_DROPPED:
+			"Dejado.";
+	}
+	rfalse;
+];

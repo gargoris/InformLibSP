@@ -1,0 +1,39 @@
+! Test basico sin acentos para probar errores de compilacion
+
+Constant Story "^Aventura en Espanol Basico^";
+Constant Headline "^Un test sin acentos^";
+
+! Usar solo globals.h y puny.h originales por ahora
+Include "globals.h";
+Include "puny.h";
+
+! Agregar solo verbos basicos
+Verb 'coger' 'tomar'
+    * multi -> Take;
+
+Verb 'mirar' 'ver'
+    * noun -> Examine
+    * -> Look;
+
+! Configuracion basica
+Constant INITIAL_LOCATION_VALUE Sala;
+
+Object Sala "Sala"
+    with description "Una sala simple.",
+    has light;
+
+Object -> mesa "mesa" 
+    with name 'mesa',
+         description "Una mesa de madera.",
+    has supporter static;
+
+Object -> -> libro "libro"
+    with name 'libro',
+         description "Un libro viejo.",
+    has ;
+
+[ Initialise;
+    print "^^TEST BASICO SIN ACENTOS^^";
+    location = Sala;
+    lookmode = 2;
+];

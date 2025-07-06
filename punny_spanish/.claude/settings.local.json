@@ -3,7 +3,10 @@
     "allow": [
       "Bash(../inform:*)",
       "Bash(ls:*)",
-      "Bash(grep:*)"
+      "Bash(grep:*)",
+      "Bash(mkdir:*)",
+      "Bash(cp:*)",
+      "Bash(true)"
     ],
     "deny": []
   }

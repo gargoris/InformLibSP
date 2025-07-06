@@ -1,0 +1,313 @@
+! Ejemplo Completo de PunyInform en Español
+! Demuestra todas las capacidades de la librería española
+! Incluye conjugaciones verbales, géneros, números y reflexivos
+
+Constant Story "^Aventura en Español Completo^";
+Constant Headline "^Demostrando todas las capacidades del español^";
+
+! Usar nuestra librería española completa
+Include "puny_spanish_simple.h";
+
+! Configuración del juego
+Constant MAX_SCORE 100;
+Constant INITIAL_LOCATION_VALUE CasaInicial;
+
+! ######################### OBJETOS CON GÉNERO Y NÚMERO
+
+! Sala principal - femenina
+Object CasaInicial "la casa familiar"
+    with description [;
+            print "Te encuentras en una acogedora casa familiar. ";
+            print "Las paredes están decoradas con cuadros antiguos y ";
+            print "una gran mesa ocupa el centro de la habitación. ";
+            print "Al norte ves una puerta que lleva al jardín.";
+        ],
+        n_to Jardin,
+    has light female;
+
+! Jardín - masculino  
+Object Jardin "el jardín encantado"
+    with description [;
+            print "Un hermoso jardín lleno de flores coloridas se extiende ";
+            print "ante ti. Los árboles proporcionan una agradable sombra ";
+            print "y puedes oír el canto de los pájaros. Al sur está la casa.";
+        ],
+        s_to CasaInicial,
+    has light;
+
+! Mesa - femenina
+Object -> mesa "mesa elegante" 
+    with name 'mesa' 'elegante',
+         description [;
+            print "Una hermosa mesa de madera pulida. ";
+            if (EstaEstan(self)) print "Está";
+            else print "Están";
+            print " muy bien cuidada y ";
+            if (child(self) == 0) {
+                print "no hay nada sobre ella.";
+            } else {
+                print "tiene algunos objetos encima.";
+            }
+         ],
+    has supporter static female;
+
+! Libro - masculino
+Object -> -> libro "libro antiguo"
+    with name 'libro' 'antiguo' 'viejo',
+         description [;
+            print "Un libro muy antiguo con tapas de cuero gastado. ";
+            print "En la portada se lee: ~Aventuras Mágicas~. ";
+            print "Parece contener historias fascinantes.";
+         ],
+         initial [;
+            print "Un libro antiguo descansa sobre ";
+            ImprimirConArticulo(parent(self));
+            print ".";
+         ],
+         before [;
+            Read, Examine:
+                print "Lees algunas páginas del libro. Las historias ";
+                print "son realmente fascinantes y te transportan a ";
+                print "mundos de fantasía y aventuras.";
+                rtrue;
+         ],
+    has male;
+
+! Llaves - femeninas plurales
+Object -> -> llaves "llaves plateadas"
+    with name 'llaves' 'plateadas' 'llave',
+         description [;
+            print "Un manojo de llaves plateadas que brillan ";
+            print "bajo la luz. Tienen un aspecto muy antiguo ";
+            print "pero parecen funcionar perfectamente.";
+         ],
+         initial [;
+            print "Unas llaves plateadas brillan sobre ";
+            ImprimirConArticulo(parent(self));
+            print ".";
+         ],
+    has female pluralname;
+
+! Caja - femenina
+Object -> caja_misteriosa "caja misteriosa"
+    with name 'caja' 'misteriosa' 'cofre',
+         description [;
+            print "Una caja de madera tallada con intrincados diseños. ";
+            print "Tiene una pequeña cerradura dorada que ";
+            if (self has locked) print "está cerrada con llave.";
+            else if (self has open) print "está abierta.";
+            else print "está cerrada pero sin llave.";
+         ],
+         initial [;
+            print "Una caja misteriosa está ";
+            if (location == CasaInicial) print "en un rincón de la habitación.";
+            else print "aquí.";
+         ],
+         capacity 10,
+         with_key llaves,
+         before [;
+            Open:
+                if (self has locked) {
+                    print "La caja está cerrada con llave. ";
+                    print "Necesitas encontrar las llaves correctas.";
+                    rtrue;
+                }
+            Unlock:
+                if (second ~= llaves) {
+                    print "Esas llaves no parecen encajar en la cerradura.";
+                    rtrue;
+                }
+                print "Usas las llaves plateadas para abrir la caja. ";
+                print "¡La cerradura se abre con un clic satisfactorio!";
+                give self ~locked;
+                rtrue;
+         ],
+    has container openable lockable locked female;
+
+! Tesoro - masculino
+Object -> -> tesoro "tesoro brillante"
+    with name 'tesoro' 'brillante' 'oro' 'gemas' 'joya',
+         description [;
+            print "Un magnífico tesoro compuesto por monedas de oro ";
+            print "y gemas preciosas que brillan con luz propia. ";
+            print "Su valor debe ser incalculable.";
+         ],
+         before [;
+            Take:
+                score = score + 50;
+                print "¡Coges el tesoro brillante! Su peso te sorprende ";
+                print "y sientes que has encontrado algo verdaderamente valioso.";
+                if (score >= MAX_SCORE) {
+                    deadflag = GS_WIN;
+                    print "^¡Felicitaciones! Has completado la aventura ";
+                    print "y encontrado el tesoro perdido!";
+                }
+                rtrue;
+         ],
+    has male;
+
+! Flores - femeninas plurales (en el jardín)
+Object -> flores "flores coloridas"
+    with name 'flores' 'coloridas' 'flor' 'colorida',
+         description [;
+            print "Un hermoso conjunto de flores de múltiples colores. ";
+            print "Hay rosas rojas, tulipanes amarillos, margaritas blancas ";
+            print "y muchas otras variedades. Su aroma es delicioso.";
+         ],
+         initial [;
+            print "Múltiples flores coloridas adornan el jardín ";
+            print "con su belleza natural.";
+         ],
+         before [;
+            Take:
+                print "Las flores están firmemente plantadas en la tierra. ";
+                print "Sería una pena arrancarlas de su hogar natural.";
+                rtrue;
+            Smell:
+                print "Las flores despiden un aroma dulce y embriagador ";
+                print "que te hace sentir muy relajado.";
+                rtrue;
+         ],
+    has scenery static female pluralname;
+
+! Pájaro - masculino (personaje animado)
+Object -> pajaro "pájaro cantarín"
+    with name 'pájaro' 'pajarito' 'cantarín' 'ave',
+         description [;
+            print "Un pequeño pájaro de colores brillantes que ";
+            print "está posado en una rama. Sus ojos son muy ";
+            print "inteligentes y parece observarte con curiosidad.";
+         ],
+         initial [;
+            print "Un pájaro cantarín está posado en una rama, ";
+            print "observándote con curiosidad.";
+         ],
+         life [;
+            Ask, Answer, Tell:
+                switch(second) {
+                    'tesoro', 'caja', 'llaves':
+                        print "El pájaro inclina la cabeza y emite unos ";
+                        print "trinos melodiosos, como si tratara de decirte algo.";
+                        rtrue;
+                    default:
+                        print "El pájaro te mira con sus ojitos brillantes ";
+                        print "pero no parece entender.";
+                        rtrue;
+                }
+            Kiss:
+                print "El pájaro se ruboriza (¡si es que los pájaros ";
+                print "pueden ruborizarse!) y vuela un poco más alto.";
+                rtrue;
+            Attack:
+                print "¡No puedes hacerle daño a una criatura tan ";
+                print "hermosa e inocente!";
+                rtrue;
+            default:
+                print "El pájaro te observa con curiosidad pero ";
+                print "no reacciona a eso.";
+                rtrue;
+         ],
+         before [;
+            Take:
+                print "El pájaro es demasiado rápido y se aleja volando ";
+                print "antes de que puedas tocarlo.";
+                rtrue;
+         ],
+    has animate male;
+
+! ######################### FUNCIONES DEL JUEGO
+
+[ Initialise;
+    ! Llamar a la inicialización española
+    InicializarEspanol();
+    
+    print "^^AVENTURA EN ESPAÑOL COMPLETO^^";
+    print "Una demostración de todas las capacidades del español^^";
+    print "Esta aventura demuestra:^";
+    print "• Conjugaciones verbales completas^";
+    print "• Concordancia de género y número^";
+    print "• Artículos y pronombres correctos^";
+    print "• Verbos reflexivos^";
+    print "• Variantes regionales^^";
+    
+    print "Tu misión: Encuentra el tesoro escondido.^^";
+    
+    print "Comandos disponibles (con todas sus conjugaciones):^";
+    print "• MIRAR / MIRA / VER - observar el entorno^";
+    print "• EXAMINAR / EXAMINA [objeto] - inspeccionar algo^";
+    print "• COGER / COGE / TOMAR [objeto] - tomar un objeto^";
+    print "• DEJAR / DEJA / SOLTAR [objeto] - soltar un objeto^";
+    print "• ABRIR / ABRE [objeto] - abrir algo^";
+    print "• CERRAR / CIERRA [objeto] - cerrar algo^";
+    print "• IR / VE [dirección] - moverse^";
+    print "• HABLAR / HABLA CON [personaje] - conversar^";
+    print "• INVENTARIO / INV - ver qué llevas^";
+    print "• Y muchos más con sus formas conjugadas...^^";
+    
+    print "Prueba diferentes formas verbales:^";
+    print "• ~coger libro~ o ~coge el libro~ o ~toma el libro~^";
+    print "• ~examinar mesa~ o ~examina la mesa~ o ~mira la mesa~^";
+    print "• ~hablar con pájaro~ o ~habla con el pájaro~^^";
+    
+    location = CasaInicial;
+    lookmode = 2;
+];
+
+! Mensajes personalizados en español
+[ LibraryMessages p_msg p_arg_1 p_arg_2;
+    switch(p_msg) {
+        MSG_INVENTORY_DEFAULT:
+            if(child(player) == 0) {
+                print "No llevas nada en este momento.";
+                rtrue;
+            }
+            print "En este momento llevas:^";
+            WriteListFrom(child(player), INDENT_BIT + NEWLINE_BIT + PARTINV_BIT);
+            rtrue;
+            
+        MSG_TAKE_DEFAULT:
+            if (EsFemenino(noun)) print "Cogida.";
+            else print "Cogido.";
+            rtrue;
+            
+        MSG_DROP_DROPPED:
+            if (EsFemenino(noun)) print "Dejada.";
+            else print "Dejado.";
+            rtrue;
+            
+        MSG_OPEN_DEFAULT:
+            print "Abres ";
+            ImprimirConArticulo(noun);
+            if(noun has container && child(noun) ~= 0) {
+                print ", revelando ";
+                WriteListFrom(child(noun), ENGLISH_BIT);
+            }
+            print ".";
+            rtrue;
+            
+        MSG_CLOSE_DEFAULT:
+            print "Cierras ";
+            ImprimirConArticulo(noun);
+            print ".";
+            rtrue;
+    }
+    rfalse; ! Usar mensajes por defecto para el resto
+];
+
+[ DeathMessage;
+    print "*** ";
+    if(deadflag == GS_WIN) {
+        print "¡AVENTURA COMPLETADA CON ÉXITO! ***^^";
+        print "Has demostrado el poder de la librería española de PunyInform. ";
+        print "Todas las conjugaciones verbales, concordancias de género ";
+        print "y número, artículos y estructuras gramaticales han funcionado ";
+        print "perfectamente.^^";
+        print "¡Felicitaciones por completar esta demostración!";
+        return;
+    }
+    if(deadflag == GS_QUIT) {
+        print "HAS SALIDO DE LA AVENTURA ***";
+        return;  
+    }
+    print "FIN DE LA AVENTURA ***";
+];

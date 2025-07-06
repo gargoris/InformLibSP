@@ -1,0 +1,29 @@
+! Test simple de puny_spanish.h sin acentos
+
+Constant Story "^Test Simple Espanol^";
+Constant Headline "^Sin acentos para probar^";
+
+Include "puny_spanish.h";
+
+Constant INITIAL_LOCATION_VALUE Sala;
+
+Object Sala "Sala de prueba"
+    with description "Una sala para probar la libreria.",
+    has light;
+
+Object -> mesa "mesa"
+    with name 'mesa',
+         description "Una mesa simple.",
+    has supporter static;
+
+Object -> -> libro "libro"
+    with name 'libro',
+         description "Un libro de prueba.",
+    has ;
+
+[ Initialise;
+    print "^^TEST SIMPLE DE PUNY_SPANISH^^";
+    print "Comandos: mirar, examinar mesa, coger libro^^";
+    location = Sala;
+    lookmode = 2;
+];

@@ -1,0 +1,43 @@
+! EJEMPLO SIMPLE FUNCIONAL
+! Demostracion del sistema espanol integrado
+
+Constant Story "^Mi Aventura en Espanol^";
+Constant Headline "^Un ejemplo que funciona^";
+
+! Para compilar desde el directorio base:
+! inform -v5 +include_path=punyinform_espanol_completo ejemplos/basicos/ejemplo_simple_funcional.inf
+
+Include "puny_spanish_integrado.h";
+
+Object Sala "sala principal"
+    with description "Una sala con una mesa.",
+         n_to Pasillo,
+    has light;
+
+Object -> mesa "mesa de madera"
+    with name 'mesa' 'madera',
+         description "Una mesa robusta.",
+    has supporter static female;
+
+Object -> -> libro "libro"
+    with name 'libro',
+         description "Un libro interesante.",
+    has ;
+
+Object Pasillo "pasillo"
+    with description "Un pasillo. Al sur esta la sala principal.",
+         s_to Sala,
+    has light;
+
+[ Initialise;
+    print "^^Bienvenido a tu aventura en espanol!^^";
+    print "Comandos disponibles:^";
+    print "• mirar - observar la habitacion^";
+    print "• examinar [objeto] - inspeccionar algo^";  
+    print "• coger [objeto] - tomar un objeto^";
+    print "• ir al norte (o norte) - moverse^";
+    print "• inventario - ver que llevas^^";
+    
+    location = Sala;
+    lookmode = 2;
+];
