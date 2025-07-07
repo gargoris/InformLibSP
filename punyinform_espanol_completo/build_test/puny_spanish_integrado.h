@@ -44,7 +44,7 @@ Zcharacter table
 ! ######################### PUNYINFORM CORE (SIN GRAMMAR.H PARA EVITAR CONFLICTOS)
 ! NOTA: Usamos puny_sin_grammar.h que es una versión modificada de puny.h
 ! que excluye grammar.h para evitar conflictos con grammar_optimizada.h
-Include "sistema_integrado/puny_sin_grammar.h";
+Include "puny_sin_grammar.h";
 
 ! ######################### GRAMMAR.H ORIGINAL (PARA DEFINICIONES DE ACCIONES)
 ! NOTA: Se incluye ANTES de la gramática española para definir las acciones,
@@ -52,10 +52,10 @@ Include "sistema_integrado/puny_sin_grammar.h";
 Include "grammar.h";
 
 ! ######################### SISTEMA DE GRAMÁTICA OPTIMIZADA (SOBRESCRIBE VERBOS)
-Include "sistema_optimizado/spanish_final/grammar_optimizada.h";
+Include "grammar_optimizada.h";
 
 ! ######################### PARSER ESPAÑOL AVANZADO
-Include "sistema_optimizado/spanish_final/parser_spanish_master.h";
+Include "parser_spanish_master.h";
 
 ! NOTA: scope.h ya está incluido en puny_sin_grammar.h - no incluir de nuevo
 

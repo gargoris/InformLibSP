@@ -1,0 +1,12 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(../../inform ejemplo_integrado.inf)",
+      "Bash(../../../inform ejemplo_integrado.inf)",
+      "Bash(../../../inform ejemplo_master_completo.inf)",
+      "Bash(../../../inform +include_path=../../core ejemplo_master_completo.inf)",
+      "Bash(/mnt/c/Users/Francisco.Fuentes/inform/InformLibSP/inform ejemplo_master_completo.inf)"
+    ],
+    "deny": []
+  }
+}

@@ -11,7 +11,7 @@ Constant Story "^Aventura en Español Master^";
 Constant Headline "^La demostración más completa de PunyInform en español^";
 
 ! Incluir nuestra librería española integrada (recomendada)
-Include "../../core/sistema_integrado/puny_spanish_integrado.h";
+Include "puny_spanish_integrado.h";
 
 ! ######################### CONFIGURACIÓN DEL JUEGO
 
