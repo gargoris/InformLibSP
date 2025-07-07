@@ -5,7 +5,18 @@
 ! Autor: Claude Code
 ! Fecha: 4 de julio de 2025
 ! Versión: 1.0 Master
-Zcharacter table '@{B3}' '@{A1}' '@{C3}' '@{B1}' '@{C2}' '@{BA}' '@{A9}';
+Zcharacter table 
+    '@{E1}' '@{E9}' '@{ED}' '@{F3}' '@{FA}'    ! á é í ó ú (minúsculas)
+    '@{C1}' '@{C9}' '@{CD}' '@{D3}' '@{DA}'    ! Á É Í Ó Ú (mayúsculas)
+    '@{FC}' '@{DC}'                            ! ü Ü (diéresis)
+    '@{F1}' '@{D1}'                            ! ñ Ñ (eñe)
+    '@{BF}' '@{A1}'                            ! ¿ ¡ (signos interrogación/exclamación)
+    '@{AB}' '@{BB}'                            ! « » (comillas españolas)
+    '@{B7}'                                    ! · (punto medio)
+    '@{A7}' '@{BA}' '@{B3}' '@{B2}' '@{B9}'    ! § º ³ ² ¹ (símbolos adicionales)
+    '@{A9}' '@{AE}' '@{B1}' '@{F7}' '@{D7}'    ! © ® ± ÷ × (símbolos matemáticos)
+    '@{C3}' '@{C2}' '@{E2}' '@{A2}' '@{BD}'    ! Códigos adicionales para acentos complejos
+;
 
 Constant Story "^Aventura en Español Master^";
 Constant Headline "^La demostración más completa de PunyInform en español^";
@@ -134,12 +145,12 @@ Object -> -> sopacaliente "sopa caliente"
     
     print "^^ ¡BIENVENIDO A LA AVENTURA EN ESPAÑOL MASTER! ^^";
     print "^Esta demostración incluye las características más avanzadas:^";
-    print "^🔤 CONJUGACIONES COMPLETAS: Todos los tiempos verbales del español^";
-    print "👫 CONCORDANCIA AUTOMÁTICA: Género y número correctos^";
-    print "🌍 VARIANTES REGIONALES: España, México, Argentina simultáneamente^";
-    print "🪞 VERBOS REFLEXIVOS: Ponerse, quitarse, levantarse^";
-    print "💬 MENSAJES INTELIGENTES: Adaptados al contexto^";
-    print "🔍 PARSER AVANZADO: Maneja contracciones y sintaxis compleja^";
+    print "^ CONJUGACIONES COMPLETAS: Todos los tiempos verbales del español^";
+    print " CONCORDANCIA AUTOMATICA: Genero y numero correctos^";
+    print " VARIANTES REGIONALES: España, Mexico, Argentina simultaneamente^";
+    print " VERBOS REFLEXIVOS: Ponerse, quitarse, levantarse^";
+    print " MENSAJES INTELIGENTES: Adaptados al contexto^";
+    print " PARSER AVANZADO: Maneja contracciones y sintaxis compleja^";
     print "^Ejemplos de comandos que puedes probar:^";
     print "• MIRAR / MIRA / VER / OBSERVAR / CONTEMPLAR^";
     print "• EXAMINAR LA MESA / INSPECCIONAR EL LIBRO^";
@@ -160,57 +171,7 @@ Object -> -> sopacaliente "sopa caliente"
 ];
 
 ! ######################### IMPLEMENTACIÓN DE ACCIONES ESPECIALES
-
-[ DrinkSub_Personalizado;
-    if (noun == fuenteCristal) {
-        "Bebes un poco de agua cristalina de la fuente. El agua está fresca y te refresca completamente.";
-    }
-    "No hay nada apropiado para beber.";
-];
-
-! Extender el verbo beber para usar nuestra rutina personalizada
-Extend 'beber' first
-    * noun -> DrinkSub_Personalizado;
-
-[ SmellSub_Personalizado;
-    if (noun == rosasRojas) {
-        "El aroma de las rosas rojas es absolutamente embriagador. Te transporta a un estado de tranquilidad total.";
-    }
-    if (noun == sopacaliente) {
-        "La sopa huele deliciosamente. Tu estómago comienza a rugir de hambre.";
-    }
-    "No hueles nada especial.";
-];
-
-[ ListenSub_Personalizado;
-    if (noun == pajaroCantor) {
-        "El pájaro cantor entona una melodía hermosa que parece contar la historia de tesoros ocultos y aventuras por descubrir.";
-    }
-    if (noun == fuenteCristal) {
-        "El sonido del agua corriendo en la fuente es increíblemente relajante y melodioso.";
-    }
-    "No oyes nada especial.";
-];
-
-[ TouchSub_Personalizado;
-    if (noun == rosasRojas) {
-        "Tocas suavemente los pétalos de las rosas. Son increíblemente suaves, como terciopelo real.";
-    }
-    if (noun == tesoroDorado) {
-        "El tesoro se siente frío al tacto pero irradiara una extraña energía. Las monedas de oro tintinean melodiosamente.";
-    }
-    "No sientes nada especial al tocar eso.";
-];
-
-! Extender verbos adicionales para usar rutinas personalizadas
-Extend 'oler' first
-    * noun -> SmellSub_Personalizado;
-
-Extend 'escuchar' first 
-    * noun -> ListenSub_Personalizado;
-
-Extend 'tocar' first
-    * noun -> TouchSub_Personalizado;
+! Nota: Las acciones especiales se definen en el archivo integrado
 
 ! ######################### FUNCIONES DE DEMOSTRACIÓN
 

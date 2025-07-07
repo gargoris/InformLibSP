@@ -224,6 +224,59 @@ Include "parser_spanish_master.h";
     #EndIf;
 ];
 
+! ######################### RUTINAS DE ACCIÓN ESPAÑOLAS ADICIONALES
+! Rutinas para verbos que no están en el núcleo de PunyInform
+
+[ KissSub;
+    if (noun has animate) {
+        if (noun == player) "No puedes besarte a ti mismo.";
+        print (The) noun, " no parece interesad";
+        if (noun has female) print "a"; else print "o";
+        " en eso.";
+    }
+    "No es apropiado besar eso.";
+];
+
+[ BuySub;
+    "No hay nada que comprar aquí.";
+];
+
+[ PraySub;
+    if (noun) {
+        print "Rezas a ", (the) noun, " en silencio.";
+    } else {
+        print "Rezas en silencio, esperando que alguien escuche tus plegarias.";
+    }
+];
+
+[ SingSub;
+    if (noun) {
+        print "Cantas una melodía dedicada a ", (the) noun, ".";
+    } else {
+        print "Cantas una hermosa melodía que llena el aire de música.";
+    }
+];
+
+[ SleepSub;
+    "No es momento de dormir. Tienes cosas importantes que hacer.";
+];
+
+[ ThinkSub;
+    if (noun) {
+        print "Piensas profundamente sobre ", (the) noun, ".";
+    } else {
+        print "Te quedas pensativo, reflexionando sobre la situación.";
+    }
+];
+
+[ SwimSub;
+    "No hay ningún lugar apropiado para nadar aquí.";
+];
+
+[ GoInSub;
+    GoSub();
+];
+
 ! ######################### NÚCLEO PUNYINFORM (MODIFICADO PARA EVITAR CONFLICTOS)
 ! Incluir solo las partes de puny.h que no conflictan con nuestro sistema
 
