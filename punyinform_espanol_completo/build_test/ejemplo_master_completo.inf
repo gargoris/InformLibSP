@@ -21,8 +21,8 @@ Constant INITIAL_LOCATION_VALUE CasaFamiliar;
 
 Object CasaFamiliar "la casa familiar"
     with description "Una acogedora casa familiar con muebles tradicionales. Al este puedes ver el jardín, y al oeste está la cocina.",
-         e_to -> Jardin,
-         w_to -> Cocina,
+         e_to Jardin,
+         w_to Cocina,
     has light female;
 
 Object -> mesaElegante "mesa elegante" 
@@ -71,7 +71,7 @@ Object -> -> zapatosNegros "zapatos negros"
 
 Object Jardin "el jardín encantado"
     with description "Un hermoso jardín lleno de flores coloridas y árboles frutales. Al oeste puedes regresar a la casa. El aroma de las rosas llena el aire.",
-         w_to -> CasaFamiliar,
+         w_to CasaFamiliar,
     has light male;
 
 Object -> pajaroCantor "pájaro cantor"
@@ -102,7 +102,7 @@ Object -> fuenteCristal "fuente de cristal"
 
 Object Cocina "la cocina tradicional"
     with description "Una cocina tradicional con todos los implementos necesarios para preparar deliciosas comidas. Al este puedes regresar a la casa.",
-         e_to -> CasaFamiliar,
+         e_to CasaFamiliar,
     has light female;
 
 Object -> estuFaAmilia "estufa de la familia"
@@ -161,14 +161,18 @@ Object -> -> sopacaliente "sopa caliente"
 
 ! ######################### IMPLEMENTACIÓN DE ACCIONES ESPECIALES
 
-[ DrinkSub;
+[ DrinkSub_Personalizado;
     if (noun == fuenteCristal) {
         "Bebes un poco de agua cristalina de la fuente. El agua está fresca y te refresca completamente.";
     }
     "No hay nada apropiado para beber.";
 ];
 
-[ SmellSub;
+! Extender el verbo beber para usar nuestra rutina personalizada
+Extend 'beber' first
+    * noun -> DrinkSub_Personalizado;
+
+[ SmellSub_Personalizado;
     if (noun == rosasRojas) {
         "El aroma de las rosas rojas es absolutamente embriagador. Te transporta a un estado de tranquilidad total.";
     }
@@ -178,7 +182,7 @@ Object -> -> sopacaliente "sopa caliente"
     "No hueles nada especial.";
 ];
 
-[ ListenSub;
+[ ListenSub_Personalizado;
     if (noun == pajaroCantor) {
         "El pájaro cantor entona una melodía hermosa que parece contar la historia de tesoros ocultos y aventuras por descubrir.";
     }
@@ -188,7 +192,7 @@ Object -> -> sopacaliente "sopa caliente"
     "No oyes nada especial.";
 ];
 
-[ TouchSub;
+[ TouchSub_Personalizado;
     if (noun == rosasRojas) {
         "Tocas suavemente los pétalos de las rosas. Son increíblemente suaves, como terciopelo real.";
     }
@@ -197,6 +201,16 @@ Object -> -> sopacaliente "sopa caliente"
     }
     "No sientes nada especial al tocar eso.";
 ];
+
+! Extender verbos adicionales para usar rutinas personalizadas
+Extend 'oler' first
+    * noun -> SmellSub_Personalizado;
+
+Extend 'escuchar' first 
+    * noun -> ListenSub_Personalizado;
+
+Extend 'tocar' first
+    * noun -> TouchSub_Personalizado;
 
 ! ######################### FUNCIONES DE DEMOSTRACIÓN
 

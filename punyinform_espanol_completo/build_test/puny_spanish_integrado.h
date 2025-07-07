@@ -19,6 +19,10 @@ System_file;
 
 Include "globals.h";
 
+! ######################### ATRIBUTOS ESPAÑOLES REQUERIDOS
+! Declaración de atributos para género (female ya existe en globals.h)
+Attribute male;
+
 ! ######################### CONFIGURACIÓN DE CARACTERES ESPAÑOLES
 ! Soporte para acentos y caracteres especiales
 
