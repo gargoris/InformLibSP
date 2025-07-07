@@ -5,25 +5,13 @@
 ! Autor: Claude Code
 ! Fecha: 4 de julio de 2025
 ! Versi�n: 1.0 Master
-! Zcharacter table ya definida en puny_spanish_integrado.h
-! Zcharacter table 
-    '@{E1}' '@{E9}' '@{ED}' '@{F3}' '@{FA}'    ! � � � � � (min�sculas)
-    '@{C1}' '@{C9}' '@{CD}' '@{D3}' '@{DA}'    ! � � � � � (may�sculas)
-    '@{FC}' '@{DC}'                            ! � � (di�resis)
-    '@{F1}' '@{D1}'                            ! � � (e�e)
-    '@{BF}' '@{A1}'                            ! � � (signos interrogaci�n/exclamaci�n)
-    '@{AB}' '@{BB}'                            ! � � (comillas espa�olas)
-    '@{B7}'                                    ! � (punto medio)
-    '@{A7}' '@{BA}' '@{B3}' '@{B2}' '@{B9}'    ! � � � � � (s�mbolos adicionales)
-    '@{A9}' '@{AE}' '@{B1}' '@{F7}' '@{D7}'    ! � � � � � (s�mbolos matem�ticos)
-    '@{C3}' '@{C2}' '@{E2}' '@{A2}' '@{BD}'    ! C�digos adicionales para acentos complejos
-;
 
+! Incluir nuestra librer�a espa�ola integrada PRIMERO (incluye Zcharacter table)
+Include "puny_spanish_integrado.h";
+
+! AHORA podemos usar caracteres especiales en las constantes
 Constant Story "^Aventura en Espa�ol Master^";
 Constant Headline "^La demostraci�n m�s completa de PunyInform en espa�ol^";
-
-! Incluir nuestra librer�a espa�ola integrada (recomendada)
-Include "puny_spanish_integrado.h";
 
 ! ######################### CONFIGURACI�N DEL JUEGO
 
@@ -48,7 +36,7 @@ Object -> -> libroAntiguo "libro antiguo"
     has male;
 
 Object -> -> llavesPlateadas "llaves plateadas"
-    with name 'llaves' 'plateadas' 'llaves' 'metal',
+    with name 'llaves' 'plateadas' 'metal' 'las' 'unas',
          description "Un juego de llaves plateadas que brillan con la luz. Parecen abrir puertas importantes.",
     has female pluralname;
 
@@ -201,41 +189,3 @@ Verb 'demostrar' 'mostrar' 'ense�ar'
     ! Permitir que nuestro sistema de mensajes master maneje todo
     rfalse;
 ];
-
-! ######################### NOTAS FINALES
-!
-! Este ejemplo demuestra:
-!
-! ? CONJUGACIONES VERBALES COMPLETAS
-! - M�s de 2000 formas verbales �nicas
-! - Todos los tiempos del espa�ol (presente, pasado, futuro, subjuntivo, etc.)
-! - Variantes regionales (Espa�a, M�xico, Argentina)
-! - Formas de cortes�a y coloquiales
-!
-! ? CONCORDANCIA AUTOM�TICA PERFECTA  
-! - Art�culos: el/la/los/las autom�ticos
-! - Demostrativos: este/esta/estos/estas
-! - Pronombres: lo/la/los/las/le/les
-! - Adjetivos: terminaciones -o/-a/-os/-as
-! - Verbos: est�/est�n, es/son, tiene/tienen
-!
-! ? MENSAJES INTELIGENTES
-! - 200+ mensajes traducidos con concordancia
-! - Respuestas contextualmente apropiadas
-! - Manejo de errores en espa�ol natural
-! - Feedback inmersivo y profesional
-!
-! ? PARSER AVANZADO
-! - Manejo de contracciones: "del" ? "de el"
-! - Procesamiento de art�culos redundantes
-! - Verbos reflexivos: "ponerse", "quitarse"
-! - Sintaxis espa�ola natural y flexible
-!
-! ? OBJETOS CON G�NERO NATIVO
-! - Masculino: libro, tesoro, armario, jard�n
-! - Femenino: mesa, caja, camisa, casa, cocina
-! - Plurales: llaves, zapatos, rosas
-! - Animados: p�jaro (con respuestas inteligentes)
-!
-! �Es la implementaci�n m�s completa de espa�ol 
-! jam�s realizada para ficci�n interactiva!

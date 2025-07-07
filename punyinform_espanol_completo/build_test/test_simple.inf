@@ -1,0 +1,25 @@
+! Test simple para verificar gramática española
+Zcharacter table 
+    '@{E1}' '@{E9}' '@{ED}' '@{F3}' '@{FA}'    ! á é í ó ú
+;
+
+Constant Story "^Test Espanol^";
+Constant Headline "^Prueba de gramatica espanola^";
+
+Include "puny_spanish_integrado.h";
+
+Object Sala "sala de prueba"
+    with description "Una sala simple para probar comandos en español.",
+    has light;
+
+Object -> libro "libro rojo"
+    with name 'libro' 'rojo',
+         description "Un libro de color rojo.",
+    has male;
+
+[ Initialise;
+    InicializarEspanol();
+    print "^Test de gramática española. Prueba: 'coger libro'^^";
+    location = Sala;
+    lookmode = 2;
+];

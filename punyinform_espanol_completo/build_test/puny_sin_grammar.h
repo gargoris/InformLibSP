@@ -1074,7 +1074,7 @@ Constant ONE_SPACE_STRING = " ";
 	if(_LookForLightInObj(_ceil, _ceil) == false) _darkness = true;
 	if(_darkness ~= _old_darkness) scope_modified = true;
 	if(_darkness) {
-		if(_old_darkness == false && p_silent == false) PrintMsg(MSG_NOW_DARK);
+		if(_old_darkness == false && p_silent == false) _PrintMsg(MSG_NOW_DARK);
 		location = thedark;
 	} else {
 		location = real_location;

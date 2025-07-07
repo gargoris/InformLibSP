@@ -8,6 +8,21 @@
 
 System_file;
 
+! ######################### CARACTERES ESPECIALES ESPAÑOLES - DEBE IR PRIMERO
+! Esta tabla DEBE definirse antes que cualquier string que use caracteres especiales
+Zcharacter table 
+    '@{E1}' '@{E9}' '@{ED}' '@{F3}' '@{FA}'    ! á é í ó ú (minúsculas)
+    '@{C1}' '@{C9}' '@{CD}' '@{D3}' '@{DA}'    ! Á É Í Ó Ú (mayúsculas)
+    '@{FC}' '@{DC}'                            ! ü Ü (diéresis)
+    '@{F1}' '@{D1}'                            ! ñ Ñ (eñe)
+    '@{BF}' '@{A1}'                            ! ¿ ¡ (signos interrogación/exclamación)
+    '@{AB}' '@{BB}'                            ! « » (comillas españolas)
+    '@{B7}'                                    ! · (punto medio)
+    '@{A7}' '@{BA}' '@{B3}' '@{B2}' '@{B9}'    ! § º ³ ² ¹ (símbolos adicionales)
+    '@{A9}' '@{AE}' '@{B1}' '@{F7}' '@{D7}'    ! © ® ± ÷ × (símbolos matemáticos)
+    '@{C3}' '@{C2}' '@{E2}' '@{A2}' '@{BD}'    ! Códigos adicionales para acentos complejos
+;
+
 ! ######################### CONFIGURACIÓN OPCIONAL
 ! Descomenta para habilitar características adicionales
 
@@ -23,32 +38,25 @@ Include "globals.h";
 ! Declaración de atributos para género (female ya existe en globals.h)
 Attribute male;
 
-! ######################### CONFIGURACIÓN DE CARACTERES ESPAÑOLES
-! Soporte para acentos y caracteres especiales
-
-Zcharacter table 
-    '@{E1}' '@{E9}' '@{ED}' '@{F3}' '@{FA}'    ! á é í ó ú (minúsculas)
-    '@{C1}' '@{C9}' '@{CD}' '@{D3}' '@{DA}'    ! Á É Í Ó Ú (mayúsculas)
-    '@{FC}' '@{DC}'                            ! ü Ü (diéresis)
-    '@{F1}' '@{D1}'                            ! ñ Ñ (eñe)
-    '@{BF}' '@{A1}'                            ! ¿ ¡ (signos interrogación/exclamación)
-    '@{AB}' '@{BB}'                            ! « » (comillas españolas)
-    '@{B7}'                                    ! · (punto medio)
-    '@{A7}' '@{BA}' '@{B3}' '@{B2}' '@{B9}'    ! § º ³ ² ¹ (símbolos adicionales)
-    '@{A9}' '@{AE}' '@{B1}' '@{F7}' '@{D7}'    ! © ® ± ÷ × (símbolos matemáticos)
-    '@{C3}' '@{C2}' '@{E2}' '@{A2}' '@{BD}'    ! Códigos adicionales para acentos complejos
-;
-
-! ######################### SISTEMA DE MENSAJES ESPAÑOL
-! NOTA: Temporalmente comentado para evitar conflicto con _PrintMsg
-! #IfnDef DISABLE_SPANISH_MESSAGES;
-! Include "spanish_final/messages_spanish_master.h";
-! #EndIf;
+! ######################### CONSTANTES DE ACCIONES REQUERIDAS
+! Definición de constantes que usa el parser español
+Constant MAX_BUFFER_WORDS = 20;
+! Global PrintMsg = _PrintMsg;  ! Comentado - se define en messages_spanish_master.h
+Constant Take = TakeSub;
+Constant Give = GiveSub; 
+Constant Insert = InsertSub;
+Constant PutOn = PutOnSub;
 
 ! ######################### PUNYINFORM CORE (SIN GRAMMAR.H PARA EVITAR CONFLICTOS)
 ! NOTA: Usamos puny_sin_grammar.h que es una versión modificada de puny.h
 ! que excluye grammar.h para evitar conflictos con grammar_optimizada.h
 Include "puny_sin_grammar.h";
+
+! ######################### SISTEMA DE MENSAJES ESPAÑOL (DESPUÉS DE PUNYINFORM)
+! NOTA: Debe ir DESPUÉS de puny_sin_grammar.h para sobrescribir mensajes ingleses
+#IfnDef DISABLE_SPANISH_MESSAGES;
+Include "messages_spanish_simple.h";
+#EndIf;
 
 ! ######################### GRAMMAR.H ORIGINAL (PARA DEFINICIONES DE ACCIONES)
 ! NOTA: Se incluye ANTES de la gramática española para definir las acciones,
@@ -59,7 +67,8 @@ Include "grammar.h";
 Include "grammar_optimizada.h";
 
 ! ######################### PARSER ESPAÑOL AVANZADO
-Include "parser_spanish_master.h";
+! TEMPORALMENTE COMENTADO PARA DEBUGGING
+! Include "parser_spanish_master.h";
 
 ! NOTA: scope.h ya está incluido en puny_sin_grammar.h - no incluir de nuevo
 

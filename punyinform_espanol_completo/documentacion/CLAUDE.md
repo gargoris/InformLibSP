@@ -1,75 +1,73 @@
-# PunyInform Librería Española Completa
+# PunyInform Sistema Español
 
-## ⚡ **INICIO ULTRA-RÁPIDO (Para Nuevos Usuarios)**
+## Estado del Proyecto
 
-### 🌟 **¿Solo quieres empezar? Usa esto:**
+**Estado actual:** Sistema básico funcional con limitaciones
+**Fecha:** 7 de julio de 2025
+**Compilación exitosa:** ✅ `build_test/test_debug.z5`
+
+### Qué funciona
 
 ```inform6
 Include "puny_spanish_integrado.h";
 
 [ Initialise;
-    InicializarEspanol();  // ← Solo esta línea
+    InicializarEspanol();
     location = TuUbicacion;
 ];
 ```
 
-**¡YA ESTÁ!** Tu juego entiende español completo. 
-
-📖 **Para más detalles:** Lee `GUIA_RAPIDA.md`  
-🎮 **Para ver ejemplo completo:** Ejecuta `ejemplo_integrado.inf`
+**Funcionalidad verificada:**
+- Verbos básicos: "coger", "tomar", "examinar"
+- Mensajes básicos: "Cogido", "Dejado"
+- Caracteres especiales: ñ, á, é, í, ó, ú
 
 ---
 
-## 🎯 Objetivo del Proyecto
+## Problemas Conocidos
 
-Crear una librería completa en español basada en PunyInform que sea capaz de interpretar comandos en español con toda su riqueza gramatical, incluyendo:
+### Limitaciones actuales
+- **Artículos:** "coge las llaves" no funciona (solo "coge llaves")
+- **Mensajes mixtos:** Algunos mensajes aún en inglés
+- **Ejemplo complejo:** `ejemplo_master_completo_fixed.inf` tiene errores de caracteres especiales
+- **Parser avanzado:** `parser_spanish_master.h` deshabilitado por conflictos
 
-- **Conjugaciones verbales completas**: regulares e irregulares en todos los tiempos
-- **Concordancia de género y número**: artículos, adjetivos, pronombres
-- **Formas reflexivas**: "levantarse", "ponerse", "quitarse"  
-- **Variantes regionales**: diferentes formas de expresar la misma acción
-- **Sintaxis natural española**: permitir construcciones sintácticas válidas del español
+### Lo que NO funciona aún
+- Sintaxis compleja con artículos
+- Concordancia automática de género/número
+- Formas reflexivas
+- Mensajes de listado completos en español
 
-## 📁 Estructura del Proyecto Final
+## Objetivo Original
+
+Crear un sistema español para PunyInform que maneje:
+- Conjugaciones verbales básicas
+- Mensajes traducidos
+- Caracteres especiales españoles
+
+## Estructura del Proyecto
 
 ```
-punny_spanish/
-├── 🌟 puny_spanish_integrado.h       # ⭐ SISTEMA INTEGRADO (RECOMENDADO)
-├── 🎮 ejemplo_integrado.inf          # ⭐ EJEMPLO COMPLETO FUNCIONAL
-├── 📖 GUIA_RAPIDA.md                 # ⭐ EMPEZAR AQUÍ - Guía 2 pasos
-├── 📋 ESTRUCTURA_SISTEMA.md          # ⭐ Mapa completo del sistema
-├── 
-├── spanish_final/                    # 🚀 SISTEMA OPTIMIZADO AVANZADO
-│   ├── puny_spanish_master.h         # Punto de entrada master completo
-│   ├── grammar_optimizada.h          # Gramática sin duplicados (66% menos código)
-│   ├── verbos_infinitivos.h          # Lista de verbos con acciones
-│   ├── verbos_irregulares.h          # Sistema de verbos irregulares
-│   ├── grammar_dinamica.h            # Gramática dinámica limpia
-│   ├── messages_spanish_master.h     # Mensajes con concordancia
-│   ├── parser_spanish_master.h       # Parser español inteligente
-│   └── grammar_spanish_master.h      # Gramática original (referencia)
-├── 
-├── spanish/                          # 📚 SISTEMA ORIGINAL
-│   ├── puny_spanish.h                # Sistema básico original
-│   ├── messages_spanish.h            # Mensajes básicos
-│   ├── grammar_spanish.h             # Gramática básica
-│   └── parser_spanish.h              # Parser básico
-├── 
-├── ejemplo_espanol_completo.inf      # Ejemplo avanzado
-├── ejemplo_funcional.inf             # Ejemplo básico funcionando
-├── demo_espanol.inf                  # Demo simple
-└── CLAUDE.md                         # Esta documentación
+build_test/                           # DIRECTORIO FUNCIONAL
+├── puny_spanish_integrado.h          # Sistema principal
+├── grammar_optimizada.h              # Verbos españoles básicos
+├── messages_spanish_simple.h         # Mensajes traducidos
+├── test_debug.inf/.z5                # ✅ FUNCIONA
+└── ejemplo_master_completo_fixed.inf # ❌ Problemas con caracteres
+
+core/                                 # Archivos de desarrollo
+├── sistema_integrado/
+├── sistema_optimizado/
+└── sistema_basico/
 ```
 
-## 🚀 Estado Final: LIBRERÍA ESPAÑOLA COMPLETA
+## Estado Real del Sistema
 
-### ✅ **Análisis Completo de PunyInform** - COMPLETADO
-- [x] Lectura exhaustiva de todos los archivos core (globals, grammar, messages, parser, puny, scope)
-- [x] Comprensión total de la arquitectura original
-- [x] Identificación de puntos de integración
-- [x] Estrategia de traducción completa definida
-
-### ✅ **Sistema Español Completo** - COMPLETADO
+### ✅ Funcionalidad Básica Verificada
+- Verbos básicos en español funcionando
+- Mensajes básicos traducidos
+- Caracteres especiales en contextos simples
+- Compilación exitosa de ejemplos básicos
 
 #### 🔧 **puny_spanish.h** - Núcleo Principal (Básico)
 ```inform6
@@ -485,50 +483,37 @@ lista para la batalla.
 
 ## 🏆 Logros del Proyecto
 
-1. **Primera librería IF española completa** basada en PunyInform
-2. **Sistema de conjugación más avanzado** jamás implementado en IF español
-3. **Compatibilidad total** mantenida con el ecosistema PunyInform
-4. **Arquitectura extensible** para futuras mejoras
-5. **Documentación ejemplar** para la comunidad
-6. **🚀 NUEVO: Sistema de gramática optimizada** que elimina >65% de duplicados
-7. **🎯 NUEVO: Parser automático de conjugaciones** regulares e irregulares
-8. **⚡ NUEVO: Arquitectura modular** fácil de mantener y extender
-9. **🌟 NUEVO: Sistema integrado ultra-fácil** - Todo en un archivo, una línea de configuración
+### Características implementadas
+1. Sistema básico español para PunyInform
+2. Verbos conjugados básicos funcionando
+3. Mensajes traducidos parcialmente
+4. Soporte para caracteres especiales
+5. Gramática española básica
+6. Funciones de concordancia definidas (sin implementar completamente)
 
-## 🔧 Cómo Usar la Librería
+## Cómo Usar
 
-### 🌟 **RECOMENDADO: Sistema Integrado (Ultra-Fácil)**
+### Sistema Básico Funcional
 ```inform6
-// TODO INCLUIDO - Solo necesitas esto:
+// Usar desde build_test/
 Include "puny_spanish_integrado.h";
 
 [ Initialise;
-    InicializarEspanol();  // ← Solo esta línea
+    InicializarEspanol();
     location = TuUbicacion;
     lookmode = 2;
 ];
 ```
 
-### 🚀 **Alternativa: Sistema Optimizado Avanzado**
-```inform6
-// Para control total (componentes separados)
-Include "spanish_final/grammar_optimizada.h";
-```
+### Limitaciones del sistema actual
+- Usa nombres simples en objetos: `'libro'` no `'el' 'libro'`
+- Comandos simples: `"coger libro"` no `"coge el libro"`
+- Algunos mensajes aún en inglés
 
-### 📚 **Alternativa: Sistema Master Completo**
-```inform6
-// Sistema completo tradicional
-Include "spanish_final/puny_spanish_master.h";
-```
+## Archivo Funcional Verificado
 
-### ⚙️ **Configuración Opcional**
-```inform6
-// Añadir ANTES del Include para personalizar:
-Constant OPTIONAL_EXTENDED_VERBSET;     // Verbos adicionales
-Constant DEBUG_SPANISH_PARSER;          // Información de debug
-// Constant DISABLE_SPANISH_MESSAGES;   // Solo gramática, mensajes en inglés
-
-Include "puny_spanish_integrado.h";
+**Usar:** `build_test/test_debug.z5`
+**Estado:** Compilación exitosa, verbos españoles funcionando
 ```
 
 ### 2. Configuración

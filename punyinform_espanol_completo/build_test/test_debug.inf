@@ -1,0 +1,27 @@
+! Test de debugging para verificar gramática española
+! Incluir librería española integrada PRIMERO
+Include "puny_spanish_integrado.h";
+
+Constant Story "^Test Debug Español^";
+Constant Headline "^Verificación de gramática^";
+
+Object Sala "sala de test"
+    with description "Una sala simple para testing.",
+    has light;
+
+Object -> objeto_test "libro test"
+    with name 'libro' 'test',
+         description "Un libro para testing.",
+    has male;
+
+[ Initialise;
+    InicializarEspanol();
+    print "^Test Debug - Prueba estos comandos:^";
+    print "• coger libro^";
+    print "• coge libro^";
+    print "• tomar libro^";
+    print "• take book^";
+    print "^";
+    location = Sala;
+    lookmode = 2;
+];

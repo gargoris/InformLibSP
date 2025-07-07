@@ -7,7 +7,15 @@
       "Bash(../../../inform +include_path=../../core ejemplo_master_completo.inf)",
       "Bash(/mnt/c/Users/Francisco.Fuentes/inform/InformLibSP/inform ejemplo_master_completo.inf)",
       "Bash(grep:*)",
-      "Bash(ls:*)"
+      "Bash(ls:*)",
+      "Bash(../../inform ejemplo_master_completo.inf)",
+      "Bash(rg:*)",
+      "Bash(find:*)",
+      "Bash(cp:*)",
+      "Bash(../../inform test_simple.inf)",
+      "Bash(../../inform ejemplo_master_completo_fixed.inf)",
+      "Bash(../../inform:*)",
+      "Bash(frotz:*)"
     ],
     "deny": []
   }
