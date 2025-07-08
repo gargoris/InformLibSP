@@ -1,0 +1,48 @@
+
+> push apple to box
+taking apple
+Apples are verboten
+
+> push banana to box
+taking banana
+You put the banana into the box.
+
+> push lemon to box
+taking lemon
+You put the lemon into the box.
+
+> l
+The Library
+You are in a library.
+
+You can see a box (which contains a lemon and a banana), some Apache Indians and
+John here.
+
+> i
+You're carrying a apple.
+
+> take banana
+taking banana
+It seems to be stuck inside the box.
+
+> empty box
+lemon: taking lemon
+Dropped.
+banana: taking banana
+It seems to be stuck inside the box.
+
+> give apple to indians
+The Apache Indians don't seem interested.
+
+> give apple to john
+John doesn't seem interested.
+
+> ask indians for me
+The Apache Indians have better things to do.
+
+> ask john for me
+John has better things to do.
+
+> quit
+Are you sure you want to quit? yes
+

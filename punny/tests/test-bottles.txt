@@ -1,0 +1,23 @@
+
+> look
+Room
+You are in a room.
+
+You can see a girl here.
+
+> take all cans
+green can: You already have it.
+brown can: You already have it.
+
+> give cans to girl
+You can't use multiple objects with that verb.
+
+> give all cans to girl
+You can't use multiple objects with that verb.
+
+> give can to girl
+Do you mean the green can or the brown can?
+
+> quit
+Are you sure you want to quit? yes
+
