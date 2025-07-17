@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using DaadModern.Parser;
+using Microsoft.Extensions.Logging;
 
 namespace DaadModern.Transpiler
 {
