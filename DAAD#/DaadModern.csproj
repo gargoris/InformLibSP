@@ -1,0 +1,165 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <OutputType>Exe</OutputType>
+    <RootNamespace>DaadModern</RootNamespace>
+    <AssemblyName>DaadModern</AssemblyName>
+    <LangVersion>13.0</LangVersion>
+    <Nullable>enable</Nullable>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <WarningsAsErrors />
+    <WarningsNotAsErrors>CA1014;CA2007</WarningsNotAsErrors>
+    <GenerateAssemblyInfo>true</GenerateAssemblyInfo>
+    <AssemblyTitle>DAAD Moderno - Parser y Transpilador</AssemblyTitle>
+    <AssemblyDescription>Sistema moderno para desarrollo de aventuras conversacionales compatible con DAAD clásico</AssemblyDescription>
+    <AssemblyCompany>DAAD Moderno Team</AssemblyCompany>
+    <AssemblyProduct>DAAD Moderno</AssemblyProduct>
+    <AssemblyCopyright>Copyright © 2025 DAAD Moderno Team</AssemblyCopyright>
+    <AssemblyVersion>1.0.0.0</AssemblyVersion>
+    <FileVersion>1.0.0.0</FileVersion>
+    <Version>1.0.0</Version>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <DebugSymbols>true</DebugSymbols>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <DefineConstants>TRACE</DefineConstants>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+  </PropertyGroup>
+
+  <!-- Dependencias principales -->
+  <ItemGroup>
+    <PackageReference Include="Pidgin" Version="3.2.2" />
+    <PackageReference Include="System.CommandLine" Version="2.0.0-beta4.22272.1" />
+    <PackageReference Include="Microsoft.Extensions.Hosting" Version="8.0.0" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="8.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Configuration" Version="8.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="8.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Logging" Version="8.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Console" Version="8.0.0" />
+    <PackageReference Include="Serilog" Version="3.1.1" />
+    <PackageReference Include="Serilog.Extensions.Hosting" Version="8.0.0" />
+    <PackageReference Include="Serilog.Sinks.Console" Version="5.0.1" />
+    <PackageReference Include="Serilog.Sinks.File" Version="5.0.0" />
+  </ItemGroup>
+
+  <!-- Dependencias de testing -->
+  <ItemGroup>
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.8.0" />
+    <PackageReference Include="xunit" Version="2.6.2" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="2.5.3">
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+    <PackageReference Include="FluentAssertions" Version="6.12.0" />
+    <PackageReference Include="Moq" Version="4.20.69" />
+  </ItemGroup>
+
+  <!-- Analizadores de código -->
+  <ItemGroup>
+    <PackageReference Include="Microsoft.CodeAnalysis.Analyzers" Version="3.3.4">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.CodeAnalysis.NetAnalyzers" Version="8.0.0">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+
+  <!-- Archivos de configuración -->
+  <ItemGroup>
+    <None Update="appsettings.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="appsettings.Development.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+  <!-- Dependencias adicionales para Fase 1 -->
+<ItemGroup>
+  <!-- Testing y mocking mejorado -->
+  <PackageReference Include="Bogus" Version="34.0.2" />
+  <PackageReference Include="AutoFixture" Version="4.18.0" />
+  <PackageReference Include="AutoFixture.Xunit2" Version="4.18.0" />
+  <PackageReference Include="NBomber" Version="3.0.5" />
+  <PackageReference Include="BenchmarkDotNet" Version="0.13.12" />
+  
+  <!-- Análisis de código -->
+  <PackageReference Include="SonarAnalyzer.CSharp" Version="9.16.0.82469">
+    <PrivateAssets>all</PrivateAssets>
+    <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
+  </PackageReference>
+  
+  <!-- Reportes y métricas -->
+  <PackageReference Include="ReportGenerator" Version="5.2.0" />
+  <PackageReference Include="coverlet.collector" Version="6.0.0" />
+  <PackageReference Include="coverlet.msbuild" Version="6.0.0" />
+  
+  <!-- Documentación automática -->
+  <PackageReference Include="DocFX.Console" Version="2.74.1" />
+  <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
+  
+  <!-- Validación y serialización -->
+  <PackageReference Include="FluentValidation" Version="11.8.1" />
+  <PackageReference Include="MessagePack" Version="2.5.129" />
+</ItemGroup>
+
+<!-- Configuración de testing mejorada -->
+<PropertyGroup Condition="'$(Configuration)'=='Debug'">
+  <CollectCoverage>true</CollectCoverage>
+  <CoverletOutputFormat>opencover,cobertura</CoverletOutputFormat>
+  <CoverletOutput>TestResults/</CoverletOutput>
+  <Include>[DaadModern.*]*</Include>
+  <Exclude>[DaadModern.Tests]*,[DaadModern.Benchmarks]*</Exclude>
+  <ExcludeByAttribute>Obsolete,GeneratedCodeAttribute,CompilerGeneratedAttribute</ExcludeByAttribute>
+</PropertyGroup>
+
+<!-- Archivos de configuración adicionales -->
+<ItemGroup>
+  <None Update="TestData\**\*.ddb">
+    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+  </None>
+  <None Update="TestData\**\*.daad">
+    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+  </None>
+  <None Update="BenchmarkData\**\*">
+    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+  </None>
+</ItemGroup>
+
+<!-- Targets personalizados -->
+<Target Name="RunPhase1Tests" DependsOnTargets="Build">
+  <Exec Command="dotnet test --filter Category=Phase1 --collect:&quot;XPlat Code Coverage&quot;" />
+</Target>
+
+<Target Name="GenerateBenchmarkReport" DependsOnTargets="Build">
+  <Exec Command="dotnet run --project DaadModern -- bench --input BenchmarkData --output TestResults/benchmark.json" />
+</Target>
+
+<Target Name="ValidateCompatibility" DependsOnTargets="Build">
+  <Exec Command="dotnet run --project DaadModern -- compat --input TestData/classic/*.ddb --coverage --report TestResults/compat.html" />
+</Target>
+
+  <!-- Recursos y templates -->
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\Templates\*.daad" />
+    <EmbeddedResource Include="Resources\Vocabulary\*.json" />
+    <EmbeddedResource Include="Resources\Examples\*.daad" />
+  </ItemGroup>
+
+  <!-- Archivos README y documentación -->
+  <ItemGroup>
+    <None Include="README.md" />
+    <None Include="CHANGELOG.md" />
+    <None Include="docs\**\*.md" />
+  </ItemGroup>
+
+</Project>
