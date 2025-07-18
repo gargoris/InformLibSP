@@ -4,6 +4,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace DaadModern.Core
 {
@@ -48,6 +49,66 @@ namespace DaadModern.Core
         /// Indica si la ejecución del proceso actual fue exitosa
         /// </summary>
         public bool ProcessExecutionSuccess { get; set; } = true;
+
+        /// <summary>
+        /// Flags del juego (estado de variables)
+        /// </summary>
+        public Dictionary<string, int> Flags { get; set; } = new Dictionary<string, int>();
+
+        /// <summary>
+        /// Objetos del juego
+        /// </summary>
+        public Dictionary<int, GameObject> Objects { get; set; } = new Dictionary<int, GameObject>();
+
+        /// <summary>
+        /// Localizaciones (ubicaciones de objetos)
+        /// </summary>
+        public Dictionary<int, int> ObjectLocations { get; set; } = new Dictionary<int, int>();
+
+        /// <summary>
+        /// Descripciones de localizaciones
+        /// </summary>
+        public Dictionary<int, GameLocation> Locations { get; set; } = new Dictionary<int, GameLocation>();
+
+        /// <summary>
+        /// Vocabulario de verbos
+        /// </summary>
+        public Dictionary<string, int> Verbs { get; set; } = new Dictionary<string, int>();
+
+        /// <summary>
+        /// Vocabulario de sustantivos
+        /// </summary>
+        public Dictionary<string, int> Nouns { get; set; } = new Dictionary<string, int>();
+
+        /// <summary>
+        /// Vocabulario de adjetivos
+        /// </summary>
+        public Dictionary<string, int> Adjectives { get; set; } = new Dictionary<string, int>();
+
+        /// <summary>
+        /// Vocabulario de preposiciones
+        /// </summary>
+        public Dictionary<string, int> Prepositions { get; set; } = new Dictionary<string, int>();
+
+        /// <summary>
+        /// Mensajes del sistema
+        /// </summary>
+        public Dictionary<int, string> Messages { get; set; } = new Dictionary<int, string>();
+
+        /// <summary>
+        /// Sinónimos de palabras
+        /// </summary>
+        public Dictionary<int, List<int>> Synonyms { get; set; } = new Dictionary<int, List<int>>();
+
+        /// <summary>
+        /// Procesos del juego
+        /// </summary>
+        public List<GameProcess> Processes { get; set; } = new List<GameProcess>();
+
+        /// <summary>
+        /// Palabras analizadas por el parser
+        /// </summary>
+        public List<ParsedWord> ParsedWords { get; set; } = new List<ParsedWord>();
 
         #endregion
 
@@ -124,80 +185,48 @@ namespace DaadModern.Core
 
         #endregion
 
-        #region Colecciones de Datos
+        #region Propiedades Fase 7 - Sistema Avanzado
 
         /// <summary>
-        /// Flags del juego (0-255)
+        /// Última tecla presionada
         /// </summary>
-        public Dictionary<string, object> Flags { get; set; } = new();
+        public char LastKeyPressed { get; set; } = '\0';
 
         /// <summary>
-        /// Ubicaciones de todos los objetos
+        /// Buffer de entrada de texto
         /// </summary>
-        public Dictionary<int, int> ObjectLocations { get; set; } = new();
+        public string InputBuffer { get; set; } = string.Empty;
 
         /// <summary>
-        /// Definiciones de objetos
+        /// ID de pantalla actual
         /// </summary>
-        public Dictionary<int, GameObject> Objects { get; set; } = new();
+        public int CurrentScreen { get; set; } = 0;
 
         /// <summary>
-        /// Localidades del juego
+        /// Último comando ejecutado por el jugador
         /// </summary>
-        public Dictionary<int, Location> Locations { get; set; } = new();
+        public string LastCommand { get; set; } = string.Empty;
 
         /// <summary>
-        /// Mensajes del juego
+        /// Posición X guardada del cursor
         /// </summary>
-        public List<string> Messages { get; set; } = new();
+        public int SavedCursorX { get; set; } = 0;
 
         /// <summary>
-        /// Procesos del juego
+        /// Posición Y guardada del cursor
         /// </summary>
-        public List<Process> Processes { get; set; } = new();
+        public int SavedCursorY { get; set; } = 0;
+
+        /// <summary>
+        /// Estado guardado en RAM
+        /// </summary>
+        private Dictionary<string, object>? _ramSavedState;
 
         #endregion
 
-        #region Diccionarios de Vocabulario
+        #region Propiedades Parser Avanzado (Fase 2)
 
-        /// <summary>
-        /// Diccionario de verbos (palabra -> id)
-        /// </summary>
-        public Dictionary<string, int> Verbs { get; set; } = new();
-
-        /// <summary>
-        /// Diccionario de sustantivos (palabra -> id)
-        /// </summary>
-        public Dictionary<string, int> Nouns { get; set; } = new();
-
-        /// <summary>
-        /// Diccionario de adjetivos (palabra -> id)
-        /// </summary>
-        public Dictionary<string, int> Adjectives { get; set; } = new();
-
-        /// <summary>
-        /// Diccionario de adverbios (palabra -> id)
-        /// </summary>
-        public Dictionary<string, int> Adverbs { get; set; } = new();
-
-        /// <summary>
-        /// Diccionario de preposiciones (palabra -> id)
-        /// </summary>
-        public Dictionary<string, int> Prepositions { get; set; } = new();
-
-        #endregion
-
-        #region Parser y Rutinas
-
-        /// <summary>
-        /// Palabras parseadas de la entrada actual
-        /// </summary>
-        public List<WordInfo> ParsedWords { get; set; } = new();
-
-        /// <summary>
-        /// Rutinas externas registradas
-        /// </summary>
-        public Dictionary<int, Func<GameState, bool>> ExternalRoutines { get; set; } = new();
+        // ...existing code...
 
         #endregion
 
@@ -271,23 +300,20 @@ namespace DaadModern.Core
 
         private void InitializeLocations()
         {
-            Locations[0] = new Location 
+            Locations[0] = new GameLocation 
             { 
-                Id = 0, 
                 Name = "Inicio", 
                 Description = "Punto de inicio del juego" 
             };
 
-            Locations[1] = new Location 
+            Locations[1] = new GameLocation 
             { 
-                Id = 1, 
                 Name = "Habitación", 
                 Description = "Una pequeña habitación con una puerta al norte."
             };
 
-            Locations[2] = new Location 
+            Locations[2] = new GameLocation 
             { 
-                Id = 2, 
                 Name = "Pasillo", 
                 Description = "Un largo pasillo con puertas a ambos lados."
             };
@@ -335,29 +361,26 @@ namespace DaadModern.Core
 
         private void InitializeMessages()
         {
-            Messages.AddRange(new[]
-            {
-                "Bienvenido al juego.",
-                "No entiendo esa palabra.",
-                "No puedes hacer eso.",
-                "No hay nada especial aquí.",
-                "Está demasiado oscuro para ver.",
-                "No tienes eso.",
-                "Ya lo tienes.",
-                "No puedes coger eso.",
-                "Tus manos están llenas.",
-                "¡Hecho!"
-            });
+            Messages[0] = "Bienvenido al juego.";
+            Messages[1] = "No entiendo esa palabra.";
+            Messages[2] = "No puedes hacer eso.";
+            Messages[3] = "No hay nada especial aquí.";
+            Messages[4] = "Está demasiado oscuro para ver.";
+            Messages[5] = "No tienes eso.";
+            Messages[6] = "Ya lo tienes.";
+            Messages[7] = "No puedes coger eso.";
+            Messages[8] = "Tus manos están llenas.";
+            Messages[9] = "¡Hecho!";
         }
 
         private void InitializeProcesses()
         {
             // Proceso 0: Proceso principal de entrada
-            var mainProcess = new Process { Id = 0 };
+            var mainProcess = new GameProcess { Id = 0 };
             Processes.Add(mainProcess);
 
             // Proceso 1: Proceso de respuestas
-            var responseProcess = new Process { Id = 1 };
+            var responseProcess = new GameProcess { Id = 1 };
             Processes.Add(responseProcess);
         }
 
@@ -379,7 +402,7 @@ namespace DaadModern.Core
         /// </summary>
         public void SetFlag(int flagId, object value)
         {
-            Flags[flagId.ToString()] = value;
+            Flags[flagId.ToString()] = Convert.ToInt32(value);
         }
 
         /// <summary>
@@ -455,6 +478,91 @@ namespace DaadModern.Core
             ParsedWords.Clear();
             
             Initialize();
+        }
+
+        /// <summary>
+        /// Guarda el estado actual en RAM
+        /// </summary>
+        public void SaveStateToRam()
+        {
+            _ramSavedState = new Dictionary<string, object>
+            {
+                ["CurrentLocation"] = CurrentLocation,
+                ["CurrentObject"] = CurrentObject,
+                ["Flags"] = Flags.ToDictionary(f => f.Key, f => (object)f.Value),
+                ["ObjectLocations"] = ObjectLocations,
+                ["GameTime"] = DateTime.Now
+            };
+        }
+
+        /// <summary>
+        /// Carga el estado desde RAM
+        /// </summary>
+        public bool LoadStateFromRam()
+        {
+            if (_ramSavedState == null)
+                return false;
+
+            try
+            {
+                CurrentLocation = (int)_ramSavedState["CurrentLocation"];
+                CurrentObject = (int)_ramSavedState["CurrentObject"];
+                
+                var savedFlags = (Dictionary<string, object>)_ramSavedState["Flags"];
+                foreach (var flag in savedFlags)
+                {
+                    Flags[flag.Key] = Convert.ToInt32(flag.Value);
+                }
+
+                var savedLocations = (Dictionary<int, int>)_ramSavedState["ObjectLocations"];
+                foreach (var objLoc in savedLocations)
+                {
+                    ObjectLocations[objLoc.Key] = objLoc.Value;
+                }
+
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        /// <summary>
+        /// Añade un sinónimo al diccionario
+        /// </summary>
+        public void AddSynonym(int wordId, int synonymId)
+        {
+            if (!Synonyms.ContainsKey(wordId))
+            {
+                Synonyms[wordId] = new List<int>();
+            }
+            
+            if (!Synonyms[wordId].Contains(synonymId))
+            {
+                Synonyms[wordId].Add(synonymId);
+            }
+        }
+
+        /// <summary>
+        /// Obtiene una conexión desde una localización en una dirección
+        /// </summary>
+        public Connection? GetConnection(int fromLocation, int direction)
+        {
+            if (Locations.ContainsKey(fromLocation))
+            {
+                var location = Locations[fromLocation];
+                if (location.Connections.ContainsKey(direction))
+                {
+                    return new Connection 
+                    { 
+                        FromLocation = fromLocation, 
+                        ToLocation = location.Connections[direction], 
+                        Direction = direction 
+                    };
+                }
+            }
+            return null;
         }
 
         #endregion
