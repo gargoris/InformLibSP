@@ -1,13 +1,13 @@
-# DAAD# - Gramática Actualizada con Fases 2, 3 y 4
+# DAAD# - Gramática Completa con Todas las Fases (1-7)
 
 ## 📝 Gramática Extendida DAAD# (EBNF)
 
-Esta gramática incluye todos los CondActs implementados en las Fases 1-4.
+Esta gramática incluye todos los CondActs implementados en las Fases 1-7 completas.
 
 ### Estructura Principal
 
 ```ebnf
-(* Gramática DAAD# v2.1 - Actualizada con Fases 2-4 *)
+(* Gramática DAAD# v3.0 - Completa con Fases 1-7 *)
 DaadProgram ::= Section+
 
 Section ::= GameSection 
@@ -28,10 +28,10 @@ ResponsePattern ::= VerbPattern NounPattern? AdjectivePattern? PrepositionPatter
 
 CondactSequence ::= CondactStatement (";" CondactStatement)*
 
-(* CondActs - Todas las fases implementadas *)
+(* CondActs - Todas las fases implementadas 1-7 *)
 CondactStatement ::= ConditionCondact | ActionCondact
 
-(* Condiciones - Fases 1-4 *)
+(* Condiciones - Fases 1-7 *)
 ConditionCondact ::= BasicCondition | ParserCondition | ComparisonCondition | AttributeCondition | ProcessCondition
 
 BasicCondition ::= "at" Identifier
@@ -73,8 +73,8 @@ AttributeCondition ::= "hasat" Identifier Expression
 ProcessCondition ::= "isdone"
                    | "isndone"
 
-(* Acciones - Fases 1-4 *)
-ActionCondact ::= BasicAction | CopyAction | AutoAction | ProcessAction | PersistenceAction | ContainerAction
+(* Acciones - Fases 1-7 *)
+ActionCondact ::= BasicAction | CopyAction | AutoAction | ProcessAction | PersistenceAction | ContainerAction | AdvancedAction
 
 BasicAction ::= "goto" Identifier
               | "get" Identifier
@@ -128,6 +128,25 @@ PersistenceAction ::= "save" Expression
 (* FASE 1: Contenedores *)
 ContainerAction ::= "putin" Identifier Identifier
                   | "takeout" Identifier Identifier
+
+(* FASE 7: Acciones Avanzadas *)
+AdvancedAction ::= "inkey"
+                 | "add" Identifier Expression
+                 | "sub" Identifier Expression  
+                 | "random" Identifier
+                 | "ok"
+                 | "newtext"
+                 | "display" Expression
+                 | "call" Expression
+                 | "synonym" Identifier Identifier
+                 | "ramsave"
+                 | "ramload"
+                 | "saveat" Expression
+                 | "backat" Expression
+                 | "gfx" Expression
+                 | "mouse"
+                 | "redo"
+                 | "move" Identifier Identifier
 
 (* Expresiones y tipos auxiliares *)
 Expression ::= Identifier | Integer | FlagReference | ObjectReference
@@ -245,6 +264,7 @@ responses {
     }
 }
 ```
+```
 
 ## 🔧 Extensiones de Sintaxis
 
@@ -290,7 +310,10 @@ responses {
 | **Fase 2** | 14 | Parser/Comparación | ✅ 14/14 |
 | **Fase 3** | 5 | COPY | ✅ 5/5 |
 | **Fase 4** | 6 | Auto-acciones | ✅ 6/6 |
-| **TOTAL** | **62** | **Implementados** | **✅ 62/125 (50%)** |
+| **Fase 5** | 6 | Extensiones | ✅ 6/6 |
+| **Fase 6** | 13 | Multimedia/Control | ✅ 13/13 |
+| **Fase 7** | 16 | Avanzadas | ✅ 16/16 |
+| **TOTAL** | **97** | **Implementados** | **✅ 97/125 (78%)** |
 
 ## 🎯 Ventajas de la Nueva Gramática
 
