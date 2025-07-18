@@ -51,6 +51,79 @@ namespace DaadModern.Core
 
         #endregion
 
+        #region Propiedades Gráficas y Display (Fase 5)
+
+        /// <summary>
+        /// ID de la imagen de fondo actual
+        /// </summary>
+        public int CurrentBackgroundImage { get; set; } = 0;
+
+        /// <summary>
+        /// Color de papel (fondo de texto) actual
+        /// </summary>
+        public int CurrentPaperColor { get; set; } = 0;
+
+        /// <summary>
+        /// Color de tinta (texto) actual
+        /// </summary>
+        public int CurrentInkColor { get; set; } = 7; // Blanco por defecto
+
+        /// <summary>
+        /// Color de borde actual
+        /// </summary>
+        public int CurrentBorderColor { get; set; } = 0;
+
+        /// <summary>
+        /// Conjunto de caracteres actual
+        /// </summary>
+        public int CurrentCharset { get; set; } = 0;
+
+        /// <summary>
+        /// Indica si el texto está centrado
+        /// </summary>
+        public bool TextCentered { get; set; } = false;
+
+        #endregion
+
+        #region Propiedades del Sistema (Fase 6)
+
+        /// <summary>
+        /// Modo de pantalla actual
+        /// </summary>
+        public int CurrentDisplayMode { get; set; } = 0;
+
+        /// <summary>
+        /// ID de la imagen actual mostrada
+        /// </summary>
+        public int CurrentPictureId { get; set; } = 0;
+
+        /// <summary>
+        /// Indica si el juego está saliendo al sistema
+        /// </summary>
+        public bool GameExiting { get; set; } = false;
+
+        /// <summary>
+        /// Timeout para entrada del jugador (en centésimas de segundo)
+        /// </summary>
+        public int InputTimeout { get; set; } = 0;
+
+        /// <summary>
+        /// Acción a ejecutar cuando expire el timeout
+        /// </summary>
+        public int TimeoutAction { get; set; } = 0;
+
+        /// <summary>
+        /// Modo de entrada actual
+        /// </summary>
+        public int InputMode { get; set; } = 0;
+
+        /// <summary>
+        /// Tamaño del buffer de entrada
+        /// </summary>
+        public int InputBufferSize { get; set; } = 80;
+
+        #endregion
+
         #region Colecciones de Datos
 
         /// <summary>
