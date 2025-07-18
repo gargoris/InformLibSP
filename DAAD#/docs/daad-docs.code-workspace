@@ -1,0 +1,12 @@
+﻿{
+    "extensions":  {
+                       "recommendations":  [
+                                               "yzane.markdown-pdf"
+                                           ]
+                   },
+    "folders":  [
+                    {
+                        "path":  "."
+                    }
+                ]
+}
