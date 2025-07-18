@@ -81,7 +81,7 @@ namespace DaadModern.Parser
         // =====================================================================
         
         private static readonly Parser<char, Unit> Whitespace =
-            OneOf(Char(' '), Char('\t'), Char('\r'), Char('\n')).SkipMany();
+            Pidgin.Parser.OneOf(Char(' '), Char('\t'), Char('\r'), Char('\n')).SkipMany();
         
         private static readonly Parser<char, Unit> LineComment =
             String("//").Then(Any.Until(Char('\n'))).Void();
@@ -90,7 +90,7 @@ namespace DaadModern.Parser
             String("/*").Then(Any.Until(String("*/"))).Void();
         
         private static readonly Parser<char, Unit> WS =
-            OneOf(Whitespace, LineComment, BlockComment).SkipMany();
+           Pidgin.Parser.OneOf(Whitespace, LineComment, BlockComment).SkipMany();
         
         private static readonly Parser<char, string> Identifier =
             Letter.Or(Char('_'))
@@ -112,7 +112,7 @@ namespace DaadModern.Parser
         private static readonly Parser<char, string> StringLiteral =
             Char('"')
             .Then(
-                OneOf(
+               Pidgin.Parser.OneOf(
                     String("\\\"").ThenReturn('"'),
                     String("\\\\").ThenReturn('\\'),
                     String("\\n").ThenReturn('\n'),
@@ -124,7 +124,7 @@ namespace DaadModern.Parser
             .Between(WS);
         
         private static readonly Parser<char, bool> Boolean =
-            OneOf(
+           Pidgin.Parser.OneOf(
                 String("true").ThenReturn(true),
                 String("false").ThenReturn(false),
                 String("verdadero").ThenReturn(true),
@@ -141,7 +141,7 @@ namespace DaadModern.Parser
         private static Parser<char, Value> Value => Rec(() => ValueImpl);
         
         private static readonly Parser<char, Value> ValueImpl =
-            OneOf(
+           Pidgin.Parser.OneOf(
                 StringLiteral.Map(s => (Value)new StringValue(s)),
                 Integer.Map(i => (Value)new NumberValue(i)),
                 Boolean.Map(b => (Value)new BoolValue(b)),
@@ -172,7 +172,7 @@ namespace DaadModern.Parser
         // =====================================================================
         
         private static Parser<char, string> Keyword(string english, string spanish) =>
-            OneOf(String(english), String(spanish)).Between(WS);
+           Pidgin.Parser.OneOf(String(english), String(spanish)).Between(WS);
         
         private static readonly Parser<char, string> GameKeyword = Keyword("game", "juego");
         private static readonly Parser<char, string> LocationKeyword = Keyword("location", "localidad");
@@ -218,12 +218,12 @@ namespace DaadModern.Parser
             .Map((func, args) => (Condition)new SimpleCondition(func, args.ToList()));
         
         private static readonly Parser<char, Condition> ConditionImpl =
-            OneOf(
+           Pidgin.Parser.OneOf(
                 Char('(').Between(WS).Then(Condition).Before(Char(')').Between(WS)),
                 SimpleCondition
             )
             .Then(
-                OneOf(
+               Pidgin.Parser.OneOf(
                     String("&&").Between(WS).ThenReturn("and"),
                     String("||").Between(WS).ThenReturn("or"),
                     String("y").Between(WS).ThenReturn("and"),
@@ -260,7 +260,7 @@ namespace DaadModern.Parser
             .Map(actions => (Action)new BlockAction(actions.ToList()));
         
         private static readonly Parser<char, Action> ActionImpl =
-            OneOf(BlockAction, SimpleAction);
+           Pidgin.Parser.OneOf(BlockAction, SimpleAction);
         
         // =====================================================================
         // SECCIONES PRINCIPALES
@@ -325,7 +325,7 @@ namespace DaadModern.Parser
         // =====================================================================
         
         private static readonly Parser<char, Section> Section =
-            OneOf(
+           Pidgin.Parser.OneOf(
                 GameSection,
                 LocationSection,
                 ObjectSection,

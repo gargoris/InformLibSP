@@ -135,7 +135,7 @@ namespace DaadModern.Parser
         
         // Espacios en blanco
         private static readonly Parser<char, Unit> Whitespace =
-            OneOf(Char(' '), Char('\t'), Char('\r'), Char('\n')).SkipMany();
+            Pidgin.Parser.OneOf(Char(' '), Char('\t'), Char('\r'), Char('\n')).SkipMany();
         
         // Comentarios
         private static readonly Parser<char, Unit> LineComment =
@@ -146,7 +146,7 @@ namespace DaadModern.Parser
         
         // Espacios con comentarios
         private static readonly Parser<char, Unit> WS =
-            OneOf(Whitespace, LineComment, BlockComment).SkipMany();
+            Pidgin.Parser.OneOf(Whitespace, LineComment, BlockComment).SkipMany();
         
         // Identificadores
         private static readonly Parser<char, string> Identifier =
@@ -171,7 +171,7 @@ namespace DaadModern.Parser
         private static readonly Parser<char, string> StringLiteral =
             Char('"')
             .Then(
-                OneOf(
+                Pidgin.Parser.OneOf(
                     String("\\\"").ThenReturn('"'),
                     String("\\\\").ThenReturn('\\'),
                     String("\\n").ThenReturn('\n'),
@@ -184,7 +184,7 @@ namespace DaadModern.Parser
         
         // Booleanos en español
         private static readonly Parser<char, bool> Boolean =
-            OneOf(
+            Pidgin.Parser.OneOf(
                 String("verdadero").ThenReturn(true),
                 String("falso").ThenReturn(false),
                 String("sí").ThenReturn(true),
@@ -199,7 +199,7 @@ namespace DaadModern.Parser
         private static Parser<char, Value> Value => Rec(() => ValueImpl);
         
         private static readonly Parser<char, Value> ValueImpl =
-            OneOf(
+            Pidgin.Parser.OneOf(
                 StringLiteral.Map(s => (Value)new StringValue(s)),
                 Integer.Map(i => (Value)new NumberValue(i)),
                 Boolean.Map(b => (Value)new BoolValue(b)),
@@ -248,7 +248,7 @@ namespace DaadModern.Parser
         
         private static readonly Parser<char, Condition> OrCondition =
             AndCondition.Then(
-                OneOf(String("||"), String("o")).Between(WS)
+                Pidgin.Parser.OneOf(String("||"), String("o")).Between(WS)
                 .Then(AndCondition)
                 .Many()
             )
@@ -258,7 +258,7 @@ namespace DaadModern.Parser
         
         private static readonly Parser<char, Condition> AndCondition =
             NotCondition.Then(
-                OneOf(String("&&"), String("y")).Between(WS)
+                Pidgin.Parser.OneOf(String("&&"), String("y")).Between(WS)
                 .Then(NotCondition)
                 .Many()
             )
@@ -267,13 +267,13 @@ namespace DaadModern.Parser
                     new CompoundCondition(acc, "and", item.Item2)));
         
         private static readonly Parser<char, Condition> NotCondition =
-            OneOf(String("no"), String("!")).Between(WS).Optional()
+            Pidgin.Parser.OneOf(String("no"), String("!")).Between(WS).Optional()
             .Then(AtomicCondition)
             .Map((negation, cond) => 
                 negation.HasValue ? new NotCondition(cond) : cond);
         
         private static readonly Parser<char, Condition> AtomicCondition =
-            OneOf(
+            Pidgin.Parser.OneOf(
                 Char('(').Between(WS).Then(Condition).Before(Char(')').Between(WS))
                     .Map(c => (Condition)new ParenthesizedCondition(c)),
                 SimpleConditionParser
@@ -297,7 +297,7 @@ namespace DaadModern.Parser
         private static Parser<char, Action> Action => Rec(() => ActionImpl);
         
         private static readonly Parser<char, Action> ActionImpl =
-            OneOf(
+            Pidgin.Parser.OneOf(
                 ConditionalActionParser,
                 BlockActionParser,
                 SimpleActionParser

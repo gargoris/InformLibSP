@@ -10,6 +10,7 @@ using Pidgin;
 using static Pidgin.Parser;
 using static Pidgin.Parser<char>;
 
+
 namespace DaadModern.Runtime
 {
     // =====================================================================
@@ -72,11 +73,12 @@ namespace DaadModern.Runtime
         // =====================================================================
         
         private static readonly Parser<char, Unit> WS = 
-            OneOf(Char(' '), Char('\t')).SkipMany();
+
+            Pidgin.Parser.OneOf(Char(' '), Char('\t')).SkipMany();
         
         // Artículos en español
         private static readonly Parser<char, string> Article =
-            OneOf(
+           Pidgin.Parser.OneOf(
                 String("el"), String("la"), String("los"), String("las"),
                 String("un"), String("una"), String("unos"), String("unas"),
                 String("del"), String("al")  // Contracciones
@@ -84,7 +86,7 @@ namespace DaadModern.Runtime
         
         // Preposiciones comunes
         private static readonly Parser<char, string> Preposition =
-            OneOf(
+           Pidgin.Parser.OneOf(
                 String("con"), String("sin"), String("en"), String("de"), 
                 String("para"), String("por"), String("desde"), String("hasta"),
                 String("sobre"), String("bajo"), String("dentro"), String("fuera"),
@@ -93,14 +95,14 @@ namespace DaadModern.Runtime
         
         // Coordinadores
         private static readonly Parser<char, string> Coordinator =
-            OneOf(
+           Pidgin.Parser.OneOf(
                 String("y"), String("pero"), String("entonces"), 
                 String("después"), String("luego"), String("mientras")
             ).Between(WS);
         
         // Verbos comunes (puedes expandir esta lista)
         private static readonly Parser<char, string> Verb =
-            OneOf(
+           Pidgin.Parser.OneOf(
                 String("mata"), String("matar"), String("atacar"), String("ataca"),
                 String("habla"), String("hablar"), String("dice"), String("decir"),
                 String("coge"), String("coger"), String("toma"), String("tomar"),
@@ -116,7 +118,7 @@ namespace DaadModern.Runtime
         
         // Adjetivos
         private static readonly Parser<char, string> Adjective =
-            OneOf(
+           Pidgin.Parser.OneOf(
                 String("brillante"), String("oscuro"), String("grande"), String("pequeño"),
                 String("afilado"), String("romo"), String("mágico"), String("antiguo"),
                 String("nuevo"), String("viejo"), String("roto"), String("perfecto"),
@@ -170,7 +172,7 @@ namespace DaadModern.Runtime
         
         // Parser principal: comando compuesto o simple
         private static readonly Parser<char, PlayerCommand> PlayerCommand =
-            OneOf(
+           Pidgin.Parser.OneOf(
                 CompoundCommand,
                 SimpleCommand.Map(cmd => (PlayerCommand)cmd)
             ).Before(End);
