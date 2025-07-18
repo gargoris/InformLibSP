@@ -27,7 +27,7 @@ namespace DaadModern.Core
         /// <summary>
         /// Inicializa los CondActs críticos faltantes
         /// </summary>
-        private Dictionary<string, CondactInfo> InitializeCriticalCondacts()
+        private static Dictionary<string, CondactInfo> InitializeCriticalCondacts()
         {
             return new Dictionary<string, CondactInfo>
             {
@@ -256,6 +256,14 @@ namespace DaadModern.Core
         {
             var key = condactName.ToLower();
             return _criticalCondacts.ContainsKey(key) ? _criticalCondacts[key] : null;
+        }
+
+        /// <summary>
+        /// Obtiene todos los CondActs críticos para integración con el transpilador
+        /// </summary>
+        public static Dictionary<string, CondactInfo> GetCriticalCondacts()
+        {
+            return InitializeCriticalCondacts();
         }
     }
 

@@ -44,6 +44,11 @@ namespace DaadModern.Core
         /// </summary>
         public bool ExitGame { get; set; } = false;
 
+        /// <summary>
+        /// Indica si la ejecución del proceso actual fue exitosa
+        /// </summary>
+        public bool ProcessExecutionSuccess { get; set; } = true;
+
         #endregion
 
         #region Colecciones de Datos
